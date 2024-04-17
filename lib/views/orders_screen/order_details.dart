@@ -32,7 +32,7 @@ class _OrderDetailsState extends State<OrderDetails> {
   Widget build(BuildContext context) {
     return Obx(() => Scaffold(
           appBar: AppBar(
-            title: boldText(text: "Order Details", size: 16.0, color: fontBlack),
+            title: boldText(text: "Order Details", size: 16.0, color: blackColor),
           ),
           bottomNavigationBar: Visibility(
             visible: !controller.confirmed.value,
@@ -43,7 +43,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                   color: primaryApp, onPress: () {
                     controller.confirmed(true);
                     controller.changeStatus(title: "order_confirmed", status: true,docID: widget.data.id);
-                  }, title: "Confirm Order", textColor: fontLightGrey, ),
+                  }, title: "Confirm Order", textColor: thinGrey01, ),
             ),
           ),
           body: SingleChildScrollView(
@@ -57,12 +57,12 @@ class _OrderDetailsState extends State<OrderDetails> {
                     child: Column(
                       children: [
                         10.heightBox,
-                        boldText(text: "Order Status", color: fontGreyDark, size: 16.0),
+                        boldText(text: "Order Status", color: greyDark2, size: 16.0),
                         SwitchListTile(
                           activeColor: primaryApp,
                           value: true, 
                           onChanged: (value) {}, 
-                          title: boldText(text: "Placed", color: fontGreyDark),
+                          title: boldText(text: "Placed", color: greyDark2),
                         ),
                         SwitchListTile(
                           activeColor: primaryApp,
@@ -70,7 +70,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                           onChanged: (value) {
                             controller.confirmed.value = value;
                           }, 
-                          title: boldText(text: "Confirmed", color: fontGreyDark),
+                          title: boldText(text: "Confirmed", color: greyDark2),
                         ),
                         SwitchListTile(
                           activeColor: primaryApp,
@@ -79,7 +79,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                             controller.ondelivery.value = value;
                             controller.changeStatus(title: "order_on_delivery", status: value, docID: widget.data.id);
                           }, 
-                          title: boldText(text: "On Delivery", color: fontGreyDark),
+                          title: boldText(text: "On Delivery", color: greyDark2),
                         ),
                         SwitchListTile(
                           activeColor: primaryApp,
@@ -87,10 +87,10 @@ class _OrderDetailsState extends State<OrderDetails> {
                             controller.delivered.value = value;
                             controller.changeStatus(title: "order_delivered", status: value, docID: widget.data.id);
                           }, 
-                          title: boldText(text: "Delivered", color: fontGreyDark),
+                          title: boldText(text: "Delivered", color: greyDark2),
                         ),
                       ],
-                    ).box.padding(const EdgeInsets.all(8.0)).outerShadowMd.white.border(color: fontLightGrey).rounded.make(),
+                    ).box.padding(const EdgeInsets.all(8.0)).outerShadowMd.white.border(color: thinGrey01).rounded.make(),
                   ),
       
                   10.heightBox,
@@ -126,7 +126,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                               children: [
                                 // "Shipping Address".text.fontFamily(semibold).make(),
                                 boldText(
-                                text: "Shipping Address", color: fontBlack),
+                                text: "Shipping Address", color: blackColor),
                                 "${widget.data['order_by_name']}".text.make(),
                                 "${widget.data['order_by_email']}".text.make(),
                                 "${widget.data['order_by_address']}".text.make(),
@@ -143,7 +143,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   boldText(
-                                      text: "Total Amount", color: fontBlack),
+                                      text: "Total Amount", color: blackColor),
                                   normalText(
                                       text: "${widget.data['total_amount']} Bath", color: primaryApp, size: 16.0),
                                   // "Total Amount".text.fontFamily(semibold).make(),
@@ -155,13 +155,13 @@ class _OrderDetailsState extends State<OrderDetails> {
                         ),
                       )
                     ],
-                  ).box.outerShadowMd.white.border(color: fontLightGrey).rounded.make(),
+                  ).box.outerShadowMd.white.border(color: thinGrey01).rounded.make(),
                   // const Divider(),
                   10.heightBox,
                  Column(
                    children: [
                   10.heightBox,
-                    boldText(text: "Ordered Product", color: fontGreyDark, size: 16.0),
+                    boldText(text: "Ordered Product", color: greyDark2, size: 16.0),
                   10.heightBox,
                   ListView(
                     physics: const NeverScrollableScrollPhysics(),
@@ -190,7 +190,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                   ),
                   20.heightBox,
                    ] 
-                 ).box.outerShadowMd.white.border(color: fontLightGrey).rounded.make(),
+                 ).box.outerShadowMd.white.border(color: thinGrey01).rounded.make(),
                 ],
               ),
             ),

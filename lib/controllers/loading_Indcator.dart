@@ -1,6 +1,6 @@
 import 'package:seller_finalproject/const/const.dart';
 
-Widget loadingIndcator({circleColor = fontGrey}) {
+Widget loadingIndicator({circleColor = greyColor}) {
   return const Center(
     child: CircularProgressIndicator(
       valueColor: AlwaysStoppedAnimation(primaryApp),

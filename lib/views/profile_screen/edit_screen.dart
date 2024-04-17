@@ -31,10 +31,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     return Obx(
       () => Scaffold(
         appBar: AppBar(
-          title: boldText(text: editshopProfile, color: fontBlack, size: 30.0),
+          title: boldText(text: editshopProfile, color: blackColor, size: 30.0),
           actions: [
             controller.isloading.value
-                ? loadingIndcator(circleColor: primaryApp)
+                ? loadingIndicator(circleColor: primaryApp)
                 : TextButton(
                     onPressed: () async {
                       controller.isloading(true);
@@ -73,7 +73,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         controller.isloading(false);
                       }
                     },
-                    child: normalText(text: save, color: fontBlack))
+                    child: normalText(text: save, color: blackColor))
           ],
         ),
         body: Padding(
@@ -129,7 +129,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: boldText(
-                      text: "Change your password", color: fontGreyDark),
+                      text: "Change your password", color: greyDark2),
                 ),
                 10.heightBox,
                 customTextField(

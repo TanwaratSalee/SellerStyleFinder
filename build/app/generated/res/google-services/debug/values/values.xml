@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="gcm_defaultSenderId" translatable="false">814660141387</string>
+    <string name="google_api_key" translatable="false">AIzaSyDgMwVRFztTKFKM-efzUm-Ea-VzMY7IS3k</string>
+    <string name="google_app_id" translatable="false">1:814660141387:android:1a0d9f11751d5376f328ce</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyDgMwVRFztTKFKM-efzUm-Ea-VzMY7IS3k</string>
+    <string name="google_storage_bucket" translatable="false">new-tung.appspot.com</string>
+    <string name="project_id" translatable="false">new-tung</string>
+</resources>

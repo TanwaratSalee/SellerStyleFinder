@@ -12,4 +12,4 @@ const icStar = "assets/icons/star.png";
 const iVerify = "assets/icons/verify.png";
 const imgProduct = "assets/product.jpg";
 const imgProfile = "assets/profile.png";
-
+const imgBg = "assets/icons/background.png";

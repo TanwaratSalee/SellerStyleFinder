@@ -12,6 +12,7 @@ Widget ourButton(
           backgroundColor: color, // Background color
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+              minimumSize: const Size(double.infinity, 45),
           padding: const EdgeInsets.all(12.0)),
       onPressed: onPress,
       child: normalText(

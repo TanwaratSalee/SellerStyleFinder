@@ -10,19 +10,39 @@
 		</data>
 		<key>flutter_assets/AssetManifest.bin</key>
 		<data>
-		wmmYvFKYGUYOYXpk9Xm4mgzIoXA=
+		QFWhE2krsIZqlHb6VbSzePWY4xM=
 		</data>
 		<key>flutter_assets/AssetManifest.json</key>
 		<data>
-		WDkgxlzFgiqkzi4ICqDdRFHidKM=
+		zw/mMhwcyLJZXkB8JfJn1zaf7Eg=
 		</data>
 		<key>flutter_assets/FontManifest.json</key>
 		<data>
-		vKJkVIcw+LGHFnKJGwrQwCREv68=
+		iyZsKiyoDh6Nz2BDChu3zatwGjo=
 		</data>
 		<key>flutter_assets/NOTICES.Z</key>
 		<data>
 		zSjU4fJo9sXn7dSfMrUb+h8RJas=
+		</data>
+		<key>flutter_assets/assets/fonts/Roboto-Black.ttf</key>
+		<data>
+		P45AHYCPbOhLVCJmcmUUrIvnMXE=
+		</data>
+		<key>flutter_assets/assets/fonts/Roboto-Bold.ttf</key>
+		<data>
+		YkQqGKn+lFfBr+q/aD0mOmkbd5g=
+		</data>
+		<key>flutter_assets/assets/fonts/Roboto-Light.ttf</key>
+		<data>
+		GHiMXWMPppX5KD9jk7+lQbIDFQg=
+		</data>
+		<key>flutter_assets/assets/fonts/Roboto-Medium.ttf</key>
+		<data>
+		PGoJ/MakVJJMga99/5T8bTme15s=
+		</data>
+		<key>flutter_assets/assets/fonts/Roboto-Regular.ttf</key>
+		<data>
+		VsXA04veTB8VSd2kPbN7CcYIqtM=
 		</data>
 		<key>flutter_assets/assets/icons/account.png</key>
 		<data>
@@ -31,6 +51,10 @@
 		<key>flutter_assets/assets/icons/add.png</key>
 		<data>
 		fHIAkT9f+CMy/cceWNFQhIQLX0k=
+		</data>
+		<key>flutter_assets/assets/icons/background.png</key>
+		<data>
+		HCZ09nAvXO9+mgSZ31hVe1PynR8=
 		</data>
 		<key>flutter_assets/assets/icons/chat.png</key>
 		<data>
@@ -90,11 +114,11 @@
 		</data>
 		<key>flutter_assets/kernel_blob.bin</key>
 		<data>
-		EPN3MfJtO2jmFi7JBHeoSHPPlc8=
+		Ae0j1q9KM7J+5vcN/fO91qVppVM=
 		</data>
 		<key>flutter_assets/lib/services/collection_model.json</key>
 		<data>
-		gxrUC+4sdDLCjoWukL6FQdk14HM=
+		J2I1rg0+K2yvfcwt0uT2csLPwh4=
 		</data>
 		<key>flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
 		<data>
@@ -115,21 +139,21 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			U+BXmg4TDeWrVaSdjyrYWNU+qo2tnC1+GlgaShHouVQ=
+			RHkRec3l5W21xj27Ak5WehQZMSoE+wTo7Y1iPcMTZrM=
 			</data>
 		</dict>
 		<key>flutter_assets/AssetManifest.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			uFZVdR/3viJTfQppyx/6+bzEL7k0JddFDh1LsIsgSks=
+			oVmvTDjL1BN+EnJgssFBcHUoYNcWAvRDuIsq4X16GLM=
 			</data>
 		</dict>
 		<key>flutter_assets/FontManifest.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			zX4DZFvESy3Ue3y2JvUcTsv1Whl6t3JBYotHrBZfviE=
+			uFWjcz4qCxHFMOaLi6sKMvXx7ODYMOMFEnVKe1w6Fpc=
 			</data>
 		</dict>
 		<key>flutter_assets/NOTICES.Z</key>
@@ -137,6 +161,41 @@
 			<key>hash2</key>
 			<data>
 			SFKD7W/H+JfGsEY5dU3NSsAgV8jnEEv7fqHcdSxdY/s=
+			</data>
+		</dict>
+		<key>flutter_assets/assets/fonts/Roboto-Black.ttf</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			Ws4NCDOrg/8Y6pTkp3RfkZxFiuTqvCmCGCJt9CdczU0=
+			</data>
+		</dict>
+		<key>flutter_assets/assets/fonts/Roboto-Bold.ttf</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			7GhaRhBSlv5GyHRNpKEc+BGLpsEScZQXZvelRt9qp8c=
+			</data>
+		</dict>
+		<key>flutter_assets/assets/fonts/Roboto-Light.ttf</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			xXbFBkInG82//+0E+S3I1qmB2vMAkU0KIMilpaVwFcc=
+			</data>
+		</dict>
+		<key>flutter_assets/assets/fonts/Roboto-Medium.ttf</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			nQ1VowO/0Tt5qHch9lGF6T8jXi13/jmLLcpnrFGZFfU=
+			</data>
+		</dict>
+		<key>flutter_assets/assets/fonts/Roboto-Regular.ttf</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			ThR6tkuf322J0B9rjDygs83cWdYIqOIhj5olBLXJjhQ=
 			</data>
 		</dict>
 		<key>flutter_assets/assets/icons/account.png</key>
@@ -151,6 +210,13 @@
 			<key>hash2</key>
 			<data>
 			7RGy/wsTwdK3thmIA/GqRhJZHlYYfmbHs1Br1GmWF3I=
+			</data>
+		</dict>
+		<key>flutter_assets/assets/icons/background.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			dc3IRyOCNgz7DllJbqbxrhAnnGLajSNvEejIF7YP2i4=
 			</data>
 		</dict>
 		<key>flutter_assets/assets/icons/chat.png</key>
@@ -255,14 +321,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			w/hViVE59DBVqT9ilVTsdwVvgdQSId+6H3WupZCAXmU=
+			By1m6Sm8WDkR6VmOC0BYnrrAzV3HPjvihSOU7KniPpk=
 			</data>
 		</dict>
 		<key>flutter_assets/lib/services/collection_model.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			qdCMmdXkJ7YwWWflNCyn3VLDH6vMTACql8Lm21u3mtE=
+			KOlgv0YAvNI282fz67cSJS7TpeUpaybFk1108fn0Ar4=
 			</data>
 		</dict>
 		<key>flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>

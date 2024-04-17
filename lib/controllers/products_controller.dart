@@ -22,53 +22,34 @@ class ProductsController extends GetxController {
   var pquantityController = TextEditingController();
 
   var collectionsList = <String>[].obs;
-  var typepfproductList = <String>[].obs;
   var subcollectionList = <String>[].obs;
   List<Collection> collection = [];
   var pImagesLinks = [];
-  var pImagesList = RxList<dynamic>.generate(3, (index) => null);
-  RxString selectedSize = ''.obs;
-  List<String> sizesList = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
-  RxString selectedGender = ''.obs;
-  List<String> genderList = ['Male', 'Female', 'Other'];
-  RxString selectedSkinColor = ''.obs;
-  List<Map<String, dynamic>> skinColorList = [
-    {'name': 'Light', 'color': Color.fromARGB(255, 223, 209, 209)},
-    {'name': 'Medium', 'color': Colors.brown[200]},
-    {'name': 'Medium', 'color': Colors.brown[200]},
-    {'name': 'Dark', 'color': Colors.brown[800]},
-    {'name': 'Unspecified', 'color': Colors.brown},
-  ];
-  RxString selectedClothingColor = ''.obs;
-  List<Map<String, dynamic>> clothingColorList = [
-    {'name': 'Red', 'color': Colors.black},
-    {'name': 'Red', 'color': Colors.grey},
-    {'name': 'Red', 'color': Colors.white},
-    {'name': 'Red', 'color': Colors.purple},
-    {'name': 'Red', 'color': Colors.deepPurple},
-    {'name': 'Red', 'color': Colors.blue},
-    {'name': 'Red', 'color': Colors.blueGrey},
-    {'name': 'Red', 'color': Colors.green},
-    {'name': 'Red', 'color': Colors.greenAccent},
-    {'name': 'Blue', 'color': Colors.yellow},
-    {'name': 'Green', 'color': Colors.amberAccent},
-    {'name': 'Black', 'color': Colors.orange},
-    {'name': 'Black', 'color': Colors.orangeAccent},
-    {'name': 'Black', 'color': Colors.red},
-    {'name': 'Black', 'color': Colors.redAccent},
-  ];
-  RxInt selectedColorIndex = (-1).obs;
-  List<Map<String, dynamic>> clothingColorLists = [
-    {'name': 'Red', 'color': Colors.red},
-    {'name': 'Blue', 'color': Colors.blue},
-  ];
-  RxString selectedMixAndMatch = ''.obs;
-  List<String> mixAndMatchOptions = ['Top', 'Lower', 'Not Specified'];
+  var pImagesList = RxList<dynamic>.generate(9, (index) => null);
 
   var collectionsvalue = ''.obs;
-  var typeofproductvalue = ''.obs;
   var subcollectionvalue = ''.obs;
-  // var selectedColorIndex = 0.obs;
+  var selectedColorIndex = 0.obs;
+
+  final RxSet<int> selectedColorIndexes = <int>{}.obs;
+
+   final List<Map<String, dynamic>> allColors = [
+    {'name': 'Black', 'color': Colors.black},
+    {'name': 'Grey', 'color': Colors.grey},
+    {'name': 'White', 'color': Colors.white},
+    {'name': 'Purple', 'color': Colors.purple},
+    {'name': 'Deep Purple', 'color': Colors.deepPurple},
+    {'name': 'Blue', 'color': Colors.lightBlue},
+    {'name': 'Blue', 'color': Color.fromARGB(255, 36, 135, 216)},
+    {'name': 'Blue Grey', 'color': Colors.blueGrey},
+    {'name': 'Green', 'color': Color.fromARGB(255, 17, 82, 50)},
+    {'name': 'Green', 'color': Colors.green},
+    {'name': 'Green Accent', 'color': Colors.greenAccent},
+    {'name': 'Yellow', 'color': Colors.yellow},
+    {'name': 'Orange', 'color': Colors.orange},
+    {'name': 'Red', 'color': Colors.red},
+    {'name': 'Red Accent', 'color': Color.fromARGB(255, 237, 101, 146)},
+  ];
 
   getCollection() async {
     var data =
@@ -123,14 +104,19 @@ class ProductsController extends GetxController {
     }
   }
 
-  uploadProduct(context) async {
+  Future<void> uploadProduct(BuildContext context) async {
+  try {
+    isloading(true);
+    // Make sure images are uploaded first if they aren't already
+    if (pImagesLinks.isEmpty) {
+      await uploadImages();
+    }
     var store = firestore.collection(productsCollection).doc();
     await store.set({
       'is_featured': false,
       'p_collection': collectionsvalue.value,
-      'P_typeofproduct': typeofproductvalue.value,
       'p_subcollection': subcollectionvalue.value,
-      'p_colors': FieldValue.arrayUnion([Colors.red.value, Colors.brown.value]),
+      'p_colors': selectedColorIndexes.map((index) => allColors[index]['color'].value).toList(),
       'p_imgs': FieldValue.arrayUnion(pImagesLinks),
       'p_wishlist': FieldValue.arrayUnion([]),
       'p_desc': pdescController.text,
@@ -145,9 +131,14 @@ class ProductsController extends GetxController {
       'featured_id': ''
     });
     isloading(false);
-
-    VxToast.show(context, msg: "Product Update");
+    VxToast.show(context, msg: "Product successfully uploaded.");
+  } catch (e) {
+    isloading(false);
+    VxToast.show(context, msg: "Failed to upload product: $e");
+    print(e.toString());  // For debugging purposes
   }
+}
+
 
   addFeatured(docId) async {
     await firestore.collection(productsCollection).doc(docId).set({
@@ -166,4 +157,60 @@ class ProductsController extends GetxController {
   removeProduct(docId) async {
     await firestore.collection(productsCollection).doc(docId).delete();
   }
+
+  void addSelectedColorIndex(int index) {
+    selectedColorIndexes.add(index);
+    updateSelectedColorsInFirebase();
+  }
+
+  void removeSelectedColorIndex(int index) {
+    selectedColorIndexes.remove(index);
+    updateSelectedColorsInFirebase();
+  }
+
+  void updateSelectedColorsInFirebase() async {
+  try {
+    // Create a list of selected colors from their indices
+    var selectedColorsValues = selectedColorIndexes.map((index) => allColors[index]['color'] as Color).toList();
+
+    // Your Firebase operation here...
+  } catch (e) {
+    print("Error: $e");
+  }
+}
+
+
+  bool isSelectedColorIndex(int index) {
+    return selectedColorIndexes.contains(index);
+  }
+
+  bool isDataComplete() {
+  return pnameController.text.isNotEmpty &&
+      pabproductController.text.isNotEmpty &&
+      pdescController.text.isNotEmpty &&
+      psizeController.text.isNotEmpty &&
+      ppriceController.text.isNotEmpty &&
+      pquantityController.text.isNotEmpty &&
+      collectionsvalue.isNotEmpty &&
+      subcollectionvalue.isNotEmpty &&
+      selectedColorIndexes.isNotEmpty; // เพิ่มเงื่อนไขสำหรับสีที่ถูกเลือก
+}
+
+void resetForm() {
+  pnameController.clear();
+  pabproductController.clear();
+  pdescController.clear();
+  psizeController.clear();
+  ppriceController.clear();
+  pquantityController.clear();
+  pImagesList.value = List<dynamic>.filled(9, null, growable: false);
+  selectedColorIndexes.clear();
+  collectionsvalue.value = '';
+  subcollectionvalue.value = '';
+  pImagesLinks.clear();
+}
+
+
+
+  MatchProducts(text) {}
 }

@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:seller_finalproject/const/const.dart';
+import 'package:seller_finalproject/const/styles.dart';
 import 'package:seller_finalproject/controllers/loading_Indcator.dart';
 import 'package:seller_finalproject/services/store_services.dart';
 import 'package:seller_finalproject/views/products_screen/product_details.dart';
@@ -22,7 +24,7 @@ class HomeScreen extends StatelessWidget {
           builder:
               (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (!snapshot.hasData) {
-              return loadingIndcator();
+              return loadingIndicator();
             } else {
               var data = snapshot.data!.docs;
               data = data.sortedBy((a, b) =>
@@ -41,7 +43,9 @@ class HomeScreen extends StatelessWidget {
                             count: "${data.length}",
                             icon: icProducts),
                         dashboardButton(context,
-                            title: orders, count: 15, icon: icOrders)
+                            title: orders,
+                            count: "${data.length}",
+                            icon: icOrders)
                       ],
                     ),
                     10.heightBox,
@@ -57,33 +61,34 @@ class HomeScreen extends StatelessWidget {
                     10.heightBox,
                     const Divider(),
                     20.heightBox,
-                    boldText(text: popular, color: fontGreyDark, size: 16.0),
+                    boldText(text: popular, color: greyDark2, size: 16.0),
                     10.heightBox,
-                    ListView(
-                      physics: const BouncingScrollPhysics(),
-                      shrinkWrap: true,
-                      children: List.generate(
-                          data.length,
-                          (index) => data[index]['p_wishlist'].length == 0
-                              ? const SizedBox()
-                              : ListTile(
-                                  onTap: () {
-                                    Get.to(() =>
-                                        ProductDetails(data: data[index]));
-                                  },
-                                  leading: Image.network(
-                                    data[index]['p_imgs'][0],
-                                    width: 100,
-                                    height: 100,
-                                    fit: BoxFit.cover,
-                                  ),
-                                  title: boldText(
-                                      text: "${data[index]['p_name']}",
-                                      color: fontGreyDark),
-                                  subtitle: normalText(
-                                      text: "${data[index]['p_price']} Bath",
-                                      color: fontGrey),
-                                )),
+                    Expanded(
+                      child: ListView.builder(
+                        physics: const BouncingScrollPhysics(),
+                        itemCount: data.length,
+                        itemBuilder: (context, index) {
+                          if (data[index]['p_wishlist'].isEmpty) {
+                            return SizedBox
+                                .shrink(); // Use shrink for more semantically correct empty space
+                          }
+
+                          return ListTile(
+                            onTap: () {
+                              Get.to(() => ProductDetails(data: data[index]));
+                            },
+                            leading: Image.network(
+                              data[index]['p_imgs'][0],
+                              width: 60,
+                              height: 80,
+                              fit: BoxFit.cover,
+                            ),
+                            title: Text(data[index]['p_name']).text.size(16).fontFamily(medium).make(),
+                            subtitle: Text(
+                                "${NumberFormat('#,##0').format(double.tryParse(data[index]['p_price'])?.toInt() ?? 0)} Bath"),
+                          );
+                        },
+                      ),
                     ),
                   ],
                 ),

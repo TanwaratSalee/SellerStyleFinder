@@ -9,7 +9,7 @@ class ProductDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: boldText(text: "${data['p_name']}", color: fontGrey, size: 16.0),
+        title: boldText(text: "${data['p_name']}", color: greyColor, size: 16.0),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -36,14 +36,14 @@ class ProductDetails extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  boldText(text: "${data['p_name']}", color: fontBlack, size: 20.0),
+                  boldText(text: "${data['p_name']}", color: blackColor, size: 20.0),
                   5.heightBox,
 
                   Row(
                     children: [
-                      boldText(text: "${data['p_collection']}", color: fontGrey, size: 16),
+                      boldText(text: "${data['p_collection']}", color: greyColor, size: 16),
                       10.widthBox,
-                      normalText(text: "${data['p_subcollection']}", color: fontGrey)
+                      normalText(text: "${data['p_subcollection']}", color: greyColor)
                     ],
                   ),
                   10.heightBox,
@@ -53,7 +53,7 @@ class ProductDetails extends StatelessWidget {
                     // value: 3.0,
                     value: double.parse(data["p_rating"]),
                     onRatingUpdate: (value) {},
-                    normalColor: fontGrey,
+                    normalColor: greyColor,
                     selectionColor: golden,
                     count: 5,
                     size: 25,
@@ -68,7 +68,7 @@ class ProductDetails extends StatelessWidget {
                       children: [
                         SizedBox(
                           width: 100,
-                          child: boldText(text: "Color: ", color: fontGrey),
+                          child: boldText(text: "Color: ", color: greyColor),
                         ),
                         Row(
                           children: List.generate(
@@ -94,18 +94,18 @@ class ProductDetails extends StatelessWidget {
                       children: [
                         SizedBox(
                           width: 100,
-                          child: boldText(text: "Quantity: ", color: fontGrey),
+                          child: boldText(text: "Quantity: ", color: greyColor),
                         ),
-                        normalText (text: "${data['p_quantity']} items", color: fontGrey),
+                        normalText (text: "${data['p_quantity']} items", color: greyColor),
                       ],
                     ).box.padding(const EdgeInsets.all(8)).make(),
 
                     const Divider(),
 
                     10.heightBox,
-                    boldText(text: "Description", color: fontGrey),
+                    boldText(text: "Description", color: greyColor),
                     10.heightBox,
-                    normalText(text: "${data['p_desc']}", color: fontGrey),
+                    normalText(text: "${data['p_desc']}", color: greyColor),
                     
                   ]),
                 ],

@@ -4,11 +4,11 @@ Widget productImages({required label, onPass}) {
   return "$label"
       .text
       .bold
-      .color(fontGrey)
+      .color(greyColor)
       .size(16)
       .makeCentered()
       .box
-      .color(fontLightGrey)
+      .color(thinGrey01)
       .size(100, 100)
       .roundedSM
       .make();

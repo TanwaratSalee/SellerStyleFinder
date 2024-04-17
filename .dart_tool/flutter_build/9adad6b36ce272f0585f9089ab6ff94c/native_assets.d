@@ -1,0 +1,1 @@
+ /Users/thanwarat/Desktop/finalproject_flutter_seller_edit/.dart_tool/flutter_build/9adad6b36ce272f0585f9089ab6ff94c/native_assets.yaml: 

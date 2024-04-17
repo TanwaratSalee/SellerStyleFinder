@@ -25,7 +25,7 @@ class OrdersScreen extends StatelessWidget {
         stream: StoreServices.getOrders(currentUser!.uid), 
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
           if(!snapshot.hasData){
-            return loadingIndcator();
+            return loadingIndicator();
           } else {
             var data = snapshot.data!.docs;
 
@@ -42,32 +42,32 @@ class OrdersScreen extends StatelessWidget {
                             onTap: () {
                               Get.to(() => OrderDetails(data: data[index]));
                             },
-                            tileColor: fontLightGrey,
+                            tileColor: thinGrey01,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12.0)
                             ),
-                            title: boldText(text:"${data[index]['order_code']}", color: fontGreyDark),
+                            title: boldText(text:"${data[index]['order_code']}", color: greyDark2),
                             subtitle: Column(
                               children: [
                                 Row(
                                   children: [
-                                    const Icon(Icons.calendar_month, color: fontGreyDark),
+                                    const Icon(Icons.calendar_month, color: greyDark2),
                                     10.widthBox,
-                                    boldText(text: intl.DateFormat().add_yMd().format(time),color: fontGrey),
+                                    boldText(text: intl.DateFormat().add_yMd().format(time),color: greyColor),
                                   ],
                                 ),
                                 3.heightBox,
                                 Row(
                                   children: [
-                                    const Icon(Icons.payment, color: fontGreyDark),
+                                    const Icon(Icons.payment, color: greyDark2),
                                     10.widthBox,
-                                    boldText(text: unpaid,color: red),
+                                    boldText(text: unpaid,color: redColor),
                                   ],
                                 )
                               ],
                             ),
                             // ignore: unnecessary_string_escapes
-                            trailing: boldText(text: "${data[index]['total_amount']} Bath", color: fontBlack, size: 16.0),
+                            trailing: boldText(text: "${data[index]['total_amount']} Bath", color: blackColor, size: 16.0),
                           ).box.margin(const EdgeInsets.only(bottom: 5)).make();
                       }
                         ),
@@ -166,7 +166,7 @@ class OrdersScreen extends StatelessWidget {
 //                 builder: (BuildContext context,
 //                     AsyncSnapshot<QuerySnapshot> snapshot) {
 //                   if (!snapshot.hasData) {
-//                     return loadingIndcator();
+//                     return loadingIndicator();
 //                   } else {
 //                     var data = snapshot.data!.docs;
 
@@ -192,7 +192,7 @@ class OrdersScreen extends StatelessWidget {
 //                             padding: const EdgeInsets.all(8.0),
 //                             margin: const EdgeInsets.only(bottom: 8.0),
 //                             decoration: BoxDecoration(
-//                               color: fontLightGrey,
+//                               color: thinGrey01,
 //                               borderRadius: BorderRadius.circular(12.0),
 //                             ),
 //                             child: Row(
@@ -229,7 +229,7 @@ class OrdersScreen extends StatelessWidget {
 //                                         "${data[index]['order_code']}",
 //                                         style: TextStyle(
 //                                           fontWeight: FontWeight.bold,
-//                                           color: fontGreyDark,
+//                                           color: greyDark2,
 //                                         ),
 //                                       ),
 //                                       const SizedBox(height: 5),
@@ -237,13 +237,13 @@ class OrdersScreen extends StatelessWidget {
 //                                       Row(
 //                                         children: [
 //                                           Icon(Icons.calendar_month,
-//                                               color: fontGreyDark),
+//                                               color: greyDark2),
 //                                           const SizedBox(width: 5),
 //                                           // Text(
 //                                           //   intl.DateFormat()
 //                                           //       .add_yMd()
 //                                           //       .format(time),
-//                                           //   style: TextStyle(color: fontGrey),
+//                                           //   style: TextStyle(color: greyColor),
 //                                           // ),
 //                                         ],
 //                                       ),
@@ -252,7 +252,7 @@ class OrdersScreen extends StatelessWidget {
 //                                       Row(
 //                                         children: [
 //                                           Icon(Icons.payment,
-//                                               color: fontGreyDark),
+//                                               color: greyDark2),
 //                                           const SizedBox(width: 5),
 //                                           Text(unpaid,
 //                                               style: TextStyle(color: red)),
@@ -267,7 +267,7 @@ class OrdersScreen extends StatelessWidget {
 //                                 //   "$totalPrice Bath",
 //                                 //   style: TextStyle(
 //                                 //     fontWeight: FontWeight.bold,
-//                                 //     color: fontBlack,
+//                                 //     color: blackColor,
 //                                 //     fontSize: 16.0,
 //                                 //   ),
 //                                 // ),

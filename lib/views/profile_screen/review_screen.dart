@@ -92,7 +92,7 @@ Widget _botton(BuildContext context) {
           borderRadius: BorderRadius.circular(8),
           boxShadow: [
             BoxShadow(
-              color: fontGrey,
+              color: greyColor,
               blurRadius: 4,
               offset: Offset(0, 2),
             ),
@@ -147,7 +147,7 @@ Widget _buildReviewCard() {
       borderRadius: BorderRadius.circular(8),
       boxShadow: [
         BoxShadow(
-          color: fontGrey,
+          color: greyColor,
           blurRadius: 4,
           offset: Offset(0, 2),
         ),
@@ -201,7 +201,7 @@ Widget _buildReviewProductCard() {
       borderRadius: BorderRadius.circular(8),
       boxShadow: [
         BoxShadow(
-          color: fontGrey,
+          color: greyColor,
           blurRadius: 4,
           offset: Offset(0, 2),
         ),

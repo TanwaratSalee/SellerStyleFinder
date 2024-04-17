@@ -10,7 +10,7 @@ class ChatScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: boldText(text: chat, size: 16.0, color: fontBlack),
+        title: boldText(text: chat, size: 16.0, color: blackColor),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),

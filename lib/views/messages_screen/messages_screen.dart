@@ -15,14 +15,14 @@ class MessagesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: boldText(text: messages, size: 16.0, color: fontBlack),
+          title: boldText(text: messages, size: 16.0, color: blackColor),
         ),
         body: StreamBuilder(
             stream: StoreServices.getMessages(currentUser!.uid),
             builder:
                 (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (!snapshot.hasData) {
-                return loadingIndcator();
+                return loadingIndicator();
               } else {
                 var data = snapshot.data!.docs;
                 return Padding(
@@ -46,11 +46,11 @@ class MessagesScreen extends StatelessWidget {
                                       color: whiteColor,
                                     )),
                                 title: boldText(
-                                    text: "${data[index]['sender_name']}", color: fontBlack),
+                                    text: "${data[index]['sender_name']}", color: blackColor),
                                 subtitle: normalText(
-                                    text: "${data[index]['last_msg']}", color: fontGrey),
+                                    text: "${data[index]['last_msg']}", color: greyColor),
                                 trailing: normalText(
-                                    text: time, color: fontGrey),
+                                    text: time, color: greyColor),
                               );
                           }),
                     ),
@@ -77,14 +77,14 @@ class MessagesScreen extends StatelessWidget {
 //   Widget build(BuildContext context) {
 //     return Scaffold(
 //         appBar: AppBar(
-//           title: boldText(text: messages, size: 16.0, color: fontBlack),
+//           title: boldText(text: messages, size: 16.0, color: blackColor),
 //         ),
 //         body: StreamBuilder(
 //             stream: StoreServices.getMessages(currentUser!.uid),
 //             builder:
 //                 (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
 //               if (!snapshot.hasData) {
-//                 return loadingIndcator();
+//                 return loadingIndicator();
 //               } else {
 //                 var data = snapshot.data!.docs;
 //                 return Padding(
@@ -110,11 +110,11 @@ class MessagesScreen extends StatelessWidget {
 //                               )),
 //                           title: boldText(
 //                               text: "${data[index]['sender_name']}",
-//                               color: fontBlack),
+//                               color: blackColor),
 //                           subtitle: normalText(
 //                               text: "${data[index]['last_msg']}",
-//                               color: fontGrey),
-//                           trailing: normalText(text: time, color: fontGrey),
+//                               color: greyColor),
+//                           trailing: normalText(text: time, color: greyColor),
 //                         );
 //                       }),
 //                     ),

@@ -8,7 +8,7 @@ Widget productDropdown(hint, List<String> list, dropvalue, ProductsController co
   return Obx(
     () =>  DropdownButtonHideUnderline(
       child: DropdownButton(
-        hint: normalText(text: "$hint", color: fontGrey),
+        hint: Text("$hint",).text.color(greyDark1).size(14).make(),
         value: dropvalue.value == '' ? null : dropvalue.value,
         isExpanded: true,
         items: list.map((e) {
@@ -25,6 +25,6 @@ Widget productDropdown(hint, List<String> list, dropvalue, ProductsController co
           dropvalue.value = newValue.toString();
         },
       ),
-    ).box.white.padding(const EdgeInsets.symmetric(horizontal: 4)).roundedSM.make(),
+    ).box.color(backGround).padding(const EdgeInsets.symmetric(horizontal: 6, vertical: 6)).border(color: thinGrey01).roundedSM.make(),
   );
 }

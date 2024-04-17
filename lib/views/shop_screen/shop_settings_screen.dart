@@ -17,10 +17,10 @@ class ShopSettings extends StatelessWidget {
     return Obx(
       () => Scaffold(
         appBar: AppBar(
-          title: boldText(text: shopSettings, color: fontGreyDark, size: 25.0),
+          title: boldText(text: shopSettings, color: greyDark2, size: 25.0),
           actions: [
             controller.isloading.value
-                ? loadingIndcator(circleColor: fontGrey)
+                ? loadingIndicator(circleColor: greyColor)
                 : TextButton(
                     onPressed: () async {
                       controller.isloading(true);
@@ -33,7 +33,7 @@ class ShopSettings extends StatelessWidget {
                       // ignore: use_build_context_synchronously
                       VxToast.show(context, msg: "Shop updated");
                     },
-                    child: normalText(text: save, color: fontGreyDark))
+                    child: normalText(text: save, color: greyDark2))
           ],
         ),
         body: Padding(
@@ -59,20 +59,20 @@ class ShopSettings extends StatelessWidget {
                         fit: BoxFit.cover,
                       ).box.roundedFull.clip(Clip.antiAlias).make(),
             10.heightBox,
-            boldText(text: " About Shop", color: fontGrey, size: 18),
+            boldText(text: " About Shop", color: greyColor, size: 18),
             10.heightBox,
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  boldText(text: "Fullname: ", color: fontGrey, size: 14),
+                  boldText(text: "Fullname: ", color: greyColor, size: 14),
                   SizedBox(width: 8),
                   Expanded(
                       child: Text(
                     controller.shopfullnameController.text,
                     style: TextStyle(
-                      color: fontGrey,
+                      color: greyColor,
                       fontWeight: FontWeight.bold,
                       fontSize: 14,
                     ),
@@ -87,13 +87,13 @@ class ShopSettings extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    boldText(text: "Email: ", color: fontGrey, size: 14),
+                    boldText(text: "Email: ", color: greyColor, size: 14),
                     SizedBox(width: 8),
                     Expanded(
                       child: Text(
                         controller.emailController.text,
                         style: TextStyle(
-                          color: fontGrey,
+                          color: greyColor,
                           fontWeight: FontWeight.bold,
                           fontSize: 14,
                         ),
@@ -108,13 +108,13 @@ class ShopSettings extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    boldText(text: "Address: ", color: fontGrey, size: 14),
+                    boldText(text: "Address: ", color: greyColor, size: 14),
                     SizedBox(width: 8),
                     Expanded(
                       child: Text(
                         controller.shopAddressController.text,
                         style: TextStyle(
-                          color: fontGrey,
+                          color: greyColor,
                           fontWeight: FontWeight.bold,
                           fontSize: 14,
                         ),

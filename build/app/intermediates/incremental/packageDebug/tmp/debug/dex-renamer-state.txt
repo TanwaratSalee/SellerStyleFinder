@@ -1,0 +1,10 @@
+#Mon Apr 15 22:04:17 ICT 2024
+base.0=/Users/thanwarat/Desktop/finalproject_flutter_seller_edit/build/app/intermediates/dex/debug/mergeDexDebug/classes.dex
+base.1=/Users/thanwarat/Desktop/finalproject_flutter_seller_edit/build/app/intermediates/dex/debug/mergeDexDebug/classes2.dex
+base.2=/Users/thanwarat/Desktop/finalproject_flutter_seller_edit/build/app/intermediates/dex/debug/mergeDexDebug/classes3.dex
+path.0=classes.dex
+path.1=classes2.dex
+path.2=classes3.dex
+renamed.0=classes.dex
+renamed.1=classes2.dex
+renamed.2=classes3.dex

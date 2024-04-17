@@ -17,3 +17,4 @@ class StoreServices {
     return firestore.collection(productsCollection).where('vendor_id', isEqualTo: uid).snapshots();
   }
 }
+

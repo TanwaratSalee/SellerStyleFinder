@@ -1,13 +1,23 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:seller_finalproject/const/const.dart';
+import 'package:seller_finalproject/const/styles.dart';
 import 'package:seller_finalproject/controllers/loading_Indcator.dart';
 import 'package:seller_finalproject/controllers/products_controller.dart';
 import 'package:seller_finalproject/views/products_screen/component/product_dropdown.dart';
 import 'package:seller_finalproject/views/products_screen/component/product_images.dart';
 import 'package:seller_finalproject/views/widgets/custom_textfield.dart';
 import 'package:seller_finalproject/views/widgets/text_style.dart';
+
+import 'package:get/get.dart';
+import 'package:seller_finalproject/controllers/products_controller.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:seller_finalproject/controllers/products_controller.dart';
+import 'package:flutter/material.dart';
+
+import 'package:get/get.dart';
+import 'package:seller_finalproject/controllers/products_controller.dart';
+import 'package:flutter/material.dart';
 
 class AddProduct extends StatelessWidget {
   const AddProduct({super.key});
@@ -16,290 +26,192 @@ class AddProduct extends StatelessWidget {
   Widget build(BuildContext context) {
     var controller = Get.find<ProductsController>();
 
+    final List<Map<String, dynamic>> allColors = [
+      {'name': 'Black', 'color': Colors.black},
+      {'name': 'Grey', 'color': Colors.grey},
+      {'name': 'White', 'color': Colors.white},
+      {'name': 'Purple', 'color': Colors.purple},
+      {'name': 'Deep Purple', 'color': Colors.deepPurple},
+      {'name': 'Blue', 'color': Colors.lightBlue},
+      {'name': 'Blue', 'color': Color.fromARGB(255, 36, 135, 216)},
+      {'name': 'Blue Grey', 'color': Colors.blueGrey},
+      {'name': 'Green', 'color': Color.fromARGB(255, 17, 82, 50)},
+      {'name': 'Green', 'color': Colors.green},
+      {'name': 'Green Accent', 'color': Colors.greenAccent},
+      {'name': 'Yellow', 'color': Colors.yellow},
+      {'name': 'Orange', 'color': Colors.orange},
+      {'name': 'Red', 'color': Colors.red},
+      {'name': 'Red Accent', 'color': Color.fromARGB(255, 237, 101, 146)},
+    ];
+
     return Obx(
       () => Scaffold(
+        backgroundColor: whiteColor,
         appBar: AppBar(
-          title: boldText(text: "Add Product", color: fontGreyDark, size: 25.0),
+          title: Text("Add Product").text.size(24).fontFamily(medium).make(),
           actions: [
             controller.isloading.value
-                ? loadingIndcator(circleColor: fontLightGrey)
+                ? loadingIndicator(circleColor: primaryApp)
                 : TextButton(
                     onPressed: () async {
-                      controller.isloading(true);
-                      await controller.uploadImages();
-                      await controller.uploadProduct(context);
-                      Get.back();
+                      if (controller.isDataComplete()) {
+                        controller.isloading(true);
+                        await controller.uploadImages();
+                        await controller.uploadProduct(context);
+                        controller
+                            .resetForm(); // Reset form fields after the upload
+                        Get.back(); // Optionally close the screen if needed
+                        controller.isloading(false);
+                        VxToast.show(context,
+                            msg: "Product saved successfully.");
+                      } else {
+                        VxToast.show(context,
+                            msg: "Please fill in all required fields.");
+                      }
                     },
-                    child: boldText(text: save, color: fontGrey))
+                    child: Text(save).text.fontFamily(medium).size(18).make())
           ],
         ),
         body: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(18.0),
           child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                boldText(text: "Add your images product ", color: fontGrey),
-                20.heightBox,
-                Obx(() => Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: List.generate(
-                        1,
-                        (index) => controller.pImagesList[index] != null
-                            ? Image.file(
-                                controller.pImagesList[index],
-                                width: 100,
-                              ).onTap(() {
-                                controller.pickImage(index, context);
-                              })
-                            : InkWell(
-                                onTap: () {
-                                  controller.pickImage(index, context);
-                                },
-                                child: Container(
-                                  width: 100,
-                                  height: 100,
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey[
-                                        200], // สามารถปรับเป็นสีที่ต้องการ
-                                    border: Border.all(color: Colors.grey),
-                                    borderRadius: BorderRadius.circular(
-                                        8), // ปรับให้เข้ากับสไตล์ UI ของคุณ
-                                  ),
-                                  child: Icon(
-                                    Icons
-                                        .camera_alt, // เปลี่ยนเป็นไอคอนกล้องถ่ายรูป
-                                    size: 50, // ปรับขนาดไอคอนตามความต้องการ
-                                    color:
-                                        Colors.grey, // สามารถปรับเปลี่ยนสีไอคอน
-                                  ),
-                                ),
-                              ),
+                Text("Choose product images")
+                    .text
+                    .size(16)
+                    .color(greyDark1)
+                    .fontFamily(medium)
+                    .make(),
+                15.heightBox,
+                Obx(
+                  () => Column(
+                    mainAxisAlignment: MainAxisAlignment
+                        .spaceAround, // This ensures space around rows
+                    children: List.generate(
+                      3,
+                      (row) => Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 7.0), // Adds space around each row
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment
+                              .spaceAround, // This ensures space around each image in a row
+                          children: List.generate(
+                            3,
+                            (col) {
+                              int index = row * 3 + col;
+                              return Padding(
+                                padding: const EdgeInsets.all(
+                                    2.0), // Adds space around each image
+                                child: controller.pImagesList[index] != null
+                                    ? Image.file(
+                                        controller.pImagesList[index],
+                                        width: 100,
+                                      ).onTap(() {
+                                        controller.pickImage(index, context);
+                                      })
+                                    : productImages(label: "${index + 1}")
+                                        .onTap(() {
+                                        controller.pickImage(index, context);
+                                      }),
+                              );
+                            },
+                          ),
+                        ),
                       ),
-                    )),
-
-                30.heightBox,
+                    ),
+                  ),
+                ),
+                25.heightBox,
                 customTextField(
-                    hint: "eg. BMW",
-                    label: "Product name",
-                    controller: controller.pnameController),
-                30.heightBox,
+                  hint: "Name of product",
+                  label: "Name of product",
+                  controller: controller.pnameController,
+                ),
+                15.heightBox,
                 customTextField(
-                    hint: "eg. about",
+                    hint: "About this product",
                     label: "About product",
                     controller: controller.pabproductController),
-                30.heightBox,
+                15.heightBox,
                 customTextField(
-                    hint: "eg. Nice Product",
+                    hint: "Description this Product",
                     label: "Description",
                     isDesc: true,
                     controller: controller.pdescController),
-                30.heightBox,
-                productDropdown("Collection", controller.collectionsList,
-                    controller.collectionsvalue, controller),
-                30.heightBox,
-                productDropdown("Type of product", controller.typepfproductList,
-                    controller.typeofproductvalue, controller),
-                30.heightBox,
-                boldText(text: "Sex", color: fontGrey, size: 18),
-                Obx(() => Wrap(
-                      spacing: 8.0,
-                      runSpacing: 8.0,
-                      children: controller.genderList.map((gender) {
-                        return ChoiceChip(
-                          label: Text(gender),
-                          selected: controller.selectedGender.value == gender,
-                          onSelected: (selected) {
-                            if (selected) {
-                              controller.selectedGender.value = gender;
-                            }
-                          },
-                        );
-                      }).toList(),
-                    )),
-                30.heightBox,
-                boldText(text: "Size", color: fontGrey, size: 18),
-                Obx(() => Wrap(
-                      spacing: 8.0,
-                      runSpacing: 8.0,
-                      children: controller.sizesList.map((size) {
-                        return ChoiceChip(
-                          label: Text(size),
-                          selected: controller.selectedSize.value == size,
-                          onSelected: (selected) {
-                            if (selected) {
-                              controller.selectedSize.value = size;
-                            }
-                          },
-                        );
-                      }).toList(),
-                    )),
-                30.heightBox,
-                boldText(text: "Skin Color", color: fontGrey, size: 18),
-                10.heightBox,
-                Obx(() => Wrap(
-                      spacing: 8.0,
-                      runSpacing: 8.0,
-                      children: controller.skinColorList.map((skinColor) {
-                        return GestureDetector(
-                          onTap: () => controller.selectedSkinColor.value =
-                              skinColor['name'],
-                          child: Container(
-                            width: 40,
-                            height: 40,
-                            decoration: BoxDecoration(
-                              color: skinColor['color'],
-                              border: Border.all(
-                                color: controller.selectedSkinColor.value ==
-                                        skinColor['name']
-                                    ? Colors
-                                        .blue // Highlight color when selected
-                                    : Colors.transparent,
-                              ),
-                              borderRadius:
-                                  BorderRadius.circular(8), // Rounded corners
-                            ),
-                          ),
-                        );
-                      }).toList(),
-                    )),
-                30.heightBox,
-                boldText(text: "Other Color", color: fontGrey, size: 18),
-                10.heightBox,
-                Obx(() => Wrap(
-                      spacing: 8.0,
-                      runSpacing: 8.0,
-                      children:
-                          controller.clothingColorList.map((clothingColor) {
-                        return GestureDetector(
-                          onTap: () => controller.selectedClothingColor.value =
-                              clothingColor['name'],
-                          child: Container(
-                            width: 35,
-                            height: 35,
-                            decoration: BoxDecoration(
-                              color: clothingColor['color'],
-                              border: Border.all(
-                                color: controller.selectedClothingColor.value ==
-                                        clothingColor['name']
-                                    ? Colors.blue
-                                    : Colors.transparent,
-                                width: 2,
-                              ),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                          ),
-                        );
-                      }).toList(),
-                    )),
-                30.heightBox,
-                boldText(text: "Similor ", color: fontGrey, size: 18),
-                10.heightBox,
-                Obx(() => Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: List.generate(
-                        1,
-                        (index) => controller.pImagesList[index] != null
-                            ? Image.file(
-                                controller.pImagesList[index],
-                                width: 100,
-                              ).onTap(() {
-                                controller.pickImage(index, context);
-                              })
-                            : InkWell(
-                                onTap: () {
-                                  controller.pickImage(index, context);
-                                },
-                                child: Container(
-                                  width: 100,
-                                  height: 100,
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey[200],
-                                    border: Border.all(color: Colors.grey),
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  child: Icon(
-                                    Icons.add,
-                                    size: 50,
-                                    color: Colors.grey,
-                                  ),
-                                ),
-                              ),
-                      ),
-                    )),
-
-                10.heightBox,
-                // normalText(
-                //     text: "First image will be your sidplay image",
-                //     color: fontGrey),
-                25.heightBox,
-                // boldText(
-                //     text: "Choose product colors", color: fontGrey, size: 18),
-                // 10.heightBox,
-                // Obx(() => Wrap(
-                //       spacing: 8.0,
-                //       runSpacing: 8.0,
-                //       children: List.generate(
-                //           controller.clothingColorList.length, (index) {
-                //         var clothingColor = controller.clothingColorList[index];
-                //         return GestureDetector(
-                //           onTap: () =>
-                //               controller.selectedColorIndex.value = index,
-                //           child: Container(
-                //             width: 40,
-                //             height: 40,
-                //             decoration: BoxDecoration(
-                //               color: clothingColor['color'],
-                //               shape: BoxShape.circle, // ปรับเป็นรูปวงกลม
-                //               border: Border.all(
-                //                 color:
-                //                     controller.selectedColorIndex.value == index
-                //                         ? Colors.blue
-                //                         : Colors.transparent,
-                //                 width: 2,
-                //               ),
-                //             ),
-                //           ),
-                //         );
-                //       }),
-                //     )),
-                30.heightBox,
-
-                boldText(text: "Mix and Match", color: fontGrey, size: 18),
-
-                Obx(() => Wrap(
-                      spacing: 8.0,
-                      runSpacing: 8.0,
-                      children: controller.mixAndMatchOptions.map((option) {
-                        return ChoiceChip(
-                          label: Text(option),
-                          selected:
-                              controller.selectedMixAndMatch.value == option,
-                          onSelected: (bool selected) {
-                            if (selected) {
-                              controller.selectedMixAndMatch.value = option;
-                            }
-                          },
-                        );
-                      }).toList(),
-                    )),
-                10.heightBox,
-
-                30.heightBox,
-                productDropdown("Subcollection", controller.subcollectionList,
-                    controller.subcollectionvalue, controller),
-                30.heightBox,
+                15.heightBox,
                 customTextField(
-                    hint: "eg. 20",
-                    label: "Quantity",
-                    controller: controller.pquantityController),
-                30.heightBox,
+                    hint: "Size & Fit",
+                    label: "Size & Fit",
+                    isDesc: true,
+                    controller: controller.psizeController),
+                15.heightBox,
                 customTextField(
-                    hint: "eg. 10,000.00",
+                    hint: "15,000.00 Bath",
                     label: "Price",
                     controller: controller.ppriceController),
-                30.heightBox,
+                15.heightBox,
+                customTextField(
+                    hint: "20",
+                    label: "Quantity",
+                    controller: controller.pquantityController),
+                15.heightBox,
+                productDropdown("Collection", controller.collectionsList,
+                    controller.collectionsvalue, controller),
+                15.heightBox,
+                productDropdown("Subcollection", controller.subcollectionList,
+                    controller.subcollectionvalue, controller),
+                20.heightBox,
+                Text("Choose product colors")
+                    .text
+                    .size(16)
+                    .color(greyDark1)
+                    .fontFamily(medium)
+                    .make(),
+                15.heightBox,
+                Obx(
+                  () => Wrap(
+                    spacing: 6.0,
+                    runSpacing: 6.0,
+                    children: List.generate(
+                      allColors.length,
+                      (index) => Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          Container(
+                            width: 50,
+                            height: 50,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(color: greyColor),
+                              color: allColors[index]['color'] as Color,
+                            ),
+                            child: InkWell(
+                              onTap: () {
+                                final selected = controller.selectedColorIndexes
+                                    .contains(index);
+                                if (selected) {
+                                  controller.removeSelectedColorIndex(index);
+                                } else {
+                                  controller.addSelectedColorIndex(index);
+                                }
+                              },
+                            ),
+                          ).box.margin(EdgeInsets.all(8)).make(),
+                          if (controller.selectedColorIndexes.contains(index))
+                            Icon(
+                              Icons.done,
+                              color: allColors[index]['color'] == Colors.white
+                                  ? blackColor
+                                  : whiteColor,
+                            ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),

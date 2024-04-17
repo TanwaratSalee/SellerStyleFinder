@@ -31,7 +31,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       backgroundColor: whiteColor,
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: boldText(text: settings, color: fontBlack, size: 25.0),
+        title: boldText(text: settings, color: blackColor, size: 25.0),
         actions: [
           IconButton(
             onPressed: () {
@@ -46,7 +46,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               await Get.find<AuthController>().signoutMethod(context);
               Get.offAll(() => const LoginScreen());
             },
-            child: normalText(text: logout, color: fontBlack),
+            child: normalText(text: logout, color: blackColor),
           ),
         ],
       ),
@@ -54,7 +54,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         future: StoreServices.getProfile(currentUser!.uid),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) {
-            return loadingIndcator(circleColor: fontLightGrey);
+            return loadingIndicator(circleColor: thinGrey01);
           } else {
             controller.snapshotData = snapshot.data!.docs[0];
 
@@ -75,10 +75,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ).box.roundedFull.clip(Clip.antiAlias).make(),
                     title: boldText(
                         text: "${controller.snapshotData['vendor_name']}",
-                        color: fontBlack),
+                        color: blackColor),
                     subtitle: normalText(
                         text: "${controller.snapshotData['email']}",
-                        color: fontGreyDark),
+                        color: greyDark2),
                   ),
                   const Divider(),
                   10.heightBox,
@@ -109,7 +109,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             children: [
                               Icon(
                                 profileButtonsIcons[index],
-                                color: fontGreyDark,
+                                color: greyDark2,
                               ),
                               if (index == 1)
                                 NotificationBadge(
@@ -123,7 +123,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                           title: normalText(
                             text: profileButtonsTitles[index],
-                            color: fontGreyDark,
+                            color: greyDark2,
                           ),
                         ),
                       ),

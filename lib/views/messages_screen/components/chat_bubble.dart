@@ -9,7 +9,7 @@ Widget chatBubble() {
       padding: const EdgeInsets.all(12),
       margin: const EdgeInsets.only(bottom: 8),
       decoration: const BoxDecoration(
-        // color: data['uid'] == currentUser!.uid ? red : fontBlack,
+        // color: data['uid'] == currentUser!.uid ? red : blackColor,
         color: primaryApp,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(20),
