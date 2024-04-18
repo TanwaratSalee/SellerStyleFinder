@@ -129,11 +129,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                                       if (value == 'edit') {
                                         //
                                       } else if (value == 'delete') {
-<<<<<<< HEAD
                                         controller.removeProduct(docId);
-=======
-                                        // controller.removeProduct();
->>>>>>> d066e71 (mixandmatchselect)
                                       }
                                     },
                                     itemBuilder: (BuildContext context) =>
