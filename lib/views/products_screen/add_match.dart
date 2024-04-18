@@ -39,7 +39,6 @@ class AddMatchProduct extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                MainAxisAlignment.center
                 Row(
                   children: [
                     ElevatedButton(
