@@ -1,170 +1,221 @@
-// import 'dart:io';
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:firebase_storage/firebase_storage.dart';
-// import 'package:flutter/services.dart';
-// import 'package:get/get.dart';
-// import 'package:image_picker/image_picker.dart';
-// import 'package:seller_finalproject/const/const.dart';
-// import 'package:seller_finalproject/controllers/home_controller.dart';
-// import 'package:seller_finalproject/models/collection_model.dart';
-// import 'package:path/path.dart';
+import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:seller_finalproject/const/const.dart';
+import 'package:seller_finalproject/controllers/loading_Indcator.dart';
+import 'package:seller_finalproject/controllers/orders_controller.dart';
+import 'package:seller_finalproject/services/store_services.dart';
+import 'package:seller_finalproject/views/orders_screen/order_details.dart';
+import 'package:seller_finalproject/views/widgets/appbar_widget.dart';
+import 'package:seller_finalproject/views/widgets/text_style.dart';
+import 'package:get/get.dart';
+// ignore: depend_on_referenced_packages
+import 'package:intl/intl.dart' as intl;
 
-// class ProductsController extends GetxController {
-//   var isloading = false.obs;
+class OrdersScreen extends StatelessWidget {
+  const OrdersScreen({Key? key});
 
-//   //text field controllers
+  @override
+  Widget build(BuildContext context) {
+    var controllers = Get.put(OrdersController());
 
-//   var pnameController = TextEditingController();
-//   var pabproductController = TextEditingController();
-//   var pdescController = TextEditingController();
-//   var psizeController = TextEditingController();
-//   var ppriceController = TextEditingController();
-//   var pquantityController = TextEditingController();
+    return DefaultTabController(
+      length: 6,
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Orders'),
+          bottom: const TabBar(
+            isScrollable: true,
+            tabs: [
+              Tab(
+                child: Row(
+                  children: [
+                    const Text('All '),
+                    Text('(10)'),
+                  ],
+                ),
+              ),
+              Tab(
+                child: Row(
+                  children: [
+                    const Text('Unpaid '),
+                    Text('(5)'),
+                  ],
+                ),
+              ),
+              Tab(
+                child: Row(
+                  children: [
+                    const Text('In Transit '),
+                    Text('(7)'),
+                  ],
+                ),
+              ),
+              Tab(
+                child: Row(
+                  children: [
+                    const Text('Awaiting Shipment '),
+                    Text('(3)'),
+                  ],
+                ),
+              ),
+              Tab(
+                child: Row(
+                  children: [
+                    const Text('Delivered '),
+                    Text('(15)'),
+                  ],
+                ),
+              ),
+              Tab(
+                child: Row(
+                  children: [
+                    const Text('Completed '),
+                    Text('(20)'),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        body: TabBarView(
+          children: [
+            // สินค้าของแท็บ All
+            StreamBuilder(
+                stream: StoreServices.getOrders(currentUser!.uid),
+                builder: (BuildContext context,
+                    AsyncSnapshot<QuerySnapshot> snapshot) {
+                  if (!snapshot.hasData) {
+                    return loadingIndicator();
+                  } else {
+                    var data = snapshot.data!.docs;
 
-//   var collectionsList = <String>[].obs;
-//   var typepfproductList = <String>[].obs;
-//   var subcollectionList = <String>[].obs;
-//   List<Collection> collection = [];
-//   var pImagesLinks = [];
-//   var pImagesList = RxList<dynamic>.generate(5, (index) => null);
-//   RxString selectedSize = ''.obs;
-//   List<String> sizesList = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
-//   RxString selectedGender = ''.obs;
-//   List<String> genderList = ['Male', 'Female', 'Other'];
-//   RxString selectedSkinColor = ''.obs;
-//   List<Map<String, dynamic>> skinColorList = [
-//     {'name': 'Light', 'color': Color.fromARGB(255, 223, 209, 209)},
-//     {'name': 'Medium', 'color': Colors.brown[200]},
-//     {'name': 'Medium', 'color': Colors.brown[200]},
-//     {'name': 'Dark', 'color': Colors.brown[800]},
-//     {'name': 'Unspecified', 'color': Colors.brown},
-//   ];
-//   RxString selectedClothingColor = ''.obs;
-//   List<Map<String, dynamic>> clothingColorList = [
-//     {'name': 'Red', 'color': Colors.black},
-//     {'name': 'Red', 'color': Colors.grey},
-//     {'name': 'Red', 'color': Colors.white},
-//     {'name': 'Red', 'color': Colors.purple},
-//     {'name': 'Red', 'color': Colors.deepPurple},
-//     {'name': 'Red', 'color': Colors.blue},
-//     {'name': 'Red', 'color': Colors.blueGrey},
-//     {'name': 'Red', 'color': Colors.green},
-//     {'name': 'Red', 'color': Colors.greenAccent},
-//     {'name': 'Blue', 'color': Colors.yellow},
-//     {'name': 'Green', 'color': Colors.amberAccent},
-//     {'name': 'Black', 'color': Colors.orange},
-//     {'name': 'Black', 'color': Colors.orangeAccent},
-//     {'name': 'Black', 'color': Colors.red},
-//     {'name': 'Black', 'color': Colors.redAccent},
-//   ];
-//   RxInt selectedColorIndex = (-1).obs;
-//   List<Map<String, dynamic>> clothingColorLists = [
-//     {'name': 'Red', 'color': Colors.red},
-//     {'name': 'Blue', 'color': Colors.blue},
-//   ];
-//   RxString selectedMixAndMatch = ''.obs;
-//   List<String> mixAndMatchOptions = ['Top', 'Lower', 'Not Specified'];
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ListView.builder(
+                        physics: const BouncingScrollPhysics(),
+                        itemCount: data.length,
+                        itemBuilder: (context, index) {
+                          // var time = data[index]['order_date'].toDate();
+                          // var productImage = data[index]
+                          //     ['assets/product.jpg']; // URL ของรูปภาพสินค้า
+                          // var productName =
+                          //     data[index]['product_name']; // ชื่อสินค้า
+                          // var productPrice =
+                          //     data[index]['product_price']; // ราคาสินค้า
+                          // var productQuantity =
+                          //     data[index]['product_quantity']; // จำนวนสินค้า
+                          // var totalPrice =
+                          //     data[index]['total_amount']; // ราคารวมทั้งหมด
 
-//   var collectionsvalue = ''.obs;
-//   var typeofproductvalue = ''.obs;
-//   var subcollectionvalue = ''.obs;
-//   // var selectedColorIndex = 0.obs;
-
-//   getCollection() async {
-//     var data =
-//         await rootBundle.loadString("lib/services/collection_model.json");
-//     var cat = collectionModelFromJson(data);
-//     collection = cat.collections;
-//   }
-
-//   populateCollectionList() {
-//     collectionsList.clear();
-
-//     for (var item in collection) {
-//       collectionsList.add(item.name);
-//     }
-//   }
-
-//   populateSubcollection(cat) {
-//     subcollectionList.clear();
-
-//     var data = collection.where((element) => element.name == cat).toList();
-
-//     for (var i = 0; i < data.first.subcollection.length; i++) {
-//       subcollectionList.add(data.first.subcollection[i]);
-//     }
-//   }
-
-//   pickImage(index, context) async {
-//     try {
-//       final img = await ImagePicker()
-//           .pickImage(source: ImageSource.gallery, imageQuality: 80);
-//       if (img == null) {
-//         return;
-//       } else {
-//         pImagesList[index] = File(img.path);
-//       }
-//     } catch (e) {
-//       VxToast.show(context, msg: e.toString());
-//     }
-//   }
-
-//   uploadImages() async {
-//     pImagesLinks.clear();
-//     for (var item in pImagesList) {
-//       if (item != null) {
-//         var filename = basename(item.path);
-//         var destination = 'images/vendors/${currentUser!.uid}/$filename';
-//         Reference ref = FirebaseStorage.instance.ref().child(destination);
-//         await ref.putFile(item);
-//         var n = await ref.getDownloadURL();
-//         pImagesLinks.add(n);
-//       }
-//     }
-//   }
-
-//   uploadProduct(context) async {
-//     var store = firestore.collection(productsCollection).doc();
-//     await store.set({
-//       'is_featured': false,
-//       'p_collection': collectionsvalue.value,
-//       'P_typeofproduct': typeofproductvalue.value,
-//       'p_subcollection': subcollectionvalue.value,
-//       'p_colors': FieldValue.arrayUnion([Colors.red.value, Colors.brown.value]),
-//       'p_imgs': FieldValue.arrayUnion(pImagesLinks),
-//       'p_wishlist': FieldValue.arrayUnion([]),
-//       'p_desc': pdescController.text,
-//       'p_name': pnameController.text,
-//       'p_aboutProduct': pabproductController.text,
-//       'p_size': psizeController.text,
-//       'p_price': ppriceController.text,
-//       'p_quantity': pquantityController.text,
-//       'p_seller': Get.find<HomeController>().username,
-//       'p_rating': "5.0",
-//       'vendor_id': currentUser!.uid,
-//       'featured_id': ''
-//     });
-//     isloading(false);
-
-//     VxToast.show(context, msg: "Product Update");
-//   }
-
-//   addFeatured(docId) async {
-//     await firestore.collection(productsCollection).doc(docId).set({
-//       'featured_id': currentUser!.uid,
-//       'is_featured': true,
-//     }, SetOptions(merge: true));
-//   }
-
-//   removeFeatured(docId) async {
-//     await firestore.collection(productsCollection).doc(docId).set({
-//       'featured_id': '',
-//       'is_featured': false,
-//     }, SetOptions(merge: true));
-//   }
-
-//   removeProduct(docId) async {
-//     await firestore.collection(productsCollection).doc(docId).delete();
-//   }
-// }
-
+                          return Container(
+                            padding: const EdgeInsets.all(8.0),
+                            margin: const EdgeInsets.only(bottom: 8.0),
+                            decoration: BoxDecoration(
+                              color: thinGrey01,
+                              borderRadius: BorderRadius.circular(12.0),
+                            ),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                // ส่วนแสดงรูปภาพสินค้า
+                                Container(
+                                  width: 100,
+                                  height: 100,
+                                  // decoration: BoxDecoration(
+                                  //   color: productImage != null
+                                  //       ? Colors.transparent
+                                  //       : Colors.grey, // สีเทาเมื่อไม่มีรูปภาพ
+                                  //   borderRadius: BorderRadius.circular(12.0),
+                                  // ),
+                                  //   child: productImage != null
+                                  //       ? Image.network(
+                                  //           productImage,
+                                  //           fit: BoxFit.cover,
+                                  //         )
+                                  //       : Icon(Icons.image,
+                                  //           color: Colors.white,
+                                  //           size:
+                                  //               50), // ไอคอนรูปภาพเมื่อไม่มีรูปภาพ
+                                ),
+                                const SizedBox(width: 10),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      // ส่วนแสดงรหัสออร์เดอร์
+                                      Text(
+                                        "${data[index]['order_code']}",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: greyDark2,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 5),
+                                      // ส่วนแสดงวันที่
+                                      Row(
+                                        children: [
+                                          Icon(Icons.calendar_month,
+                                              color: greyDark2),
+                                          const SizedBox(width: 5),
+                                          // Text(
+                                          //   intl.DateFormat()
+                                          //       .add_yMd()
+                                          //       .format(time),
+                                          //   style: TextStyle(color: greyColor),
+                                          // ),
+                                        ],
+                                      ),
+                                      const SizedBox(height: 5),
+                                      // ส่วนแสดงสถานะการชำระเงิน
+                                      Row(
+                                        children: [
+                                          Icon(Icons.payment,
+                                              color: greyDark2),
+                                          const SizedBox(width: 5),
+                                          Text(unpaid,
+                                              style: TextStyle(color: redColor)),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(width: 10),
+                                // ส่วนแสดงราคารวม
+                                // Text(
+                                //   "$totalPrice Bath",
+                                //   style: TextStyle(
+                                //     fontWeight: FontWeight.bold,
+                                //     color: blackColor,
+                                //     fontSize: 16.0,
+                                //   ),
+                                // ),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                    );
+                  }
+                }),
+            // สินค้าของแท็บ Unpaid
+            // TODO: เพิ่มโค้ดสำหรับแสดงสินค้าของแท็บ Unpaid ตรงนี้
+            Container(),
+            // สินค้าของแท็บ In Transit
+            // TODO: เพิ่มโค้ดสำหรับแสดงสินค้าของแท็บ In Transit ตรงนี้
+            Container(),
+            // สินค้าของแท็บ Awaiting Shipment
+            // TODO: เพิ่มโค้ดสำหรับแสดงสินค้าของแท็บ Awaiting Shipment ตรงนี้
+            Container(),
+            // สินค้าของแท็บ Delivered
+            // TODO: เพิ่มโค้ดสำหรับแสดงสินค้าของแท็บ Delivered ตรงนี้
+            Container(),
+            // สินค้าของแท็บ Completed
+            // TODO: เพิ่มโค้ดสำหรับแสดงสินค้าของแท็บ Completed ตรงนี้
+            Container(),
+          ],
+        ),
+      ),
+    );
+  }
+}
