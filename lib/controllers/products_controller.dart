@@ -32,10 +32,8 @@ class ProductsController extends GetxController {
   var subcollectionvalue = ''.obs;
   var selectedColorIndex = 0.obs;
 
-  final RxSet<int> selectedColorIndexes = <int>{}.obs;
-
   List<String> sizesList = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
-  RxString selectedSizes = ''.obs;
+  final selectedSizes = <String>[].obs;
   List<String> genderList = [ 'all','male', 'female'];
   RxString selectedGender = ''.obs;
 
@@ -53,6 +51,7 @@ class ProductsController extends GetxController {
 ];
 
 
+  final selectedColorIndexes = <int>[].obs;
    final List<Map<String, dynamic>> allColors = [
     {'name': 'Black', 'color': Colors.black},
     {'name': 'Grey', 'color': Colors.grey},
@@ -137,7 +136,7 @@ class ProductsController extends GetxController {
       'p_collection': collectionsvalue.value,
       'p_subcollection': subcollectionvalue.value,
       'p_sex': selectedGender.value,
-      'p_productsize':selectedSizes.value,
+      'p_productsize':selectedSizes,
       'p_part':selectedMixandmatch.value,
       'p_colors': selectedColorIndexes.map((index) => allColors[index]['color'].value).toList(),
       'p_imgs': FieldValue.arrayUnion(pImagesLinks),
@@ -151,7 +150,8 @@ class ProductsController extends GetxController {
       'p_seller': Get.find<HomeController>().username,
       'p_rating': "5.0",
       'vendor_id': currentUser!.uid,
-      'featured_id': ''
+      'featured_id': '',
+      'p_mixmatch': ''
     });
     isloading(false);
     VxToast.show(context, msg: "Product successfully uploaded.");
@@ -179,32 +179,6 @@ class ProductsController extends GetxController {
 
   removeProduct(docId) async {
     await firestore.collection(productsCollection).doc(docId).delete();
-  }
-
-  void addSelectedColorIndex(int index) {
-    selectedColorIndexes.add(index);
-    updateSelectedColorsInFirebase();
-  }
-
-  void removeSelectedColorIndex(int index) {
-    selectedColorIndexes.remove(index);
-    updateSelectedColorsInFirebase();
-  }
-
-  void updateSelectedColorsInFirebase() async {
-  try {
-    // Create a list of selected colors from their indices
-    var selectedColorsValues = selectedColorIndexes.map((index) => allColors[index]['color'] as Color).toList();
-
-    // Your Firebase operation here...
-  } catch (e) {
-    print("Error: $e");
-  }
-}
-
-
-  bool isSelectedColorIndex(int index) {
-    return selectedColorIndexes.contains(index);
   }
 
   bool isDataComplete() {

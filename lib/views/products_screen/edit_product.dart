@@ -173,21 +173,25 @@ class EditProduct extends StatelessWidget {
                     .color(greyDark1)
                     .fontFamily(medium)
                     .make(),
-                Obx(() => Wrap(
-                      spacing: 8.0,
-                      runSpacing: 8.0,
-                      children: controller.sizesList.map((size) {
-                        return ChoiceChip(
-                          label: Text(size),
-                          selected: controller.selectedSizes.value == size,
-                          onSelected: (selected) {
-                            if (selected) {
-                              controller.selectedSizes.value = size;
-                            }
-                          },
-                        );
-                      }).toList(),
-                    )),
+                        Obx(() => Wrap(
+                            spacing: 8.0,
+                            runSpacing: 8.0,
+                            children: controller.sizesList.map((size) {
+                                return ChoiceChip(
+                                    label: Text(size),
+                                    selected: controller.selectedSizes.contains(size),
+                                    onSelected: (selected) {
+                                        if (selected) {
+                                            if (!controller.selectedSizes.contains(size)) {
+                                                controller.selectedSizes.add(size);
+                                            }
+                                        } else {
+                                            controller.selectedSizes.remove(size);
+                                        }
+                                    },
+                                );
+                            }).toList(),
+                        )),
                 10.heightBox,
                 Text("Choose product colors")
                     .text
@@ -216,28 +220,26 @@ class EditProduct extends StatelessWidget {
                             ),
                             child: InkWell(
                               onTap: () {
-                                final selected = controller.selectedColorIndexes
-                                    .contains(index);
+                                final selected = controller.selectedColorIndexes.contains(index);
                                 if (selected) {
-                                  controller.removeSelectedColorIndex(index);
+
                                 } else {
-                                  controller.addSelectedColorIndex(index);
+
                                 }
                               },
                             ),
                           )
-                              .box
-                              .margin(EdgeInsets.symmetric(
-                                  horizontal: 8, vertical: 2))
-                              .make(),
-                          if (controller.selectedColorIndexes.contains(index))
-                            Icon(
-                              Icons.done,
-                              color: controller.allColors[index]['color'] ==
-                                      Colors.white
-                                  ? blackColor
-                                  : whiteColor,
-                            ),
+                          .box
+                          .margin(EdgeInsets.symmetric(
+                              horizontal: 8, vertical: 2))
+                          .make(),
+                        if (controller.selectedColorIndexes.contains(index))
+                          Icon(
+                            Icons.done,
+                            color: controller.allColors[index]['color'] == Colors.white
+                                ? blackColor
+                                : whiteColor,
+                          ),
                         ],
                       ),
                     ),

@@ -124,9 +124,9 @@ class AddMatchProduct extends StatelessWidget {
                                 final selected = controller.selectedColorIndexes
                                     .contains(index);
                                 if (selected) {
-                                  controller.removeSelectedColorIndex(index);
+
                                 } else {
-                                  controller.addSelectedColorIndex(index);
+
                                 }
                               },
                             ),

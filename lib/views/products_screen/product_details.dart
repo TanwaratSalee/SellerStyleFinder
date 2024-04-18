@@ -100,6 +100,15 @@ class ProductDetails extends StatelessWidget {
                       ],
                     ).box.padding(const EdgeInsets.all(8)).make(),
 
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: 100,
+                          child: boldText(text: "Size : ", color: greyColor),
+                        ),
+                        normalText(text: "${data['p_productsize'].join(', ')}", color: greyColor),
+                      ],
+                    ).box.padding(const EdgeInsets.all(8)).make(),
                     const Divider(),
 
                     10.heightBox,
