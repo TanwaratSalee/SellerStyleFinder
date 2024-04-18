@@ -25,25 +25,6 @@ class AddProduct extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var controller = Get.find<ProductsController>();
-
-    final List<Map<String, dynamic>> allColors = [
-      {'name': 'Black', 'color': Colors.black},
-      {'name': 'Grey', 'color': Colors.grey},
-      {'name': 'White', 'color': Colors.white},
-      {'name': 'Purple', 'color': Colors.purple},
-      {'name': 'Deep Purple', 'color': Colors.deepPurple},
-      {'name': 'Blue', 'color': Colors.lightBlue},
-      {'name': 'Blue', 'color': Color.fromARGB(255, 36, 135, 216)},
-      {'name': 'Blue Grey', 'color': Colors.blueGrey},
-      {'name': 'Green', 'color': Color.fromARGB(255, 17, 82, 50)},
-      {'name': 'Green', 'color': Colors.green},
-      {'name': 'Green Accent', 'color': Colors.greenAccent},
-      {'name': 'Yellow', 'color': Colors.yellow},
-      {'name': 'Orange', 'color': Colors.orange},
-      {'name': 'Red', 'color': Colors.red},
-      {'name': 'Red Accent', 'color': Color.fromARGB(255, 237, 101, 146)},
-    ];
-
     return Obx(
       () => Scaffold(
         backgroundColor: whiteColor,
@@ -161,9 +142,64 @@ class AddProduct extends StatelessWidget {
                 productDropdown("Collection", controller.collectionsList,
                     controller.collectionsvalue, controller),
                 15.heightBox,
-                productDropdown("Subcollection", controller.subcollectionList,
+                productDropdown("Type of product", controller.subcollectionList,
                     controller.subcollectionvalue, controller),
                 20.heightBox,
+                Text("Suitable for gender")
+                    .text
+                    .size(16)
+                    .color(greyDark1)
+                    .fontFamily(medium)
+                    .make(),
+                    10.heightBox,
+                Obx(() => Wrap(
+                      spacing: 8.0,
+                      runSpacing: 8.0,
+                      children: controller.genderList.map((gender) {
+                        return ChoiceChip(
+                          label: Text(
+                            gender,
+                            style: TextStyle(
+                              color: controller.selectedGender.value == gender
+                                  ? whiteColor
+                                  : greyDark1,
+                            ),
+                          ).text.size(18).fontFamily(regular).make(),
+                          selected: controller.selectedGender.value == gender,
+                          onSelected: (selected) {
+                            if (selected) {
+                              controller.selectedGender.value = gender;
+                            }
+                          },
+                          selectedColor: primaryApp, 
+                          backgroundColor: thinGrey0, 
+                        );
+                      }).toList(),
+                    )),
+                10.heightBox,
+                Text("Size of product")
+                    .text
+                    .size(16)
+                    .color(greyDark1)
+                    .fontFamily(medium)
+                    .make(),
+                Obx(() => Wrap(
+                      spacing: 8.0,
+                      runSpacing: 8.0,
+                      children: controller.sizesList.map((size) {
+                        return ChoiceChip(
+                          label: Text(size),
+                          selected: controller.selectedSize.value == size,
+                          onSelected: (selected) {
+                            if (selected) {
+                              controller.selectedSize.value = size;
+                            }
+                          },
+                        );
+                      }).toList(),
+                    )),
+                
+                10.heightBox,
                 Text("Choose product colors")
                     .text
                     .size(16)
@@ -176,7 +212,7 @@ class AddProduct extends StatelessWidget {
                     spacing: 6.0,
                     runSpacing: 6.0,
                     children: List.generate(
-                      allColors.length,
+                      controller.allColors.length,
                       (index) => Stack(
                         alignment: Alignment.center,
                         children: [
@@ -186,7 +222,8 @@ class AddProduct extends StatelessWidget {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8),
                               border: Border.all(color: greyColor),
-                              color: allColors[index]['color'] as Color,
+                              color:
+                                  controller.allColors[index]['color'] as Color,
                             ),
                             child: InkWell(
                               onTap: () {
@@ -199,11 +236,16 @@ class AddProduct extends StatelessWidget {
                                 }
                               },
                             ),
-                          ).box.margin(EdgeInsets.all(8)).make(),
+                          )
+                              .box
+                              .margin(EdgeInsets.symmetric(
+                                  horizontal: 8, vertical: 2))
+                              .make(),
                           if (controller.selectedColorIndexes.contains(index))
                             Icon(
                               Icons.done,
-                              color: allColors[index]['color'] == Colors.white
+                              color: controller.allColors[index]['color'] ==
+                                      Colors.white
                                   ? blackColor
                                   : whiteColor,
                             ),

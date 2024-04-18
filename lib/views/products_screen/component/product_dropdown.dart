@@ -2,7 +2,6 @@ import 'package:get/get.dart';
 import 'package:seller_finalproject/const/const.dart';
 import 'package:seller_finalproject/controllers/products_controller.dart';
 import 'package:seller_finalproject/controllers/profile_controller.dart';
-import 'package:seller_finalproject/views/widgets/text_style.dart';
 
 Widget productDropdown(hint, List<String> list, dropvalue, ProductsController controller) {
   return Obx(
@@ -25,6 +24,6 @@ Widget productDropdown(hint, List<String> list, dropvalue, ProductsController co
           dropvalue.value = newValue.toString();
         },
       ),
-    ).box.color(backGround).padding(const EdgeInsets.symmetric(horizontal: 6, vertical: 6)).border(color: thinGrey01).roundedSM.make(),
+    ).box.color(thinGrey0).padding(const EdgeInsets.symmetric(horizontal: 8, vertical: 6)).border(color: thinGrey01).roundedSM.make(),
   );
 }

@@ -20,6 +20,7 @@ class ProductsController extends GetxController {
   var psizeController = TextEditingController();
   var ppriceController = TextEditingController();
   var pquantityController = TextEditingController();
+  var explainController = TextEditingController();
 
   var collectionsList = <String>[].obs;
   var subcollectionList = <String>[].obs;
@@ -33,6 +34,20 @@ class ProductsController extends GetxController {
 
   final RxSet<int> selectedColorIndexes = <int>{}.obs;
 
+  List<String> sizesList = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
+  RxString selectedGender = ''.obs;
+  List<String> genderList = [ 'All','Male', 'Female'];
+  RxString selectedSize = ''.obs;
+
+  RxString selectedSkinColor = ''.obs;
+  List<Map<String, dynamic>> skinColorList = [
+  {'name': 'Light', 'color': Color(0xFFFFDBAC)},   
+  {'name': 'Medium', 'color': Color(0xFFE5A073)},  
+  {'name': 'Medium', 'color': Color(0xFFCD8C5C)},  
+  {'name': 'Dark', 'color': Color(0xFF5C3836)},    
+];
+
+
    final List<Map<String, dynamic>> allColors = [
     {'name': 'Black', 'color': Colors.black},
     {'name': 'Grey', 'color': Colors.grey},
@@ -41,7 +56,7 @@ class ProductsController extends GetxController {
     {'name': 'Deep Purple', 'color': Colors.deepPurple},
     {'name': 'Blue', 'color': Colors.lightBlue},
     {'name': 'Blue', 'color': Color.fromARGB(255, 36, 135, 216)},
-    {'name': 'Blue Grey', 'color': Colors.blueGrey},
+    {'name': 'Blue Grey', 'color': const Color.fromARGB(255, 96, 139, 115)},
     {'name': 'Green', 'color': Color.fromARGB(255, 17, 82, 50)},
     {'name': 'Green', 'color': Colors.green},
     {'name': 'Green Accent', 'color': Colors.greenAccent},

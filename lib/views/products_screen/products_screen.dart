@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -11,8 +10,6 @@ import 'package:seller_finalproject/services/store_services.dart';
 import 'package:seller_finalproject/views/products_screen/add_match.dart';
 import 'package:seller_finalproject/views/products_screen/add_product.dart';
 import 'package:seller_finalproject/views/products_screen/product_details.dart';
-import 'package:seller_finalproject/views/widgets/appbar_widget.dart';
-import 'package:seller_finalproject/views/widgets/text_style.dart';
 // ignore: unused_import, depend_on_referenced_packages
 import 'package:intl/intl.dart' as intl;
 
@@ -87,7 +84,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                         children: [
                           ListTile(
                             leading: const Icon(Icons.add),
-                            title: const Text('Add new address'),
+                            title: const Text('Add new product'),
                             onTap: () async {
                               await controller.getCollection();
                               controller.populateCollectionList();
@@ -102,8 +99,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                                     data[index].data() as Map<String, dynamic>;
                                 bool isFeatured = doc['is_featured']
                                         .toString()
-                                        .toLowerCase() ==
-                                    'true';
+                                        .toLowerCase() == 'true';
 
                                 return ListTile(
                                   onTap: () =>
@@ -147,8 +143,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                                         child: Text('Delete'),
                                       ),
                                     ],
-                                    icon: Icon(
-                                        Icons.more_vert), // Icon for the button
+                                    icon: Icon(Icons.more_vert), // Icon for the button
                                   ),
                                 );
                               },
@@ -162,12 +157,12 @@ class _ProductsScreenState extends State<ProductsScreen> {
                   Center(
                     child: ListTile(
                       leading: const Icon(Icons.add),
-                      title: const Text('Add new address'),
+                      title: const Text('Add new match'),
                       onTap: () async {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const AddMatchProduct()),
+                              builder: (context) => AddMatchProduct()),
                         );
                       },
                     ),
