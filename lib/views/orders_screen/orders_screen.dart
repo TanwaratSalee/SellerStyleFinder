@@ -20,7 +20,63 @@ class OrdersScreen extends StatelessWidget {
     var controllers = Get.put(OrdersController()); 
 
     return Scaffold(
-      appBar: appbarWidget(orders),
+      appBar: AppBar(title: appbarWidget(orders),
+      bottom: const TabBar(
+            isScrollable: true,
+            tabs: [
+              Tab(
+                child: Row(
+                  children: [
+                    const Text('All '),
+                    Text('(10)'),
+                  ],
+                ),
+              ),
+              Tab(
+                child: Row(
+                  children: [
+                    const Text('Unpaid '),
+                    Text('(5)'),
+                  ],
+                ),
+              ),
+              Tab(
+                child: Row(
+                  children: [
+                    const Text('In Transit '),
+                    Text('(7)'),
+                  ],
+                ),
+              ),
+              Tab(
+                child: Row(
+                  children: [
+                    const Text('Awaiting Shipment '),
+                    Text('(3)'),
+                  ],
+                ),
+              ),
+              Tab(
+                child: Row(
+                  children: [
+                    const Text('Delivered '),
+                    Text('(15)'),
+                  ],
+                ),
+              ),
+              Tab(
+                child: Row(
+                  children: [
+                    const Text('Completed '),
+                    Text('(20)'),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        
+      ) 
+      ,
       body: StreamBuilder(
         stream: StoreServices.getOrders(currentUser!.uid), 
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
