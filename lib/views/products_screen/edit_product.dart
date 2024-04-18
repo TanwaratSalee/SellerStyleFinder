@@ -8,11 +8,28 @@ import 'package:seller_finalproject/views/products_screen/component/product_imag
 import 'package:seller_finalproject/views/widgets/custom_textfield.dart';
 
 class EditProduct extends StatelessWidget {
-  const EditProduct({super.key});
+  final Map<String, dynamic> productData;
+  const EditProduct({
+    Key? key,
+    required this.productData,
+  }) : super(key: key);
+
+  String capitalize(String s) => s[0].toUpperCase() + s.substring(1);
 
   @override
   Widget build(BuildContext context) {
     var controller = Get.find<ProductsController>();
+    controller.pnameController.text = productData['p_name'];
+    controller.pabproductController.text = productData['p_aboutProduct'];
+    controller.pdescController.text = productData['p_desc'];
+    controller.psizeController.text = productData['p_size'];
+    controller.ppriceController.text = productData['p_price'];
+    controller.pquantityController.text = productData['p_quantity'];
+    controller.selectedGender.value = productData['p_sex'];
+
+    //controller.selectedSizes = productData['p_productsize'];
+    //controller.collectionsList = productData['p_collection'];
+
     return Obx(
       () => Scaffold(
         backgroundColor: whiteColor,
@@ -141,31 +158,30 @@ class EditProduct extends StatelessWidget {
                     .make(),
                 10.heightBox,
                 Obx(() => Wrap(
-                      spacing: 8.0,
-                      runSpacing: 8.0,
-                      children: controller.genderList.map((gender) {
-                        bool isSelected =
-                            controller.selectedGender.value == gender;
-                        return ChoiceChip(
-                          showCheckmark: false,
-                          label: Text(
-                            gender,
-                            style: TextStyle(
-                              color: isSelected ? primaryApp : greyDark1,
-                            ),
-                          ).text.size(18).fontFamily(regular).make(),
-                          selected: isSelected,
-                          onSelected: (selected) {
-                            if (selected) {
-                              controller.selectedGender.value = gender;
-                            }
-                          },
-                          selectedColor:thinPrimaryApp, 
-                          backgroundColor: thinGrey0,
-                          side: isSelected? BorderSide(    color: primaryApp,    width: 2) : BorderSide(color: greyColor),
-                        );
-                      }).toList(),
-                    )),
+                  spacing: 8.0,
+                  runSpacing: 8.0,
+                  children: controller.genderList.map((gender) {
+                    bool isSelected = controller.selectedGender.value == gender;
+                    return ChoiceChip(
+                      showCheckmark: false,
+                      label: Text(
+                        capitalize(gender),
+                        style: TextStyle(
+                          color: isSelected ? primaryApp : greyDark1,
+                        ),
+                      ).text.size(18).fontFamily(regular).make(),
+                      selected: isSelected,
+                      onSelected: (selected) {
+                        if (selected) {
+                          controller.selectedGender.value = gender;
+                        }
+                      },
+                      selectedColor: thinPrimaryApp, 
+                      backgroundColor: thinGrey0,
+                      side: isSelected ? BorderSide(color: primaryApp, width: 2) : BorderSide(color: greyColor),
+                    );
+                  }).toList(),
+                )),
                 10.heightBox,
                 Text("Size of product")
                     .text
@@ -173,77 +189,81 @@ class EditProduct extends StatelessWidget {
                     .color(greyDark1)
                     .fontFamily(medium)
                     .make(),
-                        Obx(() => Wrap(
-                            spacing: 8.0,
-                            runSpacing: 8.0,
-                            children: controller.sizesList.map((size) {
-                                return ChoiceChip(
-                                    label: Text(size),
-                                    selected: controller.selectedSizes.contains(size),
-                                    onSelected: (selected) {
-                                        if (selected) {
-                                            if (!controller.selectedSizes.contains(size)) {
-                                                controller.selectedSizes.add(size);
-                                            }
-                                        } else {
-                                            controller.selectedSizes.remove(size);
-                                        }
-                                    },
-                                );
-                            }).toList(),
-                        )),
+                      Obx(() => Wrap(
+                          spacing: 8.0,
+                          runSpacing: 8.0,
+                          children: controller.sizesList.map((size) {
+                              return ChoiceChip(
+                                  label: Text(size),
+                                  selected: controller.selectedSizes.contains(size),
+                                  onSelected: (selected) {
+                                      if (selected) {
+                                          // ถ้าตัวเลือกถูกเลือก เพิ่มเข้าไปในรายการ
+                                          if (!controller.selectedSizes.contains(size)) {
+                                              controller.selectedSizes.add(size);
+                                          }
+                                      } else {
+                                          // ถ้าตัวเลือกไม่ถูกเลือก ลบออกจากรายการ
+                                          controller.selectedSizes.remove(size);
+                                      }
+                                  },
+                              );
+                          }).toList(),
+                      )),
                 10.heightBox,
-                Text("Choose product colors")
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("Choose product colors")
                     .text
                     .size(16)
                     .color(greyDark1)
                     .fontFamily(medium)
                     .make(),
-                15.heightBox,
-                Obx(
-                  () => Wrap(
-                    spacing: 6.0,
-                    runSpacing: 6.0,
-                    children: List.generate(
-                      controller.allColors.length,
-                      (index) => Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          Container(
-                            width: 50,
-                            height: 50,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              border: Border.all(color: greyColor),
-                              color:
-                                  controller.allColors[index]['color'] as Color,
+                    SizedBox(height: 10),
+                    Obx(
+                      () => Wrap(
+                        spacing: 10.0,
+                        runSpacing: 10.0,
+                        children: List.generate(
+                          controller.allColors.length,
+                          (index) => GestureDetector(
+                            onTap: () {
+                              if (controller.selectedColorIndexes.contains(index)) {
+                                controller.selectedColorIndexes.remove(index);
+                              } else {
+                                controller.selectedColorIndexes.add(index);
+                              }
+                            },
+                            child: Container(
+                              width: 50,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: controller.allColors[index]['color'],
+                                border: Border.all(
+                                  color: controller.selectedColorIndexes.contains(index)
+                                      ? Colors.blueAccent // เปลี่ยนสีเมื่อถูกเลือก
+                                      : Colors.transparent, // ลบขอบเมื่อไม่ถูกเลือก
+                                  width: 2,
+                                ),
+                              ),
+                              child: Center(
+                                child: controller.selectedColorIndexes.contains(index)
+                                    ? Icon(
+                                        Icons.done,
+                                        color: controller.allColors[index]['color'] == Colors.white
+                                            ? Colors.black
+                                            : Colors.white,
+                                      )
+                                    : SizedBox(),
+                              ),
                             ),
-                            child: InkWell(
-                              onTap: () {
-                                final selected = controller.selectedColorIndexes.contains(index);
-                                if (selected) {
-
-                                } else {
-
-                                }
-                              },
-                            ),
-                          )
-                          .box
-                          .margin(EdgeInsets.symmetric(
-                              horizontal: 8, vertical: 2))
-                          .make(),
-                        if (controller.selectedColorIndexes.contains(index))
-                          Icon(
-                            Icons.done,
-                            color: controller.allColors[index]['color'] == Colors.white
-                                ? blackColor
-                                : whiteColor,
                           ),
-                        ],
+                        ),
                       ),
                     ),
-                  ),
+                  ],
                 ),
                 10.heightBox,
                 Text("Show mix and match")
@@ -252,32 +272,33 @@ class EditProduct extends StatelessWidget {
                     .color(greyDark1)
                     .fontFamily(medium)
                     .make(),
-                Obx(() => Wrap(
-                      spacing: 8.0,
-                      runSpacing: 8.0,
-                      children: controller.mixandmatchList.map((mixandmatch) {
-                        bool isSelected =
-                            controller.selectedMixandmatch.value == mixandmatch;
-                        return ChoiceChip(
-                          showCheckmark: false,
-                          label: Text(
-                            mixandmatch,
-                            style: TextStyle(
-                              color: isSelected ? primaryApp : greyDark1,
-                            ),
-                          ).text.size(18).fontFamily(regular).make(),
-                          selected: isSelected,
-                          onSelected: (selected) {
-                            if (selected) {
-                              controller.selectedMixandmatch.value = mixandmatch;
-                            }
-                          },
-                          selectedColor:thinPrimaryApp, 
-                          backgroundColor: thinGrey0,
-                          side: isSelected? BorderSide(color: primaryApp,width: 2) : BorderSide(color: greyColor),
-                        );
-                      }).toList(),
-                    )),
+                      Obx(() => Wrap(
+                        spacing: 8.0,
+                        runSpacing: 8.0,
+                        children: controller.mixandmatchList.map((mixandmatch) {
+                          bool isSelected = controller.selectedMixandmatch.value == mixandmatch;
+                          return ChoiceChip(
+                            showCheckmark: false,
+                            label: Text(
+                              capitalize(mixandmatch),
+                              style: TextStyle(
+                                color: isSelected ? primaryApp : greyDark1,
+                              ),
+                            ).text.size(18).fontFamily(regular).make(),
+                            selected: isSelected,
+                            onSelected: (selected) {
+                              if (selected) {
+                                controller.selectedMixandmatch.value = mixandmatch;
+                              }
+                            },
+                            selectedColor: thinPrimaryApp, 
+                            backgroundColor: thinGrey0,
+                            side: isSelected ? BorderSide(color: primaryApp, width: 2) : BorderSide(color: greyColor),
+                          );
+                        }).toList(),
+                      )),
+                0.heightBox,
+
               ],
             ),
           ),
