@@ -39,6 +39,11 @@ class ProductsController extends GetxController {
   List<String> genderList = [ 'All','Male', 'Female'];
   RxString selectedGender = ''.obs;
 
+  List<String> mixandmatchList = [ 'Top','Lower', 'Not specified'];
+  RxString selectedMixandmatch = ''.obs;
+
+
+
   RxString selectedSkinColor = ''.obs;
   List<Map<String, dynamic>> skinColorList = [
   {'name': 'Light', 'color': Color(0xFFFFDBAC)},   
