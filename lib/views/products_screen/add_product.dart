@@ -10,6 +10,8 @@ import 'package:seller_finalproject/views/widgets/custom_textfield.dart';
 class AddProduct extends StatelessWidget {
   const AddProduct({super.key});
 
+  String capitalize(String s) => s[0].toUpperCase() + s.substring(1);
+
   @override
   Widget build(BuildContext context) {
     var controller = Get.find<ProductsController>();
@@ -140,16 +142,15 @@ class AddProduct extends StatelessWidget {
                     .fontFamily(medium)
                     .make(),
                 10.heightBox,
-                Obx(() => Wrap(
+                    Obx(() => Wrap(
                       spacing: 8.0,
                       runSpacing: 8.0,
                       children: controller.genderList.map((gender) {
-                        bool isSelected =
-                            controller.selectedGender.value == gender;
+                        bool isSelected = controller.selectedGender.value == gender;
                         return ChoiceChip(
                           showCheckmark: false,
                           label: Text(
-                            gender,
+                            capitalize(gender), // เฉพาะตัวอักษรแรกเป็นพิมพ์ใหญ่
                             style: TextStyle(
                               color: isSelected ? primaryApp : greyDark1,
                             ),
@@ -160,9 +161,9 @@ class AddProduct extends StatelessWidget {
                               controller.selectedGender.value = gender;
                             }
                           },
-                          selectedColor:thinPrimaryApp, 
+                          selectedColor: thinPrimaryApp, 
                           backgroundColor: thinGrey0,
-                          side: isSelected? BorderSide(    color: primaryApp,    width: 2) : BorderSide(color: greyColor),
+                          side: isSelected ? BorderSide(color: primaryApp, width: 2) : BorderSide(color: greyColor),
                         );
                       }).toList(),
                     )),
@@ -250,32 +251,31 @@ class AddProduct extends StatelessWidget {
                     .color(greyDark1)
                     .fontFamily(medium)
                     .make(),
-                Obx(() => Wrap(
-                      spacing: 8.0,
-                      runSpacing: 8.0,
-                      children: controller.mixandmatchList.map((mixandmatch) {
-                        bool isSelected =
-                            controller.selectedMixandmatch.value == mixandmatch;
-                        return ChoiceChip(
-                          showCheckmark: false,
-                          label: Text(
-                            mixandmatch,
-                            style: TextStyle(
-                              color: isSelected ? primaryApp : greyDark1,
-                            ),
-                          ).text.size(18).fontFamily(regular).make(),
-                          selected: isSelected,
-                          onSelected: (selected) {
-                            if (selected) {
-                              controller.selectedMixandmatch.value = mixandmatch;
-                            }
-                          },
-                          selectedColor:thinPrimaryApp, 
-                          backgroundColor: thinGrey0,
-                          side: isSelected? BorderSide(color: primaryApp,width: 2) : BorderSide(color: greyColor),
-                        );
-                      }).toList(),
-                    )),
+                      Obx(() => Wrap(
+                        spacing: 8.0,
+                        runSpacing: 8.0,
+                        children: controller.mixandmatchList.map((mixandmatch) {
+                          bool isSelected = controller.selectedMixandmatch.value == mixandmatch;
+                          return ChoiceChip(
+                            showCheckmark: false,
+                            label: Text(
+                              capitalize(mixandmatch),
+                              style: TextStyle(
+                                color: isSelected ? primaryApp : greyDark1,
+                              ),
+                            ).text.size(18).fontFamily(regular).make(),
+                            selected: isSelected,
+                            onSelected: (selected) {
+                              if (selected) {
+                                controller.selectedMixandmatch.value = mixandmatch;
+                              }
+                            },
+                            selectedColor: thinPrimaryApp, 
+                            backgroundColor: thinGrey0,
+                            side: isSelected ? BorderSide(color: primaryApp, width: 2) : BorderSide(color: greyColor),
+                          );
+                        }).toList(),
+                      )),
                 0.heightBox,
 
               ],
