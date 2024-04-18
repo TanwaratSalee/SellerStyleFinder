@@ -129,7 +129,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                                         // Handle edit action
                                         // e.g., navigate to edit page
                                       } else if (value == 'delete') {
-                                        // controller.removeFeatured();
+                                        controller.removeFeatured();
                                       }
                                     },
                                     itemBuilder: (BuildContext context) =>
