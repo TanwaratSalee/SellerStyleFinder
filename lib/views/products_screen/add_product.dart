@@ -15,6 +15,7 @@ class AddProduct extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var controller = Get.find<ProductsController>();
+    controller.resetForm();
     return Obx(
       () => Scaffold(
         backgroundColor: whiteColor,
@@ -29,8 +30,6 @@ class AddProduct extends StatelessWidget {
                         controller.isloading(true);
                         await controller.uploadImages();
                         await controller.uploadProduct(context);
-                        controller
-                            .resetForm();
                         Get.back();
                         controller.isloading(false);
                         VxToast.show(context,

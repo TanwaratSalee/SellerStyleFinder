@@ -190,7 +190,9 @@ class ProductsController extends GetxController {
       pquantityController.text.isNotEmpty &&
       collectionsvalue.isNotEmpty &&
       subcollectionvalue.isNotEmpty &&
-      selectedColorIndexes.isNotEmpty; // เพิ่มเงื่อนไขสำหรับสีที่ถูกเลือก
+      selectedGender.isNotEmpty &&
+      selectedSizes.isNotEmpty &&
+      selectedColorIndexes.isNotEmpty;
 }
 
 void resetForm() {
@@ -205,6 +207,8 @@ void resetForm() {
   collectionsvalue.value = '';
   subcollectionvalue.value = '';
   pImagesLinks.clear();
+  selectedGender.value = '';
+  selectedSizes.clear();
 }
 
 
