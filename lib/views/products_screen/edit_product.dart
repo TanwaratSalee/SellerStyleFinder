@@ -7,8 +7,8 @@ import 'package:seller_finalproject/views/products_screen/component/product_drop
 import 'package:seller_finalproject/views/products_screen/component/product_images.dart';
 import 'package:seller_finalproject/views/widgets/custom_textfield.dart';
 
-class AddProduct extends StatelessWidget {
-  const AddProduct({super.key});
+class EditProduct extends StatelessWidget {
+  const EditProduct({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class AddProduct extends StatelessWidget {
       () => Scaffold(
         backgroundColor: whiteColor,
         appBar: AppBar(
-          title: Text("Add Product").text.size(24).fontFamily(medium).make(),
+          title: Text("Edit Product").text.size(24).fontFamily(medium).make(),
           actions: [
             controller.isloading.value
                 ? loadingIndicator(circleColor: primaryApp)
@@ -276,8 +276,6 @@ class AddProduct extends StatelessWidget {
                         );
                       }).toList(),
                     )),
-                0.heightBox,
-
               ],
             ),
           ),

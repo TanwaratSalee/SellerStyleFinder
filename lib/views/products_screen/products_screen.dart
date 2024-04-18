@@ -9,6 +9,7 @@ import 'package:seller_finalproject/controllers/products_controller.dart';
 import 'package:seller_finalproject/services/store_services.dart';
 import 'package:seller_finalproject/views/products_screen/add_match.dart';
 import 'package:seller_finalproject/views/products_screen/add_product.dart';
+import 'package:seller_finalproject/views/products_screen/edit_product.dart';
 import 'package:seller_finalproject/views/products_screen/product_details.dart';
 // ignore: unused_import, depend_on_referenced_packages
 import 'package:intl/intl.dart' as intl;
@@ -127,7 +128,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                                     onSelected: (String value) {
                                       String docId = data[index].id;
                                       if (value == 'edit') {
-                                        //
+                                        Get.to(()=> EditProduct());
                                       } else if (value == 'delete') {
                                         controller.removeProduct(docId);
                                       }
