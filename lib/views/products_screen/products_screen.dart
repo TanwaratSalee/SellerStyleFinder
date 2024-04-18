@@ -127,7 +127,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                                     onSelected: (String value) {
                                       String docId = data[index].id;
                                       if (value == 'edit') {
-                                        // Handle edit action
+                                        //
                                       } else if (value == 'delete') {
                                         controller.removeProduct(docId);
                                       }
