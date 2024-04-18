@@ -125,11 +125,12 @@ class _ProductsScreenState extends State<ProductsScreen> {
                                   ),
                                   trailing: PopupMenuButton<String>(
                                     onSelected: (String value) {
+                                      String docId = data[index].id;
                                       if (value == 'edit') {
                                         // Handle edit action
                                         // e.g., navigate to edit page
                                       } else if (value == 'delete') {
-                                        // controller.removeFeatured();
+                                        controller.removeProduct(docId);
                                       }
                                     },
                                     itemBuilder: (BuildContext context) =>

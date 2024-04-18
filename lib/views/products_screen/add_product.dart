@@ -40,8 +40,8 @@ class AddProduct extends StatelessWidget {
                         await controller.uploadImages();
                         await controller.uploadProduct(context);
                         controller
-                            .resetForm(); // Reset form fields after the upload
-                        Get.back(); // Optionally close the screen if needed
+                            .resetForm();
+                        Get.back();
                         controller.isloading(false);
                         VxToast.show(context,
                             msg: "Product saved successfully.");

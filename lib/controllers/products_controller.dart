@@ -35,9 +35,9 @@ class ProductsController extends GetxController {
   final RxSet<int> selectedColorIndexes = <int>{}.obs;
 
   List<String> sizesList = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
-  RxString selectedGender = ''.obs;
-  List<String> genderList = [ 'All','Male', 'Female'];
   RxString selectedSize = ''.obs;
+  List<String> genderList = [ 'All','Male', 'Female'];
+  RxString selectedGender = ''.obs;
 
   RxString selectedSkinColor = ''.obs;
   List<Map<String, dynamic>> skinColorList = [
@@ -131,6 +131,8 @@ class ProductsController extends GetxController {
       'is_featured': false,
       'p_collection': collectionsvalue.value,
       'p_subcollection': subcollectionvalue.value,
+      'p_gender': selectedGender.value,
+      'p_productsize':selectedSize.value,
       'p_colors': selectedColorIndexes.map((index) => allColors[index]['color'].value).toList(),
       'p_imgs': FieldValue.arrayUnion(pImagesLinks),
       'p_wishlist': FieldValue.arrayUnion([]),
