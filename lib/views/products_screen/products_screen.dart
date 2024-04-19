@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:seller_finalproject/const/const.dart';
@@ -24,6 +25,7 @@ class ProductsScreen extends StatefulWidget {
 class _ProductsScreenState extends State<ProductsScreen> {
   final searchController = TextEditingController();
   var controller = Get.put(ProductsController());
+  final String vendorId = FirebaseAuth.instance.currentUser!.uid;
 
   @override
   Widget build(BuildContext context) {
@@ -159,88 +161,81 @@ class _ProductsScreenState extends State<ProductsScreen> {
                   ),
                   // Second tab content
                   Center(
-  child: Column(
-    children: [
-      ListTile(
-        leading: const Icon(Icons.add),
-        title: const Text('Add new match'),
-        onTap: () async {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => AddMatchProduct()),
-          );
-        },
-      ),
-      Expanded(
-        child: GridView.builder(
-          physics: const NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          itemCount: 10,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            mainAxisSpacing: 12,
-            crossAxisSpacing: 8,
-            mainAxisExtent: 280,
-          ),
-          itemBuilder: (context, index) {
-            return Column(
-              children: [
-                Expanded(
-                  child: Center(
-                    child: ClipRRect(
-                      borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(15.0),
-                        topRight: Radius.circular(15.0),
-                      ),
-                      child: Image.network(
-                        imgProfile,
-                        width: 200,
-                        height: 210,
-                        fit: BoxFit.cover,
-                      ),
+                child: Column(
+                  children: [
+                    ListTile(
+                      leading: const Icon(Icons.add),
+                      title: const Text('Add new match'),
+                      onTap: () async {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => AddMatchProduct()),
+                        );
+                      },
                     ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "p_name",
-                        style: const TextStyle(
-                          fontFamily: 'medium',
-                          fontSize: 17,
-                          color: greyColor,
-                        ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      Text(
-                        // "${NumberFormat('#,##0').format(double.parse(allproductsdata[index]['p_price']).toInt())} Baht",
-                        '199,900 Bath',
-                        style: const TextStyle(
-                          fontFamily: 'regular',
-                          fontSize: 14,
-                          color: greyDark1,
-                        ),
-                      ),
-                      const SizedBox(height: 10), 
-                    ],
-                  ),
-                )
-              ],
-            ).box.white.rounded.shadowSm.margin(const EdgeInsets.symmetric(horizontal: 2)).make().onTap(() {
-              
-            });
-          },
-        ),
-      ),
-    ],
-  ),
-)
+            Expanded(
+              child: TabBarView(
+                children: [
+                  // Products Tab
+                  StreamBuilder<QuerySnapshot>(
+                    stream: FirebaseFirestore.instance
+                        .collection('products')
+                        .where('vendor_id', isEqualTo: vendorId)
+                        .snapshots(),
+                    builder: (context, snapshot) {
+                      if (!snapshot.hasData) {
+                        return const CircularProgressIndicator(); // Loading indicator
+                      }
 
+                      Map<String, List<DocumentSnapshot>> mixMatchMap = {};
+
+                      for (var doc in snapshot.data!.docs) {
+                        var data = doc.data() as Map<String, dynamic>;
+                        if (data['vendor_id'] == vendorId && data['p_mixmatch'] != null) {
+                          String mixMatchKey = data['p_mixmatch'];
+                          mixMatchMap.putIfAbsent(mixMatchKey, () => []).add(doc);
+                        }
+                      }
+                      // Filter groups with more than one entry
+                      var validPairs = mixMatchMap.entries
+                          .where((entry) => entry.value.length == 2)
+                          .toList();
+
+                      return ListView.builder(
+                        itemCount: validPairs.length,
+                        itemBuilder: (context, index) {
+                          var pair = validPairs[index];
+                          var product1 = pair.value[0].data() as Map<String, dynamic>;
+                          var product2 = pair.value[1].data() as Map<String, dynamic>;
+
+                          String price1 = product1['p_price'].toString();
+                          String price2 = product2['p_price'].toString();
+
+                          String name1 = product1['p_name'].toString();
+                          String name2 = product2['p_name'].toString();
+
+                          String productImage1 = product1['p_imgs'][0];
+                          String productImage2 = product2['p_imgs'][0];
+
+                          return ListTile(
+                            leading: Image.network(productImage1, width: 50, height: 50, fit: BoxFit.cover),
+                            trailing: Image.network(productImage2, width: 50, height: 50, fit: BoxFit.cover),
+                            title: Text('Product 1: ${product1['p_name']} - Product 2: ${product2['p_name']}'),
+                            subtitle: Text("Product 1 Price: ${product1['p_price']} Bath - Product 2 Price: ${price1} Bath"),
+                            onTap: () => Get.to(() => ProductDetails(data: pair)),
+                          );
+                        },
+                      );
+                    },
+                  ),
+                  // Matches Tab (Assuming this needs similar updates or remains unchanged)
+                ],
+              ),
+            ),
+                  ],
+                ),
+              )
                 ],
               ),
             ),
