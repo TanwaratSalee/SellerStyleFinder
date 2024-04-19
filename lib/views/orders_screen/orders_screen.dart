@@ -8,26 +8,28 @@ import 'package:seller_finalproject/views/orders_screen/order_details.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:intl/intl.dart';
+import 'package:seller_finalproject/views/widgets/appbar_widget.dart';
 
 class OrdersScreen extends StatelessWidget {
   const OrdersScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // Initialize the orders controller
     var controllers = Get.put(OrdersController());
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Orders'), // Updated for simplicity
+        title: appbarWidget(Order) /* const Text('Orders') */,
       ),
-      body: StreamBuilder(
+      body: StreamBuilder<QuerySnapshot>(
         stream: StoreServices.getOrders(currentUser!.uid),
-        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return const Center(child: CircularProgressIndicator());
           }
+
           var data = snapshot.data!.docs;
+          data.sort((a, b) => b.get('order_date').compareTo(a.get('order_date')));
 
           return Padding(
             padding: const EdgeInsets.all(8.0),
@@ -35,107 +37,9 @@ class OrdersScreen extends StatelessWidget {
               physics: const BouncingScrollPhysics(),
               child: Column(
                 children: List.generate(data.length, (index) {
-                  var time = data[index]['order_date'].toDate();
-                  return Container(
-                    child: InkWell(
-                      onTap: () {
-                        Get.to(() => OrderDetails(data: data[index]));
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text("Order code ${data[index]['order_code']}"),
-                                Row(
-                                  children: [
-                                    const Icon(Icons.calendar_month,
-                                        color: greyDark1),
-                                    const SizedBox(width: 10),
-                                    Text(intl.DateFormat()
-                                        .add_yMd()
-                                        .format(time)),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 10),
-                            Column(
-                              children:
-                                  data[index]['orders'].map<Widget>((order) {
-                                return Padding(
-                                  padding: const EdgeInsets.only(bottom: 10),
-                                  child: Row(
-                                    children: [
-                                      Text(
-                                          "${order['qty']}x ", // Display quantity next to the image
-                                          style: const TextStyle(
-                                              fontSize: 14,
-                                              fontFamily: regular)),
-                                              5.widthBox,
-                                      Image.network(
-                                        order['img'],
-                                        width: 55,
-                                        height: 55,
-                                        fit: BoxFit.cover,
-                                      ),
-                                      const SizedBox(width: 10),
-                                      Expanded(
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              order['title'],
-                                              style: const TextStyle(
-                                                  fontSize: 16,
-                                                  fontFamily: medium),
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                            Text(
-                                              "${NumberFormat('#,##0').format(double.parse(order['price'].toString()))} Bath",
-                                              style: TextStyle(
-                                                  fontSize: 14,
-                                                  color: greyDark1),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              }).toList(),
-                            ),
-                            Align(
-                                alignment: Alignment.centerRight,
-                                child: Row(
-                                  children: [
-                                    const Text(
-                                      "Total price  ",
-                                    ),
-                                    Text(
-                                      "${NumberFormat('#,##0').format(double.parse(data[index]['total_amount'].toString()))}",
-                                      // "${data[index]['total_amount']} ",
-                                    ).text.fontFamily(medium).size(16).make(),
-                                    const Text(
-                                      "  Bath",
-                                    ),
-                                  ],
-                                )),
-                          ],
-                        ),
-                      ),
-                    ),
-                  )
-                      .box
-                      .padding(const EdgeInsets.symmetric(vertical: 6, horizontal: 4))
-                      .margin(const EdgeInsets.symmetric(vertical: 6, horizontal: 4))
-                      .shadow
-                      .color(whiteColor)
-                      .rounded
-                      .make();
+                  var order = data[index];
+                  var time = order['order_date'].toDate();
+                  return buildOrderItem(order, time);
                 }),
               ),
             ),
@@ -143,5 +47,74 @@ class OrdersScreen extends StatelessWidget {
         },
       ),
     );
+  }
+
+  Widget buildOrderItem(DocumentSnapshot order, DateTime time) {
+    return Container(
+      child: InkWell(
+        onTap: () => Get.to(() => OrderDetails(data: order)),
+        child: Padding(
+          padding: const EdgeInsets.all(10),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("Order code : ${order['order_code']}")
+                      .text
+                      .size(16)
+                      .fontFamily(medium)
+                      .make(),
+                  Row(
+                    children: [
+                      const Icon(Icons.calendar_month, color: greyDark1),
+                      const SizedBox(width: 10),
+                      Text(intl.DateFormat().add_yMd().format(time)),
+                    ],
+                  ),
+                ],
+              ),
+              ...buildProductList(order['orders'])
+            ],
+          ),
+        ),
+      )
+          .box
+          .margin(EdgeInsets.symmetric(vertical: 8))
+          .border(color: thinGrey01)
+          .rounded
+          .make(),
+    );
+  }
+
+  List<Widget> buildProductList(List orders) {
+    return orders.map<Widget>((order) {
+      return Padding(
+        padding: const EdgeInsets.only(top: 10),
+        child: Row(
+          children: [
+            Text("${order['qty']}x",
+                style: TextStyle(fontSize: 14, fontFamily: regular)),
+            SizedBox(width: 5),
+            Image.network(order['img'],
+                width: 55, height: 55, fit: BoxFit.cover),
+            SizedBox(width: 10),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(order['title'],
+                      style: TextStyle(fontSize: 16, fontFamily: medium),
+                      overflow: TextOverflow.ellipsis),
+                  Text(
+                    "${NumberFormat('#,##0').format(double.parse(order['price'].toString()))} Bath",
+                  ).text.size(14).fontFamily(regular).color(greyDark1).make(),
+                ],
+              ),
+            ),
+          ],
+        ),
+      );
+    }).toList();
   }
 }
