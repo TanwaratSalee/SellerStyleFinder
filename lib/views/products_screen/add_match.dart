@@ -8,8 +8,18 @@ import 'package:seller_finalproject/views/widgets/custom_textfield.dart';
 
 import '../../controllers/products_controller.dart';
 
-class AddMatchProduct extends StatelessWidget {
-  const AddMatchProduct({super.key});
+class AddMatchProduct extends StatefulWidget {
+  const AddMatchProduct({Key? key}) : super(key: key);
+
+  @override
+  State<AddMatchProduct> createState() => _AddMatchProductState();
+}
+
+class _AddMatchProductState extends State<AddMatchProduct> {
+  String selectedGender = 'All'; // Starting value
+  List<String> genderList = ['All', 'Man', 'Woman'];
+  // Replace with actual product controller
+  // var controller = Get.find<ProductsController>();
 
   @override
   Widget build(BuildContext context) {

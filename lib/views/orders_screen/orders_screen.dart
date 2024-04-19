@@ -21,7 +21,7 @@ class OrdersScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(title: appbarWidget(orders),
-      bottom: const TabBar(
+      /* bottom: const TabBar(
             isScrollable: true,
             tabs: [
               Tab(
@@ -73,7 +73,7 @@ class OrdersScreen extends StatelessWidget {
                 ),
               ),
             ],
-          ),
+          ), */
         
       ) 
       ,
@@ -94,37 +94,73 @@ class OrdersScreen extends StatelessWidget {
                       (index) {
                         var time = data[index]['order_date'].toDate();
 
-                        return ListTile(
-                            onTap: () {
-                              Get.to(() => OrderDetails(data: data[index]));
-                            },
-                            tileColor: thinGrey01,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12.0)
-                            ),
-                            title: boldText(text:"${data[index]['order_code']}", color: greyDark2),
-                            subtitle: Column(
+                      return ListTile(
+                        onTap: () {
+                          Get.to(() => OrderDetails(data: data[index]));
+                        },
+                        tileColor: thinGrey01,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12.0)
+                        ),
+                        title: boldText(
+                          text: "${data[index]['order_code']}",
+                          color: greyDark2
+                        ),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
                               children: [
-                                Row(
-                                  children: [
-                                    const Icon(Icons.calendar_month, color: greyDark2),
-                                    10.widthBox,
-                                    boldText(text: intl.DateFormat().add_yMd().format(time),color: greyColor),
-                                  ],
+                                const Icon(Icons.calendar_month, color: greyDark2),
+                                SizedBox(width: 10),
+                                boldText(
+                                  text: intl.DateFormat().add_yMd().format(time),
+                                  color: greyColor
                                 ),
-                                3.heightBox,
-                                Row(
-                                  children: [
-                                    const Icon(Icons.payment, color: greyDark2),
-                                    10.widthBox,
-                                    boldText(text: unpaid,color: redColor),
-                                  ],
-                                )
                               ],
                             ),
-                            // ignore: unnecessary_string_escapes
-                            trailing: boldText(text: "${data[index]['total_amount']} Bath", color: blackColor, size: 16.0),
-                          ).box.margin(const EdgeInsets.only(bottom: 5)).make();
+                            SizedBox(height: 3),
+                            Row(
+                              children: [
+                                const Icon(Icons.payment, color: greyDark2),
+                                SizedBox(width: 10),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      boldText(
+                                        text: data[index]['orders'].map((order) => order['title']).toList().join(', '),
+                                        color: blackColor,
+                                        size: 16.0
+                                      ),
+                                      SizedBox(height: 3),
+                                      boldText(
+                                        text: data[index]['orders'].map((order) => order['qty']).toList().join(', '),
+                                        color: blackColor,
+                                        size: 16.0
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(width: 10),
+                                Container(
+                                  width: 100,
+                                  height: 100,
+                                  child: Image.network(
+                                    data[index]['orders'][0]['img'],
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                        trailing: boldText(
+                          text: "${data[index]['total_amount']} Bath",
+                          color: blackColor,
+                          size: 16.0
+                        ),
+                      ).box.margin(const EdgeInsets.only(bottom: 10)).make();
                       }
                         ),
                 ),
