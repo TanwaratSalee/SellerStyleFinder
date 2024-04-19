@@ -4,16 +4,19 @@ import 'package:seller_finalproject/const/styles.dart';
 import 'package:seller_finalproject/controllers/loading_Indcator.dart';
 import 'package:seller_finalproject/views/products_screen/component/product_dropdown.dart';
 import 'package:seller_finalproject/views/products_screen/selectProduct.dart';
+import 'package:seller_finalproject/views/products_screen/select_item.dart';
 import 'package:seller_finalproject/views/widgets/custom_textfield.dart';
 
 import '../../controllers/products_controller.dart';
 
 class AddMatchProduct extends StatelessWidget {
   const AddMatchProduct({super.key});
+  
 
   @override
   Widget build(BuildContext context) {
     var controller = Get.find<ProductsController>();
+    
     return Obx(
       () => Scaffold(
         backgroundColor: whiteColor,
@@ -40,19 +43,17 @@ class AddMatchProduct extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
-                  children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => SelectProductPage()),
-                        );
-                      },
-                      child: Icon(Icons.camera_alt_outlined),
-                    )
-                  ],
-                ),
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ImagePlaceholder(title: 'Top'),
+                SizedBox(width: 16), 
+                  Icon(Icons.add).box.roundedFull.make(),
+                  // mini: true,backgroundColor: primaryApp,
+                SizedBox(width: 16), 
+                ImagePlaceholder(title: 'Bottom'),
+              ],
+            ),
+            15.heightBox,
                 productDropdown("Collection", controller.collectionsList,
                     controller.collectionsvalue, controller),
                 15.heightBox,
@@ -153,6 +154,38 @@ class AddMatchProduct extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class ImagePlaceholder extends StatelessWidget {
+  final String title;
+
+  ImagePlaceholder({required this.title});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        GestureDetector(
+          onTap: () {
+            Get.to(() => SelectItemPage());
+          },
+          child: Container(
+            width: 100,
+            height: 100,
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.grey),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Icon(
+              Icons.camera_alt,
+              color: Colors.grey,
+            ),
+          ),
+        ),
+        Text(title),
+      ],
     );
   }
 }
