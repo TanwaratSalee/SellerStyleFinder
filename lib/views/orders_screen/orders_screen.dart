@@ -1,173 +1,147 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 import 'package:seller_finalproject/const/const.dart';
-import 'package:seller_finalproject/controllers/loading_Indcator.dart';
+import 'package:seller_finalproject/const/styles.dart';
 import 'package:seller_finalproject/controllers/orders_controller.dart';
 import 'package:seller_finalproject/services/store_services.dart';
 import 'package:seller_finalproject/views/orders_screen/order_details.dart';
-import 'package:seller_finalproject/views/widgets/appbar_widget.dart';
-import 'package:seller_finalproject/views/widgets/text_style.dart';
 import 'package:get/get.dart';
-// ignore: depend_on_referenced_packages
 import 'package:intl/intl.dart' as intl;
-
+import 'package:intl/intl.dart';
 
 class OrdersScreen extends StatelessWidget {
   const OrdersScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // ignore: unused_local_variable
-    var controllers = Get.put(OrdersController()); 
+    // Initialize the orders controller
+    var controllers = Get.put(OrdersController());
 
     return Scaffold(
-      appBar: AppBar(title: appbarWidget(orders),
-      /* bottom: const TabBar(
-            isScrollable: true,
-            tabs: [
-              Tab(
-                child: Row(
-                  children: [
-                    const Text('All '),
-                    Text('(10)'),
-                  ],
-                ),
-              ),
-              Tab(
-                child: Row(
-                  children: [
-                    const Text('Unpaid '),
-                    Text('(5)'),
-                  ],
-                ),
-              ),
-              Tab(
-                child: Row(
-                  children: [
-                    const Text('In Transit '),
-                    Text('(7)'),
-                  ],
-                ),
-              ),
-              Tab(
-                child: Row(
-                  children: [
-                    const Text('Awaiting Shipment '),
-                    Text('(3)'),
-                  ],
-                ),
-              ),
-              Tab(
-                child: Row(
-                  children: [
-                    const Text('Delivered '),
-                    Text('(15)'),
-                  ],
-                ),
-              ),
-              Tab(
-                child: Row(
-                  children: [
-                    const Text('Completed '),
-                    Text('(20)'),
-                  ],
-                ),
-              ),
-            ],
-          ), */
-        
-      ) 
-      ,
+      appBar: AppBar(
+        title: const Text('Orders'), // Updated for simplicity
+      ),
       body: StreamBuilder(
-        stream: StoreServices.getOrders(currentUser!.uid), 
-        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
-          if(!snapshot.hasData){
-            return loadingIndicator();
-          } else {
-            var data = snapshot.data!.docs;
+        stream: StoreServices.getOrders(currentUser!.uid),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (!snapshot.hasData) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          var data = snapshot.data!.docs;
 
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                child: Column(
-                  children: List.generate(data.length,
-                      (index) {
-                        var time = data[index]['order_date'].toDate();
-
-                      return ListTile(
-                        onTap: () {
-                          Get.to(() => OrderDetails(data: data[index]));
-                        },
-                        tileColor: thinGrey01,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12.0)
-                        ),
-                        title: boldText(
-                          text: "${data[index]['order_code']}",
-                          color: greyDark2
-                        ),
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Column(
+                children: List.generate(data.length, (index) {
+                  var time = data[index]['order_date'].toDate();
+                  return Container(
+                    child: InkWell(
+                      onTap: () {
+                        Get.to(() => OrderDetails(data: data[index]));
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Column(
                           children: [
                             Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Icon(Icons.calendar_month, color: greyDark2),
-                                SizedBox(width: 10),
-                                boldText(
-                                  text: intl.DateFormat().add_yMd().format(time),
-                                  color: greyColor
+                                Text("Order code ${data[index]['order_code']}"),
+                                Row(
+                                  children: [
+                                    const Icon(Icons.calendar_month,
+                                        color: greyDark1),
+                                    const SizedBox(width: 10),
+                                    Text(intl.DateFormat()
+                                        .add_yMd()
+                                        .format(time)),
+                                  ],
                                 ),
                               ],
                             ),
-                            SizedBox(height: 3),
-                            Row(
-                              children: [
-                                const Icon(Icons.payment, color: greyDark2),
-                                SizedBox(width: 10),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                            const SizedBox(height: 10),
+                            Column(
+                              children:
+                                  data[index]['orders'].map<Widget>((order) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(bottom: 10),
+                                  child: Row(
                                     children: [
-                                      boldText(
-                                        text: data[index]['orders'].map((order) => order['title']).toList().join(', '),
-                                        color: blackColor,
-                                        size: 16.0
+                                      Text(
+                                          "${order['qty']}x ", // Display quantity next to the image
+                                          style: const TextStyle(
+                                              fontSize: 14,
+                                              fontFamily: regular)),
+                                              5.widthBox,
+                                      Image.network(
+                                        order['img'],
+                                        width: 55,
+                                        height: 55,
+                                        fit: BoxFit.cover,
                                       ),
-                                      SizedBox(height: 3),
-                                      boldText(
-                                        text: data[index]['orders'].map((order) => order['qty']).toList().join(', '),
-                                        color: blackColor,
-                                        size: 16.0
+                                      const SizedBox(width: 10),
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              order['title'],
+                                              style: const TextStyle(
+                                                  fontSize: 16,
+                                                  fontFamily: medium),
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                            Text(
+                                              "${NumberFormat('#,##0').format(double.parse(order['price'].toString()))} Bath",
+                                              style: TextStyle(
+                                                  fontSize: 14,
+                                                  color: greyDark1),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ],
                                   ),
-                                ),
-                                SizedBox(width: 10),
-                                Container(
-                                  width: 100,
-                                  height: 100,
-                                  child: Image.network(
-                                    data[index]['orders'][0]['img'],
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ],
-                            )
+                                );
+                              }).toList(),
+                            ),
+                            Align(
+                                alignment: Alignment.centerRight,
+                                child: Row(
+                                  children: [
+                                    const Text(
+                                      "Total price  ",
+                                    ),
+                                    Text(
+                                      "${NumberFormat('#,##0').format(double.parse(data[index]['total_amount'].toString()))}",
+                                      // "${data[index]['total_amount']} ",
+                                    ).text.fontFamily(medium).size(16).make(),
+                                    const Text(
+                                      "  Bath",
+                                    ),
+                                  ],
+                                )),
                           ],
                         ),
-                        trailing: boldText(
-                          text: "${data[index]['total_amount']} Bath",
-                          color: blackColor,
-                          size: 16.0
-                        ),
-                      ).box.margin(const EdgeInsets.only(bottom: 10)).make();
-                      }
-                        ),
-                ),
+                      ),
+                    ),
+                  )
+                      .box
+                      .padding(const EdgeInsets.symmetric(vertical: 6, horizontal: 4))
+                      .margin(const EdgeInsets.symmetric(vertical: 6, horizontal: 4))
+                      .shadow
+                      .color(whiteColor)
+                      .rounded
+                      .make();
+                }),
               ),
-            );
-          }
-        })
+            ),
+          );
+        },
+      ),
     );
   }
 }
