@@ -159,18 +159,88 @@ class _ProductsScreenState extends State<ProductsScreen> {
                   ),
                   // Second tab content
                   Center(
-                    child: ListTile(
-                      leading: const Icon(Icons.add),
-                      title: const Text('Add new match'),
-                      onTap: () async {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => AddMatchProduct()),
-                        );
-                      },
+  child: Column(
+    children: [
+      ListTile(
+        leading: const Icon(Icons.add),
+        title: const Text('Add new match'),
+        onTap: () async {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AddMatchProduct()),
+          );
+        },
+      ),
+      Expanded(
+        child: GridView.builder(
+          physics: const NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          itemCount: 10,
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            mainAxisSpacing: 12,
+            crossAxisSpacing: 8,
+            mainAxisExtent: 280,
+          ),
+          itemBuilder: (context, index) {
+            return Column(
+              children: [
+                Expanded(
+                  child: Center(
+                    child: ClipRRect(
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(15.0),
+                        topRight: Radius.circular(15.0),
+                      ),
+                      child: Image.network(
+                        imgProfile,
+                        width: 200,
+                        height: 210,
+                        fit: BoxFit.cover,
+                      ),
                     ),
-                  )
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "p_name",
+                        style: const TextStyle(
+                          fontFamily: 'medium',
+                          fontSize: 17,
+                          color: greyColor,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      Text(
+                        // "${NumberFormat('#,##0').format(double.parse(allproductsdata[index]['p_price']).toInt())} Baht",
+                        '199,900 Bath',
+                        style: const TextStyle(
+                          fontFamily: 'regular',
+                          fontSize: 14,
+                          color: greyDark1,
+                        ),
+                      ),
+                      const SizedBox(height: 10), 
+                    ],
+                  ),
+                )
+              ],
+            ).box.white.rounded.shadowSm.margin(const EdgeInsets.symmetric(horizontal: 2)).make().onTap(() {
+              
+            });
+          },
+        ),
+      ),
+    ],
+  ),
+)
+
                 ],
               ),
             ),
