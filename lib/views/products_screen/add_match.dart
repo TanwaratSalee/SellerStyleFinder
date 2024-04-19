@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:seller_finalproject/const/const.dart';
 import 'package:seller_finalproject/const/styles.dart';
 import 'package:seller_finalproject/controllers/loading_Indcator.dart';
 import 'package:seller_finalproject/views/products_screen/component/product_dropdown.dart';
+import 'package:seller_finalproject/views/products_screen/match_detail.dart';
 import 'package:seller_finalproject/views/products_screen/selectProduct.dart';
 import 'package:seller_finalproject/views/products_screen/select_item.dart';
 import 'package:seller_finalproject/views/widgets/custom_textfield.dart';
@@ -188,3 +190,4 @@ class ImagePlaceholder extends StatelessWidget {
     );
   }
 }
+
