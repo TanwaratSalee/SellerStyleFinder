@@ -26,8 +26,10 @@ class ProductsController extends GetxController {
   var subcollectionList = <String>[].obs;
   List<Collection> collection = [];
   var pImagesLinks = [];
-  var pImagesList = RxList<dynamic>.generate(9, (index) => null);
+  var pImagesList = RxList<dynamic>(List.filled(9, null, growable: true));
+  
 
+  List<String> imagesToDelete = []; 
   var collectionsvalue = ''.obs;
   var subcollectionvalue = ''.obs;
   var selectedColorIndex = 0.obs;
@@ -69,13 +71,13 @@ class ProductsController extends GetxController {
     {'name': 'Red', 'color': Colors.red},
     {'name': 'Red Accent', 'color': Color.fromARGB(255, 237, 101, 146)},
   ];
-
-  getCollection() async {
-    var data =
-        await rootBundle.loadString("lib/services/collection_model.json");
+  
+getCollection() async {
+    var data = await rootBundle.loadString("lib/services/collection_model.json");
     var cat = collectionModelFromJson(data);
     collection = cat.collections;
-  }
+    populateCollectionList();
+}
 
   populateCollectionList() {
     collectionsList.clear();
@@ -109,19 +111,71 @@ class ProductsController extends GetxController {
     }
   }
 
-  uploadImages() async {
-    pImagesLinks.clear();
-    for (var item in pImagesList) {
-      if (item != null) {
-        var filename = basename(item.path);
-        var destination = 'images/vendors/${currentUser!.uid}/$filename';
-        Reference ref = FirebaseStorage.instance.ref().child(destination);
-        await ref.putFile(item);
-        var n = await ref.getDownloadURL();
-        pImagesLinks.add(n);
-      }
+uploadImages() async {
+  pImagesLinks.clear();
+  for (var item in pImagesList) {
+    if (item != null && item is File) {
+      var filename = basename(item.path);
+      var destination = 'images/vendors/${currentUser!.uid}/$filename';
+      Reference ref = FirebaseStorage.instance.ref().child(destination);
+      await ref.putFile(item);
+      var n = await ref.getDownloadURL();
+      pImagesLinks.add(n);
+    } else if (item is String) {
+      pImagesLinks.add(item);
     }
   }
+}
+
+
+void initializeImages(List<String> imageUrls) {
+    // Clear existing list and add fresh from imageUrls ensuring it's growable
+    pImagesList.clear();
+    for (int i = 0; i < imageUrls.length; i++) {
+        pImagesList.add(imageUrls[i]);
+    }
+    // Ensure there are always 9 slots in the list
+    while (pImagesList.length < 9) {
+        pImagesList.add(null);
+    }
+}
+
+
+void setupProductData(Map<String, dynamic> productData) {
+    pnameController.text = productData['p_name'] ?? '';
+    pabproductController.text = productData['p_aboutProduct'] ?? '';
+    pdescController.text = productData['p_desc'] ?? '';
+    psizeController.text = productData['p_size'] ?? '';
+    ppriceController.text = productData['p_price'] ?? '';
+    pquantityController.text = productData['p_quantity'] ?? '';
+    selectedGender.value = productData['p_sex'] ?? '';
+    selectedMixandmatch.value = productData['p_part'] ?? '';
+    collectionsvalue.value = productData['collection'] ?? '';
+    if (collectionsvalue.value.isNotEmpty) {
+        populateSubcollection(collectionsvalue.value);
+    }
+
+    if (productData['p_productsize'] != null) {
+      selectedSizes.assignAll((productData['p_productsize'] ?? '' as List).cast<String>());
+    } else {
+      selectedSizes.clear();
+    }
+
+  if (productData['p_imgs'] != null) {
+    initializeImages(List<String>.from(productData['p_imgs']));
+  }
+}
+
+void removeImage(int index) {
+  if (index >= 0 && index < pImagesList.length) {
+    if (pImagesList[index] is String) { // If it's a URL, add to the delete list
+      imagesToDelete.add(pImagesList[index] as String);
+    }
+    pImagesList.removeAt(index); // Directly remove the item at the index
+    pImagesList.add(null); // Optional: Maintain list size by adding null
+  }
+}
+
 
   Future<void> uploadProduct(BuildContext context) async {
   try {
@@ -162,6 +216,43 @@ class ProductsController extends GetxController {
   }
 }
 
+Future<void> updateProduct(BuildContext context, String documentId) async {
+  try {
+    final productDoc = FirebaseFirestore.instance.collection(productsCollection).doc(documentId);
+    // อัปเดตข้อมูลเดิม
+    await productDoc.update({
+      'p_collection': collectionsvalue.value,
+      'p_subcollection': subcollectionvalue.value,
+      'p_sex': selectedGender.value,
+      'p_productsize': selectedSizes,
+      'p_part': selectedMixandmatch.value,
+      'p_colors': selectedColorIndexes.map((index) => allColors[index]['color'].value).toList(),
+      'p_desc': pdescController.text,
+      'p_name': pnameController.text,
+      'p_aboutProduct': pabproductController.text,
+      'p_size': psizeController.text,
+      'p_price': ppriceController.text,
+      'p_quantity': pquantityController.text,
+      'p_seller': Get.find<HomeController>().username,
+      'vendor_id': currentUser!.uid,
+      'p_imgs': FieldValue.arrayUnion(pImagesLinks),
+    });
+
+    // Removing images marked for deletion
+    if (imagesToDelete.isNotEmpty) {
+      await productDoc.update({
+        'p_imgs': FieldValue.arrayRemove(imagesToDelete),
+      });
+      imagesToDelete.clear(); // Clear the list after updating
+    }
+
+    VxToast.show(context, msg: "Product updated successfully.");
+  } catch (e) {
+    print("Error updating product: $e");
+    VxToast.show(context, msg: "Error updating product. Please try again later.");
+  }
+}
+
 
   addFeatured(docId) async {
     await firestore.collection(productsCollection).doc(docId).set({
@@ -196,20 +287,26 @@ class ProductsController extends GetxController {
 }
 
 void resetForm() {
-  pnameController.clear();
-  pabproductController.clear();
-  pdescController.clear();
-  psizeController.clear();
-  ppriceController.clear();
-  pquantityController.clear();
-  pImagesList.value = List<dynamic>.filled(9, null, growable: false);
-  selectedColorIndexes.clear();
-  collectionsvalue.value = '';
-  subcollectionvalue.value = '';
-  pImagesLinks.clear();
-  selectedGender.value = '';
-  selectedSizes.clear();
+    pnameController.clear();
+    pabproductController.clear();
+    pdescController.clear();
+    psizeController.clear();
+    ppriceController.clear();
+    pquantityController.clear();
+    selectedColorIndexes.clear();
+    collectionsvalue.value = '';
+    subcollectionvalue.value = '';
+    pImagesLinks.clear();
+    selectedGender.value = '';
+    selectedSizes.clear();
+    imagesToDelete.clear();
+    pImagesList.clear();
+    selectedMixandmatch.value = '';
+    while (pImagesList.length < 9) {
+        pImagesList.add(null);
+    }
 }
+
 
 
 

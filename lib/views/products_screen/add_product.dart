@@ -67,7 +67,7 @@ class AddProduct extends StatelessWidget {
                             vertical: 7.0), // Adds space around each row
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment
-                              .spaceAround, // This ensures space around each image in a row
+                              .spaceAround,
                           children: List.generate(
                             3,
                             (col) {

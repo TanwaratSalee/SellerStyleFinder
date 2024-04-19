@@ -72,21 +72,38 @@ class HomeScreen extends StatelessWidget {
                             return SizedBox
                                 .shrink(); // Use shrink for more semantically correct empty space
                           }
+                            return ListTile(
+                              onTap: () async {
+                                var productSnapshot = await FirebaseFirestore.instance
+                                    .collection('products')
+                                    .where('p_name', isEqualTo: data[index]['p_name'])
+                                    .get();
 
-                          return ListTile(
-                            onTap: () {
-                              Get.to(() => ProductDetails(data: data[index]));
-                            },
-                            leading: Image.network(
-                              data[index]['p_imgs'][0],
-                              width: 60,
-                              height: 80,
-                              fit: BoxFit.cover,
-                            ),
-                            title: Text(data[index]['p_name']).text.size(16).fontFamily(medium).make(),
-                            subtitle: Text(
+                                if (productSnapshot.docs.isNotEmpty) {
+                                  var productData = productSnapshot.docs.first.data();
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ProductDetails(data: productData),
+                                    ),
+                                  );
+                                } else {
+                                  // หากไม่พบข้อมูลสินค้าที่ตรงกับชื่อที่ต้องการ
+                                  // อาจจะทำการแจ้งเตือนผู้ใช้หรือทำการจัดการตามต้องการ
+                                  // ในกรณีนี้เราจะไม่ไปยังหน้า ProductDetails และอาจแสดงข้อความขึ้นมาแทน
+                                  // เช่น Get.snackbar() หรือ Navigator.push() ไปยังหน้าที่เหมาะสม
+                                }
+                              },
+                              leading: Image.network(
+                                data[index]['p_imgs'][0],
+                                width: 60,
+                                height: 80,
+                                fit: BoxFit.cover,
+                              ),
+                              title: Text(data[index]['p_name']).text.size(16).fontFamily(medium).make(),
+                              subtitle: Text(
                                 "${NumberFormat('#,##0').format(double.tryParse(data[index]['p_price'])?.toInt() ?? 0)} Bath"),
-                          );
+                            );
                         },
                       ),
                     ),

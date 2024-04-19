@@ -129,7 +129,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                                       String docId = data[index].id;
                                       if (value == 'edit') {
                                         Get.to(
-                                              () => EditProduct(productData: doc),
+                                              () => EditProduct(productData: doc, documentId: data[index].id,),
                                             );
 
                                       } else if (value == 'delete') {

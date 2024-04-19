@@ -3,27 +3,30 @@ import 'package:seller_finalproject/const/const.dart';
 import 'package:seller_finalproject/controllers/products_controller.dart';
 import 'package:seller_finalproject/controllers/profile_controller.dart';
 
-Widget productDropdown(hint, List<String> list, dropvalue, ProductsController controller) {
+Widget productDropdown(String hint, List<String> list, RxString dropvalue, ProductsController controller) {
   return Obx(
-    () =>  DropdownButtonHideUnderline(
-      child: DropdownButton(
-        hint: Text("$hint",).text.color(greyDark1).size(14).make(),
-        value: dropvalue.value == '' ? null : dropvalue.value,
+    () => DropdownButtonHideUnderline(
+      child: DropdownButton<String>(
+        hint: Text(hint).text.color(Colors.grey[800]!).size(14).make(),
+        value: dropvalue.value.isEmpty ? null : dropvalue.value,
         isExpanded: true,
-        items: list.map((e) {
-          return DropdownMenuItem( 
+        items: list.map((String e) {
+          return DropdownMenuItem<String>(
             value: e,
-            child: e.toString().text.make(), 
+            child: Text(e).text.make(),
           );
         }).toList(),
-        onChanged: (newValue) {
-          if(hint == "Collection") {
-            controller.subcollectionvalue.value = '';
-            controller.populateSubcollection(newValue.toString());
+        onChanged: (String? newValue) {
+          print("New value for collection: $newValue");
+          if (newValue != null) {
+            dropvalue.value = newValue; // Set new value for current dropdown
+            if (hint == "Collection") {
+              controller.subcollectionvalue.value = ''; // Reset subcollection when collection changes
+              controller.populateSubcollection(newValue);
+            }
           }
-          dropvalue.value = newValue.toString();
         },
       ),
-    ).box.color(thinGrey0).padding(const EdgeInsets.symmetric(horizontal: 8, vertical: 6)).border(color: thinGrey01).roundedSM.make(),
+    ).box.color(Colors.grey[200]!).padding(const EdgeInsets.symmetric(horizontal: 8, vertical: 6)).border(color: Colors.grey[300]!).roundedSM.make(),
   );
 }
