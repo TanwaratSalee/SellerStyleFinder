@@ -123,12 +123,10 @@ class _ProductsScreenState extends State<ProductsScreen> {
           .snapshots(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          // Show loading indicator while waiting for data
-          return const Center(child: CircularProgressIndicator());
+          return loadingIndicator();
         }
 
         if (!snapshot.hasData) {
-          // Display a message or another widget when no data is found
           return const Center(child: Text("No matches found."));
         }
 

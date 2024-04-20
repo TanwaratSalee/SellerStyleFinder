@@ -185,7 +185,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                         .snapshots(),
                     builder: (context, snapshot) {
                       if (!snapshot.hasData) {
-                        return const CircularProgressIndicator(); // Loading indicator
+                        return loadingIndicator();
                       }
 
                       Map<String, List<DocumentSnapshot>> mixMatchMap = {};

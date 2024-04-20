@@ -19,9 +19,13 @@ class StoreServices {
   }
 
   static Stream<QuerySnapshot> getUserOrders(String userId) {
-    // Renamed for clarity: This fetches orders based on 'user_id'
-    return firestore.collection(ordersCollection).where('user_id', isEqualTo: userId).orderBy('order_date', descending: true)  .snapshots();
+    return firestore.collection(ordersCollection).where('vendors', isEqualTo: userId).orderBy('order_date', descending: true)  .snapshots();
   }
+
+  static Stream<QuerySnapshot> getOrdersByStatus(String userId, String status) {
+    return FirebaseFirestore.instance.collection(ordersCollection).where('user_id', isEqualTo: userId).where('status', isEqualTo: status).snapshots();
+  }
+
 
 }
 

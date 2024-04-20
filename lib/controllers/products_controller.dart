@@ -34,6 +34,7 @@ class ProductsController extends GetxController {
   var collectionsvalue = ''.obs;
   var subcollectionvalue = ''.obs;
   var selectedColorIndex = 0.obs;
+  var selectedCollections = <String>[].obs;
 
   List<String> sizesList = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
   final selectedSizes = <String>[].obs;
@@ -75,6 +76,17 @@ class ProductsController extends GetxController {
 
   Rxn<Product> selectedTopProduct = Rxn<Product>();
   Rxn<Product> selectedLowerProduct = Rxn<Product>(); 
+
+  void toggleCollection(String collection) {
+    if (selectedCollections.contains(collection)) {
+      selectedCollections.remove(collection);
+    } else {
+      selectedCollections.add(collection);
+    }
+  }
+  bool isCollectionSelected(String collection) {
+    return selectedCollections.contains(collection);
+  }
 
   void setSelectedProduct(Product product, String part) {
     if (part == 'top') {

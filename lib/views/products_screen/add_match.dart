@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:seller_finalproject/const/const.dart';
 import 'package:seller_finalproject/const/styles.dart';
 import 'package:seller_finalproject/controllers/loading_Indcator.dart';
-import 'package:seller_finalproject/views/products_screen/component/product_dropdown.dart';
 import 'package:seller_finalproject/views/products_screen/select_item.dart';
 import 'package:seller_finalproject/views/widgets/custom_textfield.dart';
 
@@ -75,7 +74,7 @@ class _AddMatchProductState extends State<AddMatchProduct> {
                           runSpacing: 8.0,
                           children: controller.genderList.map((gender) {
                             bool isSelected =
-                                controller.selectedCollection.value == gender;
+                                controller.selectedGender.value == gender;
                             return ChoiceChip(
                               showCheckmark: false,
                               label: Text(
@@ -87,7 +86,7 @@ class _AddMatchProductState extends State<AddMatchProduct> {
                               selected: isSelected,
                               onSelected: (selected) {
                                 if (selected) {
-                                  controller.selectedCollection.value = gender;
+                                  controller.selectedGender.value = gender;
                                 }
                               },
                               selectedColor: thinPrimaryApp,
@@ -111,20 +110,18 @@ class _AddMatchProductState extends State<AddMatchProduct> {
                           runSpacing: 8.0,
                           children: controller.collectionList.map((collection) {
                             bool isSelected =
-                                controller.selectedCollection.value == collection;
+                                controller.isCollectionSelected(collection);
                             return ChoiceChip(
                               showCheckmark: false,
                               label: Text(
-                                capitalize(collection), 
+                                capitalize(collection),
                                 style: TextStyle(
                                   color: isSelected ? primaryApp : greyDark1,
                                 ),
-                              ).text.size(18).fontFamily(regular).make(),
+                              ), // Removed .text.size(18).fontFamily(regular).make() for standard styling
                               selected: isSelected,
                               onSelected: (selected) {
-                                if (selected) {
-                                  controller.selectedCollection.value = collection;
-                                }
+                                controller.toggleCollection(collection);
                               },
                               selectedColor: thinPrimaryApp,
                               backgroundColor: thinGrey0,
