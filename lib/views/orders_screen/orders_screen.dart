@@ -29,7 +29,8 @@ class OrdersScreen extends StatelessWidget {
           }
 
           var data = snapshot.data!.docs;
-          data.sort((a, b) => b.get('order_date').compareTo(a.get('order_date')));
+          data.sort(
+(a, b) => b.get('order_date').compareTo(a.get('order_date')));
 
           return Padding(
             padding: const EdgeInsets.all(8.0),
