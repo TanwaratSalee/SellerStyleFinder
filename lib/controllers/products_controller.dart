@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/services.dart';
@@ -219,6 +220,7 @@ void removeImage(int index) {
     }
     var store = firestore.collection(productsCollection).doc();
     await store.set({
+      //Default
       'is_featured': false,
       'p_collection': collectionsvalue.value,
       'p_subcollection': subcollectionvalue.value,
@@ -238,11 +240,12 @@ void removeImage(int index) {
       'p_rating': "5.0",
       'vendor_id': currentUser!.uid,
       'featured_id': '',
+      //Mixmatch
       'p_mixmatch': '',
       'p_mixmatch_colors' : '',
       'p_mixmatch_sex' : '',
       'p_mixmatch_desc' : '',
-      'p_mixmatch_collection' : '',
+      'p_mixmatch_collection' : FieldValue.arrayUnion([]),
     });
     isloading(false);
     VxToast.show(context, msg: "Product successfully uploaded.");
@@ -292,13 +295,14 @@ Future<void> updateProduct(BuildContext context, String documentId) async {
 Future<void> updateProductMatch(BuildContext context, String documentId) async {
   try {
     final productDoc = FirebaseFirestore.instance.collection(productsCollection).doc(documentId);
+    final randomValue = randomString(10);
+
     await productDoc.update({
-      //'p_mixmatch': ,
-      'p_mixmatch_sex': selectedGender.value,
+      'p_mixmatch': randomValue,
       'p_mixmatch_colors': selectedColorIndexes.map((index) => allColors[index]['color'].value).toList(),
-      'p_quantity': pquantityController.text,
-      //'p_mixmatch_desc' : ,
-      //'p_mixmatch_collection' : ,
+      'p_mixmatch_sex': selectedGender.value,
+      'p_mixmatch_desc' : psizeController.text,
+      'p_mixmatch_collection': selectedCollection.value,
     });
 
     // Removing images marked for deletion
@@ -315,6 +319,16 @@ Future<void> updateProductMatch(BuildContext context, String documentId) async {
     VxToast.show(context, msg: "Error updating product. Please try again later.");
   }
 }
+
+  String randomString(int length) {
+    const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+    final random = Random();
+    return String.fromCharCodes(
+      Iterable.generate(
+        length, (_) => chars.codeUnitAt(random.nextInt(chars.length)),
+      ),
+    );
+  }
 
 
   addFeatured(docId) async {

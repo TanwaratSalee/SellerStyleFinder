@@ -60,78 +60,82 @@ class _AddMatchProductState extends State<AddMatchProduct> {
                   ],
                 ),
                 20.heightBox,
-                Text("Suitable for gender")
-                    .text
-                    .size(16)
-                    .color(greyDark1)
-                    .fontFamily(medium)
-                    .make(),
-                10.heightBox,
-                Obx(() => Wrap(
-                      spacing: 8.0,
-                      runSpacing: 8.0,
-                      children: controller.genderList.map((gender) {
-                        bool isSelected =
-                            controller.selectedCollection.value == gender;
-                        return ChoiceChip(
-                          showCheckmark: false,
-                          label: Text(
-                            capitalize(gender), // เฉพาะตัวอักษรแรกเป็นพิมพ์ใหญ่
-                            style: TextStyle(
-                              color: isSelected ? primaryApp : greyDark1,
-                            ),
-                          ).text.size(18).fontFamily(regular).make(),
-                          selected: isSelected,
-                          onSelected: (selected) {
-                            if (selected) {
-                              controller.selectedCollection.value = gender;
-                            }
-                          },
-                          selectedColor: thinPrimaryApp,
-                          backgroundColor: thinGrey0,
-                          side: isSelected
-                              ? BorderSide(color: primaryApp, width: 2)
-                              : BorderSide(color: greyColor),
-                        );
-                      }).toList(),
-                    )),
-
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("Suitable for gender")
+                        .text
+                        .size(16)
+                        .color(greyDark1)
+                        .fontFamily(medium)
+                        .make(),
+                    10.heightBox,
+                    Obx(() => Wrap(
+                          spacing: 8.0,
+                          runSpacing: 8.0,
+                          children: controller.genderList.map((gender) {
+                            bool isSelected =
+                                controller.selectedCollection.value == gender;
+                            return ChoiceChip(
+                              showCheckmark: false,
+                              label: Text(
+                                capitalize(gender),
+                                style: TextStyle(
+                                  color: isSelected ? primaryApp : greyDark1,
+                                ),
+                              ).text.size(18).fontFamily(regular).make(),
+                              selected: isSelected,
+                              onSelected: (selected) {
+                                if (selected) {
+                                  controller.selectedCollection.value = gender;
+                                }
+                              },
+                              selectedColor: thinPrimaryApp,
+                              backgroundColor: thinGrey0,
+                              side: isSelected
+                                  ? BorderSide(color: primaryApp, width: 2)
+                                  : BorderSide(color: greyColor),
+                            );
+                          }).toList(),
+                        )),
                     15.heightBox,
                     Text("Collection")
-                    .text
-                    .size(16)
-                    .color(greyDark1)
-                    .fontFamily(medium)
-                    .make(),
-                10.heightBox,
-                Obx(() => Wrap(
-                      spacing: 8.0,
-                      runSpacing: 8.0,
-                      children: controller.collectionList.map((collection) {
-                        bool isSelected =
-                            controller.selectedCollection.value == collection;
-                        return ChoiceChip(
-                          showCheckmark: false,
-                          label: Text(
-                            capitalize(collection), 
-                            style: TextStyle(
-                              color: isSelected ? primaryApp : greyDark1,
-                            ),
-                          ).text.size(18).fontFamily(regular).make(),
-                          selected: isSelected,
-                          onSelected: (selected) {
-                            if (selected) {
-                              controller.selectedCollection.value = collection;
-                            }
-                          },
-                          selectedColor: thinPrimaryApp,
-                          backgroundColor: thinGrey0,
-                          side: isSelected
-                              ? BorderSide(color: primaryApp, width: 2)
-                              : BorderSide(color: greyColor),
-                        );
-                      }).toList(),
-                    )),
+                        .text
+                        .size(16)
+                        .color(greyDark1)
+                        .fontFamily(medium)
+                        .make(),
+                    10.heightBox,
+                    Obx(() => Wrap(
+                          spacing: 8.0,
+                          runSpacing: 8.0,
+                          children: controller.collectionList.map((collection) {
+                            bool isSelected =
+                                controller.selectedCollection.value == collection;
+                            return ChoiceChip(
+                              showCheckmark: false,
+                              label: Text(
+                                capitalize(collection), 
+                                style: TextStyle(
+                                  color: isSelected ? primaryApp : greyDark1,
+                                ),
+                              ).text.size(18).fontFamily(regular).make(),
+                              selected: isSelected,
+                              onSelected: (selected) {
+                                if (selected) {
+                                  controller.selectedCollection.value = collection;
+                                }
+                              },
+                              selectedColor: thinPrimaryApp,
+                              backgroundColor: thinGrey0,
+                              side: isSelected
+                                  ? BorderSide(color: primaryApp, width: 2)
+                                  : BorderSide(color: greyColor),
+                            );
+                          }).toList(),
+                        )),
+                  ],
+                ),
                 15.heightBox,
                 customTextField(
                     hint: "Explain clothing matching",
