@@ -1,4 +1,3 @@
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:seller_finalproject/const/const.dart';
 import 'package:seller_finalproject/const/styles.dart';
@@ -6,7 +5,6 @@ import 'package:seller_finalproject/controllers/auth_controller.dart';
 import 'package:seller_finalproject/controllers/loading_Indcator.dart';
 import 'package:seller_finalproject/views/home_screen/home.dart';
 import 'package:seller_finalproject/views/widgets/our_button.dart';
-import 'package:seller_finalproject/views/widgets/text_style.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -30,7 +28,7 @@ class LoginScreen extends StatelessWidget {
             child: Column(
               children: [
                 // 30.heightBox,
-                // normalText(text: welcome, size: 18.0),
+                // Text(text: welcome, size: 18.0),
                 // 20.heightBox,
                 // Row(
                 //   children: [
@@ -45,22 +43,22 @@ class LoginScreen extends StatelessWidget {
                 //         .padding(const EdgeInsets.all(8.0))
                 //         .make(),
                 //     10.widthBox,
-                //     boldText(text: appname, size: 20.0)
+                //     Text(text: appname, size: 20.0)
                 //   ],
                 // ),
                 200.heightBox,
                 
                 Obx(() => Column(
                     children: [
-                      Text(loginTo,).text.size(24).color(blackColor).fontFamily(medium).make(),
-                      40.heightBox,
+                      const Text(loginTo).text.size(36).color(blackColor).fontFamily(medium).make(),
+                      20.heightBox,
                       TextFormField(
                         controller: controller.emailController,
                         decoration: const InputDecoration(
-                          prefixIcon: Icon(
-                            Icons.email,
-                            color: greyColor,
-                          ),
+                          // prefixIcon: Icon(
+                          //   Icons.email,
+                          //   color: greyColor,
+                          // ),
                           border: InputBorder.none,
                           hintText: email,
                         ),
@@ -69,17 +67,17 @@ class LoginScreen extends StatelessWidget {
                           .white
                           .rounded
                           .outerShadowMd
-                          .padding(const EdgeInsets.all(8.0))
+                          .padding(const EdgeInsets.symmetric(vertical: 8,horizontal: 22))
                           .make(),
                       10.heightBox,
                       TextFormField(
                         obscureText: true,
                         controller: controller.passwordController,
                         decoration: const InputDecoration(
-                          prefixIcon: Icon(
-                            Icons.lock,
-                            color: greyColor,
-                          ),
+                          // prefixIcon: Icon(
+                          //   Icons.lock,
+                          //   color: greyColor,
+                          // ),
                           border: InputBorder.none,
                           hintText: password,
                         ),
@@ -88,36 +86,41 @@ class LoginScreen extends StatelessWidget {
                           .white
                           .rounded
                           .outerShadowMd
-                          .padding(const EdgeInsets.all(8.0))
+                          .padding(const EdgeInsets.symmetric(vertical: 8,horizontal: 22))
                           .make(),
                       Align(
                           alignment: Alignment.centerRight,
                           child: TextButton(
                               onPressed: () {},
-                              child: normalText(
-                                  text: forgotPassword, color: greyDark2))),
-                      20.heightBox,
+                              child: const Text(
+                                   forgotPassword).text.size(14).color(greyDark1).fontFamily(medium).make())),
+                      10.heightBox,
                       SizedBox(
                         child: controller.isloading.value
                             ? loadingIndicator()
-                            : ourButton(
-                                title: login,
-                                onPress: () async {
-                                  controller.isloading(true);
-                
-                                  await controller
-                                      .loginMethod(context: context)
-                                      .then((value) {
-                                    if (value != null) {
-                                      VxToast.show(context, msg: "Logged in successfully");
-                                      controller.isloading(false);
-                                      Get.offAll(() => const Home());
-                                    } else {
-                                      controller.isloading(false);
-                                    }
-                                  });
-                                },
-                              ),
+                            :  ourButton(
+                            title: 'Login',
+                            onPress: () async {
+                              await controller.loginMethod(context: context);
+                            },
+                          ),
+                            // : ourButton(
+                            //     title: login,
+                            //     onPress: () async {
+                            //       controller.isloading(true);
+                            //       await controller
+                            //           .loginMethod(context: context)
+                            //           .then((value) {
+                            //         if (value != null) {
+                            //           VxToast.show(context, msg: "Logged in successfully");
+                            //           controller.isloading(false);
+                            //           Get.offAll(() => const Home());
+                            //         } else {
+                            //           controller.isloading(false);
+                            //         }
+                            //       });
+                            //     },
+                            //   ),
                       ),
                     ],
                   )
@@ -129,10 +132,10 @@ class LoginScreen extends StatelessWidget {
                       .make(),
                 ),
                 10.heightBox,
-                // Center(child: normalText(text: anyProblem, color: whiteColor)),
+                // Center(child: Text(text: anyProblem, color: whiteColor)),
                 const Spacer(),
                 // Center(
-                //   child: boldText(text: credit),
+                //   child: Text(text: credit),
                 // ),
               ],
             ),

@@ -1,5 +1,4 @@
 import 'package:seller_finalproject/const/const.dart';
-import 'package:seller_finalproject/views/widgets/text_style.dart';
 
 Widget chatBubble() {
   return Directionality(
@@ -20,10 +19,10 @@ Widget chatBubble() {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // "${data['msg]}".text.white.size(16).make(),
-            normalText(text: "Your message here..."),
+            Text( "Your message here..."),
             10.heightBox,
             // time.text.color(whiteColor.withOpacity(0.5)).make(),
-            normalText(text: "10.45PM")
+            Text( "10.45PM")
           ],
         ),
     ));

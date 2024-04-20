@@ -1,5 +1,4 @@
 import 'package:seller_finalproject/views/messages_screen/components/chat_bubble.dart';
-import 'package:seller_finalproject/views/widgets/text_style.dart';
 
 import '../../const/const.dart';
 
@@ -10,7 +9,7 @@ class ChatScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: boldText(text: chat, size: 16.0, color: blackColor),
+        title: Text( chat),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),

@@ -1,8 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-import 'package:seller_finalproject/const/colors.dart';
 import 'package:seller_finalproject/const/const.dart';
-import 'package:seller_finalproject/const/lists.dart';
 import 'package:seller_finalproject/controllers/auth_controller.dart';
 import 'package:seller_finalproject/controllers/loading_Indcator.dart';
 import 'package:seller_finalproject/controllers/profile_controller.dart';
@@ -13,7 +10,6 @@ import 'package:seller_finalproject/views/profile_screen/edit_screen.dart';
 import 'package:seller_finalproject/views/profile_screen/notification.dart';
 import 'package:seller_finalproject/views/profile_screen/review_screen.dart';
 import 'package:seller_finalproject/views/shop_screen/shop_settings_screen.dart';
-import 'package:seller_finalproject/views/widgets/text_style.dart'; // Import NotificationBadge widget
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -31,7 +27,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       backgroundColor: whiteColor,
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: boldText(text: settings, color: blackColor, size: 25.0),
+        title: Text( settings),
         actions: [
           IconButton(
             onPressed: () {
@@ -46,7 +42,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               await Get.find<AuthController>().signoutMethod(context);
               Get.offAll(() => const LoginScreen());
             },
-            child: normalText(text: logout, color: blackColor),
+            child: Text( logout),
           ),
         ],
       ),
@@ -73,12 +69,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             controller.snapshotData['imageUrl'],
                             width: 100,
                           ).box.roundedFull.clip(Clip.antiAlias).make(),
-                    title: boldText(
-                        text: "${controller.snapshotData['vendor_name']}",
-                        color: blackColor),
-                    subtitle: normalText(
-                        text: "${controller.snapshotData['email']}",
-                        color: greyDark2),
+                    title: Text(
+                         "${controller.snapshotData['vendor_name']}",
+                         ),
+                    subtitle: Text(
+                         "${controller.snapshotData['email']}",
+                         ),
                   ),
                   const Divider(),
                   10.heightBox,
@@ -121,9 +117,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ),
                             ],
                           ),
-                          title: normalText(
-                            text: profileButtonsTitles[index],
-                            color: greyDark2,
+                          title: Text(
+                             profileButtonsTitles[index],
+                          
                           ),
                         ),
                       ),

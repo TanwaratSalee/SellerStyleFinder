@@ -1,5 +1,3 @@
-import 'package:seller_finalproject/views/widgets/text_style.dart';
-
 import '../../../const/const.dart';
 
 Widget orderPlaceDetails({title1, title2, d1, d2}) {
@@ -11,8 +9,8 @@ Widget orderPlaceDetails({title1, title2, d1, d2}) {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            boldText(text: "$title1", color: blackColor),
-            normalText(text: "$d1", color: primaryApp)
+            Text("$title1"),
+            Text("$d1")
             ],
         ),
         SizedBox(
@@ -20,8 +18,8 @@ Widget orderPlaceDetails({title1, title2, d1, d2}) {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-            boldText(text: "$title2", color: greyDark2),
-            normalText(text: "$d2", color: greyColor)
+            Text("$title2"),
+            Text("$d2")
             ],
           ),
         )

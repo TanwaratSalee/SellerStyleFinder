@@ -1,5 +1,4 @@
 import 'package:seller_finalproject/const/const.dart';
-import 'package:seller_finalproject/views/widgets/text_style.dart';
 
 Widget dashboardButton(context, {title, count, icon}) {
   var size = MediaQuery.of(context).size;
@@ -11,8 +10,8 @@ Widget dashboardButton(context, {title, count, icon}) {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          boldText(text: title, size: 16.0),
-          boldText(text: count, size: 20.0)
+          Text(title).text.size(16).make(),
+          Text(count).text.size(20).make()
         ],
       )),
       Image.asset(

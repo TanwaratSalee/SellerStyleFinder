@@ -1,9 +1,7 @@
-import 'package:flutter/services.dart';
 import 'package:seller_finalproject/controllers/orders_controller.dart';
 import 'package:seller_finalproject/controllers/profile_controller.dart';
 import 'package:seller_finalproject/views/orders_screen/components/order_place.dart';
 import 'package:seller_finalproject/views/widgets/our_button.dart';
-import 'package:seller_finalproject/views/widgets/text_style.dart';
 import '../../const/const.dart';
 // ignore: depend_on_referenced_packages
 import 'package:intl/intl.dart' as intl;
@@ -32,7 +30,7 @@ class _OrderDetailsState extends State<OrderDetails> {
   Widget build(BuildContext context) {
     return Obx(() => Scaffold(
           appBar: AppBar(
-            title: boldText(text: "Order Details", size: 16.0, color: blackColor),
+            title: Text("Order Details"),
           ),
           bottomNavigationBar: Visibility(
             visible: !controller.confirmed.value,
@@ -57,12 +55,12 @@ class _OrderDetailsState extends State<OrderDetails> {
                     child: Column(
                       children: [
                         10.heightBox,
-                        boldText(text: "Order Status", color: greyDark2, size: 16.0),
+                        Text("Order Status"),
                         SwitchListTile(
                           activeColor: primaryApp,
                           value: true, 
                           onChanged: (value) {}, 
-                          title: boldText(text: "Placed", color: greyDark2),
+                          title: Text("Placed"),
                         ),
                         SwitchListTile(
                           activeColor: primaryApp,
@@ -70,7 +68,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                           onChanged: (value) {
                             controller.confirmed.value = value;
                           }, 
-                          title: boldText(text: "Confirmed", color: greyDark2),
+                          title: Text("Confirmed"),
                         ),
                         SwitchListTile(
                           activeColor: primaryApp,
@@ -79,7 +77,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                             controller.ondelivery.value = value;
                             controller.changeStatus(title: "order_on_delivery", status: value, docID: widget.data.id);
                           }, 
-                          title: boldText(text: "On Delivery", color: greyDark2),
+                          title: Text("On Delivery"),
                         ),
                         SwitchListTile(
                           activeColor: primaryApp,
@@ -87,7 +85,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                             controller.delivered.value = value;
                             controller.changeStatus(title: "order_delivered", status: value, docID: widget.data.id);
                           }, 
-                          title: boldText(text: "Delivered", color: greyDark2),
+                          title: Text("Delivered"),
                         ),
                       ],
                     ).box.padding(const EdgeInsets.all(8.0)).outerShadowMd.white.border(color: thinGrey01).rounded.make(),
@@ -125,8 +123,8 @@ class _OrderDetailsState extends State<OrderDetails> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 // "Shipping Address".text.fontFamily(semibold).make(),
-                                boldText(
-                                text: "Shipping Address", color: blackColor),
+                                Text(
+                                "Shipping Address",),
                                 "${widget.data['order_by_name']}".text.make(),
                                 "${widget.data['order_by_email']}".text.make(),
                                 "${widget.data['order_by_address']}".text.make(),
@@ -142,10 +140,10 @@ class _OrderDetailsState extends State<OrderDetails> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  boldText(
-                                      text: "Total Amount", color: blackColor),
-                                  normalText(
-                                      text: "${widget.data['total_amount']} Bath", color: primaryApp, size: 16.0),
+                                  Text(
+                                      "Total Amount",),
+                                  Text(
+                                      "${widget.data['total_amount']} Bath", ),
                                   // "Total Amount".text.fontFamily(semibold).make(),
                                   // "${data['total_amount']}".text.color(primaryApp).fontFamily(bold).make()
                                 ],
@@ -161,7 +159,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                  Column(
                    children: [
                   10.heightBox,
-                    boldText(text: "Ordered Product", color: greyDark2, size: 16.0),
+                    Text("Ordered Product"),
                   10.heightBox,
                   ListView(
                     physics: const NeverScrollableScrollPhysics(),

@@ -3,7 +3,6 @@ import 'package:seller_finalproject/const/const.dart';
 import 'package:seller_finalproject/controllers/loading_Indcator.dart';
 import 'package:seller_finalproject/services/store_services.dart';
 import 'package:seller_finalproject/views/messages_screen/chat_screen.dart';
-import 'package:seller_finalproject/views/widgets/text_style.dart';
 import 'package:get/get.dart';
 // ignore: unused_import, depend_on_referenced_packages
 import 'package:intl/intl.dart' as intl;
@@ -15,7 +14,7 @@ class MessagesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: boldText(text: messages, size: 16.0, color: blackColor),
+          title: Text( messages),
         ),
         body: StreamBuilder(
             stream: StoreServices.getMessages(currentUser!.uid),
@@ -45,12 +44,12 @@ class MessagesScreen extends StatelessWidget {
                                       Icons.person,
                                       color: whiteColor,
                                     )),
-                                title: boldText(
-                                    text: "${data[index]['sender_name']}", color: blackColor),
-                                subtitle: normalText(
-                                    text: "${data[index]['last_msg']}", color: greyColor),
-                                trailing: normalText(
-                                    text: time, color: greyColor),
+                                title: Text(
+                                    "${data[index]['sender_name']}"),
+                                subtitle: Text(
+                                    "${data[index]['last_msg']}"),
+                                trailing: Text(
+                                    time,),
                               );
                           }),
                     ),
@@ -77,7 +76,7 @@ class MessagesScreen extends StatelessWidget {
 //   Widget build(BuildContext context) {
 //     return Scaffold(
 //         appBar: AppBar(
-//           title: boldText(text: messages, size: 16.0, color: blackColor),
+//           title: Text(text: messages, size: 16.0, color: blackColor),
 //         ),
 //         body: StreamBuilder(
 //             stream: StoreServices.getMessages(currentUser!.uid),
@@ -108,13 +107,13 @@ class MessagesScreen extends StatelessWidget {
 //                                 Icons.person,
 //                                 color: whiteColor,
 //                               )),
-//                           title: boldText(
+//                           title: Text(
 //                               text: "${data[index]['sender_name']}",
 //                               color: blackColor),
-//                           subtitle: normalText(
+//                           subtitle: Text(
 //                               text: "${data[index]['last_msg']}",
 //                               color: greyColor),
-//                           trailing: normalText(text: time, color: greyColor),
+//                           trailing: Text(text: time, color: greyColor),
 //                         );
 //                       }),
 //                     ),

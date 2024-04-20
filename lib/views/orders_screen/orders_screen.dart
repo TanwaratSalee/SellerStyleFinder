@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:intl/intl.dart';
@@ -17,7 +16,8 @@ class OrdersScreen extends StatefulWidget {
   State<OrdersScreen> createState() => _OrdersScreenState();
 }
 
-class _OrdersScreenState extends State<OrdersScreen> with SingleTickerProviderStateMixin {
+class _OrdersScreenState extends State<OrdersScreen>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
   final OrdersController controller = Get.put(OrdersController());
 
@@ -76,12 +76,13 @@ class _OrdersScreenState extends State<OrdersScreen> with SingleTickerProviderSt
           );
         }
 
-        var data = snapshot.data!.docs.where((order) =>
-            order['order_placed'] == true &&
-            order['order_confirmed'] == false &&
-            order['order_delivered'] == false &&
-            order['order_on_delivery'] == false
-        ).toList();
+        var data = snapshot.data!.docs
+            .where((order) =>
+                order['order_placed'] == true &&
+                order['order_confirmed'] == false &&
+                order['order_delivered'] == false &&
+                order['order_on_delivery'] == false)
+            .toList();
 
         return buildOrderList(data);
       },
@@ -101,12 +102,13 @@ class _OrdersScreenState extends State<OrdersScreen> with SingleTickerProviderSt
           );
         }
 
-        var data = snapshot.data!.docs.where((order) =>
-            order['order_placed'] == true &&
-            order['order_confirmed'] == true &&
-            order['order_delivered'] == false &&
-            order['order_on_delivery'] == false
-        ).toList();
+        var data = snapshot.data!.docs
+            .where((order) =>
+                order['order_placed'] == true &&
+                order['order_confirmed'] == true &&
+                order['order_delivered'] == false &&
+                order['order_on_delivery'] == false)
+            .toList();
 
         return buildOrderList(data);
       },
@@ -118,20 +120,21 @@ class _OrdersScreenState extends State<OrdersScreen> with SingleTickerProviderSt
       stream: StoreServices.getOrders(currentUser!.uid),
       builder: (context, snapshot) {
         if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-        return const Center(
-          child: Text(
-            'No order yet!',
-            style: TextStyle(fontSize: 18, color: greyColor),
-          ),
-        );
-      }
+          return const Center(
+            child: Text(
+              'No order yet!',
+              style: TextStyle(fontSize: 18, color: greyColor),
+            ),
+          );
+        }
 
-        var data = snapshot.data!.docs.where((order) =>
-            order['order_placed'] == true &&
-            order['order_confirmed'] == true &&
-            order['order_delivered'] == true &&
-            order['order_on_delivery'] == false
-        ).toList();
+        var data = snapshot.data!.docs
+            .where((order) =>
+                order['order_placed'] == true &&
+                order['order_confirmed'] == true &&
+                order['order_delivered'] == true &&
+                order['order_on_delivery'] == false)
+            .toList();
 
         return buildOrderList(data);
       },
@@ -151,12 +154,13 @@ class _OrdersScreenState extends State<OrdersScreen> with SingleTickerProviderSt
           );
         }
 
-        var data = snapshot.data!.docs.where((order) =>
-            order['order_placed'] == true &&
-            order['order_confirmed'] == true &&
-            order['order_delivered'] == true &&
-            order['order_on_delivery'] == true
-        ).toList();
+        var data = snapshot.data!.docs
+            .where((order) =>
+                order['order_placed'] == true &&
+                order['order_confirmed'] == true &&
+                order['order_delivered'] == true &&
+                order['order_on_delivery'] == true)
+            .toList();
 
         return buildOrderList(data);
       },
