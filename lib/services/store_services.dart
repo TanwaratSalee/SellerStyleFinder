@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:seller_finalproject/const/firebase_consts.dart';
 
 class StoreServices {
@@ -15,6 +16,14 @@ class StoreServices {
 
   static getProducts(uid) {
     return firestore.collection(productsCollection).where('vendor_id', isEqualTo: uid).snapshots();
+  }
+
+  static Stream<QuerySnapshot> getUserOrders(String userId) {
+    // Renamed for clarity: This fetches orders based on 'user_id'
+    return firestore.collection(ordersCollection)
+        .where('user_id', isEqualTo: userId)
+        .orderBy('order_date', descending: true)  
+        .snapshots();
   }
 }
 

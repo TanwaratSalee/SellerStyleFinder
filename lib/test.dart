@@ -1,218 +1,244 @@
-import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:seller_finalproject/const/const.dart';
-import 'package:seller_finalproject/controllers/loading_Indcator.dart';
-import 'package:seller_finalproject/controllers/orders_controller.dart';
-import 'package:seller_finalproject/services/store_services.dart';
-import 'package:seller_finalproject/views/orders_screen/order_details.dart';
-import 'package:seller_finalproject/views/widgets/appbar_widget.dart';
-import 'package:seller_finalproject/views/widgets/text_style.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
-// ignore: depend_on_referenced_packages
+import 'package:intl/intl.dart';
+import 'package:seller_finalproject/const/const.dart';
+import 'package:seller_finalproject/const/styles.dart';
+import 'package:seller_finalproject/controllers/loading_Indcator.dart';
+// import 'package:seller_finalproject/controllers/loading_indicator.dart';
+import 'package:seller_finalproject/controllers/products_controller.dart';
+import 'package:seller_finalproject/services/store_services.dart';
+import 'package:seller_finalproject/views/products_screen/add_match.dart';
+import 'package:seller_finalproject/views/products_screen/add_product.dart';
+import 'package:seller_finalproject/views/products_screen/edit_product.dart';
+import 'package:seller_finalproject/views/products_screen/product_details.dart';
+// ignore: unused_import, depend_on_referenced_packages
 import 'package:intl/intl.dart' as intl;
 
-class OrdersScreen extends StatelessWidget {
-  const OrdersScreen({Key? key});
+class ProductsScreen extends StatefulWidget {
+  const ProductsScreen({Key? key}) : super(key: key);
+
+  @override
+  _ProductsScreenState createState() => _ProductsScreenState();
+}
+
+class _ProductsScreenState extends State<ProductsScreen> {
+  final searchController = TextEditingController();
+  var controller = Get.put(ProductsController());
+  final String vendorId = FirebaseAuth.instance.currentUser!.uid;
 
   @override
   Widget build(BuildContext context) {
-    var controllers = Get.put(OrdersController());
-
     return DefaultTabController(
-      length: 6,
+      length: 2, // Total number of tabs
       child: Scaffold(
+        // floatingActionButton: FloatingActionButton(
+        //   backgroundColor: primaryApp,
+        //   onPressed: () async {
+        //     await controller.getCollection();
+        //     controller.populateCollectionList();
+        //     Get.to(() => const AddProduct());
+        //   },
+        //   child: const Icon(Icons.add, color: whiteColor),
+        // ),
         appBar: AppBar(
-          title: const Text('Orders'),
+          title: const Text('Products'),
           bottom: const TabBar(
-            isScrollable: true,
+            labelColor: primaryApp,
+            unselectedLabelColor: greyColor,
+            indicatorColor: primaryApp,
             tabs: [
-              Tab(
-                child: Row(
-                  children: [
-                    const Text('All '),
-                    Text('(10)'),
-                  ],
-                ),
-              ),
-              Tab(
-                child: Row(
-                  children: [
-                    const Text('Unpaid '),
-                    Text('(5)'),
-                  ],
-                ),
-              ),
-              Tab(
-                child: Row(
-                  children: [
-                    const Text('In Transit '),
-                    Text('(7)'),
-                  ],
-                ),
-              ),
-              Tab(
-                child: Row(
-                  children: [
-                    const Text('Awaiting Shipment '),
-                    Text('(3)'),
-                  ],
-                ),
-              ),
-              Tab(
-                child: Row(
-                  children: [
-                    const Text('Delivered '),
-                    Text('(15)'),
-                  ],
-                ),
-              ),
-              Tab(
-                child: Row(
-                  children: [
-                    const Text('Completed '),
-                    Text('(20)'),
-                  ],
-                ),
-              ),
+              Tab(text: 'Products'),
+              Tab(text: 'Matches'),
             ],
           ),
         ),
-        body: TabBarView(
+        body: Column(
           children: [
-            // สินค้าของแท็บ All
-            StreamBuilder(
-                stream: StoreServices.getOrders(currentUser!.uid),
-                builder: (BuildContext context,
-                    AsyncSnapshot<QuerySnapshot> snapshot) {
-                  if (!snapshot.hasData) {
-                    return loadingIndicator();
-                  } else {
-                    var data = snapshot.data!.docs;
+            // Padding(
+            //   padding: const EdgeInsets.all(8.0),
+            //   child: TextField(
+            //     controller: searchController,
+            //     decoration: InputDecoration(
+            //       labelText: 'Search',
+            //       hintText: 'Search for products...',
+            //       prefixIcon: const Icon(Icons.search),
+            //       border: OutlineInputBorder(
+            //         borderRadius: BorderRadius.circular(25.0),
+            //       ),
+            //     ),
+            //     onChanged: (value) {
+            //       // Implement your search functionality here
+            //     },
+            //   ),
+            // ),
+            Expanded(
+              child: TabBarView(
+                children: [
+                  // First tab content
+                  StreamBuilder<QuerySnapshot>(
+                    stream: StoreServices.getProducts(currentUser!.uid),
+                    builder: (context, snapshot) {
+                      if (!snapshot.hasData) {
+                        return loadingIndicator();
+                      }
+                      var data = snapshot.data!.docs;
+                      return Column(
+                        children: [
+                          ListTile(
+                            leading: const Icon(Icons.add),
+                            title: const Text('Add new product'),
+                            onTap: () async {
+                              await controller.getCollection();
+                              controller.populateCollectionList();
+                              Get.to(() => const AddProduct());
+                            },
+                          ),
+                          Expanded(
+                            child: ListView.builder(
+                              itemCount: data.length,
+                              itemBuilder: (context, index) {
+                                var doc =
+                                    data[index].data() as Map<String, dynamic>;
+                                bool isFeatured = doc['is_featured']
+                                        .toString()
+                                        .toLowerCase() == 'true';
 
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: ListView.builder(
-                        physics: const BouncingScrollPhysics(),
-                        itemCount: data.length,
-                        itemBuilder: (context, index) {
-                          // var time = data[index]['order_date'].toDate();
-                          // var productImage = data[index]
-                          //     ['assets/product.jpg']; // URL ของรูปภาพสินค้า
-                          // var productName =
-                          //     data[index]['product_name']; // ชื่อสินค้า
-                          // var productPrice =
-                          //     data[index]['product_price']; // ราคาสินค้า
-                          // var productQuantity =
-                          //     data[index]['product_quantity']; // จำนวนสินค้า
-                          // var totalPrice =
-                          //     data[index]['total_amount']; // ราคารวมทั้งหมด
-
-                          return Container(
-                            padding: const EdgeInsets.all(8.0),
-                            margin: const EdgeInsets.only(bottom: 8.0),
-                            decoration: BoxDecoration(
-                              color: thinGrey01,
-                              borderRadius: BorderRadius.circular(12.0),
-                            ),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                // ส่วนแสดงรูปภาพสินค้า
-                                Container(
-                                  width: 100,
-                                  height: 100,
-                                  // decoration: BoxDecoration(
-                                  //   color: productImage != null
-                                  //       ? Colors.transparent
-                                  //       : Colors.grey, // สีเทาเมื่อไม่มีรูปภาพ
-                                  //   borderRadius: BorderRadius.circular(12.0),
-                                  // ),
-                                  //   child: productImage != null
-                                  //       ? Image.network(
-                                  //           productImage,
-                                  //           fit: BoxFit.cover,
-                                  //         )
-                                  //       : Icon(Icons.image,
-                                  //           color: Colors.white,
-                                  //           size:
-                                  //               50), // ไอคอนรูปภาพเมื่อไม่มีรูปภาพ
-                                ),
-                                const SizedBox(width: 10),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                return ListTile(
+                                  onTap: () =>
+                                      Get.to(() => ProductDetails(data: doc)),
+                                  leading: Image.network(
+                                    doc['p_imgs'][0],
+                                    width: 50,
+                                    height: 150,
+                                    fit: BoxFit.cover,
+                                  ),
+                                  title: Text(doc['p_name'])
+                                      .text
+                                      .size(16)
+                                      .fontFamily(medium)
+                                      .make(),
+                                  subtitle: Row(
                                     children: [
-                                      // ส่วนแสดงรหัสออร์เดอร์
                                       Text(
-                                        "${data[index]['order_code']}",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: greyDark2,
-                                        ),
-                                      ),
-                                      const SizedBox(height: 5),
-                                      // ส่วนแสดงวันที่
-                                      Row(
-                                        children: [
-                                          Icon(Icons.calendar_month,
-                                              color: greyDark2),
-                                          const SizedBox(width: 5),
-                                          // Text(
-                                          //   intl.DateFormat()
-                                          //       .add_yMd()
-                                          //       .format(time),
-                                          //   style: TextStyle(color: greyColor),
-                                          // ),
-                                        ],
-                                      ),
-                                      const SizedBox(height: 5),
-                                      // ส่วนแสดงสถานะการชำระเงิน
-                                      Row(
-                                        children: [
-                                          Icon(Icons.payment,
-                                              color: greyDark2),
-                                          const SizedBox(width: 5),
-                                          Text(unpaid,
-                                              style: TextStyle(color: redColor)),
-                                        ],
-                                      ),
+                                          "${NumberFormat('#,##0').format(double.tryParse(doc['p_price'])?.toInt() ?? 0)} Bath"),
+                                      const SizedBox(width: 10),
+                                      // if (isFeatured) Text("Featured"),
                                     ],
                                   ),
-                                ),
-                                const SizedBox(width: 10),
-                                // ส่วนแสดงราคารวม
-                                // Text(
-                                //   "$totalPrice Bath",
-                                //   style: TextStyle(
-                                //     fontWeight: FontWeight.bold,
-                                //     color: blackColor,
-                                //     fontSize: 16.0,
-                                //   ),
-                                // ),
-                              ],
+                                  trailing: PopupMenuButton<String>(
+                                    onSelected: (String value) {
+                                      String docId = data[index].id;
+                                      if (value == 'edit') {
+                                        Get.to(
+                                              () => EditProduct(productData: doc, documentId: data[index].id,),
+                                            );
+
+                                      } else if (value == 'delete') {
+                                        controller.removeProduct(docId);
+                                      }
+                                    },
+                                    itemBuilder: (BuildContext context) =>
+                                        <PopupMenuEntry<String>>[
+                                      const PopupMenuItem<String>(
+                                        value: 'edit',
+                                        child: Text('Edit'),
+                                      ),
+                                      const PopupMenuItem<String>(
+                                        value: 'delete',
+                                        child: Text('Delete'),
+                                      ),
+                                    ],
+                                    icon: Icon(Icons.more_vert), // Icon for the button
+                                  ),
+                                );
+                              },
                             ),
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                  // Second tab content
+                  Center(
+                child: Column(
+                  children: [
+                    ListTile(
+                      leading: const Icon(Icons.add),
+                      title: const Text('Add new match'),
+                      onTap: () async {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => AddMatchProduct()),
+                        );
+                      },
+                    ),
+            Expanded(
+              child: TabBarView(
+                children: [
+                  // Products Tab
+                  StreamBuilder<QuerySnapshot>(
+                    stream: FirebaseFirestore.instance
+                        .collection('products')
+                        .where('vendor_id', isEqualTo: vendorId)
+                        .snapshots(),
+                    builder: (context, snapshot) {
+                      if (!snapshot.hasData) {
+                        return const CircularProgressIndicator(); // Loading indicator
+                      }
+
+                      Map<String, List<DocumentSnapshot>> mixMatchMap = {};
+
+                      for (var doc in snapshot.data!.docs) {
+                        var data = doc.data() as Map<String, dynamic>;
+                        if (data['vendor_id'] == vendorId && data['p_mixmatch'] != null) {
+                          String mixMatchKey = data['p_mixmatch'];
+                          mixMatchMap.putIfAbsent(mixMatchKey, () => []).add(doc);
+                        }
+                      }
+                      // Filter groups with more than one entry
+                      var validPairs = mixMatchMap.entries
+                          .where((entry) => entry.value.length == 2)
+                          .toList();
+
+                      return ListView.builder(
+                        itemCount: validPairs.length,
+                        itemBuilder: (context, index) {
+                          var pair = validPairs[index];
+                          var product1 = pair.value[0].data() as Map<String, dynamic>;
+                          var product2 = pair.value[1].data() as Map<String, dynamic>;
+
+                          String price1 = product1['p_price'].toString();
+                          String price2 = product2['p_price'].toString();
+
+                          String name1 = product1['p_name'].toString();
+                          String name2 = product2['p_name'].toString();
+
+                          String productImage1 = product1['p_imgs'][0];
+                          String productImage2 = product2['p_imgs'][0];
+
+                          return ListTile(
+                            // leading: Image.network(productImage1, width: 50, height: 50, fit: BoxFit.cover),
+                            // trailing: Image.network(productImage2, width: 50, height: 50, fit: BoxFit.cover),
+                            // title: Text('Product 1: ${product1['p_name']} - Product 2: ${product2['p_name']}'),
+                            // subtitle: Text("Product 1 Price: ${product1['p_price']} Bath - Product 2 Price: ${price1} Bath"),
+                            // onTap: () => Get.to(() => ProductDetails(data: pair)),
                           );
                         },
-                      ),
-                    );
-                  }
-                }),
-            // สินค้าของแท็บ Unpaid
-            // TODO: เพิ่มโค้ดสำหรับแสดงสินค้าของแท็บ Unpaid ตรงนี้
-            Container(),
-            // สินค้าของแท็บ In Transit
-            // TODO: เพิ่มโค้ดสำหรับแสดงสินค้าของแท็บ In Transit ตรงนี้
-            Container(),
-            // สินค้าของแท็บ Awaiting Shipment
-            // TODO: เพิ่มโค้ดสำหรับแสดงสินค้าของแท็บ Awaiting Shipment ตรงนี้
-            Container(),
-            // สินค้าของแท็บ Delivered
-            // TODO: เพิ่มโค้ดสำหรับแสดงสินค้าของแท็บ Delivered ตรงนี้
-            Container(),
-            // สินค้าของแท็บ Completed
-            // TODO: เพิ่มโค้ดสำหรับแสดงสินค้าของแท็บ Completed ตรงนี้
-            Container(),
+                      );
+                    },
+                  ),
+                  // Matches Tab (Assuming this needs similar updates or remains unchanged)
+                ],
+              ),
+            ),
+                  ],
+                ),
+              )
+                ],
+              ),
+            ),
           ],
         ),
       ),

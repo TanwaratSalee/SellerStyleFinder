@@ -1,173 +1,120 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 import 'package:seller_finalproject/const/const.dart';
-import 'package:seller_finalproject/controllers/loading_Indcator.dart';
+import 'package:seller_finalproject/const/styles.dart';
 import 'package:seller_finalproject/controllers/orders_controller.dart';
 import 'package:seller_finalproject/services/store_services.dart';
 import 'package:seller_finalproject/views/orders_screen/order_details.dart';
-import 'package:seller_finalproject/views/widgets/appbar_widget.dart';
-import 'package:seller_finalproject/views/widgets/text_style.dart';
 import 'package:get/get.dart';
-// ignore: depend_on_referenced_packages
 import 'package:intl/intl.dart' as intl;
-
+import 'package:intl/intl.dart';
+import 'package:seller_finalproject/views/widgets/appbar_widget.dart';
 
 class OrdersScreen extends StatelessWidget {
   const OrdersScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // ignore: unused_local_variable
-    var controllers = Get.put(OrdersController()); 
+    var controllers = Get.put(OrdersController());
 
     return Scaffold(
-      appBar: AppBar(title: appbarWidget(orders),
-      /* bottom: const TabBar(
-            isScrollable: true,
-            tabs: [
-              Tab(
-                child: Row(
-                  children: [
-                    const Text('All '),
-                    Text('(10)'),
-                  ],
-                ),
-              ),
-              Tab(
-                child: Row(
-                  children: [
-                    const Text('Unpaid '),
-                    Text('(5)'),
-                  ],
-                ),
-              ),
-              Tab(
-                child: Row(
-                  children: [
-                    const Text('In Transit '),
-                    Text('(7)'),
-                  ],
-                ),
-              ),
-              Tab(
-                child: Row(
-                  children: [
-                    const Text('Awaiting Shipment '),
-                    Text('(3)'),
-                  ],
-                ),
-              ),
-              Tab(
-                child: Row(
-                  children: [
-                    const Text('Delivered '),
-                    Text('(15)'),
-                  ],
-                ),
-              ),
-              Tab(
-                child: Row(
-                  children: [
-                    const Text('Completed '),
-                    Text('(20)'),
-                  ],
-                ),
-              ),
-            ],
-          ), */
-        
-      ) 
-      ,
-      body: StreamBuilder(
-        stream: StoreServices.getOrders(currentUser!.uid), 
-        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
-          if(!snapshot.hasData){
-            return loadingIndicator();
-          } else {
-            var data = snapshot.data!.docs;
-
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                child: Column(
-                  children: List.generate(data.length,
-                      (index) {
-                        var time = data[index]['order_date'].toDate();
-
-                      return ListTile(
-                        onTap: () {
-                          Get.to(() => OrderDetails(data: data[index]));
-                        },
-                        tileColor: thinGrey01,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12.0)
-                        ),
-                        title: boldText(
-                          text: "${data[index]['order_code']}",
-                          color: greyDark2
-                        ),
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                const Icon(Icons.calendar_month, color: greyDark2),
-                                SizedBox(width: 10),
-                                boldText(
-                                  text: intl.DateFormat().add_yMd().format(time),
-                                  color: greyColor
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: 3),
-                            Row(
-                              children: [
-                                const Icon(Icons.payment, color: greyDark2),
-                                SizedBox(width: 10),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      boldText(
-                                        text: data[index]['orders'].map((order) => order['title']).toList().join(', '),
-                                        color: blackColor,
-                                        size: 16.0
-                                      ),
-                                      SizedBox(height: 3),
-                                      boldText(
-                                        text: data[index]['orders'].map((order) => order['qty']).toList().join(', '),
-                                        color: blackColor,
-                                        size: 16.0
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(width: 10),
-                                Container(
-                                  width: 100,
-                                  height: 100,
-                                  child: Image.network(
-                                    data[index]['orders'][0]['img'],
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ],
-                            )
-                          ],
-                        ),
-                        trailing: boldText(
-                          text: "${data[index]['total_amount']} Bath",
-                          color: blackColor,
-                          size: 16.0
-                        ),
-                      ).box.margin(const EdgeInsets.only(bottom: 10)).make();
-                      }
-                        ),
-                ),
-              ),
-            );
+      appBar: AppBar(
+        title: appbarWidget(Order) /* const Text('Orders') */,
+      ),
+      body: StreamBuilder<QuerySnapshot>(
+        stream: StoreServices.getOrders(currentUser!.uid),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return const Center(child: CircularProgressIndicator());
           }
-        })
+
+          var data = snapshot.data!.docs;
+          data.sort((a, b) => b.get('order_date').compareTo(a.get('order_date')));
+
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Column(
+                children: List.generate(data.length, (index) {
+                  var order = data[index];
+                  var time = order['order_date'].toDate();
+                  return buildOrderItem(order, time);
+                }),
+              ),
+            ),
+          );
+        },
+      ),
     );
+  }
+
+  Widget buildOrderItem(DocumentSnapshot order, DateTime time) {
+    return Container(
+      child: InkWell(
+        onTap: () => Get.to(() => OrderDetails(data: order)),
+        child: Padding(
+          padding: const EdgeInsets.all(10),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("Order code : ${order['order_code']}")
+                      .text
+                      .size(16)
+                      .fontFamily(medium)
+                      .make(),
+                  Row(
+                    children: [
+                      const Icon(Icons.calendar_month, color: greyDark1),
+                      const SizedBox(width: 10),
+                      Text(intl.DateFormat().add_yMd().format(time)),
+                    ],
+                  ),
+                ],
+              ),
+              ...buildProductList(order['orders'])
+            ],
+          ),
+        ),
+      )
+          .box
+          .margin(EdgeInsets.symmetric(vertical: 8))
+          .border(color: thinGrey01)
+          .rounded
+          .make(),
+    );
+  }
+
+  List<Widget> buildProductList(List orders) {
+    return orders.map<Widget>((order) {
+      return Padding(
+        padding: const EdgeInsets.only(top: 10),
+        child: Row(
+          children: [
+            Text("${order['qty']}x",
+                style: TextStyle(fontSize: 14, fontFamily: regular)),
+            SizedBox(width: 5),
+            Image.network(order['img'],
+                width: 55, height: 55, fit: BoxFit.cover),
+            SizedBox(width: 10),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(order['title'],
+                      style: TextStyle(fontSize: 16, fontFamily: medium),
+                      overflow: TextOverflow.ellipsis),
+                  Text(
+                    "${NumberFormat('#,##0').format(double.parse(order['price'].toString()))} Bath",
+                  ).text.size(14).fontFamily(regular).color(greyDark1).make(),
+                ],
+              ),
+            ),
+          ],
+        ),
+      );
+    }).toList();
   }
 }
