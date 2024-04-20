@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:seller_finalproject/const/const.dart';
 import 'package:seller_finalproject/const/styles.dart';
@@ -51,7 +52,7 @@ class AddMatchProduct extends StatelessWidget {
                   Icon(Icons.add).box.roundedFull.make(),
                   // mini: true,backgroundColor: primaryApp,
                 SizedBox(width: 16), 
-                ImagePlaceholder(title: 'Bottom'),
+                ImagePlaceholder(title: 'Lower'),
               ],
             ),
             15.heightBox,
@@ -161,16 +162,43 @@ class AddMatchProduct extends StatelessWidget {
 
 class ImagePlaceholder extends StatelessWidget {
   final String title;
+  final String vendorId = FirebaseAuth.instance.currentUser!.uid;
 
   ImagePlaceholder({required this.title});
 
   @override
   Widget build(BuildContext context) {
+    var controller = Get.find<ProductsController>();
+    var product = title.toLowerCase() == 'top' ? controller.selectedTopProduct.value : controller.selectedLowerProduct.value;
+
     return Column(
       children: [
         GestureDetector(
-          onTap: () {
-            Get.to(() => SelectItemPage());
+          onTap: () async {
+            controller.isloading.value = true;
+            try {
+              var currentUserUid = vendorId;
+
+              // Fetch products that match the criteria
+              var querySnapshot = await FirebaseFirestore.instance
+                  .collection('products')
+                  .where('vendor_id', isEqualTo: currentUserUid)
+                  .where('p_part', isEqualTo: title.toLowerCase())
+                  .get();
+
+              controller.isloading.value = false;
+              
+              Get.to(() => SelectItemPage(
+                  products: querySnapshot.docs.map((doc) => Product.fromFirestore(doc.data())).toList(),
+                  onProductSelected: (selectedProduct) {
+                    // You need to add state management here to update the images
+                    controller.setSelectedProduct(selectedProduct, title.toLowerCase()); // This method needs to be implemented in your ProductsController
+                  }
+                ));
+            } catch (e) {
+              controller.isloading.value = false;
+              print('Error fetching products: $e');
+            }
           },
           child: Container(
             width: 100,
@@ -190,4 +218,5 @@ class ImagePlaceholder extends StatelessWidget {
     );
   }
 }
+
 

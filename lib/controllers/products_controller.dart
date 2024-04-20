@@ -71,7 +71,19 @@ class ProductsController extends GetxController {
     {'name': 'Red', 'color': Colors.red},
     {'name': 'Red Accent', 'color': Color.fromARGB(255, 237, 101, 146)},
   ];
-  
+
+  Rxn<Product> selectedTopProduct = Rxn<Product>();
+  Rxn<Product> selectedLowerProduct = Rxn<Product>(); 
+
+  void setSelectedProduct(Product product, String part) {
+    if (part == 'top') {
+      selectedTopProduct.value = product;
+    } else if (part == 'lower') {
+      selectedLowerProduct.value = product;
+    }
+    update(); // Triggers UI update
+  }
+
 getCollection() async {
     var data = await rootBundle.loadString("lib/services/collection_model.json");
     var cat = collectionModelFromJson(data);
@@ -311,4 +323,27 @@ void resetForm() {
 
 
   MatchProducts(text) {}
+}
+
+
+class Product {
+  final String id;
+  final String name;
+  final String vendorId;
+  final String part;
+  final String price;
+  final String imageUrl; // Add this if your products have images.
+
+  Product({required this.id, required this.name, required this.vendorId, required this.part, required this.price, required this.imageUrl});
+
+  factory Product.fromFirestore(Map<String, dynamic> doc) {
+    return Product(
+      id: doc['id'] ?? '',
+      name: doc['p_name'] ?? '',
+      vendorId: doc['vendor_id'] ?? '',
+      part: doc['p_part'] ?? '',
+      price: doc['p_price'] ?? '',
+      imageUrl: doc['p_imgs'][0] ?? '', // Assume there's an image_url field in your Firestore documents.
+    );
+  }
 }
