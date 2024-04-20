@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:seller_finalproject/const/const.dart';
 import 'package:seller_finalproject/const/styles.dart';
@@ -20,7 +21,8 @@ class _AddMatchProductState extends State<AddMatchProduct> {
   @override
   Widget build(BuildContext context) {
     var controller = Get.find<ProductsController>();
-    
+    String capitalize(String s) => s[0].toUpperCase() + s.substring(1);
+
     return Obx(
       () => Scaffold(
         backgroundColor: whiteColor,
@@ -47,25 +49,16 @@ class _AddMatchProductState extends State<AddMatchProduct> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ImagePlaceholder(title: 'Top'),
-                SizedBox(width: 16), 
-                  Icon(Icons.add).box.roundedFull.make(),
-                  // mini: true,backgroundColor: primaryApp,
-                SizedBox(width: 16), 
-                ImagePlaceholder(title: 'Lower'),
-              ],
-            ),
-            15.heightBox,
-                productDropdown("Collection", controller.collectionsList,
-                    controller.collectionsvalue, controller),
-                15.heightBox,
-                customTextField(
-                    hint: "Explain clothing matching",
-                    label: "Explain clothing matching",
-                    isDesc: true,
-                    controller: controller.psizeController),
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ImagePlaceholder(title: 'Top'),
+                    SizedBox(width: 16),
+                    Icon(Icons.add).box.roundedFull.make(),
+                    // mini: true,backgroundColor: primaryApp,
+                    SizedBox(width: 16),
+                    ImagePlaceholder(title: 'Lower'),
+                  ],
+                ),
                 20.heightBox,
                 Text("Suitable for gender")
                     .text
@@ -78,26 +71,74 @@ class _AddMatchProductState extends State<AddMatchProduct> {
                       spacing: 8.0,
                       runSpacing: 8.0,
                       children: controller.genderList.map((gender) {
+                        bool isSelected =
+                            controller.selectedCollection.value == gender;
                         return ChoiceChip(
+                          showCheckmark: false,
                           label: Text(
-                            gender,
+                            capitalize(gender), // เฉพาะตัวอักษรแรกเป็นพิมพ์ใหญ่
                             style: TextStyle(
-                              color: controller.selectedGender.value == gender
-                                  ? whiteColor
-                                  : greyDark1,
+                              color: isSelected ? primaryApp : greyDark1,
                             ),
                           ).text.size(18).fontFamily(regular).make(),
-                          selected: controller.selectedGender.value == gender,
+                          selected: isSelected,
                           onSelected: (selected) {
                             if (selected) {
-                              controller.selectedGender.value = gender;
+                              controller.selectedCollection.value = gender;
                             }
                           },
-                          selectedColor: primaryApp,
+                          selectedColor: thinPrimaryApp,
                           backgroundColor: thinGrey0,
+                          side: isSelected
+                              ? BorderSide(color: primaryApp, width: 2)
+                              : BorderSide(color: greyColor),
                         );
                       }).toList(),
                     )),
+
+                    15.heightBox,
+                    Text("Collection")
+                    .text
+                    .size(16)
+                    .color(greyDark1)
+                    .fontFamily(medium)
+                    .make(),
+                10.heightBox,
+                Obx(() => Wrap(
+                      spacing: 8.0,
+                      runSpacing: 8.0,
+                      children: controller.collectionList.map((collection) {
+                        bool isSelected =
+                            controller.selectedCollection.value == collection;
+                        return ChoiceChip(
+                          showCheckmark: false,
+                          label: Text(
+                            capitalize(collection), 
+                            style: TextStyle(
+                              color: isSelected ? primaryApp : greyDark1,
+                            ),
+                          ).text.size(18).fontFamily(regular).make(),
+                          selected: isSelected,
+                          onSelected: (selected) {
+                            if (selected) {
+                              controller.selectedCollection.value = collection;
+                            }
+                          },
+                          selectedColor: thinPrimaryApp,
+                          backgroundColor: thinGrey0,
+                          side: isSelected
+                              ? BorderSide(color: primaryApp, width: 2)
+                              : BorderSide(color: greyColor),
+                        );
+                      }).toList(),
+                    )),
+                15.heightBox,
+                customTextField(
+                    hint: "Explain clothing matching",
+                    label: "Explain clothing matching",
+                    isDesc: true,
+                    controller: controller.psizeController),
+                20.heightBox,
                 10.heightBox,
                 Text("Choose product colors")
                     .text
@@ -106,48 +147,52 @@ class _AddMatchProductState extends State<AddMatchProduct> {
                     .fontFamily(medium)
                     .make(),
                 15.heightBox,
-                    Obx(
-                      () => Wrap(
-                        spacing: 10.0,
-                        runSpacing: 10.0,
-                        children: List.generate(
-                          controller.allColors.length,
-                          (index) => GestureDetector(
-                            onTap: () {
-                              if (controller.selectedColorIndexes.contains(index)) {
-                                controller.selectedColorIndexes.remove(index);
-                              } else {
-                                controller.selectedColorIndexes.add(index);
-                              }
-                            },
-                            child: Container(
-                              width: 50,
-                              height: 50,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                color: controller.allColors[index]['color'],
-                                border: Border.all(
-                                  color: controller.selectedColorIndexes.contains(index)
-                                      ? Colors.blueAccent // เปลี่ยนสีเมื่อถูกเลือก
-                                      : Colors.transparent,
-                                  width: 2,
-                                ),
-                              ),
-                              child: Center(
-                                child: controller.selectedColorIndexes.contains(index)
+                Obx(
+                  () => Wrap(
+                    spacing: 10.0,
+                    runSpacing: 10.0,
+                    children: List.generate(
+                      controller.allColors.length,
+                      (index) => GestureDetector(
+                        onTap: () {
+                          if (controller.selectedColorIndexes.contains(index)) {
+                            controller.selectedColorIndexes.remove(index);
+                          } else {
+                            controller.selectedColorIndexes.add(index);
+                          }
+                        },
+                        child: Container(
+                          width: 50,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            color: controller.allColors[index]['color'],
+                            border: Border.all(
+                              color: controller.selectedColorIndexes
+                                      .contains(index)
+                                  ? Colors.blueAccent // เปลี่ยนสีเมื่อถูกเลือก
+                                  : Colors.transparent,
+                              width: 2,
+                            ),
+                          ),
+                          child: Center(
+                            child:
+                                controller.selectedColorIndexes.contains(index)
                                     ? Icon(
                                         Icons.done,
-                                        color: controller.allColors[index]['color'] == Colors.white
+                                        color: controller.allColors[index]
+                                                    ['color'] ==
+                                                Colors.white
                                             ? Colors.black
                                             : Colors.white,
                                       )
                                     : SizedBox(),
-                              ),
-                            ),
                           ),
                         ),
                       ),
                     ),
+                  ),
+                ),
               ],
             ),
           ),
@@ -177,7 +222,7 @@ class _ImagePlaceholderState extends State<ImagePlaceholder> {
         GestureDetector(
           onTap: () async {
             setState(() {
-            controller.isloading.value = true;
+              controller.isloading.value = true;
             });
             try {
               var querySnapshot = await FirebaseFirestore.instance
@@ -187,31 +232,33 @@ class _ImagePlaceholderState extends State<ImagePlaceholder> {
                   .get();
 
               var products = querySnapshot.docs
-                .map((doc) => Product.fromFirestore(doc.data()))
-                .toList();
+                  .map((doc) => Product.fromFirestore(doc.data()))
+                  .toList();
 
               controller.isloading.value = false;
 
               var selectedProductImages = await Get.to(() => SelectItemPage(
-                products: products,
-                onProductSelected: (selectedProduct) {
-                  controller.setSelectedProduct(selectedProduct, widget.title.toLowerCase());
-                }
-              ));
+                  products: products,
+                  onProductSelected: (selectedProduct) {
+                    controller.setSelectedProduct(
+                        selectedProduct, widget.title.toLowerCase());
+                  }));
 
               if (selectedProductImages != null) {
-                controller.updateProductImages(selectedProductImages, widget.title.toLowerCase());
+                controller.updateProductImages(
+                    selectedProductImages, widget.title.toLowerCase());
               }
             } catch (e) {
               controller.isloading.value = false;
               print('Error fetching products: $e');
-              Get.snackbar('Error', 'Failed to fetch products', snackPosition: SnackPosition.BOTTOM);
+              Get.snackbar('Error', 'Failed to fetch products',
+                  snackPosition: SnackPosition.BOTTOM);
             } finally {
-                setState(() {
-                  controller.isloading.value = false;
-                });
-              }
-            },
+              setState(() {
+                controller.isloading.value = false;
+              });
+            }
+          },
           child: Container(
             width: 100,
             height: 100,
@@ -219,13 +266,17 @@ class _ImagePlaceholderState extends State<ImagePlaceholder> {
               border: Border.all(color: Colors.grey),
               borderRadius: BorderRadius.circular(8),
             ),
-        child: controller.getProductImages(widget.title.toLowerCase()).isEmpty
-          ? Icon(Icons.camera_alt, color: Colors.grey)
-          : Image.network(
-              controller.getProductImages(widget.title.toLowerCase()).first,
-              fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) => Icon(Icons.broken_image, color: Colors.grey),
-            ),
+            child:
+                controller.getProductImages(widget.title.toLowerCase()).isEmpty
+                    ? Icon(Icons.camera_alt, color: Colors.grey)
+                    : Image.network(
+                        controller
+                            .getProductImages(widget.title.toLowerCase())
+                            .first,
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) =>
+                            Icon(Icons.broken_image, color: Colors.grey),
+                      ),
           ),
         ),
         Text(widget.title),
@@ -233,5 +284,3 @@ class _ImagePlaceholderState extends State<ImagePlaceholder> {
     );
   }
 }
-
-

@@ -38,10 +38,10 @@ class ProductsController extends GetxController {
   final selectedSizes = <String>[].obs;
   List<String> genderList = [ 'all','male', 'female'];
   RxString selectedGender = ''.obs;
-
   List<String> mixandmatchList = [ 'top','lower', 'not specified'];
   RxString selectedMixandmatch = ''.obs;
-
+  List<String> collectionList = [ 'summer','winter','autumn','dinner','everydaylook'];
+  RxString selectedCollection = ''.obs;
 
 
   RxString selectedSkinColor = ''.obs;
