@@ -149,7 +149,7 @@ class MessagesScreen extends StatelessWidget {
 //                   Text(
 //                     '10:00 AM', // แสดงเวลาของข้อความ
 //                     style: TextStyle(
-//                       color: Colors.grey,
+//                       color: greyColor,
 //                     ),
 //                   ),
 //                 ],
@@ -173,7 +173,7 @@ class MessagesScreen extends StatelessWidget {
 //                   Text(
 //                     '11:30 AM', // แสดงเวลาของข้อความ
 //                     style: TextStyle(
-//                       color: Colors.grey,
+//                       color: greyColor,
 //                     ),
 //                   ),
 //                 ],
@@ -197,7 +197,7 @@ class MessagesScreen extends StatelessWidget {
 //                   Text(
 //                     '11:30 AM', // แสดงเวลาของข้อความ
 //                     style: TextStyle(
-//                       color: Colors.grey,
+//                       color: greyColor,
 //                     ),
 //                   ),
 //                 ],
@@ -221,7 +221,7 @@ class MessagesScreen extends StatelessWidget {
 //                   Text(
 //                     '11:30 AM', // แสดงเวลาของข้อความ
 //                     style: TextStyle(
-//                       color: Colors.grey,
+//                       color: greyColor,
 //                     ),
 //                   ),
 //                 ],
@@ -245,7 +245,7 @@ class MessagesScreen extends StatelessWidget {
 //                   Text(
 //                     '11:30 AM', // แสดงเวลาของข้อความ
 //                     style: TextStyle(
-//                       color: Colors.grey,
+//                       color: greyColor,
 //                     ),
 //                   ),
 //                 ],

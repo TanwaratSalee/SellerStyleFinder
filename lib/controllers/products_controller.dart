@@ -48,30 +48,30 @@ class ProductsController extends GetxController {
 
   RxString selectedSkinColor = ''.obs;
   List<Map<String, dynamic>> skinColorList = [
-  {'name': 'Light', 'color': Color(0xFFFFDBAC)},   
-  {'name': 'Medium', 'color': Color(0xFFE5A073)},  
-  {'name': 'Medium', 'color': Color(0xFFCD8C5C)},  
-  {'name': 'Dark', 'color': Color(0xFF5C3836)},    
+  {'name': 'Light', 'color': const Color(0xFFFFDBAC)},   
+  {'name': 'Medium', 'color': const Color(0xFFE5A073)},  
+  {'name': 'Medium', 'color': const Color(0xFFCD8C5C)},  
+  {'name': 'Dark', 'color': const Color(0xFF5C3836)},    
 ];
 
 
   final selectedColorIndexes = <int>[].obs;
    final List<Map<String, dynamic>> allColors = [
     {'name': 'Black', 'color': Colors.black},
-    {'name': 'Grey', 'color': Colors.grey},
+    {'name': 'Grey', 'color': greyColor},
     {'name': 'White', 'color': Colors.white},
     {'name': 'Purple', 'color': Colors.purple},
     {'name': 'Deep Purple', 'color': Colors.deepPurple},
     {'name': 'Blue', 'color': Colors.lightBlue},
-    {'name': 'Blue', 'color': Color.fromARGB(255, 36, 135, 216)},
+    {'name': 'Blue', 'color': const Color.fromARGB(255, 36, 135, 216)},
     {'name': 'Blue Grey', 'color': const Color.fromARGB(255, 96, 139, 115)},
-    {'name': 'Green', 'color': Color.fromARGB(255, 17, 82, 50)},
+    {'name': 'Green', 'color': const Color.fromARGB(255, 17, 82, 50)},
     {'name': 'Green', 'color': Colors.green},
     {'name': 'Green Accent', 'color': Colors.greenAccent},
     {'name': 'Yellow', 'color': Colors.yellow},
     {'name': 'Orange', 'color': Colors.orange},
     {'name': 'Red', 'color': Colors.red},
-    {'name': 'Red Accent', 'color': Color.fromARGB(255, 237, 101, 146)},
+    {'name': 'Red Accent', 'color': const Color.fromARGB(255, 237, 101, 146)},
   ];
 
   Rxn<Product> selectedTopProduct = Rxn<Product>();

@@ -81,17 +81,18 @@ Widget _buildReviewProduct(BuildContext context) {
 Widget _botton(BuildContext context) {
   return Container(
       alignment: Alignment.centerRight, // จัดตำแหน่งชิดขวากลาง
-      margin: EdgeInsets.only(right: 20.0), // กำหนดระยะห่างจากขวา 20.0 พิกเซล
+      margin:
+          const EdgeInsets.only(right: 20.0), // กำหนดระยะห่างจากขวา 20.0 พิกเซล
       child: Container(
         height: 28,
         width: 70,
-        margin: EdgeInsets.only(top: 5),
-        padding: EdgeInsets.all(10.0),
+        margin: const EdgeInsets.only(top: 5),
+        padding: const EdgeInsets.all(10.0),
         decoration: BoxDecoration(
           color: whiteColor,
           borderRadius: BorderRadius.circular(8),
           boxShadow: [
-            BoxShadow(
+            const BoxShadow(
               color: greyColor,
               blurRadius: 4,
               offset: Offset(0, 2),
@@ -140,13 +141,13 @@ Widget _buildReviewHigh() {
 Widget _buildReviewCard() {
   return Container(
     width: 200,
-    margin: EdgeInsets.all(5.0),
-    padding: EdgeInsets.all(10.0),
+    margin: const EdgeInsets.all(5.0),
+    padding: const EdgeInsets.all(10.0),
     decoration: BoxDecoration(
       color: whiteColor,
       borderRadius: BorderRadius.circular(8),
       boxShadow: [
-        BoxShadow(
+        const BoxShadow(
           color: greyColor,
           blurRadius: 4,
           offset: Offset(0, 2),
@@ -156,7 +157,7 @@ Widget _buildReviewCard() {
     child: Column(
       // crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
+        const Row(
           children: [
             CircleAvatar(
               radius: 20,
@@ -167,7 +168,7 @@ Widget _buildReviewCard() {
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
           ],
         ),
-        SizedBox(
+        const SizedBox(
           height: 10,
         ),
         Row(
@@ -179,7 +180,7 @@ Widget _buildReviewCard() {
             );
           }),
         ),
-        Text(
+        const Text(
           'The review text goes here...',
           style: TextStyle(fontSize: 14),
           maxLines: 2,
@@ -194,13 +195,13 @@ Widget _buildReviewProductCard() {
   return Container(
     height: 142,
     width: 387,
-    margin: EdgeInsets.all(5.0),
-    padding: EdgeInsets.all(10.0),
+    margin: const EdgeInsets.all(5.0),
+    padding: const EdgeInsets.all(10.0),
     decoration: BoxDecoration(
       color: whiteColor,
       borderRadius: BorderRadius.circular(8),
       boxShadow: [
-        BoxShadow(
+        const BoxShadow(
           color: greyColor,
           blurRadius: 4,
           offset: Offset(0, 2),
@@ -208,36 +209,27 @@ Widget _buildReviewProductCard() {
       ],
     ),
     child: Row(
-      // Changed to Row to allow for side-by-side layout
       children: [
         Container(
-          // This container is for the image placeholder
-          height: 122, // Adjusted to fit within the parent container's padding
-          width: 122, // Making it square
+          height: 122,
+          width: 122,
           decoration: BoxDecoration(
-            color: Colors.grey[200], // Placeholder color
-            borderRadius:
-                BorderRadius.circular(8), // Optional: to match the card's style
+            color: greyColor,
+            borderRadius: BorderRadius.circular(8),
           ),
-          // You can add an image here using a widget like Image.network or for a placeholder use Icon
-          child: Icon(Icons.photo, color: Colors.grey[500]), // Placeholder icon
+          child: const Icon(Icons.photo, color: greyColor),
         ),
         Expanded(
-          // Using Expanded to fill the remaining space
           child: Padding(
-            padding:
-                const EdgeInsets.only(left: 10.0), // Added padding for spacing
+            padding: const EdgeInsets.only(left: 10.0),
             child: Column(
-              // mainAxisAlignment: MainAxisAlignment.center, // Center vertically
-              // crossAxisAlignment: CrossAxisAlignment.start, // Align text to the start
               children: [
-                Text('Reviewer Name',
+                const Text('Reviewer Name',
                     style:
                         TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Row(
-                  mainAxisAlignment:
-                      MainAxisAlignment.start, // Align stars to start
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: List.generate(5, (index) {
                     return Icon(
                       index < 4 ? Icons.star : Icons.star_border,
@@ -246,8 +238,8 @@ Widget _buildReviewProductCard() {
                     );
                   }),
                 ),
-                SizedBox(height: 10),
-                Text(
+                const SizedBox(height: 10),
+                const Text(
                   'The review text goes here...',
                   style: TextStyle(fontSize: 14),
                   maxLines: 2,
@@ -274,17 +266,17 @@ class _YourWidgetState extends State<YourWidget> {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.centerRight,
-      margin: EdgeInsets.fromLTRB(0, 10, 10, 0),
+      margin: const EdgeInsets.fromLTRB(0, 10, 10, 0),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          foregroundColor: Colors.grey,
+          foregroundColor: greyColor,
           backgroundColor: Colors.white,
-          shadowColor: Colors.grey,
+          shadowColor: greyColor,
           elevation: 4,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
           ),
-          fixedSize: Size(110, 28),
+          fixedSize: const Size(110, 28),
         ),
         onPressed: () {
           setState(() {
@@ -297,9 +289,9 @@ class _YourWidgetState extends State<YourWidget> {
             Icon(
               buttonText == 'New' ? Icons.arrow_upward : Icons.arrow_downward,
               size: 16,
-              color: Colors.grey,
+              color: greyColor,
             ),
-            SizedBox(width: 4),
+            const SizedBox(width: 4),
             Text(buttonText),
           ],
         ),

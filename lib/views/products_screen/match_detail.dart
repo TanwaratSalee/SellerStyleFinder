@@ -127,7 +127,7 @@ class _MatchDetailScreenState extends State<MatchDetailScreen> {
                     height: 230,
                     decoration: BoxDecoration(
                       color: whiteColor,
-                      // border: Border.all(color: Colors.grey),
+                      // border: Border.all(color: greyColor),
                       borderRadius: BorderRadius.circular(4),
                     ),
                     child: Stack(
@@ -153,7 +153,7 @@ class _MatchDetailScreenState extends State<MatchDetailScreen> {
                             ),
                           ],
                         ),
-                        Positioned(
+                        const Positioned(
                           bottom: 0,
                           left: 0,
                           right: 0,
@@ -183,27 +183,27 @@ class _MatchDetailScreenState extends State<MatchDetailScreen> {
                       ],
                     ),
                   ),
-                  SizedBox(width: 5),
+                  const SizedBox(width: 5),
                   Container(
                     width: 30,
                     height: 30,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: primaryApp,
                       shape: BoxShape.circle,
                     ),
-                    child: Icon(
+                    child: const Icon(
                       Icons.add,
                       color: whiteColor,
                       size: 25,
                     ),
                   ),
-                  SizedBox(width: 5),
+                  const SizedBox(width: 5),
                   Container(
                     width: 180,
                     height: 230,
                     decoration: BoxDecoration(
                       color: whiteColor,
-                      // border: Border.all(color: Colors.grey),
+                      // border: Border.all(color: greyColor),
                       borderRadius: BorderRadius.circular(4),
                     ),
                     child: Stack(
@@ -229,10 +229,10 @@ class _MatchDetailScreenState extends State<MatchDetailScreen> {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
-                        Positioned(
+                        const Positioned(
                           bottom: 0,
                           left: 0,
                           right: 0,
@@ -266,11 +266,11 @@ class _MatchDetailScreenState extends State<MatchDetailScreen> {
               ),
             ),
           ),
-          SizedBox(height: 25),
+          const SizedBox(height: 25),
           Container(
             width: double.infinity,
             height: 100,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Color.fromARGB(255, 229, 235, 237),
             ),
             child: Row(
@@ -284,7 +284,7 @@ class _MatchDetailScreenState extends State<MatchDetailScreen> {
                           child: Container(
                             width: 80,
                             height: 80,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               shape: BoxShape.circle,
                               color: whiteColor,
                               image: DecorationImage(
@@ -321,7 +321,7 @@ class _MatchDetailScreenState extends State<MatchDetailScreen> {
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 100,
                 ),
                 Padding(
@@ -330,7 +330,7 @@ class _MatchDetailScreenState extends State<MatchDetailScreen> {
                     onPressed: () {
                       // Get.to(() => StoreScreen());
                     },
-                    child: Text(
+                    child: const Text(
                       'See Store',
                       style: TextStyle(
                         fontFamily: regular,
@@ -351,12 +351,12 @@ class _MatchDetailScreenState extends State<MatchDetailScreen> {
           ),
           Column(
             children: [
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
                 child: Column(
                   children: [
-                    Row(
+                    const Row(
                       children: [
                         Text(
                           'Opportunity suitable for',
@@ -368,7 +368,7 @@ class _MatchDetailScreenState extends State<MatchDetailScreen> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     Row(
                       children: [
                         Wrap(
@@ -381,16 +381,16 @@ class _MatchDetailScreenState extends State<MatchDetailScreen> {
                               'Seminars or meetings',
                             ])
                               Container(
-                                padding: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.symmetric(
                                     horizontal: 10, vertical: 5),
                                 decoration: BoxDecoration(
-                                  color: Color.fromARGB(255, 229, 235, 237),
+                                  color: const Color.fromARGB(255, 229, 235, 237),
                                   borderRadius: BorderRadius.circular(50),
                                 ),
                                 child: Center(
                                   child: Text(
                                     label,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       color: primaryApp,
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
@@ -405,11 +405,11 @@ class _MatchDetailScreenState extends State<MatchDetailScreen> {
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+              const Padding(
+                padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
                 child: Row(
                   children: [
                     Text(
@@ -423,19 +423,19 @@ class _MatchDetailScreenState extends State<MatchDetailScreen> {
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 5,
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 229, 235, 237),
+                    color: const Color.fromARGB(255, 229, 235, 237),
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  child: Center(
+                  child: const Center(
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: EdgeInsets.all(8.0),
                       child: Text(
                         'Choosing a simple shirt with a high-waisted mini or long skirt can create a comfortable but still stylish look.',
                         textAlign: TextAlign.start,

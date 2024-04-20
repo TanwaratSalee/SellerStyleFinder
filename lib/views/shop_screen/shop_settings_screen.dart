@@ -67,11 +67,11 @@ class ShopSettings extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   boldText(text: "Fullname: ", color: greyColor, size: 14),
-                  SizedBox(width: 8),
+                  const SizedBox(width: 8),
                   Expanded(
                       child: Text(
                     controller.shopfullnameController.text,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: greyColor,
                       fontWeight: FontWeight.bold,
                       fontSize: 14,
@@ -88,11 +88,11 @@ class ShopSettings extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     boldText(text: "Email: ", color: greyColor, size: 14),
-                    SizedBox(width: 8),
+                    const SizedBox(width: 8),
                     Expanded(
                       child: Text(
                         controller.emailController.text,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: greyColor,
                           fontWeight: FontWeight.bold,
                           fontSize: 14,
@@ -109,11 +109,11 @@ class ShopSettings extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     boldText(text: "Address: ", color: greyColor, size: 14),
-                    SizedBox(width: 8),
+                    const SizedBox(width: 8),
                     Expanded(
                       child: Text(
                         controller.shopAddressController.text,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: greyColor,
                           fontWeight: FontWeight.bold,
                           fontSize: 14,

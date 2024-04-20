@@ -26,13 +26,13 @@ class _AddMatchProductState extends State<AddMatchProduct> {
       () => Scaffold(
         backgroundColor: whiteColor,
         appBar: AppBar(
-          title: Text("Match Product").text.size(24).fontFamily(medium).make(),
+          title: const Text("Match Product").text.size(24).fontFamily(medium).make(),
           actions: [
             controller.isloading.value
                 ? loadingIndicator(circleColor: primaryApp)
                 : TextButton(
                     onPressed: () async {},
-                    child: Text(save)
+                    child: const Text(save)
                         .text
                         .fontFamily(medium)
                         .color(greyColor)
@@ -51,10 +51,10 @@ class _AddMatchProductState extends State<AddMatchProduct> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     ImagePlaceholder(title: 'Top'),
-                    SizedBox(width: 16),
-                    Icon(Icons.add).box.roundedFull.make(),
+                    const SizedBox(width: 16),
+                    const Icon(Icons.add).box.roundedFull.make(),
                     // mini: true,backgroundColor: primaryApp,
-                    SizedBox(width: 16),
+                    const SizedBox(width: 16),
                     ImagePlaceholder(title: 'Lower'),
                   ],
                 ),
@@ -62,7 +62,7 @@ class _AddMatchProductState extends State<AddMatchProduct> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Suitable for gender")
+                    const Text("Suitable for gender")
                         .text
                         .size(16)
                         .color(greyDark1)
@@ -92,13 +92,13 @@ class _AddMatchProductState extends State<AddMatchProduct> {
                               selectedColor: thinPrimaryApp,
                               backgroundColor: thinGrey0,
                               side: isSelected
-                                  ? BorderSide(color: primaryApp, width: 2)
-                                  : BorderSide(color: greyColor),
+                                  ? const BorderSide(color: primaryApp, width: 2)
+                                  : const BorderSide(color: greyColor),
                             );
                           }).toList(),
                         )),
                     15.heightBox,
-                    Text("Collection")
+                    const Text("Collection")
                         .text
                         .size(16)
                         .color(greyDark1)
@@ -126,8 +126,8 @@ class _AddMatchProductState extends State<AddMatchProduct> {
                               selectedColor: thinPrimaryApp,
                               backgroundColor: thinGrey0,
                               side: isSelected
-                                  ? BorderSide(color: primaryApp, width: 2)
-                                  : BorderSide(color: greyColor),
+                                  ? const BorderSide(color: primaryApp, width: 2)
+                                  : const BorderSide(color: greyColor),
                             );
                           }).toList(),
                         )),
@@ -141,7 +141,7 @@ class _AddMatchProductState extends State<AddMatchProduct> {
                     controller: controller.psizeController),
                 20.heightBox,
                 10.heightBox,
-                Text("Choose product colors")
+                const Text("Choose product colors")
                     .text
                     .size(16)
                     .color(greyDark1)
@@ -187,7 +187,7 @@ class _AddMatchProductState extends State<AddMatchProduct> {
                                             ? Colors.black
                                             : Colors.white,
                                       )
-                                    : SizedBox(),
+                                    : const SizedBox(),
                           ),
                         ),
                       ),
@@ -264,19 +264,19 @@ class _ImagePlaceholderState extends State<ImagePlaceholder> {
             width: 100,
             height: 100,
             decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey),
+              border: Border.all(color: greyColor),
               borderRadius: BorderRadius.circular(8),
             ),
             child:
                 controller.getProductImages(widget.title.toLowerCase()).isEmpty
-                    ? Icon(Icons.camera_alt, color: Colors.grey)
+                    ? const Icon(Icons.camera_alt, color: greyColor)
                     : Image.network(
                         controller
                             .getProductImages(widget.title.toLowerCase())
                             .first,
                         fit: BoxFit.cover,
                         errorBuilder: (context, error, stackTrace) =>
-                            Icon(Icons.broken_image, color: Colors.grey),
+                            const Icon(Icons.broken_image, color: greyColor),
                       ),
           ),
         ),

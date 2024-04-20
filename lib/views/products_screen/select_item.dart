@@ -42,7 +42,7 @@ class _SelectItemPageState extends State<SelectItemPage> {
                       width: 80,
                       height: 100,
                       decoration: BoxDecoration(
-                        color: Colors.grey[300],
+                        color: greyColor,
                         borderRadius: BorderRadius.circular(5),
                         image: DecorationImage(
                           image: NetworkImage(item.imageUrls.isNotEmpty ? item.imageUrls.first : ''),

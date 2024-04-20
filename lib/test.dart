@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable, library_private_types_in_public_api
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
@@ -149,7 +151,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                                         child: Text('Delete'),
                                       ),
                                     ],
-                                    icon: Icon(Icons.more_vert), // Icon for the button
+                                    icon: const Icon(Icons.more_vert), // Icon for the button
                                   ),
                                 );
                               },
@@ -170,7 +172,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => AddMatchProduct()),
+                            builder: (context) => const AddMatchProduct()),
                         );
                       },
                     ),
@@ -218,7 +220,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                           String productImage1 = product1['p_imgs'][0];
                           String productImage2 = product2['p_imgs'][0];
 
-                          return ListTile(
+                          return const ListTile(
                             // leading: Image.network(productImage1, width: 50, height: 50, fit: BoxFit.cover),
                             // trailing: Image.network(productImage2, width: 50, height: 50, fit: BoxFit.cover),
                             // title: Text('Product 1: ${product1['p_name']} - Product 2: ${product2['p_name']}'),

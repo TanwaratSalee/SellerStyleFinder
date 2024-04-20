@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:get/get.dart';
 import 'package:seller_finalproject/const/const.dart';
 import 'package:seller_finalproject/controllers/products_controller.dart';
@@ -7,7 +9,7 @@ Widget productDropdown(String hint, List<String> list, RxString dropvalue, Produ
   return Obx(
     () => DropdownButtonHideUnderline(
       child: DropdownButton<String>(
-        hint: Text(hint).text.color(Colors.grey[800]!).size(14).make(),
+        hint: Text(hint).text.color(greyColor).size(14).make(),
         value: dropvalue.value.isEmpty ? null : dropvalue.value,
         isExpanded: true,
         items: list.map((String e) {
@@ -27,6 +29,6 @@ Widget productDropdown(String hint, List<String> list, RxString dropvalue, Produ
           }
         },
       ),
-    ).box.color(Colors.grey[200]!).padding(const EdgeInsets.symmetric(horizontal: 8, vertical: 6)).border(color: Colors.grey[300]!).roundedSM.make(),
+    ).box.color(greyColor).padding(const EdgeInsets.symmetric(horizontal: 8, vertical: 6)).border(color: greyColor).roundedSM.make(),
   );
 }

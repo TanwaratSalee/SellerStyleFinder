@@ -1,5 +1,6 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:seller_finalproject/const/const.dart';
 import 'package:seller_finalproject/const/styles.dart';
@@ -69,8 +70,7 @@ class HomeScreen extends StatelessWidget {
                         itemCount: data.length,
                         itemBuilder: (context, index) {
                           if (data[index]['p_wishlist'].isEmpty) {
-                            return SizedBox
-                                .shrink(); // Use shrink for more semantically correct empty space
+                            return const SizedBox.shrink(); // Use shrink for more semantically correct empty space
                           }
                             return ListTile(
                               onTap: () async {

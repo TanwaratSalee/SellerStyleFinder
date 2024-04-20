@@ -1,7 +1,7 @@
+// ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously
+
 import 'dart:io';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:seller_finalproject/const/const.dart';
 import 'package:seller_finalproject/const/styles.dart';
 import 'package:seller_finalproject/controllers/loading_Indcator.dart';
@@ -9,7 +9,6 @@ import 'package:seller_finalproject/controllers/products_controller.dart';
 import 'package:seller_finalproject/views/products_screen/component/product_dropdown.dart';
 import 'package:seller_finalproject/views/products_screen/component/product_images.dart';
 import 'package:seller_finalproject/views/widgets/custom_textfield.dart';
-import 'package:velocity_x/velocity_x.dart';
 
 class EditProduct extends StatefulWidget {
   final Map<String, dynamic> productData;
@@ -42,7 +41,7 @@ class _EditProductState extends State<EditProduct> {
       () => Scaffold(
         backgroundColor: whiteColor,
         appBar: AppBar(
-          title: Text("Edit Product").text.size(24).fontFamily(medium).make(),
+          title: const Text("Edit Product").text.size(24).fontFamily(medium).make(),
           actions: [
             controller.isloading.value
                 ? loadingIndicator(circleColor: primaryApp)
@@ -60,7 +59,7 @@ class _EditProductState extends State<EditProduct> {
                         VxToast.show(context, msg: "Please fill in all required fields.");
                       }
                     },
-                    child: Text(save).text.fontFamily(medium).size(18).make(),
+                    child: const Text(save).text.fontFamily(medium).size(18).make(),
                   ),
           ],
         ),
@@ -71,7 +70,7 @@ class _EditProductState extends State<EditProduct> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Choose product images")
+                const Text("Choose product images")
                     .text
                     .size(16)
                     .color(greyDark1)
@@ -107,7 +106,7 @@ class _EditProductState extends State<EditProduct> {
                                       top: 0,
                                       right: 0,
                                       child: IconButton(
-                                        icon: Icon(Icons.delete),
+                                        icon: const Icon(Icons.delete),
                                         onPressed: () {
                                           controller.removeImage(index);
                                         },
@@ -172,7 +171,7 @@ class _EditProductState extends State<EditProduct> {
                 15.heightBox,
                 productDropdown("Type of product", controller.subcollectionList, controller.subcollectionvalue, controller),
                 20.heightBox,
-                Text("Suitable for gender")
+                const Text("Suitable for gender")
                     .text
                     .size(16)
                     .color(greyDark1)
@@ -200,12 +199,12 @@ class _EditProductState extends State<EditProduct> {
                           },
                           selectedColor: thinPrimaryApp,
                           backgroundColor: thinGrey0,
-                          side: isSelected ? BorderSide(color: primaryApp, width: 2) : BorderSide(color: greyColor),
+                          side: isSelected ? const BorderSide(color: primaryApp, width: 2) : const BorderSide(color: greyColor),
                         );
                       }).toList(),
                     )),
                 10.heightBox,
-                Text("Size of product")
+                const Text("Size of product")
                     .text
                     .size(16)
                     .color(greyDark1)
@@ -236,13 +235,13 @@ class _EditProductState extends State<EditProduct> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Choose product colors")
+                    const Text("Choose product colors")
                         .text
                         .size(16)
                         .color(greyDark1)
                         .fontFamily(medium)
                         .make(),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     Obx(
                       () => Wrap(
                         spacing: 10.0,
@@ -278,7 +277,7 @@ class _EditProductState extends State<EditProduct> {
                                             ? Colors.black
                                             : Colors.white,
                                       )
-                                    : SizedBox(),
+                                    : const SizedBox(),
                               ),
                             ),
                           ),
@@ -288,7 +287,7 @@ class _EditProductState extends State<EditProduct> {
                   ],
                 ),
                 10.heightBox,
-                Text("Show mix and match")
+                const Text("Show mix and match")
                     .text
                     .size(16)
                     .color(greyDark1)
@@ -315,7 +314,7 @@ class _EditProductState extends State<EditProduct> {
                           },
                           selectedColor: thinPrimaryApp,
                           backgroundColor: thinGrey0,
-                          side: isSelected ? BorderSide(color: primaryApp, width: 2) : BorderSide(color: greyColor),
+                          side: isSelected ? const BorderSide(color: primaryApp, width: 2) : const BorderSide(color: greyColor),
                         );
                       }).toList(),
                     )),
