@@ -140,6 +140,28 @@ uploadImages() async {
 }
 
 
+  RxList<String> selectedTopProductImages = RxList<String>();
+  RxList<String> selectedLowerProductImages = RxList<String>();
+
+  void updateProductImages(List<String> images, String part) {
+    if (part == 'top') {
+      selectedTopProductImages.assignAll(images);
+    } else if (part == 'lower') {
+      selectedLowerProductImages.assignAll(images);
+    }
+  }
+
+  List<String> getProductImages(String part) {
+    if (part == 'top') {
+      return selectedTopProductImages;
+    } else if (part == 'lower') {
+      return selectedLowerProductImages;
+    }
+    return [];
+  }
+
+
+
 void initializeImages(List<String> imageUrls) {
     // Clear existing list and add fresh from imageUrls ensuring it's growable
     pImagesList.clear();
@@ -188,7 +210,6 @@ void removeImage(int index) {
   }
 }
 
-
   Future<void> uploadProduct(BuildContext context) async {
   try {
     isloading(true);
@@ -217,7 +238,11 @@ void removeImage(int index) {
       'p_rating': "5.0",
       'vendor_id': currentUser!.uid,
       'featured_id': '',
-      'p_mixmatch': ''
+      'p_mixmatch': '',
+      'p_mixmatch_colors' : '',
+      'p_mixmatch_sex' : '',
+      'p_mixmatch_desc' : '',
+      'p_mixmatch_collection' : '',
     });
     isloading(false);
     VxToast.show(context, msg: "Product successfully uploaded.");
@@ -231,7 +256,6 @@ void removeImage(int index) {
 Future<void> updateProduct(BuildContext context, String documentId) async {
   try {
     final productDoc = FirebaseFirestore.instance.collection(productsCollection).doc(documentId);
-    // อัปเดตข้อมูลเดิม
     await productDoc.update({
       'p_collection': collectionsvalue.value,
       'p_subcollection': subcollectionvalue.value,
@@ -248,6 +272,33 @@ Future<void> updateProduct(BuildContext context, String documentId) async {
       'p_seller': Get.find<HomeController>().username,
       'vendor_id': currentUser!.uid,
       'p_imgs': FieldValue.arrayUnion(pImagesLinks),
+    });
+
+    // Removing images marked for deletion
+    if (imagesToDelete.isNotEmpty) {
+      await productDoc.update({
+        'p_imgs': FieldValue.arrayRemove(imagesToDelete),
+      });
+      imagesToDelete.clear(); // Clear the list after updating
+    }
+
+    VxToast.show(context, msg: "Product updated successfully.");
+  } catch (e) {
+    print("Error updating product: $e");
+    VxToast.show(context, msg: "Error updating product. Please try again later.");
+  }
+}
+
+Future<void> updateProductMatch(BuildContext context, String documentId) async {
+  try {
+    final productDoc = FirebaseFirestore.instance.collection(productsCollection).doc(documentId);
+    await productDoc.update({
+      //'p_mixmatch': ,
+      'p_mixmatch_sex': selectedGender.value,
+      'p_mixmatch_colors': selectedColorIndexes.map((index) => allColors[index]['color'].value).toList(),
+      'p_quantity': pquantityController.text,
+      //'p_mixmatch_desc' : ,
+      //'p_mixmatch_collection' : ,
     });
 
     // Removing images marked for deletion
@@ -332,9 +383,9 @@ class Product {
   final String vendorId;
   final String part;
   final String price;
-  final String imageUrl; // Add this if your products have images.
+  final List<String> imageUrls;
 
-  Product({required this.id, required this.name, required this.vendorId, required this.part, required this.price, required this.imageUrl});
+  Product({required this.id, required this.name, required this.vendorId, required this.part, required this.price, required this.imageUrls});
 
   factory Product.fromFirestore(Map<String, dynamic> doc) {
     return Product(
@@ -343,7 +394,7 @@ class Product {
       vendorId: doc['vendor_id'] ?? '',
       part: doc['p_part'] ?? '',
       price: doc['p_price'] ?? '',
-      imageUrl: doc['p_imgs'][0] ?? '', // Assume there's an image_url field in your Firestore documents.
+      imageUrls: List<String>.from(doc['p_imgs'] ?? [0]),
     );
   }
 }

@@ -12,9 +12,14 @@ import 'package:seller_finalproject/views/widgets/custom_textfield.dart';
 
 import '../../controllers/products_controller.dart';
 
-class AddMatchProduct extends StatelessWidget {
-  const AddMatchProduct({super.key});
+class AddMatchProduct extends StatefulWidget {
+  const AddMatchProduct({Key? key}) : super(key: key);
 
+  @override
+  _AddMatchProductState createState() => _AddMatchProductState();
+}
+
+class _AddMatchProductState extends State<AddMatchProduct> {
   @override
   Widget build(BuildContext context) {
     var controller = Get.find<ProductsController>();
@@ -104,53 +109,48 @@ class AddMatchProduct extends StatelessWidget {
                     .fontFamily(medium)
                     .make(),
                 15.heightBox,
-                Obx(
-                  () => Wrap(
-                    spacing: 6.0,
-                    runSpacing: 6.0,
-                    children: List.generate(
-                      controller.allColors.length,
-                      (index) => Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          Container(
-                            width: 50,
-                            height: 50,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              border: Border.all(color: greyColor),
-                              color:
-                                  controller.allColors[index]['color'] as Color,
+                    Obx(
+                      () => Wrap(
+                        spacing: 10.0,
+                        runSpacing: 10.0,
+                        children: List.generate(
+                          controller.allColors.length,
+                          (index) => GestureDetector(
+                            onTap: () {
+                              if (controller.selectedColorIndexes.contains(index)) {
+                                controller.selectedColorIndexes.remove(index);
+                              } else {
+                                controller.selectedColorIndexes.add(index);
+                              }
+                            },
+                            child: Container(
+                              width: 50,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: controller.allColors[index]['color'],
+                                border: Border.all(
+                                  color: controller.selectedColorIndexes.contains(index)
+                                      ? Colors.blueAccent // เปลี่ยนสีเมื่อถูกเลือก
+                                      : Colors.transparent,
+                                  width: 2,
+                                ),
+                              ),
+                              child: Center(
+                                child: controller.selectedColorIndexes.contains(index)
+                                    ? Icon(
+                                        Icons.done,
+                                        color: controller.allColors[index]['color'] == Colors.white
+                                            ? Colors.black
+                                            : Colors.white,
+                                      )
+                                    : SizedBox(),
+                              ),
                             ),
-                            child: InkWell(
-                              onTap: () {
-                                final selected = controller.selectedColorIndexes
-                                    .contains(index);
-                                if (selected) {
-
-                                } else {
-
-                                }
-                              },
-                            ),
-                          )
-                              .box
-                              .margin(EdgeInsets.symmetric(
-                                  horizontal: 8, vertical: 2))
-                              .make(),
-                          if (controller.selectedColorIndexes.contains(index))
-                            Icon(
-                              Icons.done,
-                              color: controller.allColors[index]['color'] ==
-                                      Colors.white
-                                  ? blackColor
-                                  : whiteColor,
-                            ),
-                        ],
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
               ],
             ),
           ),
@@ -160,46 +160,61 @@ class AddMatchProduct extends StatelessWidget {
   }
 }
 
-class ImagePlaceholder extends StatelessWidget {
+class ImagePlaceholder extends StatefulWidget {
   final String title;
   final String vendorId = FirebaseAuth.instance.currentUser!.uid;
 
-  ImagePlaceholder({required this.title});
+  ImagePlaceholder({Key? key, required this.title}) : super(key: key);
 
+  @override
+  _ImagePlaceholderState createState() => _ImagePlaceholderState();
+}
+
+class _ImagePlaceholderState extends State<ImagePlaceholder> {
   @override
   Widget build(BuildContext context) {
     var controller = Get.find<ProductsController>();
-    var product = title.toLowerCase() == 'top' ? controller.selectedTopProduct.value : controller.selectedLowerProduct.value;
 
     return Column(
       children: [
         GestureDetector(
           onTap: () async {
+            setState(() {
             controller.isloading.value = true;
+            });
             try {
-              var currentUserUid = vendorId;
-
-              // Fetch products that match the criteria
               var querySnapshot = await FirebaseFirestore.instance
                   .collection('products')
-                  .where('vendor_id', isEqualTo: currentUserUid)
-                  .where('p_part', isEqualTo: title.toLowerCase())
+                  .where('vendor_id', isEqualTo: widget.vendorId)
+                  .where('p_part', isEqualTo: widget.title.toLowerCase())
                   .get();
 
+              var products = querySnapshot.docs
+                .map((doc) => Product.fromFirestore(doc.data()))
+                .toList();
+
               controller.isloading.value = false;
-              
-              Get.to(() => SelectItemPage(
-                  products: querySnapshot.docs.map((doc) => Product.fromFirestore(doc.data())).toList(),
-                  onProductSelected: (selectedProduct) {
-                    // You need to add state management here to update the images
-                    controller.setSelectedProduct(selectedProduct, title.toLowerCase()); // This method needs to be implemented in your ProductsController
-                  }
-                ));
+
+              var selectedProductImages = await Get.to(() => SelectItemPage(
+                products: products,
+                onProductSelected: (selectedProduct) {
+                  controller.setSelectedProduct(selectedProduct, widget.title.toLowerCase());
+                }
+              ));
+
+              if (selectedProductImages != null) {
+                controller.updateProductImages(selectedProductImages, widget.title.toLowerCase());
+              }
             } catch (e) {
               controller.isloading.value = false;
               print('Error fetching products: $e');
-            }
-          },
+              Get.snackbar('Error', 'Failed to fetch products', snackPosition: SnackPosition.BOTTOM);
+            } finally {
+                setState(() {
+                  controller.isloading.value = false;
+                });
+              }
+            },
           child: Container(
             width: 100,
             height: 100,
@@ -207,13 +222,16 @@ class ImagePlaceholder extends StatelessWidget {
               border: Border.all(color: Colors.grey),
               borderRadius: BorderRadius.circular(8),
             ),
-            child: Icon(
-              Icons.camera_alt,
-              color: Colors.grey,
+        child: controller.getProductImages(widget.title.toLowerCase()).isEmpty
+          ? Icon(Icons.camera_alt, color: Colors.grey)
+          : Image.network(
+              controller.getProductImages(widget.title.toLowerCase()).first,
+              fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) => Icon(Icons.broken_image, color: Colors.grey),
             ),
           ),
         ),
-        Text(title),
+        Text(widget.title),
       ],
     );
   }

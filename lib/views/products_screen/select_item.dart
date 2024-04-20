@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:seller_finalproject/const/colors.dart';
 import 'package:seller_finalproject/const/const.dart';
 import 'package:seller_finalproject/controllers/products_controller.dart';
+import 'package:seller_finalproject/controllers/profile_controller.dart';
 import 'package:seller_finalproject/views/widgets/our_button.dart';
 
 
@@ -43,7 +45,7 @@ class _SelectItemPageState extends State<SelectItemPage> {
                         color: Colors.grey[300],
                         borderRadius: BorderRadius.circular(5),
                         image: DecorationImage(
-                          image: NetworkImage(item.imageUrl),
+                          image: NetworkImage(item.imageUrls.isNotEmpty ? item.imageUrls.first : ''),
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -54,7 +56,7 @@ class _SelectItemPageState extends State<SelectItemPage> {
                         setState(() {
                           _selectedIndex = index;
                         });
-                        widget.onProductSelected(widget.products[index]);  // Add this line to trigger callback
+                        widget.onProductSelected(widget.products[index]);
                       },
                   ),
                 );
@@ -65,9 +67,14 @@ class _SelectItemPageState extends State<SelectItemPage> {
             title: 'Confirm this item to matching',
             color: primaryApp,
             textColor: whiteColor,
-            onPress: () {
-              // Handle the confirmation action
-            },
+              onPress: () {
+                if (_selectedIndex != null) {
+                  var selectedProduct = widget.products[_selectedIndex!];
+                  Get.back(result: selectedProduct.imageUrls);
+                } else {
+                  Get.snackbar('Error', 'No item selected', snackPosition: SnackPosition.BOTTOM);
+                }
+              },
           ).box.margin(EdgeInsets.symmetric(vertical: 28, horizontal: 20)).make(),
         ],
       ),
