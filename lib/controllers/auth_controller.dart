@@ -4,6 +4,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:seller_finalproject/const/const.dart';
 import 'package:get/get.dart';
 import 'package:seller_finalproject/controllers/create_screen.dart';
+import 'package:seller_finalproject/controllers/home_controller.dart';
 import 'package:seller_finalproject/views/home_screen/home.dart';
 
 class AuthController extends GetxController {
@@ -67,35 +68,54 @@ class AuthController extends GetxController {
   }
 
   //signup account
-  Future<void> loginMethod() async {
-    if (emailController.text.isEmpty || passwordController.text.isEmpty) {
-      return;
-    }
+Future<void> loginMethod() async {
+  if (emailController.text.isEmpty || passwordController.text.isEmpty) {
+    return;
+  }
 
-    try {
-      isloading.value = true;
+  try {
+    isloading.value = true;
 
-      var userCredential = await auth.signInWithEmailAndPassword(
-          email: emailController.text.trim(),
-          password: passwordController.text.trim());
+    var userEmail = emailController.text.trim().toLowerCase();
+    var userCredential = await auth.signInWithEmailAndPassword(
+        email: userEmail,
+        password: passwordController.text.trim());
 
-      if (userCredential.user != null) {
-        var vendorSnapshot = await firestore
-            .collection('vendors')
-            .where('email', isEqualTo: emailController.text.trim())
-            .get();
+    if (userCredential.user != null) {
+      var vendorSnapshot = await firestore
+          .collection('vendors')
+          .where('email', isEqualTo: userEmail)
+          .get();
 
-        if (vendorSnapshot.docs.isEmpty) {
-          Get.to(() => CreateAccount());
-        } else {
-          Get.offAll(() => Home());
-        }
+      if (vendorSnapshot.docs.isEmpty) {
+        Get.to(() => CreateAccount());
+      } else {
+        Get.offAll(() => Home());
       }
-    } on FirebaseAuthException catch (e) {
-      print(e.message);
-    } finally {
-      isloading.value = false;
     }
+  } on FirebaseAuthException catch (e) {
+    print(e.message);
+  } finally {
+    isloading.value = false;
+  }
+}
+
+
+  Future<void> CreateAccountMethod(BuildContext context) async {
+    var store = firestore.collection(vendorsCollection).doc();
+    await store.set({
+      'email': email,
+      'id': currentUser!.uid,
+      'imageUrl': '',
+      'shop_address':'',
+      'shop_desc': '',
+      'shop_mobile': '',
+      'shop_name': '',
+      'shop_website': '',
+      'vendor_id':  currentUser!.uid,
+      'vendor_name': '',
+    });
+    VxToast.show(context, msg: "Product successfully uploaded.");
   }
 
   //image
