@@ -4,7 +4,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:seller_finalproject/const/const.dart';
 import 'package:get/get.dart';
 import 'package:seller_finalproject/controllers/create_screen.dart';
-import 'package:seller_finalproject/controllers/home_controller.dart';
 import 'package:seller_finalproject/views/home_screen/home.dart';
 
 class AuthController extends GetxController {
