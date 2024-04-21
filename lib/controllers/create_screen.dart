@@ -1,72 +1,79 @@
+import 'dart:io';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:seller_finalproject/const/colors.dart';
 import 'package:seller_finalproject/controllers/auth_controller.dart';
 import 'package:seller_finalproject/controllers/loading_Indcator.dart';
 import 'package:seller_finalproject/views/widgets/our_button.dart';
 
-import '../const/const.dart';
-import '../const/styles.dart';
+class CreateAccount extends StatefulWidget {
+  const CreateAccount({Key? key}) : super(key: key);
 
-class CreateAccount extends StatelessWidget {
-  const CreateAccount({super.key});
+  @override
+  _CreateAccountState createState() => _CreateAccountState();
+}
+
+class _CreateAccountState extends State<CreateAccount> {
+  final AuthController controller = Get.find<AuthController>();
+
 
   @override
   Widget build(BuildContext context) {
-    var controller = Get.put(AuthController());
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: whiteColor,
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-          title: Text("Create Shop Account").text.size(24).fontFamily(medium).make(),
-          backgroundColor: Colors.white,
-        elevation: 0,
-        ),
-      body: Container(
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
+        title: Text("Create Shop Account"),
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black, // To change the back button color
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: SingleChildScrollView(
           child: Column(
             children: [
-              200.heightBox,
+              InkWell(
+                onTap: controller.pickImage,
+                child: CircleAvatar(
+                  radius: 60,
+                  backgroundColor: thinGrey01,
+                  child: controller.imageFile == null
+                      ? Icon(Icons.add_a_photo, color: greyColor, size: 50)
+                      : ClipOval(
+                          child: Image.file(
+                            File(controller.imageFile!.path),
+                            fit: BoxFit.cover,
+                            width: 120,
+                            height: 120,
+                          ),
+                        ),
+                ),
+              ),
+              const SizedBox(height: 20),
               Obx(
                 () => Column(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    TextFormField(
-                      controller: controller.shopnNameController,
-                      decoration: const InputDecoration(
-                        border: InputBorder.none,
-                        hintText: 'Shop Name',
+                    TextField(
+                      controller: controller.shopNameController,
+                      decoration: InputDecoration(
+                        labelText: 'Shop Name',
+                        border: OutlineInputBorder(),
+                        isDense: true,
                       ),
-                    )
-                        .box
-                        .white
-                        .rounded
-                        .outerShadowMd
-                        .padding(const EdgeInsets.symmetric(
-                            vertical: 8, horizontal: 22))
-                        .make(),
-                    40.heightBox,
-                    SizedBox(
-                      child: controller.isloading.value
-                          ? loadingIndicator()
-                          : ourButton(
-                              title: 'Next',
-                              onPress: () async {
-                                // await controller.signupMethod();
-                              },
-                            ),
                     ),
+                    const SizedBox(height: 20),
+                    controller.isloading.value
+                            ? loadingIndicator()
+                            :  ourButton(
+                            title: 'Next',
+                            onPress: () async {
+                              await controller.loginMethod();
+                            },
+                          ), 
                   ],
-                )
-                    .box
-                    .padding(const EdgeInsets.all(20.0))
-                    .make(),
+                ),
               ),
-              10.heightBox,
-              const Spacer(),
             ],
           ),
         ),

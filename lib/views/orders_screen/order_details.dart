@@ -30,7 +30,7 @@ class _OrderDetailsState extends State<OrderDetails> {
   Widget build(BuildContext context) {
     return Obx(() => Scaffold(
           appBar: AppBar(
-            title: Text("Order Details"),
+            title: const Text("Order Details"),
           ),
           bottomNavigationBar: Visibility(
             visible: !controller.confirmed.value,
@@ -55,12 +55,12 @@ class _OrderDetailsState extends State<OrderDetails> {
                     child: Column(
                       children: [
                         10.heightBox,
-                        Text("Order Status"),
+                        const Text("Order Status"),
                         SwitchListTile(
                           activeColor: primaryApp,
                           value: true, 
                           onChanged: (value) {}, 
-                          title: Text("Placed"),
+                          title: const Text("Placed"),
                         ),
                         SwitchListTile(
                           activeColor: primaryApp,
@@ -68,7 +68,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                           onChanged: (value) {
                             controller.confirmed.value = value;
                           }, 
-                          title: Text("Confirmed"),
+                          title: const Text("Confirmed"),
                         ),
                         SwitchListTile(
                           activeColor: primaryApp,
@@ -77,7 +77,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                             controller.ondelivery.value = value;
                             controller.changeStatus(title: "order_on_delivery", status: value, docID: widget.data.id);
                           }, 
-                          title: Text("On Delivery"),
+                          title: const Text("On Delivery"),
                         ),
                         SwitchListTile(
                           activeColor: primaryApp,
@@ -85,7 +85,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                             controller.delivered.value = value;
                             controller.changeStatus(title: "order_delivered", status: value, docID: widget.data.id);
                           }, 
-                          title: Text("Delivered"),
+                          title: const Text("Delivered"),
                         ),
                       ],
                     ).box.padding(const EdgeInsets.all(8.0)).outerShadowMd.white.border(color: thinGrey01).rounded.make(),
@@ -123,7 +123,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 // "Shipping Address".text.fontFamily(semibold).make(),
-                                Text(
+                                const Text(
                                 "Shipping Address",),
                                 "${widget.data['order_by_name']}".text.make(),
                                 "${widget.data['order_by_email']}".text.make(),
@@ -140,7 +140,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
+                                  const Text(
                                       "Total Amount",),
                                   Text(
                                       "${widget.data['total_amount']} Bath", ),
@@ -159,7 +159,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                  Column(
                    children: [
                   10.heightBox,
-                    Text("Ordered Product"),
+                    const Text("Ordered Product"),
                   10.heightBox,
                   ListView(
                     physics: const NeverScrollableScrollPhysics(),

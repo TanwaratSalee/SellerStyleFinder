@@ -43,9 +43,9 @@ class _ReviewScreenState extends State<ReviewScreen>
           preferredSize: const Size.fromHeight(50.0),
           child: TabBar(
             controller: _tabController,
-            tabs: [
-              const Tab(text: 'Shop'),
-              const Tab(text: 'Product'),
+            tabs: const [
+              Tab(text: 'Shop'),
+              Tab(text: 'Product'),
             ],
           ),
         ),
@@ -91,8 +91,8 @@ Widget _botton(BuildContext context) {
         decoration: BoxDecoration(
           color: whiteColor,
           borderRadius: BorderRadius.circular(8),
-          boxShadow: [
-            const BoxShadow(
+          boxShadow: const [
+            BoxShadow(
               color: greyColor,
               blurRadius: 4,
               offset: Offset(0, 2),
@@ -146,8 +146,8 @@ Widget _buildReviewCard() {
     decoration: BoxDecoration(
       color: whiteColor,
       borderRadius: BorderRadius.circular(8),
-      boxShadow: [
-        const BoxShadow(
+      boxShadow: const [
+        BoxShadow(
           color: greyColor,
           blurRadius: 4,
           offset: Offset(0, 2),
@@ -200,8 +200,8 @@ Widget _buildReviewProductCard() {
     decoration: BoxDecoration(
       color: whiteColor,
       borderRadius: BorderRadius.circular(8),
-      boxShadow: [
-        const BoxShadow(
+      boxShadow: const [
+        BoxShadow(
           color: greyColor,
           blurRadius: 4,
           offset: Offset(0, 2),

@@ -11,7 +11,7 @@ Widget dashboardButton(context, {title, count, icon}) {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Text(title).text.size(16).make(),
-          Text(count).text.size(20).make()
+          // Text(count).text.size(20).make()
         ],
       )),
       Image.asset(

@@ -153,7 +153,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                 onTap: () async {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => AddMatchProduct()),
+                    MaterialPageRoute(builder: (context) => const AddMatchProduct()),
                   );
                 },
               ),
@@ -170,7 +170,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
               onTap: () async {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => AddMatchProduct()),
+                  MaterialPageRoute(builder: (context) => const AddMatchProduct()),
                 );
               },
             ),
@@ -201,7 +201,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                             height: 55,
                             fit: BoxFit.cover,
                           ),
-                          SizedBox(width: 10),
+                          const SizedBox(width: 10),
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -226,7 +226,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                             height: 55,
                             fit: BoxFit.cover,
                           ),
-                          SizedBox(width: 10),
+                          const SizedBox(width: 10),
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -246,7 +246,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Text('Total price:').text.fontFamily(regular).make(),
+                          const Text('Total price:').text.fontFamily(regular).make(),
                           5.widthBox,
                           Text("${NumberFormat('#,##0').format((double.parse(price1.toString()) + double.parse(price2.toString())).toInt())} Bath")
                               .text
@@ -259,9 +259,9 @@ class _ProductsScreenState extends State<ProductsScreen> {
                       .box
                       .rounded
                       .border(color: thinGrey01)
-                      .margin(EdgeInsets.symmetric(vertical: 4, horizontal: 12))
+                      .margin(const EdgeInsets.symmetric(vertical: 4, horizontal: 12))
                       .padding(
-                          EdgeInsets.symmetric(vertical: 8, horizontal: 12))
+                          const EdgeInsets.symmetric(vertical: 8, horizontal: 12))
                       .make();
                 },
               ),

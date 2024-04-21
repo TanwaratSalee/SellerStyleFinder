@@ -65,7 +65,7 @@ class ProductDetails extends StatelessWidget {
                   Column(children: [
                     Row(
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           width: 100,
                           child: Text("Color: ", ),
                         ),
@@ -91,7 +91,7 @@ class ProductDetails extends StatelessWidget {
                     //quantity row
                     Row(
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           width: 100,
                           child: Text("Quantity: "),
                         ),
@@ -100,7 +100,7 @@ class ProductDetails extends StatelessWidget {
                     ).box.padding(const EdgeInsets.all(8)).make(),
                     Row(
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           width: 100,
                           child: Text("Size : "),
                         ),
@@ -109,7 +109,7 @@ class ProductDetails extends StatelessWidget {
                     ).box.padding(const EdgeInsets.all(8)).make(),
                     const Divider(),
                     10.heightBox,
-                    Text("Description", ),
+                    const Text("Description", ),
                     10.heightBox,
                     Text("${data['p_desc']}"),
                     

@@ -165,9 +165,9 @@
     },
     {
       "name": "flutter_lints",
-      "rootUri": "file:///Users/thanwarat/.pub-cache/hosted/pub.dev/flutter_lints-2.0.3",
+      "rootUri": "file:///Users/thanwarat/.pub-cache/hosted/pub.dev/flutter_lints-3.0.2",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "3.1"
     },
     {
       "name": "flutter_plugin_android_lifecycle",
@@ -279,7 +279,7 @@
     },
     {
       "name": "lints",
-      "rootUri": "file:///Users/thanwarat/.pub-cache/hosted/pub.dev/lints-2.1.1",
+      "rootUri": "file:///Users/thanwarat/.pub-cache/hosted/pub.dev/lints-3.0.0",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
@@ -404,7 +404,7 @@
       "languageVersion": "3.2"
     }
   ],
-  "generated": "2024-04-20T19:39:20.662899Z",
+  "generated": "2024-04-21T08:00:11.732184Z",
   "generator": "pub",
-  "generatorVersion": "3.3.1"
+  "generatorVersion": "3.3.4"
 }

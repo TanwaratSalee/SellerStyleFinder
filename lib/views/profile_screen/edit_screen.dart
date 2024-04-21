@@ -30,7 +30,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     return Obx(
       () => Scaffold(
         appBar: AppBar(
-          title: Text( editshopProfile),
+          title: const Text( editshopProfile),
           actions: [
             controller.isloading.value
                 ? loadingIndicator(circleColor: primaryApp)
@@ -72,7 +72,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         controller.isloading(false);
                       }
                     },
-                    child: Text( save))
+                    child: const Text( save))
           ],
         ),
         body: Padding(
@@ -111,7 +111,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     onPressed: () {
                       controller.changeImage(context);
                     },
-                    child: Text( changeImage)),
+                    child: const Text( changeImage)),
                 20.heightBox,
                 const Divider(),
                 20.heightBox,
@@ -125,7 +125,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   controller: controller.emailController,
                 ),
                 20.heightBox,
-                Align(
+                const Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
                        "Change your password"),

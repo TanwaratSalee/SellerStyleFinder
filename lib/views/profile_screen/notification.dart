@@ -11,18 +11,18 @@ class NotificationBadge extends StatelessWidget {
         ? Positioned(
             right: 0,
             child: Container(
-              padding: EdgeInsets.all(1),
+              padding: const EdgeInsets.all(1),
               decoration: BoxDecoration(
                 color: Colors.red,
                 borderRadius: BorderRadius.circular(8),
               ),
-              constraints: BoxConstraints(
+              constraints: const BoxConstraints(
                 minWidth: 10,
                 minHeight: 10,
               ),
               child: Text(
                 '$notificationCount',
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 1,
                 ),
@@ -30,7 +30,7 @@ class NotificationBadge extends StatelessWidget {
               ),
             ),
           )
-        : SizedBox(); // แสดงป้ายกำกับเฉพาะเมื่อมีการแจ้งเตือน
+        : const SizedBox(); // แสดงป้ายกำกับเฉพาะเมื่อมีการแจ้งเตือน
   }
 }
 

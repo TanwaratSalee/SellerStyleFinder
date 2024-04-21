@@ -101,7 +101,7 @@ class LoginScreen extends StatelessWidget {
                             :  ourButton(
                             title: 'Login',
                             onPress: () async {
-                              await controller.loginMethod(context: context);
+                              await controller.loginMethod();
                             },
                           ),
                             // : ourButton(

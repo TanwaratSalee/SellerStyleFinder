@@ -27,7 +27,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       backgroundColor: whiteColor,
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Text( settings),
+        title: const Text( settings),
         actions: [
           IconButton(
             onPressed: () {
@@ -42,7 +42,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               await Get.find<AuthController>().signoutMethod(context);
               Get.offAll(() => const LoginScreen());
             },
-            child: Text( logout),
+            child: const Text( logout),
           ),
         ],
       ),
@@ -108,11 +108,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 color: greyDark2,
                               ),
                               if (index == 1)
-                                NotificationBadge(
+                                const NotificationBadge(
                                   notificationCount: 1,
                                 ),
                               if (index == 2)
-                                NotificationBadge(
+                                const NotificationBadge(
                                   notificationCount: 0,
                                 ),
                             ],

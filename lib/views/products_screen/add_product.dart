@@ -20,7 +20,7 @@ class AddProduct extends StatelessWidget {
       () => Scaffold(
         backgroundColor: whiteColor,
         appBar: AppBar(
-          title: Text("Add Product").text.size(24).fontFamily(medium).make(),
+          title: const Text("Add Product").text.size(24).fontFamily(medium).make(),
           actions: [
             controller.isloading.value
                 ? loadingIndicator(circleColor: primaryApp)
@@ -39,7 +39,7 @@ class AddProduct extends StatelessWidget {
                             msg: "Please fill in all required fields.");
                       }
                     },
-                    child: Text(save).text.fontFamily(medium).size(18).make())
+                    child: const Text(save).text.fontFamily(medium).size(18).make())
           ],
         ),
         body: Padding(
@@ -49,7 +49,7 @@ class AddProduct extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Choose product images")
+                const Text("Choose product images")
                     .text
                     .size(16)
                     .color(greyDark1)
@@ -133,7 +133,7 @@ class AddProduct extends StatelessWidget {
                 productDropdown("Type of product", controller.subcollectionList,
                     controller.subcollectionvalue, controller),
                 20.heightBox,
-                Text("Suitable for gender")
+                const Text("Suitable for gender")
                     .text
                     .size(16)
                     .color(greyDark1)
@@ -163,13 +163,13 @@ class AddProduct extends StatelessWidget {
                           selectedColor: thinPrimaryApp,
                           backgroundColor: thinGrey0,
                           side: isSelected
-                              ? BorderSide(color: primaryApp, width: 2)
-                              : BorderSide(color: greyColor),
+                              ? const BorderSide(color: primaryApp, width: 2)
+                              : const BorderSide(color: greyColor),
                         );
                       }).toList(),
                     )),
                 10.heightBox,
-                Text("Size of product")
+                const Text("Size of product")
                     .text
                     .size(16)
                     .color(greyDark1)
@@ -200,13 +200,13 @@ class AddProduct extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Choose product colors")
+                    const Text("Choose product colors")
                         .text
                         .size(16)
                         .color(greyDark1)
                         .fontFamily(medium)
                         .make(),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     Obx(
                       () => Wrap(
                         spacing: 10.0,
@@ -249,7 +249,7 @@ class AddProduct extends StatelessWidget {
                                             ? Colors.black
                                             : Colors.white,
                                       )
-                                    : SizedBox(),
+                                    : const SizedBox(),
                               ),
                             ),
                           ),
@@ -259,7 +259,7 @@ class AddProduct extends StatelessWidget {
                   ],
                 ),
                 10.heightBox,
-                Text("Show mix and match")
+                const Text("Show mix and match")
                     .text
                     .size(16)
                     .color(greyDark1)
@@ -289,8 +289,8 @@ class AddProduct extends StatelessWidget {
                           selectedColor: thinPrimaryApp,
                           backgroundColor: thinGrey0,
                           side: isSelected
-                              ? BorderSide(color: primaryApp, width: 2)
-                              : BorderSide(color: greyColor),
+                              ? const BorderSide(color: primaryApp, width: 2)
+                              : const BorderSide(color: greyColor),
                         );
                       }).toList(),
                     )),
