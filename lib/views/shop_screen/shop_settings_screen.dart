@@ -4,7 +4,6 @@ import 'package:seller_finalproject/const/const.dart';
 import 'package:seller_finalproject/controllers/loading_Indcator.dart';
 import 'package:seller_finalproject/controllers/profile_controller.dart';
 import 'package:seller_finalproject/views/widgets/custom_textfield.dart';
-import 'package:seller_finalproject/views/widgets/text_style.dart';
 export 'package:get/get.dart';
 
 class ShopSettings extends StatelessWidget {
@@ -17,7 +16,7 @@ class ShopSettings extends StatelessWidget {
     return Obx(
       () => Scaffold(
         appBar: AppBar(
-          title: boldText(text: shopSettings, color: greyDark2, size: 25.0),
+          title: const Text( shopSettings),
           actions: [
             controller.isloading.value
                 ? loadingIndicator(circleColor: greyColor)
@@ -33,7 +32,7 @@ class ShopSettings extends StatelessWidget {
                       // ignore: use_build_context_synchronously
                       VxToast.show(context, msg: "Shop updated");
                     },
-                    child: normalText(text: save, color: greyDark2))
+                    child: const Text(save))
           ],
         ),
         body: Padding(
@@ -59,14 +58,14 @@ class ShopSettings extends StatelessWidget {
                         fit: BoxFit.cover,
                       ).box.roundedFull.clip(Clip.antiAlias).make(),
             10.heightBox,
-            boldText(text: " About Shop", color: greyColor, size: 18),
+            const Text( " About Shop"),
             10.heightBox,
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  boldText(text: "Fullname: ", color: greyColor, size: 14),
+                  const Text( "Fullname: "),
                   const SizedBox(width: 8),
                   Expanded(
                       child: Text(
@@ -87,7 +86,7 @@ class ShopSettings extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    boldText(text: "Email: ", color: greyColor, size: 14),
+                    const Text( "Email: "),
                     const SizedBox(width: 8),
                     Expanded(
                       child: Text(
@@ -108,7 +107,7 @@ class ShopSettings extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    boldText(text: "Address: ", color: greyColor, size: 14),
+                    const Text( "Address: "),
                     const SizedBox(width: 8),
                     Expanded(
                       child: Text(

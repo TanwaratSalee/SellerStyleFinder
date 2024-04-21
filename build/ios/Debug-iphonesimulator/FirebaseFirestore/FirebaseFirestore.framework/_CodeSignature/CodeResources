@@ -6,7 +6,7 @@
 	<dict>
 		<key>FirebaseFirestore_Privacy.bundle/Info.plist</key>
 		<data>
-		k9sK7pvbyS0JZCdmoq7TvDS2XWw=
+		BpJdVKQFuTQqndZcNfFgWfeJ62s=
 		</data>
 		<key>FirebaseFirestore_Privacy.bundle/PrivacyInfo.xcprivacy</key>
 		<data>
@@ -138,15 +138,15 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		TykuGsMkNo0Ymn4nYpxwmNVzKoI=
+		300gQIZ6NdhNCwEch98YDbpLl9M=
 		</data>
 		<key>Modules/FirebaseFirestore.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo</key>
 		<data>
-		8LybV1O2lKzLRowsZIw/pfvSUvQ=
+		BoRpGc3gpltZmK7yRU8YNBpWvqE=
 		</data>
 		<key>Modules/FirebaseFirestore.swiftmodule/Project/x86_64-apple-ios-simulator.swiftsourceinfo</key>
 		<data>
-		h5PfxMHim9DGUXSEJisThJROdNk=
+		VTHz8wqD22LB4EwnsR+EE1HSKvI=
 		</data>
 		<key>Modules/FirebaseFirestore.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<data>
@@ -183,7 +183,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			AU2DTY6JYTcJIZYlzUukxdtXJnlimbOvzbS6H0bGfwA=
+			FN0IGyVguStJQgyIha7JSv0dMDnfF1mkvDmG7xjd7wc=
 			</data>
 		</dict>
 		<key>FirebaseFirestore_Privacy.bundle/PrivacyInfo.xcprivacy</key>
@@ -414,14 +414,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			tBdJ4YOwClFiLZvkx+yW3zZMmpwmISHrMuFitTF28WE=
+			bzz0sQVEKPpF6AlgQGZ65Rd3/9mqgNsWvGIuo/fiCXI=
 			</data>
 		</dict>
 		<key>Modules/FirebaseFirestore.swiftmodule/Project/x86_64-apple-ios-simulator.swiftsourceinfo</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			A2SccslylJwa3QkwAPHpAr4XGsgHc102zixNC/UApVM=
+			SZy0sHMqksxCHH/3Bt+Jldnvj4xIX6xN+TkZEoo/XqY=
 			</data>
 		</dict>
 		<key>Modules/FirebaseFirestore.swiftmodule/arm64-apple-ios-simulator.abi.json</key>

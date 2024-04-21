@@ -1,6 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:seller_finalproject/const/const.dart';
-import 'package:seller_finalproject/views/widgets/text_style.dart';
+import 'package:seller_finalproject/const/styles.dart';
 
 Widget ourButton(
     {required String title,
@@ -15,9 +14,7 @@ Widget ourButton(
               minimumSize: const Size(double.infinity, 45),
           padding: const EdgeInsets.all(12.0)),
       onPressed: onPress,
-      child: normalText(
-          text: title,
-          size: 16.0,
-          color: textColor) // Pass textColor to normalText
+      child: Text(
+           title,).text.size(18).fontFamily(bold).color(whiteColor).make() // Pass textColor to Text
       );
 }

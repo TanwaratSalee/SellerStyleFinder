@@ -5,7 +5,6 @@ import 'dart:io';
 import 'package:seller_finalproject/controllers/loading_Indcator.dart';
 import 'package:seller_finalproject/controllers/profile_controller.dart';
 import 'package:seller_finalproject/views/widgets/custom_textfield.dart';
-import 'package:seller_finalproject/views/widgets/text_style.dart';
 
 import '../../const/const.dart';
 
@@ -31,7 +30,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     return Obx(
       () => Scaffold(
         appBar: AppBar(
-          title: boldText(text: editshopProfile, color: blackColor, size: 30.0),
+          title: const Text( editshopProfile),
           actions: [
             controller.isloading.value
                 ? loadingIndicator(circleColor: primaryApp)
@@ -73,7 +72,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         controller.isloading(false);
                       }
                     },
-                    child: normalText(text: save, color: blackColor))
+                    child: const Text( save))
           ],
         ),
         body: Padding(
@@ -112,7 +111,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     onPressed: () {
                       controller.changeImage(context);
                     },
-                    child: normalText(text: changeImage)),
+                    child: const Text( changeImage)),
                 20.heightBox,
                 const Divider(),
                 20.heightBox,
@@ -126,10 +125,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   controller: controller.emailController,
                 ),
                 20.heightBox,
-                Align(
+                const Align(
                   alignment: Alignment.centerLeft,
-                  child: boldText(
-                      text: "Change your password", color: greyDark2),
+                  child: Text(
+                       "Change your password"),
                 ),
                 10.heightBox,
                 customTextField(

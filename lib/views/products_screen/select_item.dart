@@ -24,8 +24,8 @@ class _SelectItemPageState extends State<SelectItemPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: BackButton(),
-        title: Text('Select Item'),
+        leading: const BackButton(),
+        title: const Text('Select Item'),
       ),
       body: Column(
         children: [
@@ -37,7 +37,7 @@ class _SelectItemPageState extends State<SelectItemPage> {
                 return Card(
                   color: _selectedIndex == index ? Colors.lightBlueAccent : Colors.white,
                   child: ListTile(
-                    contentPadding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 16.0),
+                    contentPadding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 16.0),
                     leading: Container(
                       width: 80,
                       height: 100,
@@ -75,7 +75,7 @@ class _SelectItemPageState extends State<SelectItemPage> {
                   Get.snackbar('Error', 'No item selected', snackPosition: SnackPosition.BOTTOM);
                 }
               },
-          ).box.margin(EdgeInsets.symmetric(vertical: 28, horizontal: 20)).make(),
+          ).box.margin(const EdgeInsets.symmetric(vertical: 28, horizontal: 20)).make(),
         ],
       ),
     );

@@ -9,7 +9,6 @@ import 'package:seller_finalproject/services/store_services.dart';
 import 'package:seller_finalproject/views/products_screen/product_details.dart';
 import 'package:seller_finalproject/views/widgets/appbar_widget.dart';
 import 'package:seller_finalproject/views/widgets/dashboard_button.dart';
-import 'package:seller_finalproject/views/widgets/text_style.dart';
 // ignore: unused_import, depend_on_referenced_packages
 import 'package:intl/intl.dart' as intl;
 
@@ -62,7 +61,7 @@ class HomeScreen extends StatelessWidget {
                     10.heightBox,
                     const Divider(),
                     20.heightBox,
-                    boldText(text: popular, color: greyDark2, size: 16.0),
+                    Text( popular),
                     10.heightBox,
                     Expanded(
                       child: ListView.builder(
@@ -88,10 +87,7 @@ class HomeScreen extends StatelessWidget {
                                     ),
                                   );
                                 } else {
-                                  // หากไม่พบข้อมูลสินค้าที่ตรงกับชื่อที่ต้องการ
-                                  // อาจจะทำการแจ้งเตือนผู้ใช้หรือทำการจัดการตามต้องการ
-                                  // ในกรณีนี้เราจะไม่ไปยังหน้า ProductDetails และอาจแสดงข้อความขึ้นมาแทน
-                                  // เช่น Get.snackbar() หรือ Navigator.push() ไปยังหน้าที่เหมาะสม
+                                  
                                 }
                               },
                               leading: Image.network(
