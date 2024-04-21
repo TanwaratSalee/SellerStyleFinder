@@ -23,7 +23,7 @@ class _CreateAccountState extends State<CreateAccount> {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text("Create Shop Account"),
-        backgroundColor: Colors.white,
+        backgroundColor: whiteColor,
         foregroundColor: Colors.black, // To change the back button color
       ),
       body: Padding(

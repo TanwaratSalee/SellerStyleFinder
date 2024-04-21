@@ -15,6 +15,6 @@ Widget ourButton(
           padding: const EdgeInsets.all(12.0)),
       onPressed: onPress,
       child: Text(
-           title,).text.size(18).fontFamily(bold).color(whiteColor).make() // Pass textColor to Text
+           title,).text.size(18).fontFamily(regular).color(whiteColor).make() // Pass textColor to Text
       );
 }

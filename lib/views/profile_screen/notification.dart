@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:seller_finalproject/const/colors.dart';
 
 class NotificationBadge extends StatelessWidget {
   final int notificationCount;
@@ -13,7 +14,7 @@ class NotificationBadge extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.all(1),
               decoration: BoxDecoration(
-                color: Colors.red,
+                color: redColor,
                 borderRadius: BorderRadius.circular(8),
               ),
               constraints: const BoxConstraints(
@@ -23,7 +24,7 @@ class NotificationBadge extends StatelessWidget {
               child: Text(
                 '$notificationCount',
                 style: const TextStyle(
-                  color: Colors.white,
+                  color: whiteColor,
                   fontSize: 1,
                 ),
                 textAlign: TextAlign.center,

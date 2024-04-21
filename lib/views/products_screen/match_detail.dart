@@ -67,7 +67,7 @@ class _MatchDetailScreenState extends State<MatchDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: whiteColor,
       appBar: AppBar(
         title: const Text(
           'Match Product',
@@ -107,7 +107,7 @@ class _MatchDetailScreenState extends State<MatchDetailScreen> {
           //       controller.isFav.value
           //           ? Icons.favorite
           //           : Icons.favorite_outline,
-          //       color: controller.isFav.value ? Colors.red : null,
+          //       color: controller.isFav.value ? redColor : null,
           //     ),
           //     iconSize: 28,
           //   ),
@@ -334,7 +334,7 @@ class _MatchDetailScreenState extends State<MatchDetailScreen> {
                       'See Store',
                       style: TextStyle(
                         fontFamily: regular,
-                        color: Colors.white,
+                        color: whiteColor,
                         fontSize: 16,
                       ),
                     ),

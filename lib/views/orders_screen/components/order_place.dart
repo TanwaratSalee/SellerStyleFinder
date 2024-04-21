@@ -1,3 +1,5 @@
+import 'package:seller_finalproject/const/styles.dart';
+
 import '../../../const/const.dart';
 
 Widget orderPlaceDetails({title1, title2, d1, d2}) {
@@ -9,8 +11,8 @@ Widget orderPlaceDetails({title1, title2, d1, d2}) {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("$title1"),
-            Text("$d1")
+            Text("$title1").text.size(15).fontFamily(bold).make(),
+            Text("$d1").text.size(14).fontFamily(regular).make(),
             ],
         ),
         SizedBox(
@@ -18,8 +20,8 @@ Widget orderPlaceDetails({title1, title2, d1, d2}) {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-            Text("$title2"),
-            Text("$d2")
+            Text("$title2").text.size(15).fontFamily(bold).make(),
+            Text("$d2").text.size(14).fontFamily(regular).make(),
             ],
           ),
         )

@@ -171,7 +171,7 @@ class _AddMatchProductState extends State<AddMatchProduct> {
                             border: Border.all(
                               color: controller.selectedColorIndexes
                                       .contains(index)
-                                  ? Colors.blueAccent // เปลี่ยนสีเมื่อถูกเลือก
+                                  ? primaryApp // เปลี่ยนสีเมื่อถูกเลือก
                                   : Colors.transparent,
                               width: 2,
                             ),
@@ -183,9 +183,9 @@ class _AddMatchProductState extends State<AddMatchProduct> {
                                         Icons.done,
                                         color: controller.allColors[index]
                                                     ['color'] ==
-                                                Colors.white
+                                                whiteColor
                                             ? Colors.black
-                                            : Colors.white,
+                                            : whiteColor,
                                       )
                                     : const SizedBox(),
                           ),
