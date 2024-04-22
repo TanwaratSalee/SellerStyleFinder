@@ -6,14 +6,15 @@ Widget dashboardButton(context, {title, count, icon}) {
   return Row(
     children: [
       Expanded(
-          child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          Text(title).text.size(16).make(),
-          // Text(count).text.size(20).make()
-        ],
-      )),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Text(title).text.size(16).make(),
+            Text(count.toString()).text.size(20).make()  // แสดงค่า count ที่รับเข้ามา
+          ],
+        ),
+      ),
       Image.asset(
         icon,
         width: 40,
@@ -21,10 +22,11 @@ Widget dashboardButton(context, {title, count, icon}) {
       )
     ],
   )
-      .box
-      .color(primaryApp)
-      .rounded
-      .size(size.width * 0.4, 80)
-      .padding(const EdgeInsets.all(12.0))
-      .make();
+  .box
+  .color(primaryApp)
+  .rounded
+  .size(size.width * 0.4, 80)
+  .padding(const EdgeInsets.all(12.0))
+  .make();
 }
+
