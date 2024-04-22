@@ -284,6 +284,12 @@
       "languageVersion": "3.0"
     },
     {
+      "name": "loading_animation_widget",
+      "rootUri": "file:///C:/Users/P/AppData/Local/Pub/Cache/hosted/pub.dev/loading_animation_widget-1.2.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.16"
+    },
+    {
       "name": "matcher",
       "rootUri": "file:///C:/Users/P/AppData/Local/Pub/Cache/hosted/pub.dev/matcher-0.12.16+1",
       "packageUri": "lib/",
@@ -404,7 +410,7 @@
       "languageVersion": "3.2"
     }
   ],
-  "generated": "2024-04-21T10:43:59.010442Z",
+  "generated": "2024-04-22T12:50:39.258002Z",
   "generator": "pub",
   "generatorVersion": "3.3.4"
 }

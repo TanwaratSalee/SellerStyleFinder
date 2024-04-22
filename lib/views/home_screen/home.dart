@@ -12,7 +12,8 @@ class Home extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(HomeController());  // Ensure controller is initialized if not already
+    Get.put(HomeController());
+    HomeController controller = Get.put(HomeController());
 
     return Scaffold(
       bottomNavigationBar: Obx(
