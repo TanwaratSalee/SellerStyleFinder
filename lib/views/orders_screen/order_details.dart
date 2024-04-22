@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+import 'package:seller_finalproject/const/styles.dart';
 import 'package:seller_finalproject/controllers/orders_controller.dart';
 import 'package:seller_finalproject/controllers/profile_controller.dart';
 import 'package:seller_finalproject/views/orders_screen/components/order_place.dart';
@@ -23,14 +25,19 @@ class _OrderDetailsState extends State<OrderDetails> {
     controller.getOrders(widget.data);
     controller.confirmed.value = widget.data['order_confirmed'];
     controller.ondelivery.value = widget.data['order_on_delivery'];
-    controller.delivered.value = widget.data[ 'order_delivered'];
+    controller.delivered.value = widget.data['order_delivered'];
   }
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => Scaffold(
+    return Obx(
+      () => Scaffold(
           appBar: AppBar(
-            title: const Text("Order Details"),
+            title: const Text("Order Details")
+                .text
+                .size(24)
+                .fontFamily(medium)
+                .make(),
           ),
           bottomNavigationBar: Visibility(
             visible: !controller.confirmed.value,
@@ -38,10 +45,17 @@ class _OrderDetailsState extends State<OrderDetails> {
               height: 60,
               width: context.screenWidth,
               child: ourButton(
-                  color: primaryApp, onPress: () {
-                    controller.confirmed(true);
-                    controller.changeStatus(title: "order_confirmed", status: true,docID: widget.data.id);
-                  }, title: "Confirm Order", textColor: thinGrey01, ),
+                color: primaryApp,
+                onPress: () {
+                  controller.confirmed(true);
+                  controller.changeStatus(
+                      title: "order_confirmed",
+                      status: true,
+                      docID: widget.data.id);
+                },
+                title: "Confirm Order",
+                textColor: thinGrey01,
+              ),
             ),
           ),
           body: SingleChildScrollView(
@@ -49,7 +63,6 @@ class _OrderDetailsState extends State<OrderDetails> {
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 children: [
-      
                   Visibility(
                     visible: controller.confirmed.value,
                     child: Column(
@@ -58,39 +71,53 @@ class _OrderDetailsState extends State<OrderDetails> {
                         const Text("Order Status"),
                         SwitchListTile(
                           activeColor: primaryApp,
-                          value: true, 
-                          onChanged: (value) {}, 
+                          value: true,
+                          onChanged: (value) {},
                           title: const Text("Placed"),
                         ),
                         SwitchListTile(
                           activeColor: primaryApp,
-                          value: controller.confirmed.value, 
+                          value: controller.confirmed.value,
                           onChanged: (value) {
                             controller.confirmed.value = value;
-                          }, 
+                          },
                           title: const Text("Confirmed"),
                         ),
                         SwitchListTile(
                           activeColor: primaryApp,
-                          value: controller.ondelivery.value, 
+                          value: controller.ondelivery.value,
                           onChanged: (value) {
                             controller.ondelivery.value = value;
-                            controller.changeStatus(title: "order_on_delivery", status: value, docID: widget.data.id);
-                          }, 
+                            controller.changeStatus(
+                                title: "order_on_delivery",
+                                status: value,
+                                docID: widget.data.id);
+                          },
                           title: const Text("On Delivery"),
                         ),
                         SwitchListTile(
                           activeColor: primaryApp,
-                          value: controller.delivered.value, onChanged: (value) {
+                          value: controller.delivered.value,
+                          onChanged: (value) {
                             controller.delivered.value = value;
-                            controller.changeStatus(title: "order_delivered", status: value, docID: widget.data.id);
-                          }, 
+                            controller.changeStatus(
+                                title: "order_delivered",
+                                status: value,
+                                docID: widget.data.id);
+                          },
                           title: const Text("Delivered"),
                         ),
                       ],
-                    ).box.padding(const EdgeInsets.all(8.0)).outerShadowMd.white.border(color: thinGrey01).rounded.make(),
+                    )
+                        .box
+                        .padding(const EdgeInsets.all(8.0))
+                        .outerShadowMd
+                        .white
+                        .border(color: thinGrey01)
+                        .rounded
+                        .make(),
                   ),
-      
+
                   10.heightBox,
                   Column(
                     children: [
@@ -102,7 +129,9 @@ class _OrderDetailsState extends State<OrderDetails> {
                       ),
                       orderPlaceDetails(
                         // d1: DateTime.now(),
-                        d1: intl.DateFormat().add_yMd().format((widget.data['order_date'].toDate())),
+                        d1: intl.DateFormat()
+                            .add_yMd()
+                            .format((widget.data['order_date'].toDate())),
                         d2: "${widget.data['payment_method']}",
                         title1: "Order Date",
                         title2: "Payment Method",
@@ -123,15 +152,25 @@ class _OrderDetailsState extends State<OrderDetails> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 // "Shipping Address".text.fontFamily(semibold).make(),
-                                const Text(
-                                "Shipping Address",),
+                                const Text("Shipping Address")
+                                    .text
+                                    .size(15)
+                                    .fontFamily(bold)
+                                    .make(),
                                 "${widget.data['order_by_name']}".text.make(),
-                                "${widget.data['order_by_email']}".text.make(),
-                                "${widget.data['order_by_address']}".text.make(),
+                                "${widget.data['order_by_firstname']} ${widget.data['order_by_surname']}"
+                                    .text
+                                    .make(),
+                                // "${widget.data['order_by_email']}".text.make(),
+                                "${widget.data['order_by_address']}"
+                                    .text
+                                    .make(),
                                 "${widget.data['order_by_city']}".text.make(),
                                 "${widget.data['order_by_state']}".text.make(),
+                                "${widget.data['order_by_postalcode']}"
+                                    .text
+                                    .make(),
                                 "${widget.data['order_by_phone']}".text.make(),
-                                "${widget.data['order_by_postalcode']}".text.make(),
                               ],
                             ),
                             SizedBox(
@@ -141,11 +180,10 @@ class _OrderDetailsState extends State<OrderDetails> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   const Text(
-                                      "Total Amount",),
+                                    "Total Amount",
+                                  ).text.size(15).fontFamily(bold).make(),
                                   Text(
-                                      "${widget.data['total_amount']} Bath", ),
-                                  // "Total Amount".text.fontFamily(semibold).make(),
-                                  // "${data['total_amount']}".text.color(primaryApp).fontFamily(bold).make()
+                                      "${NumberFormat('#,##0').format(double.parse(widget.data['total_amount'].toString()).toInt())} Bath")
                                 ],
                               ),
                             ),
@@ -153,42 +191,89 @@ class _OrderDetailsState extends State<OrderDetails> {
                         ),
                       )
                     ],
-                  ).box.outerShadowMd.white.border(color: thinGrey01).rounded.make(),
+                  )
+                      .box
+                      .outerShadowMd
+                      .white
+                      .border(color: thinGrey01)
+                      .rounded
+                      .make(),
                   // const Divider(),
                   10.heightBox,
-                 Column(
-                   children: [
-                  10.heightBox,
-                    const Text("Ordered Product"),
-                  10.heightBox,
-                  ListView(
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    children: List.generate(controller.orders.length, (index) {
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          orderPlaceDetails(
-                              title1: "${controller.orders[index]['title']} Bath",
-                              title2: "${controller.orders[index]['price']} Bath",
-                              d1: "${controller.orders[index]['qty']}x",
-                              d2: "Refundable"),
-                          Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 16),
-                            child: Container(
-                              width: 30,
-                              height: 20,
-                              color: Color(controller.orders[index]['color']),
-                            ),
-                          ),
-                          
-                        ],
-                      );
-                    }).toList(),
-                  ),
-                  20.heightBox,
-                   ] 
-                 ).box.outerShadowMd.white.border(color: thinGrey01).rounded.make(),
+                  Column(children: [
+                    10.heightBox,
+                    const Text("Ordered Product")
+                        .text
+                        .size(20)
+                        .fontFamily(medium)
+                        .make(),
+                    10.heightBox,
+                    ListView(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      children:
+                          List.generate(controller.orders.length, (index) {
+                        return ListView(
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          children:
+                              List.generate(controller.orders.length, (index) {
+                            return Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const SizedBox(width: 10),
+                                Text("${controller.orders[index]['qty']}x",
+                                    style: const TextStyle(
+                                        fontSize: 14, fontFamily: regular)),
+                                const SizedBox(width: 15),
+                                Image.network(
+                                  controller.orders[index]['img'],
+                                  width: 70,
+                                  height: 70,
+                                  fit: BoxFit.cover,
+                                ),
+                                const SizedBox(width: 10),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      controller.orders[index]['title'],
+                                      style: const TextStyle(
+                                          fontSize: 16, fontFamily: medium),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                    Text(
+                                      "${NumberFormat('#,##0').format(double.parse(controller.orders[index]['price'].toString()))} Bath",
+                                      style: const TextStyle(
+                                          fontSize: 14,
+                                          fontFamily: regular,
+                                          color: greyDark1),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                    width:
+                                        10), // Provide spacing between text and the color box
+                                // Container(
+                                //   width: 30,
+                                //   height: 20,
+                                //   color:
+                                //       Color(controller.orders[index]['color']),
+                                // ),
+                              ],
+                            );
+                          }).toList(),
+                        ).box.padding(EdgeInsets.all(8)).make();
+                      }).toList(),
+                    ),
+                    20.heightBox,
+                  ])
+                      .box
+                      .outerShadowMd
+                      .white
+                      // .border(color: thinGrey01)
+                      .rounded
+                      .make(),
                 ],
               ),
             ),

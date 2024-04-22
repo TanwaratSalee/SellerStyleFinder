@@ -270,7 +270,7 @@ class _YourWidgetState extends State<YourWidget> {
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           foregroundColor: greyColor,
-          backgroundColor: Colors.white,
+          backgroundColor: whiteColor,
           shadowColor: greyColor,
           elevation: 4,
           shape: RoundedRectangleBorder(

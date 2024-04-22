@@ -59,7 +59,7 @@ class ProductsController extends GetxController {
    final List<Map<String, dynamic>> allColors = [
     {'name': 'Black', 'color': Colors.black},
     {'name': 'Grey', 'color': greyColor},
-    {'name': 'White', 'color': Colors.white},
+    {'name': 'White', 'color': whiteColor},
     {'name': 'Purple', 'color': Colors.purple},
     {'name': 'Deep Purple', 'color': Colors.deepPurple},
     {'name': 'Blue', 'color': Colors.lightBlue},
@@ -70,7 +70,7 @@ class ProductsController extends GetxController {
     {'name': 'Green Accent', 'color': Colors.greenAccent},
     {'name': 'Yellow', 'color': Colors.yellow},
     {'name': 'Orange', 'color': Colors.orange},
-    {'name': 'Red', 'color': Colors.red},
+    {'name': 'Red', 'color': redColor},
     {'name': 'Red Accent', 'color': const Color.fromARGB(255, 237, 101, 146)},
   ];
 

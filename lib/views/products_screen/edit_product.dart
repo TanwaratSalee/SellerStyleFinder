@@ -264,8 +264,8 @@ class _EditProductState extends State<EditProduct> {
                                 color: controller.allColors[index]['color'],
                                 border: Border.all(
                                   color: controller.selectedColorIndexes.contains(index)
-                                      ? Colors.blueAccent // เปลี่ยนสีเมื่อถูกเลือก
-                                      : Colors.transparent, // ลบขอบเมื่อไม่ถูกเลือก
+                                      ? primaryApp 
+                                      : Colors.transparent, 
                                   width: 2,
                                 ),
                               ),
@@ -273,9 +273,9 @@ class _EditProductState extends State<EditProduct> {
                                 child: controller.selectedColorIndexes.contains(index)
                                     ? Icon(
                                         Icons.done,
-                                        color: controller.allColors[index]['color'] == Colors.white
+                                        color: controller.allColors[index]['color'] == whiteColor
                                             ? Colors.black
-                                            : Colors.white,
+                                            : whiteColor,
                                       )
                                     : const SizedBox(),
                               ),

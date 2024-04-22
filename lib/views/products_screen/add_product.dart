@@ -245,9 +245,9 @@ class AddProduct extends StatelessWidget {
                                         Icons.done,
                                         color: controller.allColors[index]
                                                     ['color'] ==
-                                                Colors.white
+                                                whiteColor
                                             ? Colors.black
-                                            : Colors.white,
+                                            : whiteColor,
                                       )
                                     : const SizedBox(),
                               ),
