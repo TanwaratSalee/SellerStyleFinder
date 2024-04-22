@@ -2,13 +2,14 @@ import 'package:seller_finalproject/const/const.dart';
 
 class ProductDetails extends StatelessWidget {
   final dynamic data;
-  const ProductDetails({super.key, this.data});
+
+  const ProductDetails({Key? key, required this.data}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("${data['p_name']}"),
+        title: Text(data['p_name'] ?? 'Product'),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -22,8 +23,7 @@ class ProductDetails extends StatelessWidget {
               viewportFraction: 1.0,
               itemBuilder: (context, index) {
                 return Image.network(
-                  // imgProduct,
-                  data['p_imgs'][index],
+                  data['p_imgs'][index] ?? '',
                   width: double.infinity,
                   fit: BoxFit.cover,
                 );
@@ -35,7 +35,7 @@ class ProductDetails extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("${data['p_name']}", ),
+                  Text(data['p_name'] ?? 'No Name'),
                   5.heightBox,
 
                   Row(
@@ -104,14 +104,14 @@ class ProductDetails extends StatelessWidget {
                           width: 100,
                           child: Text("Size : "),
                         ),
-                        Text(data['p_productsize']),
+                        Text(data['p_productsize']  ?? ''),
                       ],
                     ).box.padding(const EdgeInsets.all(8)).make(),
                     const Divider(),
                     10.heightBox,
                     const Text("Description", ),
                     10.heightBox,
-                    Text("${data['p_desc']}"),
+                    Text(data['p_desc'] ?? ''),
                     
                   ]),
                 ],
