@@ -3,6 +3,7 @@ import 'package:seller_finalproject/const/const.dart';
 import 'package:seller_finalproject/const/styles.dart';
 import 'package:seller_finalproject/controllers/auth_controller.dart';
 import 'package:seller_finalproject/controllers/loading_Indcator.dart';
+import 'package:seller_finalproject/views/auth_screen/forgot_screen.dart';
 import 'package:seller_finalproject/views/widgets/our_button.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -26,25 +27,6 @@ class LoginScreen extends StatelessWidget {
             padding: const EdgeInsets.all(12.0),
             child: Column(
               children: [
-                // 30.heightBox,
-                // Text(text: welcome, size: 18.0),
-                // 20.heightBox,
-                // Row(
-                //   children: [
-                //     Image.asset(
-                //       icLogo,
-                //       width: 70,
-                //       height: 70,
-                //     )
-                //         .box
-                //         .border(color: whiteColor)
-                //         .rounded
-                //         .padding(const EdgeInsets.all(8.0))
-                //         .make(),
-                //     10.widthBox,
-                //     Text(text: appname, size: 20.0)
-                //   ],
-                // ),
                 200.heightBox,
                 
                 Obx(() => Column(
@@ -90,7 +72,9 @@ class LoginScreen extends StatelessWidget {
                       Align(
                           alignment: Alignment.centerRight,
                           child: TextButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Get.to(() => ForgotScreen());
+                              },
                               child: const Text(
                                    forgotPassword).text.size(14).color(greyDark1).fontFamily(medium).make())),
                       10.heightBox,

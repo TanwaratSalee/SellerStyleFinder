@@ -10,11 +10,11 @@
 		</data>
 		<key>flutter_assets/AssetManifest.bin</key>
 		<data>
-		QFWhE2krsIZqlHb6VbSzePWY4xM=
+		4Gf6iZAV7CUDnKNpQw2RsorqR7s=
 		</data>
 		<key>flutter_assets/AssetManifest.json</key>
 		<data>
-		zw/mMhwcyLJZXkB8JfJn1zaf7Eg=
+		tGcdXkq4anLRBhMoa0wq9d7tAfY=
 		</data>
 		<key>flutter_assets/FontManifest.json</key>
 		<data>
@@ -22,7 +22,11 @@
 		</data>
 		<key>flutter_assets/NOTICES.Z</key>
 		<data>
-		fLtimYpuCBwvf2CxWMI8TOe2zf4=
+		wFQ8TI3/yHmclF2IF3aFveOhDLs=
+		</data>
+		<key>flutter_assets/assets/.DS_Store</key>
+		<data>
+		cR1LUTsciTj6G8MEgwRmg8NrJFc=
 		</data>
 		<key>flutter_assets/assets/fonts/Roboto-Black.ttf</key>
 		<data>
@@ -43,6 +47,10 @@
 		<key>flutter_assets/assets/fonts/Roboto-Regular.ttf</key>
 		<data>
 		VsXA04veTB8VSd2kPbN7CcYIqtM=
+		</data>
+		<key>flutter_assets/assets/icons/SellerLogo.png</key>
+		<data>
+		/ZsfSPqdcHliUMaOtfJW4hPphV8=
 		</data>
 		<key>flutter_assets/assets/icons/account.png</key>
 		<data>
@@ -84,6 +92,22 @@
 		<data>
 		QlfdZr/KUmvdQ/aEdOCtLYgxIig=
 		</data>
+		<key>flutter_assets/assets/icons/setting/logout.png</key>
+		<data>
+		bxXms5EJTH3hbFOwrqssYwEgOss=
+		</data>
+		<key>flutter_assets/assets/icons/setting/me.png</key>
+		<data>
+		zqtk4GbTeV5sT9bXUTxEvzXco/c=
+		</data>
+		<key>flutter_assets/assets/icons/setting/message.png</key>
+		<data>
+		3qY8ML7Y6tkYo0Ywv0nznAiFZ1Y=
+		</data>
+		<key>flutter_assets/assets/icons/setting/review.png</key>
+		<data>
+		yG3jAQy1+FpbJDNP8JODesXp2z4=
+		</data>
 		<key>flutter_assets/assets/icons/shop_setting.png</key>
 		<data>
 		FU4KKy8sj0cqcFWr2NyKYWNB6yQ=
@@ -114,7 +138,7 @@
 		</data>
 		<key>flutter_assets/kernel_blob.bin</key>
 		<data>
-		6oBSN7UMPC9js8O01C8X35bNzpc=
+		nVR8VjtWz+GhgacDjcLnoW5fa+g=
 		</data>
 		<key>flutter_assets/lib/services/collection_model.json</key>
 		<data>
@@ -139,14 +163,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			RHkRec3l5W21xj27Ak5WehQZMSoE+wTo7Y1iPcMTZrM=
+			rbYUqND9Pjm2uCI0TLTMACABCvtO9Q/vofw0uepRTsk=
 			</data>
 		</dict>
 		<key>flutter_assets/AssetManifest.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			oVmvTDjL1BN+EnJgssFBcHUoYNcWAvRDuIsq4X16GLM=
+			V2xjn9b0UPOpLhZwkmrnyGVlnXatAYN10MkEt0B9I1I=
 			</data>
 		</dict>
 		<key>flutter_assets/FontManifest.json</key>
@@ -160,7 +184,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			YPxjTVEve39dSUfCIlukAkorPFAUJF7/RWmr6JyLrFY=
+			XtoYbcmkx8fbRh5bvfT04rA/GcuONo0ZXDkt6unqU/k=
 			</data>
 		</dict>
 		<key>flutter_assets/assets/fonts/Roboto-Black.ttf</key>
@@ -196,6 +220,13 @@
 			<key>hash2</key>
 			<data>
 			ThR6tkuf322J0B9rjDygs83cWdYIqOIhj5olBLXJjhQ=
+			</data>
+		</dict>
+		<key>flutter_assets/assets/icons/SellerLogo.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			j0N8aeNKojgWYyBkYHipjNyYCBkNHXZ4kun9oreAg38=
 			</data>
 		</dict>
 		<key>flutter_assets/assets/icons/account.png</key>
@@ -268,6 +299,34 @@
 			MdOAk2u8onx0InFxd4QmWkCDvGAWeoJS3JqpHx3QI84=
 			</data>
 		</dict>
+		<key>flutter_assets/assets/icons/setting/logout.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			3cixbd2ss/AxVM+f8Ucl0qWXnCwVTPzBmtW0NVPR4i0=
+			</data>
+		</dict>
+		<key>flutter_assets/assets/icons/setting/me.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			wb94tK9T8wlZfGWKxtRsjmq/MupkgOQUntJFtyKPcUQ=
+			</data>
+		</dict>
+		<key>flutter_assets/assets/icons/setting/message.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			jD7GUK00P9Cner2y1l6Mp3OA1Tl05vQ2z/HOY/cUrxA=
+			</data>
+		</dict>
+		<key>flutter_assets/assets/icons/setting/review.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			GDafzjkneJHmH7UKMKnzoSGngJgBjwX3mavD7qI8cSk=
+			</data>
+		</dict>
 		<key>flutter_assets/assets/icons/shop_setting.png</key>
 		<dict>
 			<key>hash2</key>
@@ -321,7 +380,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			8Xcx5rWQTSKf18cwpcCm05j+vDt4klbwhpzH05HlJN0=
+			TXP/pyYdtHhMDOPT3M3yrLUoXuZAUw95SCphFNcZLjY=
 			</data>
 		</dict>
 		<key>flutter_assets/lib/services/collection_model.json</key>

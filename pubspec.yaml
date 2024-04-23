@@ -44,6 +44,7 @@ dependencies:
   intl: ^0.18.1
   cloud_firestore: ^4.17.0
   loading_animation_widget: ^1.2.1
+  rename: ^3.0.2
 
 dev_dependencies:
   flutter_test:
@@ -71,6 +72,7 @@ flutter:
   assets:
     - assets/
     - assets/icons/
+    - assets/icons/setting/
     - lib/services/collection_model.json
 
   # An image asset can refer to one or more resolution-specific "variants", see

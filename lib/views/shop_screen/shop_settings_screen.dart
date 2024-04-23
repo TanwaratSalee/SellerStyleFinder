@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:seller_finalproject/const/const.dart';
 import 'package:seller_finalproject/controllers/loading_Indcator.dart';
 import 'package:seller_finalproject/controllers/profile_controller.dart';
-import 'package:seller_finalproject/views/widgets/custom_textfield.dart';
 export 'package:get/get.dart';
 
 class ShopSettings extends StatelessWidget {
