@@ -10,14 +10,14 @@ import 'package:seller_finalproject/views/profile_screen/edit_screen.dart';
 import 'package:seller_finalproject/views/profile_screen/notification.dart';
 import 'package:seller_finalproject/views/profile_screen/review_screen.dart';
 
-class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+class CopyProfileScreen extends StatefulWidget {
+  const CopyProfileScreen({Key? key}) : super(key: key);
 
   @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
+  State<CopyProfileScreen> createState() => _CopyProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class _CopyProfileScreenState extends State<CopyProfileScreen> {
   @override
   Widget build(BuildContext context) {
     var controller = Get.put(ProfileController());
