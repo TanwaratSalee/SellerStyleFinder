@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:seller_finalproject/const/const.dart';
 import 'package:seller_finalproject/const/styles.dart';
 import 'package:seller_finalproject/controllers/products_controller.dart';
@@ -25,24 +26,27 @@ Widget build(BuildContext context) {
         onPressed: () => Navigator.of(context).pop(),
       ),
       title: const Text('Match Product'),
-      actions: <Widget>[
-        TextButton(
-          onPressed: () {},
-          child: const Text('Save', style: TextStyle(color: Colors.white)),
-        ),
-      ],
+actions: <Widget>[
+TextButton(
+  onPressed: () {
+
+  },
+  child: const Text('Save', style: TextStyle(color: primaryApp)),
+),
+
+],
     ),
     body: SingleChildScrollView(
       child: Column(
         children: <Widget>[
           SizedBox(
             height: 110, 
-            child: buildPageView(_topController),
+            child: buildTopPageView(_topController, controller),
           ),
           const SizedBox(height: 10),
           SizedBox(
             height: 110, 
-            child: buildPageView(_bottomController),
+            child: buildLowerPageView(_bottomController, controller),
           ),
           const SizedBox(height: 20),
           buildGenderChips(controller),
@@ -204,21 +208,56 @@ Widget buildColorChoices(ProductsController controller) {
   );
 }
 
-Widget buildPageView(PageController controller) {
+Widget buildTopPageView(PageController controller, ProductsController productsController) {
+  return FutureBuilder(
+    future: productsController.fetchTopProductsByVendor(currentUser!.uid), // Fetch top products
+    builder: (context, snapshot) {
+      if (snapshot.connectionState == ConnectionState.waiting) {
+        return Center(child: CircularProgressIndicator());
+      } else if (snapshot.hasError) {
+        return Center(child: Text('Error: ${snapshot.error}'));
+      } else {
+        List<Product> topProducts = snapshot.data as List<Product>;
+        return buildPageView(controller, topProducts);
+      }
+    },
+  );
+}
+
+Widget buildLowerPageView(PageController controller, ProductsController productsController) {
+  return FutureBuilder(
+    future: productsController.fetchLowerProductsByVendor(currentUser!.uid), // Fetch lower products
+    builder: (context, snapshot) {
+      if (snapshot.connectionState == ConnectionState.waiting) {
+        return Center(child: CircularProgressIndicator());
+      } else if (snapshot.hasError) {
+        return Center(child: Text('Error: ${snapshot.error}'));
+      } else {
+        List<Product> lowerProducts = snapshot.data as List<Product>;
+        return buildPageView(controller, lowerProducts);
+      }
+    },
+  );
+}
+
+
+Widget buildPageView(PageController controller, List<Product> products) {
   return PageView.builder(
     controller: controller,
-    itemCount: 6, 
+    itemCount: products.length,
     itemBuilder: (context, index) {
+      Product product = products[index];
+      print("Current index: $index");
       return AnimatedBuilder(
         animation: controller,
         builder: (context, child) {
           double scale = 1.0;
           if (controller.position.haveDimensions) {
             double pageOffset = controller.page! - index;
-            scale = (1 - (pageOffset.abs() * 0.2)).clamp(0.8, 1.2); 
+            scale = (1 - (pageOffset.abs() * 0.2)).clamp(0.8, 1.2);
           }
 
-          final double baseSize = 100.0; 
+          final double baseSize = 100.0;
           final double height = Curves.easeInOut.transform(scale) * baseSize;
           final double width = Curves.easeInOut.transform(scale) * baseSize;
 
@@ -230,13 +269,13 @@ Widget buildPageView(PageController controller) {
             ),
           );
         },
-        child: Image.asset(
-          imgProduct,
+        child: Image.network(
+          product.imageUrls[0], // Assuming the first image is displayed
           fit: BoxFit.cover,
         ),
       );
     },
-    physics: const BouncingScrollPhysics(), 
+    physics: const BouncingScrollPhysics(),
   );
 }
 }  
