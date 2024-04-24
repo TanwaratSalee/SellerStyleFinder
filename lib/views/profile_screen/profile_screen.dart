@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:seller_finalproject/const/const.dart';
 import 'package:seller_finalproject/const/styles.dart';
 import 'package:seller_finalproject/controllers/auth_controller.dart';
+import 'package:seller_finalproject/controllers/loading_Indcator.dart';
 import 'package:seller_finalproject/controllers/profile_controller.dart';
 import 'package:seller_finalproject/services/store_services.dart';
 import 'package:seller_finalproject/views/auth_screen/login_screen.dart';
@@ -30,9 +31,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
         future: StoreServices.getProfile(currentUser!.uid),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) {
-            return Center(child: CircularProgressIndicator());
+            return loadingIndicator(circleColor: primaryApp);
           } else {
-            var data = snapshot.data!.docs[0];
+           controller.snapshotData = snapshot.data!.docs[0];
             return ListView(
               children: [
                 Center(
@@ -42,18 +43,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       Container(
                         width: 100,
                         height: 100,
-                        child: data['imageUrl'] == ''
-                            ? Image.asset(imgProfile, fit: BoxFit.cover)
-                            : Image.network(data['imageUrl'],
-                                fit: BoxFit.cover),
+                        child: controller.snapshotData['imageUrl'] == ''
+                        ? Image.asset(
+                            imgProfile,
+                            width: 100,
+                            fit: BoxFit.cover,
+                          ).box.roundedFull.clip(Clip.antiAlias).make()
+                        : Image.network(
+                            controller.snapshotData['imageUrl'],
+                            width: 100,
+                          ).box.roundedFull.clip(Clip.antiAlias).make(),
                       ),
                       15.widthBox,
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(data['vendor_name']).text.size(16).fontFamily(medium).make(),
-                            Text(data['email']).text.size(14).fontFamily(regular).make(),
+                            Text("${controller.snapshotData['vendor_name']}")
+                                .text
+                                .size(16)
+                                .fontFamily(medium)
+                                .make(),
+                            Text("${controller.snapshotData['email']}")
+                                .text
+                                .size(14)
+                                .fontFamily(regular)
+                                .make(),
                           ],
                         ),
                       ),
@@ -76,7 +91,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       trailing: const Icon(Icons.arrow_forward_ios, size: 18),
                       onTap: () {
                         Get.to(() => EditProfileScreen(
-                              username: data['vendor_name'],
+                              username: controller.snapshotData['vendor_name'],
                             ));
                       },
                     ),
@@ -103,7 +118,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       },
                     ),
                   ],
-                ).box.padding(EdgeInsets.all(4)).make(),
+                ).box.padding(const EdgeInsets.all(4)).make(),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -119,7 +134,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ],
                 )
               ],
-            ).box.padding(EdgeInsets.all(24)).make();
+            ).box.padding(const EdgeInsets.all(24)).make();
           }
         },
       ),

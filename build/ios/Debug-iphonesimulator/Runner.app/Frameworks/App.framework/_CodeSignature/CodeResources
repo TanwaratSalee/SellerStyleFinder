@@ -94,15 +94,11 @@
 		</data>
 		<key>flutter_assets/assets/icons/setting/account.png</key>
 		<data>
-		Dp3DHNpLIjwkCJn94PRFj9yzDyQ=
+		f7r3F6I3NbN7S9b71YsM0pcZhCo=
 		</data>
 		<key>flutter_assets/assets/icons/setting/logout.png</key>
 		<data>
 		bxXms5EJTH3hbFOwrqssYwEgOss=
-		</data>
-		<key>flutter_assets/assets/icons/setting/me1.png</key>
-		<data>
-		Q2pC2SX0uWFKddE2aJj7ZqXEnz4=
 		</data>
 		<key>flutter_assets/assets/icons/setting/message.png</key>
 		<data>
@@ -142,7 +138,7 @@
 		</data>
 		<key>flutter_assets/kernel_blob.bin</key>
 		<data>
-		0kEnFoyM0ifjXFGrcBQsxwMwgbU=
+		5fMaktUWEobdf5PKa0f1Ne8C1z8=
 		</data>
 		<key>flutter_assets/lib/services/collection_model.json</key>
 		<data>
@@ -307,7 +303,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			ZLmZOZea8WL96SRjzuGGnqWlDDTGmGFmXv+gpKC1F5o=
+			faY1Yde78Tqfdw/ezzU9Kz9sJzpQivY+qwqK4TfU+vg=
 			</data>
 		</dict>
 		<key>flutter_assets/assets/icons/setting/logout.png</key>
@@ -315,13 +311,6 @@
 			<key>hash2</key>
 			<data>
 			3cixbd2ss/AxVM+f8Ucl0qWXnCwVTPzBmtW0NVPR4i0=
-			</data>
-		</dict>
-		<key>flutter_assets/assets/icons/setting/me1.png</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			xOK+LViGRxBSw6z1JfyTV0MO9x4Dkm3h4VbFZCkIYME=
 			</data>
 		</dict>
 		<key>flutter_assets/assets/icons/setting/message.png</key>
@@ -391,7 +380,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			vC1zb9d6d5bAJf+x2KtzotKZyAv9dzf4dDReGPViKjI=
+			c0CJb8VfOcJryScRKZ9i4Rkg2qeFfDsD1+EoXBQUe88=
 			</data>
 		</dict>
 		<key>flutter_assets/lib/services/collection_model.json</key>
