@@ -16,6 +16,6 @@ const imgBg = "assets/icons/background.png";
 
 //Setting page
 const icLogout = "assets/icons/setting/logout.png";
-const icMe = "assets/icons/setting/me.png";
+const icMe = "assets/icons/setting/account.png";
 const icMessage = "assets/icons/setting/message.png";
 const icReview = "assets/icons/setting/review.png";

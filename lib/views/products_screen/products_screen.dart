@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:seller_finalproject/const/const.dart';
@@ -31,7 +30,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Products'),
+          title: const Text('Products').text.size(24).fontFamily(medium).make(),
           bottom: const TabBar(
             labelColor: primaryApp,
             unselectedLabelColor: greyColor,

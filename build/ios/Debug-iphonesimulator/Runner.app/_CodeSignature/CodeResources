@@ -46,7 +46,7 @@
 		</data>
 		<key>Frameworks/App.framework/App</key>
 		<data>
-		OWbu9nVZu1a244BGWjrqga1wNoQ=
+		0aCsvPR3W7J2IxBhqf6uk5SMZqg=
 		</data>
 		<key>Frameworks/App.framework/Info.plist</key>
 		<data>
@@ -54,15 +54,15 @@
 		</data>
 		<key>Frameworks/App.framework/_CodeSignature/CodeResources</key>
 		<data>
-		QzFg73uZTK8F1CSamg3qQ5XG6iY=
+		n7v2hex1ZguIZkNIAdlYPEqvv90=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/AssetManifest.bin</key>
 		<data>
-		4Gf6iZAV7CUDnKNpQw2RsorqR7s=
+		DN2nWjPrs7tQRWbMUzlFneW8KoQ=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/AssetManifest.json</key>
 		<data>
-		tGcdXkq4anLRBhMoa0wq9d7tAfY=
+		2u/JTrNTS5wZyKFuH+xYlJjRa3g=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/FontManifest.json</key>
 		<data>
@@ -136,17 +136,17 @@
 		<data>
 		QlfdZr/KUmvdQ/aEdOCtLYgxIig=
 		</data>
+		<key>Frameworks/App.framework/flutter_assets/assets/icons/setting/account.png</key>
+		<data>
+		Dp3DHNpLIjwkCJn94PRFj9yzDyQ=
+		</data>
 		<key>Frameworks/App.framework/flutter_assets/assets/icons/setting/logout.png</key>
 		<data>
 		bxXms5EJTH3hbFOwrqssYwEgOss=
 		</data>
-		<key>Frameworks/App.framework/flutter_assets/assets/icons/setting/me.png</key>
-		<data>
-		zqtk4GbTeV5sT9bXUTxEvzXco/c=
-		</data>
 		<key>Frameworks/App.framework/flutter_assets/assets/icons/setting/message.png</key>
 		<data>
-		3qY8ML7Y6tkYo0Ywv0nznAiFZ1Y=
+		IAQu3+oOhSyDGmTjnDo+pgOZqe4=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/assets/icons/setting/review.png</key>
 		<data>
@@ -182,7 +182,7 @@
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/kernel_blob.bin</key>
 		<data>
-		nVR8VjtWz+GhgacDjcLnoW5fa+g=
+		0kEnFoyM0ifjXFGrcBQsxwMwgbU=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/lib/services/collection_model.json</key>
 		<data>
@@ -761,7 +761,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			hkZdfZj+fPgNahSuXDifl0A6HoZjsaVtjFEqHWATLnI=
+			H+KzObN916L/mOt4U2TFJWjGD7gcm8kTiVk1NlDqdQQ=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/Info.plist</key>
@@ -775,21 +775,21 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			yKlPpOozz7E4cZOanr/bkCvN9Fqkt32f9yPnNKsMBcU=
+			LgiX4Z5S3ivU30GrehUcGgSVin+CMVbAP25FeYnrVao=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/AssetManifest.bin</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			rbYUqND9Pjm2uCI0TLTMACABCvtO9Q/vofw0uepRTsk=
+			1a83XICYoqs76cEQwtJ1daLP/5TA4SPaIQpP9LStQFo=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/AssetManifest.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			V2xjn9b0UPOpLhZwkmrnyGVlnXatAYN10MkEt0B9I1I=
+			wVTHkY/oSTPT7sMfBEFNBxmGAJCEGqXIEAvtvc2xnFM=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/FontManifest.json</key>
@@ -918,6 +918,13 @@
 			MdOAk2u8onx0InFxd4QmWkCDvGAWeoJS3JqpHx3QI84=
 			</data>
 		</dict>
+		<key>Frameworks/App.framework/flutter_assets/assets/icons/setting/account.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			ZLmZOZea8WL96SRjzuGGnqWlDDTGmGFmXv+gpKC1F5o=
+			</data>
+		</dict>
 		<key>Frameworks/App.framework/flutter_assets/assets/icons/setting/logout.png</key>
 		<dict>
 			<key>hash2</key>
@@ -925,18 +932,11 @@
 			3cixbd2ss/AxVM+f8Ucl0qWXnCwVTPzBmtW0NVPR4i0=
 			</data>
 		</dict>
-		<key>Frameworks/App.framework/flutter_assets/assets/icons/setting/me.png</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			wb94tK9T8wlZfGWKxtRsjmq/MupkgOQUntJFtyKPcUQ=
-			</data>
-		</dict>
 		<key>Frameworks/App.framework/flutter_assets/assets/icons/setting/message.png</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			jD7GUK00P9Cner2y1l6Mp3OA1Tl05vQ2z/HOY/cUrxA=
+			Hdwofid9MdhOql/d7c8bQ5VFg6xeT+MdSBLK+SU0nWY=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/assets/icons/setting/review.png</key>
@@ -999,7 +999,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			TXP/pyYdtHhMDOPT3M3yrLUoXuZAUw95SCphFNcZLjY=
+			vC1zb9d6d5bAJf+x2KtzotKZyAv9dzf4dDReGPViKjI=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/lib/services/collection_model.json</key>
