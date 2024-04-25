@@ -1,7 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:seller_finalproject/const/const.dart';
 import 'package:seller_finalproject/const/styles.dart';
-import 'package:seller_finalproject/controllers/products_controller.dart';
+import 'package:seller_finalproject/controllers/match_controller.dart';
 import 'package:seller_finalproject/controllers/profile_controller.dart';
 import 'package:seller_finalproject/views/widgets/custom_textfield.dart';
 
@@ -13,10 +12,10 @@ class AddMatchProduct extends StatefulWidget {
 class _AddMatchProductState extends State<AddMatchProduct> {
   final PageController _topController = PageController(viewportFraction: 0.6);
   final PageController _bottomController = PageController(viewportFraction: 0.6);
+  final MatchController controller = Get.put(MatchController());
 
 @override
 Widget build(BuildContext context) {
-  var controller = Get.find<ProductsController>();
   String capitalize(String s) => s[0].toUpperCase() + s.substring(1);
 
   return Scaffold(
@@ -26,15 +25,15 @@ Widget build(BuildContext context) {
         onPressed: () => Navigator.of(context).pop(),
       ),
       title: const Text('Match Product'),
-actions: <Widget>[
-TextButton(
-  onPressed: () {
+    actions: <Widget>[
+      TextButton(
+        onPressed: () {
+          controller.onSaveButtonPressed(context);
+        },
+        child: const Text('Save', style: TextStyle(color: primaryApp)),
+      ),
+    ],
 
-  },
-  child: const Text('Save', style: TextStyle(color: primaryApp)),
-),
-
-],
     ),
     body: SingleChildScrollView(
       child: Column(
@@ -66,7 +65,7 @@ TextButton(
   );
 }
 
-Widget buildGenderChips(ProductsController controller) {
+Widget buildGenderChips(MatchController controller) {
   String capitalize(String s) => s[0].toUpperCase() + s.substring(1);
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -109,7 +108,7 @@ Widget buildGenderChips(ProductsController controller) {
   );
 }
 
-Widget buildCollectionChips(ProductsController controller) {
+Widget buildCollectionChips(MatchController controller) {
   String capitalize(String s) => s[0].toUpperCase() + s.substring(1);
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -150,7 +149,7 @@ Widget buildCollectionChips(ProductsController controller) {
   );
 }
 
-Widget buildColorChoices(ProductsController controller) {
+Widget buildColorChoices(MatchController controller) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -208,76 +207,107 @@ Widget buildColorChoices(ProductsController controller) {
   );
 }
 
-Widget buildTopPageView(PageController controller, ProductsController productsController) {
-  return FutureBuilder(
-    future: productsController.fetchTopProductsByVendor(currentUser!.uid), // Fetch top products
+Widget buildTopPageView(PageController controller, MatchController matchController) {
+  return FutureBuilder<Rxn<List<Product>>>(
+    future: matchController.fetchTopProductsByVendor(currentUser!.uid),
     builder: (context, snapshot) {
       if (snapshot.connectionState == ConnectionState.waiting) {
         return Center(child: CircularProgressIndicator());
       } else if (snapshot.hasError) {
         return Center(child: Text('Error: ${snapshot.error}'));
       } else {
-        List<Product> topProducts = snapshot.data as List<Product>;
-        return buildPageView(controller, topProducts);
+        final rxnList = snapshot.data;
+        if (rxnList != null && rxnList.value != null) {
+          final topProducts = rxnList.value!;
+          // Check if p_mixmatch is empty for each product
+          final filteredTopProducts = topProducts.where((product) => product.mixmatch.isEmpty).toList();
+          if (filteredTopProducts.isNotEmpty) {
+            return buildPageView(controller, filteredTopProducts, matchController.onTopProductSelected);
+          } else {
+            return Center(child: Text('No data available'));
+          }
+        } else {
+          return Center(child: Text('No data available'));
+        }
       }
     },
   );
 }
 
-Widget buildLowerPageView(PageController controller, ProductsController productsController) {
-  return FutureBuilder(
-    future: productsController.fetchLowerProductsByVendor(currentUser!.uid), // Fetch lower products
+Widget buildLowerPageView(PageController controller, MatchController matchController) {
+  return FutureBuilder<Rxn<List<Product>>>(
+    future: matchController.fetchLowerProductsByVendor(currentUser!.uid),
     builder: (context, snapshot) {
       if (snapshot.connectionState == ConnectionState.waiting) {
         return Center(child: CircularProgressIndicator());
       } else if (snapshot.hasError) {
         return Center(child: Text('Error: ${snapshot.error}'));
       } else {
-        List<Product> lowerProducts = snapshot.data as List<Product>;
-        return buildPageView(controller, lowerProducts);
+        final rxnList = snapshot.data;
+        if (rxnList != null && rxnList.value != null) {
+          final lowerProducts = rxnList.value!;
+          // Check if p_mixmatch is empty for each product
+          final filteredLowerProducts = lowerProducts.where((product) => product.mixmatch.isEmpty).toList();
+          if (filteredLowerProducts.isNotEmpty) {
+            return buildPageView(controller, filteredLowerProducts, matchController.onLowerProductSelected);
+          } else {
+            return Center(child: Text('No data available'));
+          }
+        } else {
+          return Center(child: Text('No data available'));
+        }
       }
     },
   );
 }
 
 
-Widget buildPageView(PageController controller, List<Product> products) {
+
+Widget buildPageView(PageController controller, List<Product> products, Function(Product) onSelectProduct) {
   return PageView.builder(
     controller: controller,
     itemCount: products.length,
     itemBuilder: (context, index) {
       Product product = products[index];
-      print("Current index: $index");
-      return AnimatedBuilder(
-        animation: controller,
-        builder: (context, child) {
-          double scale = 1.0;
-          if (controller.position.haveDimensions) {
-            double pageOffset = controller.page! - index;
-            scale = (1 - (pageOffset.abs() * 0.2)).clamp(0.8, 1.2);
-          }
+      print("Current index - ${product.part}: $index");
 
-          final double baseSize = 100.0;
-          final double height = Curves.easeInOut.transform(scale) * baseSize;
-          final double width = Curves.easeInOut.transform(scale) * baseSize;
-
-          return Center(
-            child: SizedBox(
-              height: height,
-              width: width,
-              child: child,
-            ),
-          );
+      return GestureDetector(
+        onTap: () {
+          onSelectProduct(product);
         },
-        child: Image.network(
-          product.imageUrls[0], // Assuming the first image is displayed
-          fit: BoxFit.cover,
+        child: AnimatedBuilder(
+          animation: controller,
+          builder: (context, child) {
+            double scale = 1.0;
+            if (controller.position.haveDimensions) {
+              double pageOffset = controller.page! - index;
+              scale = (1 - (pageOffset.abs() * 0.2)).clamp(0.8, 1.2);
+            }
+
+            final double baseSize = 90.0;
+            final double height = Curves.easeInOut.transform(scale) * baseSize;
+            final double width = Curves.easeInOut.transform(scale) * baseSize;
+
+            return Center(
+              child: SizedBox(
+                height: height,
+                width: width,
+                child: child,
+              ),
+            );
+          },
+          child: Image.network(
+            product.imageUrls[0],
+            fit: BoxFit.cover,
+          ),
         ),
       );
     },
     physics: const BouncingScrollPhysics(),
   );
 }
+
+
 }  
 
 

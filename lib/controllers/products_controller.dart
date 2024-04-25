@@ -173,31 +173,6 @@ uploadImages() async {
     return [];
   }
 
-
-  Future<List<Product>> fetchTopProductsByVendor(String vendorId) async {
-    return _fetchProductsByVendorAndPart(vendorId, 'top');
-  }
-
-  // Fetch lower products by vendor
-  Future<List<Product>> fetchLowerProductsByVendor(String vendorId) async {
-    return _fetchProductsByVendorAndPart(vendorId, 'lower');
-  }
-
-  // Private method to fetch products by vendor and part
-  Future<List<Product>> _fetchProductsByVendorAndPart(String vendorId, String part) async {
-    List<Product> products = [];
-    try {
-      var productsQuery = FirebaseFirestore.instance.collection('products').where('vendor_id', isEqualTo: vendorId).where('p_part', isEqualTo: part);
-      var querySnapshot = await productsQuery.get();
-      for (var doc in querySnapshot.docs) {
-        products.add(Product.fromFirestore(doc.data()));
-      }
-    } catch (e) {
-      print('Error fetching products: $e');
-    }
-    return products;
-  }
-
 void initializeImages(List<String> imageUrls) {
     // Clear existing list and add fresh from imageUrls ensuring it's growable
     pImagesList.clear();
@@ -332,7 +307,7 @@ Future<void> updateProductMatch(BuildContext context, String documentId) async {
     final productDoc = FirebaseFirestore.instance.collection(productsCollection).doc(documentId);
 
     await productDoc.update({
-      'p_mixmatch': randomString(10),
+      'p_mixmatch': '',
       'p_mixmatch_colors': selectedColorIndexes.map((index) => allColors[index]['name']).toList(),
       'p_mixmatch_sex': selectedGender.value,
       'p_mixmatch_desc' : psizeController.text,
@@ -345,17 +320,6 @@ Future<void> updateProductMatch(BuildContext context, String documentId) async {
     print(e.toString());
   }
 }
-
-
-  String randomString(int length) {
-    const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
-    final random = Random();
-    return String.fromCharCodes(
-      Iterable.generate(
-        length, (_) => chars.codeUnitAt(random.nextInt(chars.length)),
-      ),
-    );
-  }
 
 
   addFeatured(docId) async {
@@ -426,16 +390,29 @@ class Product {
   final String price;
   final List<String> imageUrls;
 
-  Product({required this.id, required this.name, required this.vendorId, required this.part, required this.price, required this.imageUrls});
+  Product({
+    required this.id,
+    required this.name,
+    required this.vendorId,
+    required this.part,
+    required this.price,
+    required this.imageUrls,
+  });
 
-  factory Product.fromFirestore(Map<String, dynamic> doc) {
+  factory Product.fromFirestore(DocumentSnapshot doc) {
+    Map<String, dynamic>? data = doc.data() as Map<String, dynamic>?;
+
+    if (data == null) {
+      throw Exception('Product data is null');
+    }
+
     return Product(
-      id: doc['id'] ?? '',
-      name: doc['p_name'] ?? '',
-      vendorId: doc['vendor_id'] ?? '',
-      part: doc['p_part'] ?? '',
-      price: doc['p_price'] ?? '',
-      imageUrls: List<String>.from(doc['p_imgs'] ?? [0]),
+      id: doc.id,
+      name: data['p_name'] ?? '',
+      vendorId: data['vendor_id'] ?? '',
+      part: data['p_part'] ?? '',
+      price: data['p_price'] ?? '',
+      imageUrls: List<String>.from(data['p_imgs'] ?? []),
     );
   }
 }

@@ -233,7 +233,7 @@ class _ImagePlaceholderState extends State<ImagePlaceholder> {
                   .get();
 
               var products = querySnapshot.docs
-                  .map((doc) => Product.fromFirestore(doc.data()))
+                  .map((doc) => (Product.fromFirestore(doc)))
                   .toList();
 
               controller.isloading.value = false;
