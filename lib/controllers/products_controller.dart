@@ -340,6 +340,20 @@ Future<void> updateProductMatch(BuildContext context, String documentId) async {
     await firestore.collection(productsCollection).doc(docId).delete();
   }
 
+void resetMixMatchData(String documentId) async {
+  FirebaseFirestore.instance.collection('products').doc(documentId).update({
+    'p_mixmatch': '',
+    'p_mixmatch_colors': [],
+    'p_mixmatch_sex': '',
+    'p_mixmatch_desc': '',
+    'p_mixmatch_collection': [],
+  }).then((value) {
+    print("MixMatch data reset to empty successfully.");
+  }).catchError((error) {
+    print("Failed to reset MixMatch data: $error");
+  });
+}
+
   bool isDataComplete() {
   return pnameController.text.isNotEmpty &&
       pabproductController.text.isNotEmpty &&
