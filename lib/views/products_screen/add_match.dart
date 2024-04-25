@@ -15,15 +15,24 @@ class _AddMatchProductState extends State<AddMatchProduct> {
   final MatchController controller = Get.put(MatchController());
 
 @override
+void dispose() {
+  controller.resetController();
+  super.dispose();
+}
+
+@override
 Widget build(BuildContext context) {
   String capitalize(String s) => s[0].toUpperCase() + s.substring(1);
 
   return Scaffold(
     appBar: AppBar(
       leading: IconButton(
-        icon: const Icon(Icons.arrow_back),
-        onPressed: () => Navigator.of(context).pop(),
-      ),
+      icon: const Icon(Icons.arrow_back),
+      onPressed: () {
+        controller.resetController();
+        Navigator.of(context).pop();
+      },
+    ),
       title: const Text('Match Product'),
     actions: <Widget>[
       TextButton(
@@ -60,6 +69,20 @@ Widget build(BuildContext context) {
           const SizedBox(height: 20),
           buildColorChoices(controller),
         ],
+      ),
+    ),
+  );
+}
+
+Widget buildHeader(String text) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+    child: Text(
+      text,
+      style: TextStyle(
+        fontSize: 16,
+        color: greyDark1,
+        fontFamily: medium,
       ),
     ),
   );
@@ -260,8 +283,6 @@ Widget buildLowerPageView(PageController controller, MatchController matchContro
     },
   );
 }
-
-
 
 Widget buildPageView(PageController controller, List<Product> products, Function(Product) onSelectProduct) {
   return PageView.builder(

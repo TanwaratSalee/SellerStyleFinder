@@ -1,15 +1,9 @@
-import 'dart:io';
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/services.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:seller_finalproject/const/const.dart';
-import 'package:seller_finalproject/controllers/home_controller.dart';
 import 'package:seller_finalproject/models/collection_model.dart';
-import 'package:path/path.dart';
 
 class MatchController extends GetxController {
   var isloading = false.obs;
@@ -63,6 +57,13 @@ class MatchController extends GetxController {
     {'name': 'Red', 'color': redColor},
     {'name': 'Red Accent', 'color': const Color.fromARGB(255, 237, 101, 146)},
   ];
+
+  void resetController() {
+    selectedGender.value = '';
+    selectedCollection.value = '';
+    selectedColorIndexes.clear();
+    selectedCollections.clear();
+  }
 
   void toggleCollection(String collection) {
     if (selectedCollections.contains(collection)) {
