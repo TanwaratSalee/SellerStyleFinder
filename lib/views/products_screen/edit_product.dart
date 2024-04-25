@@ -167,10 +167,73 @@ class _EditProductState extends State<EditProduct> {
                   controller: controller.pquantityController,
                 ),
                 15.heightBox,
-                productDropdown("Collection", controller.collectionsList, controller.collectionsvalue, controller),
-                15.heightBox,
-                productDropdown("Type of product", controller.subcollectionList, controller.subcollectionvalue, controller),
-                20.heightBox,
+                const Text("Collection")
+                    .text
+                    .size(16)
+                    .color(greyDark1)
+                    .fontFamily(medium)
+                    .make(),
+                Obx(() => Wrap(
+                      spacing: 8.0,
+                      runSpacing: 8.0,
+                      children: controller.collectionList.map((collection) {
+                        bool isSelected = controller.selectedCollection.contains(collection);
+                        return ChoiceChip(
+                          label: Text(capitalize(collection)),
+                          selected: isSelected,
+                          onSelected: (selected) {
+                            if (selected) {
+                              if (!controller.selectedCollection.contains(collection)) {
+                                controller.selectedCollection.add(collection);
+                              }
+                            } else {
+                              controller.selectedCollection.remove(collection);
+                            }
+                          },
+                          selectedColor: thinPrimaryApp,
+                          backgroundColor: thinGrey0,
+                          side: isSelected
+                              ? const BorderSide(color: primaryApp, width: 2)
+                              : const BorderSide(color: greyColor),
+                        ).paddingAll(4);
+                      }).toList(),
+                    )),
+                10.heightBox,
+                const Text("Type of product")
+                    .text
+                    .size(16)
+                    .color(greyDark1)
+                    .fontFamily(medium)
+                    .make(),
+                10.heightBox,
+                Obx(() => Wrap(
+                      spacing: 8.0,
+                      runSpacing: 8.0,
+                      children: controller.subcollectionList.map((subcollection) {
+                        bool isSelected =
+                            controller.selectedSubcollection.value == subcollection;
+                        return ChoiceChip(
+                          showCheckmark: false,
+                          label: Text(
+                            capitalize(subcollection),
+                            style: TextStyle(
+                              color: isSelected ? primaryApp : greyDark1,
+                            ),
+                          ).text.size(18).fontFamily(regular).make(),
+                          selected: isSelected,
+                          onSelected: (selected) {
+                            if (selected) {
+                              controller.selectedSubcollection.value = subcollection;
+                            }
+                          },
+                          selectedColor: thinPrimaryApp,
+                          backgroundColor: thinGrey0,
+                          side: isSelected
+                              ? const BorderSide(color: primaryApp, width: 2)
+                              : const BorderSide(color: greyColor),
+                        );
+                      }).toList(),
+                    )),10.heightBox,
                 const Text("Suitable for gender")
                     .text
                     .size(16)

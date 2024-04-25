@@ -23,7 +23,7 @@ Widget productDropdown(String hint, List<String> list, RxString dropvalue, Produ
           if (newValue != null) {
             dropvalue.value = newValue; // Set new value for current dropdown
             if (hint == "Collection") {
-              controller.subcollectionvalue.value = ''; // Reset subcollection when collection changes
+              //controller.subcollectionvalue.value = '';
               controller.populateSubcollection(newValue);
             }
           }

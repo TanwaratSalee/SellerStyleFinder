@@ -23,7 +23,6 @@ class ProductsController extends GetxController {
   var explainController = TextEditingController();
 
   var collectionsList = <String>[].obs;
-  var subcollectionList = <String>[].obs;
   List<Collection> collection = [];
   var pImagesLinks = [];
   var pImagesList = RxList<dynamic>(List.filled(9, null, growable: true));
@@ -31,7 +30,6 @@ class ProductsController extends GetxController {
 
   List<String> imagesToDelete = []; 
   var collectionsvalue = ''.obs;
-  var subcollectionvalue = ''.obs;
   var selectedColorIndex = 0.obs;
   var selectedCollections = <String>[].obs;
 
@@ -42,7 +40,9 @@ class ProductsController extends GetxController {
   List<String> mixandmatchList = [ 'top','lower', 'not specified'];
   RxString selectedMixandmatch = ''.obs;
   List<String> collectionList = [ 'summer','winter','autumn','dinner','everydaylook'];
-  RxString selectedCollection = ''.obs;
+  final selectedCollection = <String>[].obs;
+  List<String> subcollectionList = [ 't-shirts','dresses','coat','shirts','shorts','pants','skirts'];
+  RxString selectedSubcollection = ''.obs;
 
 
   RxString selectedSkinColor = ''.obs;
@@ -194,10 +194,14 @@ void setupProductData(Map<String, dynamic> productData) {
     pquantityController.text = productData['p_quantity'] ?? '';
     selectedGender.value = productData['p_sex'] ?? '';
     selectedMixandmatch.value = productData['p_part'] ?? '';
-    collectionsvalue.value = productData['collection'] ?? '';
-    if (collectionsvalue.value.isNotEmpty) {
-        populateSubcollection(collectionsvalue.value);
+    selectedSubcollection.value = productData['p_subcollection'] ?? '';
+    
+    if (productData['p_collection'] != null) {
+      selectedCollection.assignAll((productData['p_collection'] ?? '' as List).cast<String>());
+    } else {
+      selectedCollection.clear();
     }
+
 
     if (productData['p_productsize'] != null) {
       selectedSizes.assignAll((productData['p_productsize'] ?? '' as List).cast<String>());
@@ -231,8 +235,8 @@ void removeImage(int index) {
     await store.set({
       //Default
       'is_featured': false,
-      'p_collection': collectionsvalue.value,
-      'p_subcollection': subcollectionvalue.value,
+      'p_collection': selectedCollection,
+      'p_subcollection': selectedSubcollection.value,
       'p_sex': selectedGender.value,
       'p_productsize':selectedSizes,
       'p_part':selectedMixandmatch.value,
@@ -269,8 +273,8 @@ Future<void> updateProduct(BuildContext context, String documentId) async {
   try {
     final productDoc = FirebaseFirestore.instance.collection(productsCollection).doc(documentId);
     await productDoc.update({
-      'p_collection': collectionsvalue.value,
-      'p_subcollection': subcollectionvalue.value,
+      'p_collection': selectedCollection,
+      'p_subcollection': selectedSubcollection.value,
       'p_sex': selectedGender.value,
       'p_productsize': selectedSizes,
       'p_part': selectedMixandmatch.value,
@@ -360,8 +364,8 @@ void resetMixMatchData(String documentId) async {
       psizeController.text.isNotEmpty &&
       ppriceController.text.isNotEmpty &&
       pquantityController.text.isNotEmpty &&
-      collectionsvalue.isNotEmpty &&
-      subcollectionvalue.isNotEmpty &&
+      selectedCollection.isNotEmpty &&
+      selectedSubcollection.isNotEmpty &&
       selectedGender.isNotEmpty &&
       selectedSizes.isNotEmpty &&
       selectedColorIndexes.isNotEmpty;
@@ -375,9 +379,9 @@ void resetForm() {
     ppriceController.clear();
     pquantityController.clear();
     selectedColorIndexes.clear();
-    collectionsvalue.value = '';
-    subcollectionvalue.value = '';
+    selectedCollection.clear();
     pImagesLinks.clear();
+    selectedSubcollection.value = '';
     selectedGender.value = '';
     selectedSizes.clear();
     imagesToDelete.clear();

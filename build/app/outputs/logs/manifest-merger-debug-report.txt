@@ -83,6 +83,7 @@ MERGED from [:cloud_firestore] C:\Users\P\Documents\seller_app1\build\cloud_fire
 MERGED from [:firebase_core] C:\Users\P\Documents\seller_app1\build\firebase_core\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-17:12
 MERGED from [:image_picker_android] C:\Users\P\Documents\seller_app1\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-36:12
 MERGED from [:flutter_plugin_android_lifecycle] C:\Users\P\Documents\seller_app1\build\flutter_plugin_android_lifecycle\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-9:12
+MERGED from [:fluttertoast] C:\Users\P\Documents\seller_app1\build\fluttertoast\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-9:12
 MERGED from [com.google.firebase:firebase-auth:22.3.1] C:\Users\P\.gradle\caches\transforms-3\86feba03724c3c01cf5c2c40fcdf43d5\transformed\jetified-firebase-auth-22.3.1\AndroidManifest.xml:17:1-75:12
 MERGED from [com.google.firebase:firebase-storage:20.3.0] C:\Users\P\.gradle\caches\transforms-3\af3e20c7205cfd67c95b29a5ce592b1a\transformed\jetified-firebase-storage-20.3.0\AndroidManifest.xml:15:1-39:12
 MERGED from [com.google.firebase:firebase-firestore:24.11.0] C:\Users\P\.gradle\caches\transforms-3\89693237b917cc9303b682ca93efd213\transformed\jetified-firebase-firestore-24.11.0\AndroidManifest.xml:2:1-26:12
@@ -177,6 +178,8 @@ MERGED from [:image_picker_android] C:\Users\P\Documents\seller_app1\build\image
 MERGED from [:image_picker_android] C:\Users\P\Documents\seller_app1\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:6:5-8:41
 MERGED from [:flutter_plugin_android_lifecycle] C:\Users\P\Documents\seller_app1\build\flutter_plugin_android_lifecycle\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
 MERGED from [:flutter_plugin_android_lifecycle] C:\Users\P\Documents\seller_app1\build\flutter_plugin_android_lifecycle\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
+MERGED from [:fluttertoast] C:\Users\P\Documents\seller_app1\build\fluttertoast\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
+MERGED from [:fluttertoast] C:\Users\P\Documents\seller_app1\build\fluttertoast\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
 MERGED from [com.google.firebase:firebase-auth:22.3.1] C:\Users\P\.gradle\caches\transforms-3\86feba03724c3c01cf5c2c40fcdf43d5\transformed\jetified-firebase-auth-22.3.1\AndroidManifest.xml:21:5-23:64
 MERGED from [com.google.firebase:firebase-auth:22.3.1] C:\Users\P\.gradle\caches\transforms-3\86feba03724c3c01cf5c2c40fcdf43d5\transformed\jetified-firebase-auth-22.3.1\AndroidManifest.xml:21:5-23:64
 MERGED from [com.google.firebase:firebase-storage:20.3.0] C:\Users\P\.gradle\caches\transforms-3\af3e20c7205cfd67c95b29a5ce592b1a\transformed\jetified-firebase-storage-20.3.0\AndroidManifest.xml:19:5-44

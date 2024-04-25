@@ -40,9 +40,9 @@ class ProductDetails extends StatelessWidget {
 
                   Row(
                     children: [
-                      Text("${data['p_collection']}"),
+                      Text("${data['p_collection'] ?? ''}"),
                       10.widthBox,
-                      Text("${data['p_subcollection']}",)
+                      Text("${data['p_subcollection'] ?? ''}",)
                     ],
                   ),
                   10.heightBox,
@@ -60,7 +60,7 @@ class ProductDetails extends StatelessWidget {
                   ),
                   10.heightBox,
                   // ignore: unnecessary_string_escapes
-                  Text("${data['p_price']} Bath"),
+                  Text("${data['p_price'] ?? ''} Bath"),
                   10.heightBox,
                   Column(children: [
                     Row(
@@ -77,7 +77,7 @@ class ProductDetails extends StatelessWidget {
                                           .size(30, 30)
                                           .roundedFull
                                           .color(Color(data['p_colors'][index]))
-                                          // .color(Color(data['p_colors'][index]).withOpacity(1.0))
+                                          //.color(Color(data['p_colors'][index]).withOpacity(1.0))
                                           .margin(const EdgeInsets.symmetric(
                                               horizontal: 4))
                                           .make()
@@ -95,7 +95,7 @@ class ProductDetails extends StatelessWidget {
                           width: 100,
                           child: Text("Quantity: "),
                         ),
-                        Text ("${data['p_quantity']} items"),
+                        Text ("${data['p_quantity'] ?? ''} items"),
                       ],
                     ).box.padding(const EdgeInsets.all(8)).make(),
                     Row(
@@ -104,7 +104,7 @@ class ProductDetails extends StatelessWidget {
                           width: 100,
                           child: Text("Size : "),
                         ),
-                        Text(data['p_productsize']  ?? ''),
+                        Text("${data['p_productsize'] ?? ''}"),
                       ],
                     ).box.padding(const EdgeInsets.all(8)).make(),
                     const Divider(),

@@ -34,4 +34,5 @@ com.example.seller_finalproject.app-packaged_res-32 C:\Users\P\Documents\seller_
 com.example.seller_finalproject.app-packaged_res-33 C:\Users\P\Documents\seller_app1\build\firebase_core\intermediates\packaged_res\debug
 com.example.seller_finalproject.app-packaged_res-34 C:\Users\P\Documents\seller_app1\build\firebase_storage\intermediates\packaged_res\debug
 com.example.seller_finalproject.app-packaged_res-35 C:\Users\P\Documents\seller_app1\build\flutter_plugin_android_lifecycle\intermediates\packaged_res\debug
-com.example.seller_finalproject.app-packaged_res-36 C:\Users\P\Documents\seller_app1\build\image_picker_android\intermediates\packaged_res\debug
+com.example.seller_finalproject.app-packaged_res-36 C:\Users\P\Documents\seller_app1\build\fluttertoast\intermediates\packaged_res\debug
+com.example.seller_finalproject.app-packaged_res-37 C:\Users\P\Documents\seller_app1\build\image_picker_android\intermediates\packaged_res\debug
