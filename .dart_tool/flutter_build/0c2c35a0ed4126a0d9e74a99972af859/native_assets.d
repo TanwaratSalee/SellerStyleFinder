@@ -1,0 +1,1 @@
+ /Users/thanwarat/Desktop/seller_app/.dart_tool/flutter_build/0c2c35a0ed4126a0d9e74a99972af859/native_assets.yaml: 
