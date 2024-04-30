@@ -41,7 +41,7 @@ class ProductsController extends GetxController {
   RxString selectedMixandmatch = ''.obs;
   List<String> collectionList = [ 'summer','winter','autumn','dinner','everydaylook'];
   final selectedCollection = <String>[].obs;
-  List<String> subcollectionList = [ 't-shirts','dresses','coat','shirts','shorts','pants','skirts'];
+  List<String> subcollectionList = [ 'dresses','outerwear & Costs','blazers','suits','blouses & Tops','knitwear','t-shirts','skirts','pants','denim','activewear'];
   RxString selectedSubcollection = ''.obs;
 
 
