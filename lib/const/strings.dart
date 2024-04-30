@@ -1,5 +1,6 @@
 const appname = "eMart Seller App",
     login = "Login",
+    loginWith = "Login With",
     welcome = "Hi, Welcome to",
     email = "Email",
     password = "Password",
