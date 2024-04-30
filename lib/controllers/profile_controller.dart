@@ -25,12 +25,35 @@ class ProfileController extends GetxController {
   var newpassController = TextEditingController();
   var emailController = TextEditingController();
 
-  var shopNameController = TextEditingController();
-  var shopfullnameController = TextEditingController();
   var shopAddressController = TextEditingController();
-  var shopMobileController = TextEditingController();
-  var shopWebsiteController = TextEditingController();
-  var shopDescController = TextEditingController();
+  var shopCityController = TextEditingController();
+  var shopStateController = TextEditingController();
+  var shopPostalController = TextEditingController();
+
+  fetchUserData() async {
+  isloading(true);
+  try {
+    var editaccount = await FirebaseFirestore.instance
+    .collection(vendorsCollection).doc(FirebaseAuth.instance.currentUser!.uid).get();
+    nameController.text = editaccount.data()?['vendor_name'] ?? '';
+    emailController.text = editaccount.data()?['email'] ?? '';
+
+    shopAddressController.text = editaccount.data()?['address'] ?? '';
+    shopCityController.text = editaccount.data()?['city'] ?? '';
+    shopStateController.text = editaccount.data()?['postalCode'] ?? '';
+    shopPostalController.text = editaccount.data()?['state'] ?? '';
+
+    String email = editaccount.data()?['email'] ?? '';
+    String capitalizedEmail = email[0].toUpperCase() + email.substring(1);
+    emailController.text = capitalizedEmail;
+
+    isloading(false);
+  } catch (e) {
+    print('Error fetching user data: $e');
+    isloading(false);
+  }
+}
+
 
   // Select a photo from the user's gallery. /ImagePicker to open a gallery. / 70% to reduce file size.
   changeImage(context) async {

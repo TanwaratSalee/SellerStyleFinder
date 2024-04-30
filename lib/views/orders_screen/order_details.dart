@@ -198,7 +198,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                       .border(color: thinGrey01)
                       .rounded
                       .make(),
-                  // const Divider(),
+                  // const Divider(color: thinGrey0),
                   10.heightBox,
                   Column(children: [
                     10.heightBox,

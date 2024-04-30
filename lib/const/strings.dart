@@ -8,11 +8,11 @@ const appname = "eMart Seller App",
     dashboard = "Dashboard",
     rating = "Rating",
     unpaid = "Unpaid",
-    shopSettings = "Shop Account",
+    shopSettings = "Edit Account",
     logout = "Logout",
     messages = "Messages",
     editProfile = "Edit Profile",
-    editshopProfile = " Shop Account",
+    editshopProfile = " Edit Account",
     totalSale = "Total Sales",
     popular = "Popular Products",
     orders = "Orders",
@@ -29,16 +29,11 @@ const appname = "eMart Seller App",
     chat = "Chat",
     credit = "@BabaDevs",
     review = "Reviews";
+const aboutaccount = "About Account", aboutyou = "About You";
 
-//shop setting string
-const nameHint = "eg. Vendor Name",
-    shopDescHint = "Enter your shop description",
-    shopwebsiteHint = "eg. vendor.emart.com",
-    shopMobileHint = "eg. +92123456789",
-    shopAddressHint = "eg. Near Railway Bazaar",
-    description = "Description",
-    mobile = "Shop Mobile",
-    website = "Shop Website",
-    shopName = "Shop Name",
-    address = "Shop Address",
-    fullname = "Full Name ";
+//Edit account
+const address = 'Address :',
+city = 'City :',
+state = 'State / Province :',
+postal = 'Postal / Zip code :';
+
