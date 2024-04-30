@@ -132,14 +132,11 @@ Future<Rxn<List<Product>>> fetchLowerProductsByVendor(String vendorId) async {
 Future<void> onSaveButtonPressed(BuildContext context) async {
   if (selectedTopProduct != null && selectedLowerProduct != null) {
     try {
-      // สร้างสตริงสุ่มเพื่อใช้เป็นค่า 'p_mixmatch' สำหรับทั้งสองสินค้า
       String mixMatchValue = generateRandomString(10);
       
-      // ดึง document id ของสินค้าที่ถูกเลือก
       String? topProductDocumentId = getTopProductDocumentId();
       String? lowerProductDocumentId = getLowerProductDocumentId();
 
-      // อัปเดตข้อมูลสินค้าใน Firestore
       if (topProductDocumentId != null) {
         await updateProductMatch(context, topProductDocumentId, mixMatchValue);
       }

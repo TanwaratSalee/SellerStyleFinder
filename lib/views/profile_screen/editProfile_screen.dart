@@ -42,44 +42,31 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             controller.isloading.value
                 ? loadingIndicator(circleColor: primaryApp)
                 : TextButton(
-                    onPressed: () async {
-                      controller.isloading(true);
+                  onPressed: () async {
+                    controller.isloading(true);
 
-                      //if image is not selected
-                      if (controller.profileImgPath.value.isNotEmpty) {
-                        await controller.uploadProfileImage();
-                      } else {
-                        controller.profileImageLink =
-                            controller.snapshotData['imageUrl'];
-                      }
+                    if (controller.profileImgPath.value.isNotEmpty) {
+                      await controller.uploadProfileImage();
+                    } else {
+                      controller.profileImageLink = controller.snapshotData['imageUrl'];
+                    }
 
-                      //if old password matches data
-                      if (controller.snapshotData['password'] ==
-                          controller.oldpassController.text) {
-                        await controller.changeAuthPassword(
-                            email: controller.snapshotData['email'],
-                            password: controller.oldpassController.text,
-                            newpassword: controller.newpassController.text);
+                    // Pass all updated fields to updateProfile
+                    await controller.updateProfile(
+                      name: controller.nameController.text,
+                      imgUrl: controller.profileImageLink,
+                      address: controller.shopAddressController.text,
+                      city: controller.shopCityController.text,
+                      state: controller.shopStateController.text,
+                      postal: controller.shopAddressController.text,
+                    );
 
-                        await controller.updateProfile(
-                            imgUrl: controller.profileImageLink,
-                            name: controller.nameController.text,
-                            password: controller.newpassController.text);
-                        VxToast.show(context, msg: "Updated");
-                      } else if (controller
-                              .oldpassController.text.isEmptyOrNull &&
-                          controller.newpassController.text.isEmptyOrNull) {
-                        await controller.updateProfile(
-                            imgUrl: controller.profileImageLink,
-                            name: controller.nameController.text,
-                            password: controller.snapshotData['password']);
-                        VxToast.show(context, msg: "Updated");
-                      } else {
-                        VxToast.show(context, msg: "Some error occured");
-                        controller.isloading(false);
-                      }
-                    },
-                    child: const Text(save))
+                    VxToast.show(context, msg: "Profile updated successfully");
+
+                    controller.isloading(false);
+                  },
+                  child: const Text("Save")
+                )
           ],
         ),
         body: Padding(
@@ -185,8 +172,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 editTextField(
                   label: city,
                   controller: controller.shopCityController,
-                  isPass: false,
-                  readOnly: true
                 ),
                 editTextField(
                   label: state,
@@ -196,8 +181,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 editTextField(
                   label: postal,
                   controller: controller.shopPostalController,
-                  isPass: false,
-                  readOnly: true
                 ),
                 10.heightBox,
                 // const Align(

@@ -217,8 +217,8 @@ class _ProductsScreenState extends State<ProductsScreen> {
             ),
             PopupMenuButton<String>(
               onSelected: (String value) {
-                if (value == 'edit') {
-                  //
+                        if (value == 'edit') {
+                          //
                 } else if (value == 'delete') {
                   controller.resetMixMatchData(pair.value[0].id);
                   controller.resetMixMatchData(pair.value[1].id);

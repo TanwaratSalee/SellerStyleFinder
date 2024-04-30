@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:flutter/services.dart';
 import 'package:seller_finalproject/const/const.dart';
 import 'package:seller_finalproject/const/styles.dart';
-import 'package:seller_finalproject/controllers/address_controller.dart';
 import 'package:seller_finalproject/controllers/auth_controller.dart';
 import 'package:seller_finalproject/views/widgets/custom_textfield.dart';
 import 'package:seller_finalproject/views/widgets/our_button.dart';
@@ -38,7 +37,7 @@ class AddressForm extends StatefulWidget {
 }
 
 class _AddressFormFormState extends State<AddressForm> {
-  final AddressController controller = Get.put(AddressController());
+  final AuthController controller = Get.put(AuthController());
 
   void showLoadingDialog() {
     showDialog(

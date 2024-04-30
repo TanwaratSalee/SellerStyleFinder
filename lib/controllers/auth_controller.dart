@@ -14,8 +14,13 @@ class AuthController extends GetxController {
   Rx<XFile?> imageFile = Rx<XFile?>(null);
   final ImagePicker _picker = ImagePicker();
 
-
-
+   var firstnameController = TextEditingController().obs;
+   var surnameController = TextEditingController().obs;
+   var addressController = TextEditingController().obs;
+   var cityController = TextEditingController().obs;
+   var stateController = TextEditingController().obs;
+   var postalCodeController = TextEditingController().obs;
+   var phoneController = TextEditingController().obs;
   //textcontrollers
   var emailController = TextEditingController();
   var passwordController = TextEditingController();

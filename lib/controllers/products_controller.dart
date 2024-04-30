@@ -195,6 +195,13 @@ void setupProductData(Map<String, dynamic> productData) {
     selectedGender.value = productData['p_sex'] ?? '';
     selectedMixandmatch.value = productData['p_part'] ?? '';
     selectedSubcollection.value = productData['p_subcollection'] ?? '';
+    selectedColorIndexes.clear();
+    selectedColorIndexes.addAll(
+      productData.entries
+          .map((entry) =>
+              allColors.indexWhere((colorMap) => colorMap['name'] == entry.key))
+          .where((index) => index != -1)
+    );
     
     if (productData['p_collection'] != null) {
       selectedCollection.assignAll((productData['p_collection'] ?? '' as List).cast<String>());
@@ -391,6 +398,15 @@ void resetForm() {
     }
 }
 
+  void loadProductData(Product product) {
+    selectedGender.value = product.gendermixmatch;
+    selectedCollections.assignAll(product.collectionsmixmatch);
+    selectedColorIndexes.assignAll(
+        product.colormixmatch.map(
+            (colorName) => allColors.indexWhere((colorMap) => colorMap['name'] == colorName)
+        ).where((index) => index != -1)
+    );
+  }
 
 
 
@@ -404,6 +420,9 @@ class Product {
   final String vendorId;
   final String part;
   final String price;
+  final String gendermixmatch;
+  final List<String> collectionsmixmatch;
+  final List<String> colormixmatch;
   final List<String> imageUrls;
 
   Product({
@@ -412,6 +431,9 @@ class Product {
     required this.vendorId,
     required this.part,
     required this.price,
+    required this.gendermixmatch,
+    required this.collectionsmixmatch,
+    required this.colormixmatch,
     required this.imageUrls,
   });
 
@@ -428,6 +450,9 @@ class Product {
       vendorId: data['vendor_id'] ?? '',
       part: data['p_part'] ?? '',
       price: data['p_price'] ?? '',
+      gendermixmatch: data['p_mixmatch_sex'] ?? '',
+      collectionsmixmatch: List<String>.from(data['p_mixmatch_collection'] ?? []),
+      colormixmatch: List<String>.from(data['p_mixmatch_colors'] ?? []),
       imageUrls: List<String>.from(data['p_imgs'] ?? []),
     );
   }

@@ -30,29 +30,47 @@ class ProfileController extends GetxController {
   var shopStateController = TextEditingController();
   var shopPostalController = TextEditingController();
 
-  fetchUserData() async {
+fetchUserData() async {
   isloading(true);
   try {
+    // Fetch the document for the current user
     var editaccount = await FirebaseFirestore.instance
-    .collection(vendorsCollection).doc(FirebaseAuth.instance.currentUser!.uid).get();
+      .collection(vendorsCollection).doc(FirebaseAuth.instance.currentUser!.uid).get();
+    
+    // Update text fields with data from Firestore
     nameController.text = editaccount.data()?['vendor_name'] ?? '';
     emailController.text = editaccount.data()?['email'] ?? '';
 
-    shopAddressController.text = editaccount.data()?['address'] ?? '';
-    shopCityController.text = editaccount.data()?['city'] ?? '';
-    shopStateController.text = editaccount.data()?['postalCode'] ?? '';
-    shopPostalController.text = editaccount.data()?['state'] ?? '';
+    // Fetch and handle addresses if available
+    var addresses = editaccount.data()?['addresses'] as List<dynamic>? ?? [];
+    if (addresses.isNotEmpty) {
+      var firstAddress = addresses.first as Map<String, dynamic>;
+      shopAddressController.text = firstAddress['address'] ?? '';
+      shopCityController.text = firstAddress['city'] ?? '';
+      shopStateController.text = firstAddress['state'] ?? '';
+      shopPostalController.text = firstAddress['postalCode'] ?? '';
+    } else {
+      // Clear address fields if no addresses found
+      shopAddressController.clear();
+      shopCityController.clear();
+      shopStateController.clear();
+      shopPostalController.clear();
+    }
 
-    String email = editaccount.data()?['email'] ?? '';
-    String capitalizedEmail = email[0].toUpperCase() + email.substring(1);
-    emailController.text = capitalizedEmail;
+    // Ensure email is not empty to avoid errors when capitalizing
+    if (emailController.text.isNotEmpty) {
+      emailController.text = emailController.text[0].toUpperCase() + emailController.text.substring(1);
+    }
 
     isloading(false);
   } catch (e) {
+    // Handle errors and ensure loading state is updated
     print('Error fetching user data: $e');
     isloading(false);
   }
 }
+
+
 
 
   // Select a photo from the user's gallery. /ImagePicker to open a gallery. / 70% to reduce file size.
@@ -77,12 +95,42 @@ class ProfileController extends GetxController {
   }
 
   // Uused to update Firebase Firestore profile information.
-  updateProfile({name, password, imgUrl}) async {
-    var store = firestore.collection(vendorsCollection).doc(currentUser!.uid);
-    store.set({'vendor_name': name, 'password': password, 'imageUrl': imgUrl},
-        SetOptions(merge: true));
-    isloading(false);
+updateProfile({name, imgUrl, address, city, state, postal}) async {
+  var store = FirebaseFirestore.instance.collection(vendorsCollection).doc(FirebaseAuth.instance.currentUser!.uid);
+  
+  // Fetch the current user data to access the addresses array
+  var doc = await store.get();
+  List<dynamic> addresses = doc.data()?['addresses'] ?? [];
+
+  if (addresses.isNotEmpty) {
+    // Assuming you want to update the first address
+    addresses[0] = {
+      'address': address,
+      'city': city,
+      'state': state,
+      'postalCode': postal
+    };
+  } else {
+    // If no addresses exist, create a new one
+    addresses.add({
+      'address': address,
+      'city': city,
+      'state': state,
+      'postalCode': postal
+    });
   }
+
+  // Update the document with the new array
+  await store.set({
+    'vendor_name': name,
+    'imageUrl': imgUrl,
+    'addresses': addresses
+  }, SetOptions(merge: true));
+
+  isloading(false);
+}
+
+
 
   // Change password
   changeAuthPassword({email, password, newpassword}) async {
