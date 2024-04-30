@@ -13,6 +13,7 @@ const iVerify = "assets/icons/verify.png";
 const imgProduct = "assets/product.jpg";
 const imgProfile = "assets/profile.png";
 const imgBg = "assets/icons/background.png";
+const icGmail = "assets/icons/gmail-icon.png";
 
 //Setting page
 const icLogout = "assets/icons/setting/logout.png";

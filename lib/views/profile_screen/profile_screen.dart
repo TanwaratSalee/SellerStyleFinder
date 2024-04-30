@@ -7,7 +7,7 @@ import 'package:seller_finalproject/controllers/profile_controller.dart';
 import 'package:seller_finalproject/services/store_services.dart';
 import 'package:seller_finalproject/views/auth_screen/login_screen.dart';
 import 'package:seller_finalproject/views/messages_screen/messages_screen.dart';
-import 'package:seller_finalproject/views/profile_screen/edit_screen.dart';
+import 'package:seller_finalproject/views/profile_screen/editProfile_screen.dart';
 import 'package:seller_finalproject/views/profile_screen/review_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -33,7 +33,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           if (!snapshot.hasData) {
             return loadingIndicator(circleColor: primaryApp);
           } else {
-           controller.snapshotData = snapshot.data!.docs[0];
+            controller.snapshotData = snapshot.data!.docs[0];
             return ListView(
               children: [
                 Center(
@@ -44,15 +44,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         width: 100,
                         height: 100,
                         child: controller.snapshotData['imageUrl'] == ''
-                        ? Image.asset(
-                            imgProfile,
-                            width: 100,
-                            fit: BoxFit.cover,
-                          ).box.roundedFull.clip(Clip.antiAlias).make()
-                        : Image.network(
-                            controller.snapshotData['imageUrl'],
-                            width: 100,
-                          ).box.roundedFull.clip(Clip.antiAlias).make(),
+                            ? ClipRRect(
+                              borderRadius: BorderRadius.circular(50),
+                                child: Image.asset(
+                                  imgProfile,
+                                  width: 100,
+                                  fit: BoxFit.cover,
+                                ).box.roundedFull.clip(Clip.antiAlias).make(),
+                              )
+                            : ClipRRect(
+                              borderRadius: BorderRadius.circular(50),
+                              child: Image.network(
+                                  controller.snapshotData['imageUrl'],
+                                  width: 100,
+                                ).box.roundedFull.clip(Clip.antiAlias).make(),
+                            ),
                       ),
                       15.widthBox,
                       Expanded(
@@ -76,7 +82,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ),
                 10.heightBox,
-                const Divider(),
+                const Divider(color: thinGrey0),
                 10.heightBox,
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -87,7 +93,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         icMe,
                         width: 22,
                       ),
-                      title: const Text('Shop Account').text.size(15).make(),
+                      title: const Text('Edit Account').text.size(15).make(),
                       trailing: const Icon(Icons.arrow_forward_ios, size: 18),
                       onTap: () {
                         Get.to(() => EditProfileScreen(

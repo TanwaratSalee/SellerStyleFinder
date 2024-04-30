@@ -107,7 +107,7 @@ class ProductDetails extends StatelessWidget {
                         Text("${data['p_productsize'] ?? ''}"),
                       ],
                     ).box.padding(const EdgeInsets.all(8)).make(),
-                    const Divider(),
+                    const Divider(color: thinGrey0),
                     10.heightBox,
                     const Text("Description", ),
                     10.heightBox,

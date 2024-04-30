@@ -6,7 +6,7 @@ import 'package:seller_finalproject/controllers/profile_controller.dart';
 import 'package:seller_finalproject/services/store_services.dart';
 import 'package:seller_finalproject/views/auth_screen/login_screen.dart';
 import 'package:seller_finalproject/views/messages_screen/messages_screen.dart';
-import 'package:seller_finalproject/views/profile_screen/edit_screen.dart';
+import 'package:seller_finalproject/views/profile_screen/editProfile_screen.dart';
 import 'package:seller_finalproject/views/profile_screen/notification.dart';
 import 'package:seller_finalproject/views/profile_screen/review_screen.dart';
 
@@ -75,7 +75,7 @@ class _CopyProfileScreenState extends State<CopyProfileScreen> {
                          "${controller.snapshotData['email']}",
                          ),
                   ),
-                  const Divider(),
+                  const Divider(color: thinGrey0),
                   10.heightBox,
                   Padding(
                     padding: const EdgeInsets.all(8.0),

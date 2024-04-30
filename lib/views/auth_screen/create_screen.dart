@@ -30,7 +30,7 @@ class _CreateAccountState extends State<CreateAccount> {
     return Scaffold(
       // resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: const Text("Create Shop Account"),
+        title: const Text("Create Edit Account"),
         backgroundColor: whiteColor,
         foregroundColor: Colors.black,
       ),
