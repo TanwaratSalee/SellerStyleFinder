@@ -46,7 +46,7 @@
 		</data>
 		<key>Frameworks/App.framework/App</key>
 		<data>
-		RSynJF1DrK5TXPYbVtnIOxVneMA=
+		Tocn6+aMQWsRxeFiwgr5Uawqd54=
 		</data>
 		<key>Frameworks/App.framework/Info.plist</key>
 		<data>
@@ -54,15 +54,15 @@
 		</data>
 		<key>Frameworks/App.framework/_CodeSignature/CodeResources</key>
 		<data>
-		231+fUFqllYj6sZz2Vjyi+WLY+s=
+		qSi/SsaqEj0pq4PKfc4UfV4SYEU=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/AssetManifest.bin</key>
 		<data>
-		fU5Z6X6y4kkfxIZ7FDlGvfXBePc=
+		KhL9ea4W4fTbTZlM72PVYOCypNI=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/AssetManifest.json</key>
 		<data>
-		U/jXxj8Jhx3MnJxT6gLC+pJUoQ8=
+		jV4T2JI8uR6EniklPA1HIqMm64s=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/FontManifest.json</key>
 		<data>
@@ -115,6 +115,10 @@
 		<key>Frameworks/App.framework/flutter_assets/assets/icons/general_setting.png</key>
 		<data>
 		QFnom6UGzo1dWuywAtjMOT+5hhE=
+		</data>
+		<key>Frameworks/App.framework/flutter_assets/assets/icons/gmail-icon.png</key>
+		<data>
+		DTOWQ6mFnTiFIfWALZmjQ+c+NKY=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/assets/icons/home.png</key>
 		<data>
@@ -182,7 +186,7 @@
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/kernel_blob.bin</key>
 		<data>
-		xUbLlf7MZ/rfGnMqGKJdgRjgNEk=
+		xfp4p8RUL/s8iiRLR61XFglqcDc=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/lib/services/collection_model.json</key>
 		<data>
@@ -606,7 +610,7 @@
 		</data>
 		<key>Frameworks/grpc.framework/grpc</key>
 		<data>
-		ej7Mu7rllt84tSrWf0ciDztdt00=
+		zJcRTgtQVrSC7vhfeph87CAQlbw=
 		</data>
 		<key>Frameworks/grpc.framework/grpc.bundle/Info.plist</key>
 		<data>
@@ -809,7 +813,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			4YM6KuMsh568BD+UQQDLXhjujMH1frQz5MUjR9hNbCQ=
+			rSpO5ijJCibOEe6cP0ZIw+4/ts7qwBIZh0D1GbLtNQE=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/Info.plist</key>
@@ -823,21 +827,21 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			evPukk1rhnkZyyVFp9zSARUT7rqZYW6Oj8400x/OJUI=
+			5p3RdbDaIvwofKxsAdVmp1HjBU//0bI/xeJ7DmMEfrs=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/AssetManifest.bin</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			RO8K0YMcwTCEVBggiqH7hJsjLIAuo4kpTgzHDy9roLE=
+			jLiSAEZ51mHx/idF24+6ga2SSkSd6bmOu9AzMErXLAg=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/AssetManifest.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			O2vdW5cDo0X/WZ55RtW9HCEISrwOAQAgaDsm9dP1X/A=
+			oXg/EDxNi1Y2y8TuVm9HwdvaEHBK5I/AJA7FG5qOSJI=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/FontManifest.json</key>
@@ -929,6 +933,13 @@
 			<key>hash2</key>
 			<data>
 			hew/RMHPzlEem9I59cUiVj/wm5ntQhrnkOI0k92E+ws=
+			</data>
+		</dict>
+		<key>Frameworks/App.framework/flutter_assets/assets/icons/gmail-icon.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			PMltjeZDWGV7i0U2MT+bRg5HD7knGXlfOSWREbDEI+s=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/assets/icons/home.png</key>
@@ -1047,7 +1058,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			s36UgiqQBtVfgdiVvDMV0nzAXPE6E8Mx7qt1yecuk2U=
+			aMl0IuzjzuxJF76nQoECK0+pB142P6GyCMA1ZICDpkg=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/lib/services/collection_model.json</key>
@@ -1789,7 +1800,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			tpyNAZtm6Dai0KUY+6je9nWJxixFCXzi3VTILKMwiRU=
+			VlZrBQVdUAAOtlCqfZQWmbEtTFkAhS0/jUzpBP4i4oQ=
 			</data>
 		</dict>
 		<key>Frameworks/grpc.framework/grpc.bundle/Info.plist</key>
