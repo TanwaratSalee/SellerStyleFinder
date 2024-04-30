@@ -1,0 +1,74 @@
+{
+    "collections": [
+        {
+            "name": "Summer Collections",
+            "subcollection": [
+                "T-Shirts",
+                "Knitwear",
+                "Dresses",
+                "Coat",
+                "Shirts",
+                "Knitwear",
+                "Shorts",
+                "Pants",
+                "Skirts"
+            ]
+        },
+        {
+            "name": "Winter Collections",
+            "subcollection": [
+                "T-Shirts",
+                "Knitwear",
+                "Dresses",
+                "Coat",
+                "Shirts",
+                "Knitwear",
+                "Shorts",
+                "Pants",
+                "Skirts"
+            ]
+        },
+        {
+            "name": "Autumn Collections",
+            "subcollection": [
+                "T-Shirts",
+                "Knitwear",
+                "Dresses",
+                "Coat",
+                "Shirts",
+                "Knitwear",
+                "Shorts",
+                "Pants",
+                "Skirts"
+            ]
+        },
+        {
+            "name": "Gala Dinner Collections",
+            "subcollection": [
+                "T-Shirts",
+                "Knitwear",
+                "Dresses",
+                "Coat",
+                "Shirts",
+                "Knitwear",
+                "Shorts",
+                "Pants",
+                "Skirts"
+            ]
+        },
+        {
+            "name": "Bridesmaid Collections",
+            "subcollection": [
+                "T-Shirts",
+                "Knitwear",
+                "Dresses",
+                "Coat",
+                "Shirts",
+                "Knitwear",
+                "Shorts",
+                "Pants",
+                "Skirts"
+            ]
+        }
+    ]
+}
