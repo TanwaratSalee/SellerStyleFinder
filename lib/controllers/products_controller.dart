@@ -195,31 +195,37 @@ void setupProductData(Map<String, dynamic> productData) {
     selectedGender.value = productData['p_sex'] ?? '';
     selectedMixandmatch.value = productData['p_part'] ?? '';
     selectedSubcollection.value = productData['p_subcollection'] ?? '';
-    selectedColorIndexes.clear();
-    selectedColorIndexes.addAll(
-      productData.entries
-          .map((entry) =>
-              allColors.indexWhere((colorMap) => colorMap['name'] == entry.key))
-          .where((index) => index != -1)
-    );
-    
-    if (productData['p_collection'] != null) {
-      selectedCollection.assignAll((productData['p_collection'] ?? '' as List).cast<String>());
-    } else {
-      selectedCollection.clear();
+
+    List<dynamic> colorMaps = productData['p_colors'] ?? [];
+    for (var colorMap in colorMaps) {
+        if (colorMap is Map && colorMap.containsKey('number')) {
+            Map<String, dynamic> colorMapData = colorMap.cast<String, dynamic>();
+            int colorNumber = colorMapData['number'];
+            int colorIndex = allColors.indexWhere((colorMap) => colorMap['number'] == colorNumber);
+            if (colorIndex != -1) {
+                selectedColorIndexes.add(colorIndex);
+            }
+        }
     }
 
+
+    if (productData['p_collection'] != null) {
+        selectedCollection.assignAll(List<String>.from(productData['p_collection']));
+    } else {
+        selectedCollection.clear();
+    }
 
     if (productData['p_productsize'] != null) {
-      selectedSizes.assignAll((productData['p_productsize'] ?? '' as List).cast<String>());
+        selectedSizes.assignAll(List<String>.from(productData['p_productsize']));
     } else {
-      selectedSizes.clear();
+        selectedSizes.clear();
     }
 
-  if (productData['p_imgs'] != null) {
-    initializeImages(List<String>.from(productData['p_imgs']));
-  }
+    if (productData['p_imgs'] != null) {
+        initializeImages(List<String>.from(productData['p_imgs']));
+    }
 }
+
 
 void removeImage(int index) {
   if (index >= 0 && index < pImagesList.length) {
@@ -397,18 +403,6 @@ void resetForm() {
         pImagesList.add(null);
     }
 }
-
-  void loadProductData(Product product) {
-    selectedGender.value = product.gendermixmatch;
-    selectedCollections.assignAll(product.collectionsmixmatch);
-    selectedColorIndexes.assignAll(
-        product.colormixmatch.map(
-            (colorName) => allColors.indexWhere((colorMap) => colorMap['name'] == colorName)
-        ).where((index) => index != -1)
-    );
-  }
-
-
 
   MatchProducts(text) {}
 }
