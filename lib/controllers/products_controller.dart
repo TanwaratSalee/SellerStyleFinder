@@ -290,12 +290,11 @@ Future<void> updateProduct(BuildContext context, String documentId) async {
       'p_imgs': FieldValue.arrayUnion(pImagesLinks),
     });
 
-    // Removing images marked for deletion
     if (imagesToDelete.isNotEmpty) {
       await productDoc.update({
         'p_imgs': FieldValue.arrayRemove(imagesToDelete),
       });
-      imagesToDelete.clear(); // Clear the list after updating
+      imagesToDelete.clear();
     }
 
     VxToast.show(context, msg: "Product updated successfully.");

@@ -282,12 +282,10 @@ class _EditProductState extends State<EditProduct> {
                           selected: controller.selectedSizes.contains(size),
                           onSelected: (selected) {
                             if (selected) {
-                              // ถ้าตัวเลือกถูกเลือก เพิ่มเข้าไปในรายการ
                               if (!controller.selectedSizes.contains(size)) {
                                 controller.selectedSizes.add(size);
                               }
                             } else {
-                              // ถ้าตัวเลือกไม่ถูกเลือก ลบออกจากรายการ
                               controller.selectedSizes.remove(size);
                             }
                           },
