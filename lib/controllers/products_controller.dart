@@ -203,6 +203,21 @@ void setupProductData(Map<String, dynamic> productData) {
     selectedGender.value = productData['p_sex'] ?? '';
     selectedMixandmatch.value = productData['p_part'] ?? '';
     selectedSubcollection.value = productData['p_subcollection'] ?? '';
+<<<<<<< HEAD
+=======
+
+    List<dynamic> colorMaps = productData['p_colors'] ?? [];
+    for (var colorMap in colorMaps) {
+        if (colorMap is Map && colorMap.containsKey('number')) {
+            Map<String, dynamic> colorMapData = colorMap.cast<String, dynamic>();
+            int colorNumber = colorMapData['number'];
+            int colorIndex = allColors.indexWhere((colorMap) => colorMap['number'] == colorNumber);
+            if (colorIndex != -1) {
+                selectedColorIndexes.add(colorIndex);
+            }
+        }
+    }
+>>>>>>> b47d1a0331ae4e1150b500dc7310301a24993aa0
 
   List<dynamic> colorMaps = productData['p_colors'] ?? [];
   for (var colorMap in colorMaps) {
@@ -214,6 +229,12 @@ void setupProductData(Map<String, dynamic> productData) {
       }
     }
   }
+
+    if (productData['p_collection'] != null) {
+        selectedCollection.assignAll(List<String>.from(productData['p_collection']));
+    } else {
+        selectedCollection.clear();
+    }
 
     if (productData['p_collection'] != null) {
         selectedCollection.assignAll(List<String>.from(productData['p_collection']));
