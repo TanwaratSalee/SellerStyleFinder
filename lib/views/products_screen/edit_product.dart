@@ -311,11 +311,7 @@ class _EditProductState extends State<EditProduct> {
                           controller.allColors.length,
                           (index) => GestureDetector(
                             onTap: () {
-                              if (controller.selectedColorIndexes.contains(index)) {
-                                controller.selectedColorIndexes.remove(index);
-                              } else {
-                                controller.selectedColorIndexes.add(index);
-                              }
+                              controller.toggleColorSelection(index);
                             },
                             child: Container(
                               width: 50,

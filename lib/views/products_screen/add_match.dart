@@ -14,11 +14,36 @@ class _AddMatchProductState extends State<AddMatchProduct> {
   final PageController _bottomController = PageController(viewportFraction: 0.6);
   final MatchController controller = Get.put(MatchController());
 
-@override
-void dispose() {
-  controller.resetController();
-  super.dispose();
-}
+  int _currentTopIndex = 0;
+  int _currentLowerIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _topController.addListener(() {
+      int nextIndex = _topController.page!.round();
+      if (_currentTopIndex != nextIndex) {
+        _currentTopIndex = nextIndex;
+        // Optional: Call a function here if you need to update something on index change
+      }
+    });
+
+    _bottomController.addListener(() {
+      int nextIndex = _bottomController.page!.round();
+      if (_currentLowerIndex != nextIndex) {
+        _currentLowerIndex = nextIndex;
+        // Optional: Call a function here if you need to update something on index change
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _topController.dispose();
+    _bottomController.dispose();
+    controller.resetController();
+    super.dispose();
+  }
 
 @override
 Widget build(BuildContext context) {
@@ -37,7 +62,7 @@ Widget build(BuildContext context) {
     actions: <Widget>[
       TextButton(
         onPressed: () {
-          controller.onSaveButtonPressed(context);
+          onSaveButtonPressed(context);
         },
         child: const Text('Save', style: TextStyle(color: primaryApp)),
       ),
@@ -238,20 +263,10 @@ Widget buildTopPageView(PageController controller, MatchController matchControll
         return Center(child: CircularProgressIndicator());
       } else if (snapshot.hasError) {
         return Center(child: Text('Error: ${snapshot.error}'));
+      } else if (snapshot.data?.value != null && snapshot.data!.value!.isNotEmpty) {
+        return buildPageView(controller, snapshot.data!.value!, matchController.onTopProductSelected);
       } else {
-        final rxnList = snapshot.data;
-        if (rxnList != null && rxnList.value != null) {
-          final topProducts = rxnList.value!;
-          // Check if p_mixmatch is empty for each product
-          final filteredTopProducts = topProducts.where((product) => product.mixmatch.isEmpty).toList();
-          if (filteredTopProducts.isNotEmpty) {
-            return buildPageView(controller, filteredTopProducts, matchController.onTopProductSelected);
-          } else {
-            return Center(child: Text('No data available'));
-          }
-        } else {
-          return Center(child: Text('No data available'));
-        }
+        return Center(child: Text('No data available'));
       }
     },
   );
@@ -265,58 +280,44 @@ Widget buildLowerPageView(PageController controller, MatchController matchContro
         return Center(child: CircularProgressIndicator());
       } else if (snapshot.hasError) {
         return Center(child: Text('Error: ${snapshot.error}'));
+      } else if (snapshot.data?.value != null && snapshot.data!.value!.isNotEmpty) {
+        return buildPageView(controller, snapshot.data!.value!, matchController.onLowerProductSelected);
       } else {
-        final rxnList = snapshot.data;
-        if (rxnList != null && rxnList.value != null) {
-          final lowerProducts = rxnList.value!;
-          // Check if p_mixmatch is empty for each product
-          final filteredLowerProducts = lowerProducts.where((product) => product.mixmatch.isEmpty).toList();
-          if (filteredLowerProducts.isNotEmpty) {
-            return buildPageView(controller, filteredLowerProducts, matchController.onLowerProductSelected);
-          } else {
-            return Center(child: Text('No data available'));
-          }
-        } else {
-          return Center(child: Text('No data available'));
-        }
+        return Center(child: Text('No data available'));
       }
     },
   );
 }
 
+
 Widget buildPageView(PageController controller, List<Product> products, Function(Product) onSelectProduct) {
   return PageView.builder(
     controller: controller,
     itemCount: products.length,
+    onPageChanged: (index) {
+      if (controller == _topController) {
+        _currentTopIndex = index;
+      } else if (controller == _bottomController) {
+        _currentLowerIndex = index;
+      }
+      onSelectProduct(products[index]);
+    },
     itemBuilder: (context, index) {
       Product product = products[index];
-      print("Current index - ${product.part}: $index");
+      double scale = 1.0;
+      if (controller.position.haveDimensions) {
+        double pageOffset = controller.page! - index;
+        scale = (1 - (pageOffset.abs() * 0.2)).clamp(0.8, 1.0);
+      }
 
-      return GestureDetector(
-        onTap: () {
-          onSelectProduct(product);
-        },
-        child: AnimatedBuilder(
-          animation: controller,
-          builder: (context, child) {
-            double scale = 1.0;
-            if (controller.position.haveDimensions) {
-              double pageOffset = controller.page! - index;
-              scale = (1 - (pageOffset.abs() * 0.2)).clamp(0.8, 1.2);
-            }
+      final double baseSize = 90.0;
+      final double height = Curves.easeInOut.transform(scale) * baseSize;
+      final double width = Curves.easeInOut.transform(scale) * baseSize;
 
-            final double baseSize = 90.0;
-            final double height = Curves.easeInOut.transform(scale) * baseSize;
-            final double width = Curves.easeInOut.transform(scale) * baseSize;
-
-            return Center(
-              child: SizedBox(
-                height: height,
-                width: width,
-                child: child,
-              ),
-            );
-          },
+      return Center(
+        child: SizedBox(
+          height: height,
+          width: width,
           child: Image.network(
             product.imageUrls[0],
             fit: BoxFit.cover,
@@ -327,6 +328,38 @@ Widget buildPageView(PageController controller, List<Product> products, Function
     physics: const BouncingScrollPhysics(),
   );
 }
+
+
+
+Future<void> onSaveButtonPressed(BuildContext context) async {
+  try {
+    final topProducts = await controller.fetchTopProductsByVendor(currentUser!.uid).then((rxn) => rxn.value!);
+    final lowerProducts = await controller.fetchLowerProductsByVendor(currentUser!.uid).then((rxn) => rxn.value!);
+    
+    if (topProducts.isNotEmpty && lowerProducts.isNotEmpty) {
+      Product topProduct = topProducts[_currentTopIndex];
+      Product lowerProduct = lowerProducts[_currentLowerIndex];
+
+      if (topProduct != null && lowerProduct != null) {
+        // Generate a random string to link these products
+        String mixMatchValue = controller.generateRandomString(10);
+
+        // Update both products in Firestore
+        await controller.updateProductMatch(context, topProduct.id, mixMatchValue);
+        await controller.updateProductMatch(context, lowerProduct.id, mixMatchValue);
+
+        print('Success: Products updated with MixMatch ID $mixMatchValue');
+        VxToast.show(context, msg: "Products updated successfully.");
+      }
+    } else {
+      VxToast.show(context, msg: "No products available to save.");
+    }
+  } catch (e) {
+    VxToast.show(context, msg: "Error saving products: ${e.toString()}");
+    print("Error saving products: $e");
+  }
+}
+
 
 
 }  

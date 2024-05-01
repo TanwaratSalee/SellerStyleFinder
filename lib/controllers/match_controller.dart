@@ -6,7 +6,6 @@ import 'package:seller_finalproject/models/collection_model.dart';
 
 class MatchController extends GetxController {
   var isloading = false.obs;
-
   //text field controllers
 
   var pnameController = TextEditingController();
@@ -61,6 +60,7 @@ class MatchController extends GetxController {
     selectedGender.value = '';
     selectedCollection.value = '';
     selectedColorIndexes.clear();
+    psizeController.clear();
     selectedCollections.clear();
   }
 
@@ -81,20 +81,12 @@ class MatchController extends GetxController {
 void onTopProductSelected(Product product) {
   selectedTopProduct = product;
   print("Selected top product: ${selectedTopProduct?.name}");
-  Get.dialog(AlertDialog(
-    title: Text(product.name),
-    content: Text('Top Product Selected'),
-));
 }
 
 
 void onLowerProductSelected(Product product) {
   selectedLowerProduct = product;
   print("Selected lower product: ${selectedLowerProduct?.name}");
-  Get.dialog(AlertDialog(
-    title: Text(product.name),
-    content: Text('Lower Product Selected'),
-));
 }
 
 String? getTopProductDocumentId() {
