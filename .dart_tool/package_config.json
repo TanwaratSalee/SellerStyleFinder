@@ -488,7 +488,11 @@
       "languageVersion": "3.2"
     }
   ],
+<<<<<<< HEAD
   "generated": "2024-05-01T10:09:50.693107Z",
+=======
+  "generated": "2024-05-01T09:02:10.474557Z",
+>>>>>>> 9e62938 (add)
   "generator": "pub",
   "generatorVersion": "3.3.4"
 }
