@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:seller_finalproject/const/const.dart';
 import 'package:seller_finalproject/controllers/auth_controller.dart';
-import 'package:seller_finalproject/controllers/editaddress_controller.dart';
 import 'package:seller_finalproject/controllers/loading_Indcator.dart';
 import 'package:seller_finalproject/views/auth_screen/address_screen.dart';
 import 'package:seller_finalproject/views/widgets/custom_textfield.dart';

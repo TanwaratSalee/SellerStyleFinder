@@ -98,23 +98,23 @@ flutter:
   fonts:
     - family: Roboto-Light
       fonts:
-        - asset: assets/fonts/Roboto-Light.ttf
+        - asset: assets/fonts/Urbanist/Urbanist-Light.ttf
 
     - family: Roboto-Regular
       fonts:
-        - asset: assets/fonts/Roboto-Regular.ttf
+        - asset: assets/fonts/Urbanist/Urbanist-Regular.ttf
 
     - family: Roboto-Bold
       fonts:
-        - asset: assets/fonts/Roboto-Bold.ttf    
+        - asset: assets/fonts/Urbanist/Urbanist-Bold.ttf    
 
     - family: Roboto-Black
       fonts:
-        - asset: assets/fonts/Roboto-Black.ttf 
+        - asset: assets/fonts/Urbanist/Urbanist-Black.ttf 
         
     - family: Roboto-Medium
       fonts:
-        - asset: assets/fonts/Roboto-Medium.ttf     
+        - asset: assets/fonts/Urbanist/Urbanist-Medium.ttf     
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
