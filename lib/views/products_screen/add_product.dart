@@ -228,6 +228,7 @@ class AddProduct extends StatelessWidget {
                         );
                       }).toList(),
                     )),
+                    
                 10.heightBox,
                 const Text("Size of product")
                     .text
