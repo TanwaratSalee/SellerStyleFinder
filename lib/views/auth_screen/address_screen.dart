@@ -1,13 +1,10 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:flutter/services.dart';
 import 'package:seller_finalproject/const/const.dart';
 import 'package:seller_finalproject/const/styles.dart';
 import 'package:seller_finalproject/controllers/auth_controller.dart';
 import 'package:seller_finalproject/views/widgets/custom_textfield.dart';
 import 'package:seller_finalproject/views/widgets/our_button.dart';
-import 'package:velocity_x/velocity_x.dart'; // Assuming you are using VelocityX for styling
-import 'package:loading_animation_widget/loading_animation_widget.dart'; // Ensure this package is added to your pubspec.yaml
+import 'package:loading_animation_widget/loading_animation_widget.dart'; 
 
 
 class AddressForm extends StatefulWidget {
