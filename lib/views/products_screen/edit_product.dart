@@ -26,6 +26,7 @@ class EditProduct extends StatefulWidget {
 
 class _EditProductState extends State<EditProduct> {
   late ProductsController controller;
+  
   @override
   void initState() {
     super.initState();

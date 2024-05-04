@@ -9,6 +9,7 @@ import 'package:seller_finalproject/controllers/products_controller.dart';
 import 'package:seller_finalproject/services/store_services.dart';
 import 'package:seller_finalproject/views/products_screen/add_match.dart';
 import 'package:seller_finalproject/views/products_screen/add_product.dart';
+import 'package:seller_finalproject/views/products_screen/edit_match.dart';
 import 'package:seller_finalproject/views/products_screen/edit_product.dart';
 import 'package:seller_finalproject/views/products_screen/product_details.dart';
 
@@ -175,20 +176,20 @@ class _ProductsScreenState extends State<ProductsScreen> {
             ),
             Expanded(
               child: ListView.builder(
-  itemCount: validPairs.length,
-  itemBuilder: (context, index) {
-    var pair = validPairs[index];
-    var product1 = pair.value[0].data() as Map<String, dynamic>;
-    var product2 = pair.value[1].data() as Map<String, dynamic>;
+              itemCount: validPairs.length,
+              itemBuilder: (context, index) {
+                var pair = validPairs[index];
+                var product1 = pair.value[0].data() as Map<String, dynamic>;
+                var product2 = pair.value[1].data() as Map<String, dynamic>;
 
-    String price1 = product1['p_price'].toString();
-    String price2 = product2['p_price'].toString();
+                String price1 = product1['p_price'].toString();
+                String price2 = product2['p_price'].toString();
 
-    String name1 = product1['p_name'].toString();
-    String name2 = product2['p_name'].toString();
+                String name1 = product1['p_name'].toString();
+                String name2 = product2['p_name'].toString();
 
-    String productImage1 = product1['p_imgs'][0];
-    String productImage2 = product2['p_imgs'][0];
+                String productImage1 = product1['p_imgs'][0];
+                String productImage2 = product2['p_imgs'][0];
 
 
     return Column(
@@ -217,8 +218,11 @@ class _ProductsScreenState extends State<ProductsScreen> {
             ),
             PopupMenuButton<String>(
               onSelected: (String value) {
-                        if (value == 'edit') {
-                          //
+                  if (value == 'edit') {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) =>  EditMatchProduct(product1: product1, product2: product2)),
+                    );
                 } else if (value == 'delete') {
                   controller.resetMixMatchData(pair.value[0].id);
                   controller.resetMixMatchData(pair.value[1].id);
