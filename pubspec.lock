@@ -225,6 +225,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.15.0"
+  firebase_service:
+    dependency: "direct main"
+    description:
+      name: firebase_service
+      sha256: e4fb0efac2ce7c926cac7beaf7c36164fd39266c46970bd8790f09c3c2ef6f7b
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.1+1"
   firebase_storage:
     dependency: "direct main"
     description:

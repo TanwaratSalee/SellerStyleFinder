@@ -1,8 +1,10 @@
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_service/firebase_service.dart';
 import 'package:get/get.dart';
 import 'package:seller_finalproject/const/const.dart';
 import 'package:seller_finalproject/models/collection_model.dart';
+import 'package:seller_finalproject/models/product_model.dart';
 
 class MatchController extends GetxController {
   var isloading = false.obs;
@@ -104,6 +106,7 @@ Future<Rxn<List<Product>>> fetchTopProductsByVendor(String vendorId) async {
 Future<Rxn<List<Product>>> fetchLowerProductsByVendor(String vendorId) async {
   return Rxn<List<Product>>(await _fetchProductsByVendorAndPart(vendorId, 'lower'));
 }
+
 
   Future<List<Product>> _fetchProductsByVendorAndPart(String vendorId, String part) async {
     List<Product> products = [];

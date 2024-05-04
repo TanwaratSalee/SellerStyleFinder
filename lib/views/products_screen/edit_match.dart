@@ -61,12 +61,8 @@ Widget build(BuildContext context) {
     product2 = widget.product2;
     String capitalize(String s) => s[0].toUpperCase() + s.substring(1);
 
-
     controller.selectedGender.value = widget.product1['p_mixmatch_sex'] ?? '';
     controller.psizeController.text = widget.product1['p_mixmatch_desc'] ?? '';
-
-
-    
 
   return Scaffold(
     appBar: AppBar(
@@ -291,6 +287,8 @@ Widget buildTopPageView(PageController controller, MatchController matchControll
     },
   );
 }
+
+
 
 Widget buildLowerPageView(PageController controller, MatchController matchController) {
   return FutureBuilder<Rxn<List<Product>>>(

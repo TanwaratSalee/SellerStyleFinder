@@ -170,6 +170,12 @@
       "languageVersion": "3.2"
     },
     {
+      "name": "firebase_service",
+      "rootUri": "file:///C:/Users/P/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_service-0.0.1+1",
+      "packageUri": "lib/",
+      "languageVersion": "2.16"
+    },
+    {
       "name": "firebase_storage",
       "rootUri": "file:///C:/Users/P/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_storage-11.7.2",
       "packageUri": "lib/",
@@ -488,11 +494,7 @@
       "languageVersion": "3.2"
     }
   ],
-<<<<<<< HEAD
-  "generated": "2024-05-01T10:09:50.693107Z",
-=======
-  "generated": "2024-05-01T09:02:10.474557Z",
->>>>>>> 9e62938 (add)
+  "generated": "2024-05-04T09:50:06.213969Z",
   "generator": "pub",
   "generatorVersion": "3.3.4"
 }
