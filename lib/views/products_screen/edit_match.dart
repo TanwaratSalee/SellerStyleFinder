@@ -3,6 +3,7 @@ import 'package:seller_finalproject/const/styles.dart';
 import 'package:seller_finalproject/controllers/match_controller.dart';
 import 'package:seller_finalproject/controllers/profile_controller.dart';
 import 'package:seller_finalproject/views/widgets/custom_textfield.dart';
+import 'package:seller_finalproject/views/widgets/edit_textfield.dart';
 
 class EditMatchProduct extends StatefulWidget {
   final Map<String, dynamic> product1;
@@ -23,6 +24,10 @@ class _EditMatchProductState extends State<EditMatchProduct> {
   int _currentTopIndex = 0;
   int _currentLowerIndex = 0;
 
+  int totalTopProductsIndex = products.length;
+  int totalLowerProductsIndex = products.length;
+
+
   @override
   void initState() {
     super.initState();
@@ -30,21 +35,26 @@ class _EditMatchProductState extends State<EditMatchProduct> {
     WidgetsBinding.instance!.addPostFrameCallback((_) {
       product1 = widget.product1;
       product2 = widget.product2;
+    
+    List<int> preselectedIndices = [];
+    controller.selectedColorIndexes.addAll(preselectedIndices);
     });
 
-    _topController.addListener(() {
-      int nextIndex = _topController.page!.round();
-      if (_currentTopIndex != nextIndex) {
-        _currentTopIndex = nextIndex;
-      }
-    });
+_topController.addListener(() {
+  int nextIndex = _topController.page!.round();
+  if (_currentTopIndex != nextIndex) {
+      _currentTopIndex = nextIndex;
+      print("Top Page Index Updated: $_currentTopIndex");
+  }
+});
 
-    _bottomController.addListener(() {
-      int nextIndex = _bottomController.page!.round();
-      if (_currentLowerIndex != nextIndex) {
-        _currentLowerIndex = nextIndex;
-      }
-    });
+_bottomController.addListener(() {
+  int nextIndex = _bottomController.page!.round();
+  if (_currentLowerIndex != nextIndex) {
+    _currentLowerIndex = nextIndex;
+    print("Bottom Page Index Updated: $_currentLowerIndex");
+  }
+});
   }
 
   @override
@@ -64,6 +74,14 @@ Widget build(BuildContext context) {
     controller.selectedGender.value = widget.product1['p_mixmatch_sex'] ?? '';
     controller.psizeController.text = widget.product1['p_mixmatch_desc'] ?? '';
 
+    if (widget.product1['p_mixmatch_collection'] is List) {
+        List<String> collections = List<String>.from(widget.product1['p_mixmatch_collection'].map((item) => item.toString()));
+        controller.selectedCollection.assignAll(collections);
+    } else {
+        controller.selectedCollection.clear();
+    }
+
+
   return Scaffold(
     appBar: AppBar(
       leading: IconButton(
@@ -74,11 +92,10 @@ Widget build(BuildContext context) {
       },
     ),
       title: const Text('Edit Match'),
-      //title: Text('${widget.product1['p_name']} & ${widget.product2['p_name']}'),
     actions: <Widget>[
       TextButton(
         onPressed: () {
-          onSaveButtonPressed(context);
+          controller.onSaveButtonPressed(context);
         },
         child: const Text('Save', style: TextStyle(color: primaryApp)),
       ),
@@ -173,7 +190,6 @@ Widget buildGenderChips(MatchController controller) {
 }
 
 Widget buildCollectionChips(MatchController controller) {
-  String capitalize(String s) => s[0].toUpperCase() + s.substring(1);
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -185,30 +201,35 @@ Widget buildCollectionChips(MatchController controller) {
           .make(),
       const SizedBox(height: 10),
       Obx(() => Wrap(
-            spacing: 8.0,
-            runSpacing: 8.0,
-            children: controller.collectionList.map((collection) {
-              bool isSelected = controller.isCollectionSelected(collection);
-              return ChoiceChip(
-                showCheckmark: false,
-                label: Text(
-                  capitalize(collection),
-                  style: TextStyle(
-                    color: isSelected ? primaryApp : greyDark1,
-                  ),
-                ), 
-                selected: isSelected,
-                onSelected: (selected) {
-                  controller.toggleCollection(collection);
-                },
-                selectedColor: thinPrimaryApp,
-                backgroundColor: thinGrey0,
-                side: isSelected
-                    ? const BorderSide(color: primaryApp, width: 2)
-                    : const BorderSide(color: greyColor),
-              );
-            }).toList(),
-          )),
+        spacing: 8.0,
+        runSpacing: 8.0,
+        children: controller.collectionList.map((collection) {
+          bool isSelected = controller.selectedCollection.contains(collection);
+          return ChoiceChip(
+            label: Text(
+              capitalize(collection),
+              style: TextStyle(
+                color: isSelected ? primaryApp : greyDark1,
+              ),
+            ).text.size(14).fontFamily(regular).make(),
+            selected: isSelected,
+            onSelected: (selected) {
+              if (selected) {
+                if (!controller.selectedCollection.contains(collection)) {
+                  controller.selectedCollection.add(collection);
+                }
+              } else {
+                controller.selectedCollection.remove(collection);
+              }
+            },
+            selectedColor: thinPrimaryApp,
+            backgroundColor: thinGrey0,
+            side: isSelected
+                ? const BorderSide(color: primaryApp, width: 2)
+                : const BorderSide(color: greyColor),
+          );
+        }).toList(),
+      )),
     ],
   );
 }
@@ -224,15 +245,17 @@ Widget buildColorChoices(MatchController controller) {
           .fontFamily(medium)
           .make(),
       const SizedBox(height: 15),
-      Obx(
-        () => Wrap(
-          spacing: 10.0,
-          runSpacing: 10.0,
-          children: List.generate(
-            controller.allColors.length,
-            (index) => GestureDetector(
+      Obx(() => Wrap(
+        spacing: 10.0,
+        runSpacing: 10.0,
+        children: List.generate(
+          controller.allColors.length,
+          (index) {
+            var colorInfo = controller.allColors[index];
+            bool isSelected = controller.selectedColorIndexes.contains(index);
+            return GestureDetector(
               onTap: () {
-                if (controller.selectedColorIndexes.contains(index)) {
+                if (isSelected) {
                   controller.selectedColorIndexes.remove(index);
                 } else {
                   controller.selectedColorIndexes.add(index);
@@ -243,30 +266,25 @@ Widget buildColorChoices(MatchController controller) {
                 height: 50,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
-                  color: controller.allColors[index]['color'],
+                  color: colorInfo['color'],
                   border: Border.all(
-                    color: controller.selectedColorIndexes.contains(index)
-                        ? primaryApp
-                        : Colors.transparent,
+                    color: isSelected ? primaryApp : Colors.transparent,
                     width: 2,
                   ),
                 ),
                 child: Center(
-                  child: controller.selectedColorIndexes.contains(index)
+                  child: isSelected
                       ? Icon(
-                          Icons.done,
-                          color: controller.allColors[index]['color'] ==
-                                  whiteColor
-                              ? Colors.black
-                              : whiteColor,
+                          Icons.check,
+                          color: Colors.white,
                         )
                       : const SizedBox(),
                 ),
               ),
-            ),
-          ),
+            );
+          },
         ),
-      ),
+      )),
     ],
   );
 }
@@ -276,47 +294,68 @@ Widget buildTopPageView(PageController controller, MatchController matchControll
     future: matchController.fetchTopProductsByVendor(currentUser!.uid),
     builder: (context, snapshot) {
       if (snapshot.connectionState == ConnectionState.waiting) {
-        return Center(child: CircularProgressIndicator());
+        return const Center(child: CircularProgressIndicator());
       } else if (snapshot.hasError) {
         return Center(child: Text('Error: ${snapshot.error}'));
       } else if (snapshot.data?.value != null && snapshot.data!.value!.isNotEmpty) {
-        return buildPageView(controller, snapshot.data!.value!, matchController.onTopProductSelected);
+        List<Product> products = snapshot.data!.value!;
+        int initialIndex = products.indexWhere((product) => product.mixmatch == widget.product1['p_mixmatch']);
+
+        if (initialIndex != -1 && initialIndex != _currentTopIndex) {
+          Product matchingProduct = products.removeAt(initialIndex);
+          products.insert(0, matchingProduct);
+          _currentTopIndex = 0;
+          if (controller.hasClients) {
+            controller.jumpToPage(0);
+          }
+        }
+
+        return buildPageView(controller, products, matchController.onTopProductSelected, products.length, _currentTopIndex);
       } else {
-        return Center(child: Text('No data available'));
+        return const Center(child: Text('No data available'));
       }
     },
   );
 }
-
-
 
 Widget buildLowerPageView(PageController controller, MatchController matchController) {
   return FutureBuilder<Rxn<List<Product>>>(
     future: matchController.fetchLowerProductsByVendor(currentUser!.uid),
     builder: (context, snapshot) {
       if (snapshot.connectionState == ConnectionState.waiting) {
-        return Center(child: CircularProgressIndicator());
+        return const Center(child: CircularProgressIndicator());
       } else if (snapshot.hasError) {
         return Center(child: Text('Error: ${snapshot.error}'));
       } else if (snapshot.data?.value != null && snapshot.data!.value!.isNotEmpty) {
-        return buildPageView(controller, snapshot.data!.value!, matchController.onLowerProductSelected);
+        List<Product> products = snapshot.data!.value!;
+        int initialIndex = products.indexWhere((product) => product.mixmatch == widget.product2['p_mixmatch']);
+
+        if (initialIndex != -1) {
+          Product matchingProduct = products.removeAt(initialIndex);
+          products.insert(0, matchingProduct);
+          _currentLowerIndex = 0;
+          if (controller.hasClients) {
+            controller.jumpToPage(0);
+          }
+        }
+
+        return buildPageView(controller, products, matchController.onLowerProductSelected, products.length, initialIndex);
       } else {
-        return Center(child: Text('No data available'));
+        return const Center(child: Text('No data available'));
       }
     },
   );
 }
 
-
-Widget buildPageView(PageController controller, List<Product> products, Function(Product) onSelectProduct) {
+Widget buildPageView(PageController controller, List<Product> products, Function(Product) onSelectProduct, int totalProductsIndex, int initialIndex) {
   return PageView.builder(
     controller: controller,
-    itemCount: products.length,
+    itemCount: totalProductsIndex,
     onPageChanged: (index) {
       if (controller == _topController) {
-        _currentTopIndex = index;
+        totalTopProductsIndex = index;
       } else if (controller == _bottomController) {
-        _currentLowerIndex = index;
+        totalLowerProductsIndex = index;
       }
       onSelectProduct(products[index]);
     },
@@ -346,40 +385,6 @@ Widget buildPageView(PageController controller, List<Product> products, Function
     physics: const BouncingScrollPhysics(),
   );
 }
-
-
-
-Future<void> onSaveButtonPressed(BuildContext context) async {
-  try {
-    final topProducts = await controller.fetchTopProductsByVendor(currentUser!.uid).then((rxn) => rxn.value!);
-    final lowerProducts = await controller.fetchLowerProductsByVendor(currentUser!.uid).then((rxn) => rxn.value!);
-    
-    if (topProducts.isNotEmpty && lowerProducts.isNotEmpty) {
-      Product topProduct = topProducts[_currentTopIndex];
-      Product lowerProduct = lowerProducts[_currentLowerIndex];
-
-      if (topProduct != null && lowerProduct != null) {
-        // Generate a random string to link these products
-        String mixMatchValue = controller.generateRandomString(10);
-
-        // Update both products in Firestore
-        await controller.updateProductMatch(context, topProduct.id, mixMatchValue);
-        await controller.updateProductMatch(context, lowerProduct.id, mixMatchValue);
-
-        print('Success: Products updated with MixMatch ID $mixMatchValue');
-        VxToast.show(context, msg: "Products updated successfully.");
-      }
-    } else {
-      VxToast.show(context, msg: "No products available to save.");
-    }
-  } catch (e) {
-    VxToast.show(context, msg: "Error saving products: ${e.toString()}");
-    print("Error saving products: $e");
-  }
-}
-
-
-
 }  
 
 

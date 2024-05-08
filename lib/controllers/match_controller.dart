@@ -37,7 +37,7 @@ class MatchController extends GetxController {
   List<String> mixandmatchList = ['top', 'lower', 'not specified'];
   RxString selectedMixandmatch = ''.obs;
   List<String> collectionList = ['summer', 'winter', 'autumn', 'dinner', 'everydaylook'];
-  RxString selectedCollection = ''.obs;
+  final selectedCollection = <String>[].obs;
 
   final selectedColorIndexes = <int>[].obs;
   final List<Map<String, dynamic>> allColors = [
@@ -60,7 +60,6 @@ class MatchController extends GetxController {
 
   void resetController() {
     selectedGender.value = '';
-    selectedCollection.value = '';
     selectedColorIndexes.clear();
     psizeController.clear();
     selectedCollections.clear();
@@ -169,7 +168,7 @@ bool isDataIncomplete(MatchController controller) {
 
 Future<void> updateProductMatch(BuildContext context, String documentId, String mixMatchValue) async {
   try {
-    print('Document ID before update: $documentId'); // แสดงค่า documentId ก่อนการอัปเดต
+    print('Document ID before update: $documentId');
     final productDoc = FirebaseFirestore.instance.collection(productsCollection).doc(documentId);
 
     if (documentId.isNotEmpty) {
@@ -178,7 +177,32 @@ Future<void> updateProductMatch(BuildContext context, String documentId, String 
         'p_mixmatch_colors': selectedColorIndexes.map((index) => allColors[index]['name']).toList(),
         'p_mixmatch_sex': selectedGender.value,
         'p_mixmatch_desc': psizeController.text,
-        'p_mixmatch_collection': selectedCollections.toList(),
+        'p_mixmatch_collection': selectedCollection.toList(),
+      });
+
+      VxToast.show(context, msg: "Product updated successfully.");
+    } else {
+      VxToast.show(context, msg: "Error updating product: Document ID is empty.");
+    }
+  } catch (e) {
+    // แสดงข้อความเมื่อเกิดข้อผิดพลาดในการอัปเดต
+    VxToast.show(context, msg: "Error updating product. Please try again later.");
+    print("Error updating product: $e");
+  }
+}
+
+Future<void> updateProductEditMatch(BuildContext context, String documentId, String mixMatchValue) async {
+  try {
+    print('Document ID before update: $documentId');
+    final productDoc = FirebaseFirestore.instance.collection(productsCollection).doc(documentId);
+
+    if (documentId.isNotEmpty) {
+      await productDoc.update({
+        'p_mixmatch': mixMatchValue,
+        'p_mixmatch_colors': selectedColorIndexes.map((index) => allColors[index]['name']).toList(),
+        'p_mixmatch_sex': selectedGender.value,
+        'p_mixmatch_desc': psizeController.text,
+        'p_mixmatch_collection': selectedCollection.toList(),
       });
 
       VxToast.show(context, msg: "Product updated successfully.");
@@ -192,7 +216,6 @@ Future<void> updateProductMatch(BuildContext context, String documentId, String 
     print("Error updating product: $e");
   }
 }
-
 
 
 String generateRandomString(int length) {
@@ -228,6 +251,18 @@ class Product {
     required this.mixmatch,
     required this.imageUrls,
   });
+
+  factory Product.fromJson(Map<String, dynamic> json) {
+    return Product(
+      id: json['id'] ?? '',
+      name: json['name'] ?? '',
+      vendorId: json['vendorId'] ?? '',
+      part: json['part'] ?? '',
+      price: json['price'] ?? '',
+      mixmatch: json['mixmatch'] ?? '', 
+      imageUrls: List<String>.from(json['imageUrls'] ?? []),
+    );
+  }
 
   factory Product.fromFirestore(DocumentSnapshot doc) {
     Map<String, dynamic>? data = doc.data() as Map<String, dynamic>?;
