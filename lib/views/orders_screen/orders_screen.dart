@@ -169,7 +169,7 @@ class _OrdersScreenState extends State<OrdersScreen>
 
   Widget buildOrderList(List<DocumentSnapshot> data) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(8),
       child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Column(

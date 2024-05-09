@@ -46,7 +46,7 @@
 		</data>
 		<key>Frameworks/App.framework/App</key>
 		<data>
-		xuB2wfED5HreIe112Qk9WMvLP40=
+		IZg/MhiFyWFH5DWTHf/BfVxjKqQ=
 		</data>
 		<key>Frameworks/App.framework/Info.plist</key>
 		<data>
@@ -54,43 +54,43 @@
 		</data>
 		<key>Frameworks/App.framework/_CodeSignature/CodeResources</key>
 		<data>
-		9eGrWDVrjGQfUhe4RRUYQA5d6h0=
+		bSGT38wkPiLlbo0kUCfQd/GNygg=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/AssetManifest.bin</key>
 		<data>
-		Tmt2x0QURIktiukvyayL+y0xg3g=
+		1oYxAOCR3SQ0JKmgHvt7r31b3oU=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/AssetManifest.json</key>
 		<data>
-		ZVzIB1JN3qJQBuLgwVvNa0XWsGE=
+		UzRWlMWT2xdjxpOfqYLHxZWzjdw=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/FontManifest.json</key>
 		<data>
-		iyZsKiyoDh6Nz2BDChu3zatwGjo=
+		VjMdFvyJ7JLCOVKkl6mW+xPWZdw=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/NOTICES.Z</key>
 		<data>
-		ytXZaYJxyMYyleVYNu6xlkWqrPg=
+		fBiiaE9IERIC5CSNEaFbgAvPI3Y=
 		</data>
-		<key>Frameworks/App.framework/flutter_assets/assets/fonts/Roboto-Black.ttf</key>
+		<key>Frameworks/App.framework/flutter_assets/assets/fonts/Urbanist/Urbanist-Black.ttf</key>
 		<data>
-		P45AHYCPbOhLVCJmcmUUrIvnMXE=
+		GNm1FNjsZFTUOjFHwJAjW7wFDN0=
 		</data>
-		<key>Frameworks/App.framework/flutter_assets/assets/fonts/Roboto-Bold.ttf</key>
+		<key>Frameworks/App.framework/flutter_assets/assets/fonts/Urbanist/Urbanist-Bold.ttf</key>
 		<data>
-		YkQqGKn+lFfBr+q/aD0mOmkbd5g=
+		Sx2EeO+vhYhdmijcfOO/KElUrXQ=
 		</data>
-		<key>Frameworks/App.framework/flutter_assets/assets/fonts/Roboto-Light.ttf</key>
+		<key>Frameworks/App.framework/flutter_assets/assets/fonts/Urbanist/Urbanist-Light.ttf</key>
 		<data>
-		GHiMXWMPppX5KD9jk7+lQbIDFQg=
+		mg5hs2UfJEgzphXBu+a/r9F1HUc=
 		</data>
-		<key>Frameworks/App.framework/flutter_assets/assets/fonts/Roboto-Medium.ttf</key>
+		<key>Frameworks/App.framework/flutter_assets/assets/fonts/Urbanist/Urbanist-Medium.ttf</key>
 		<data>
-		PGoJ/MakVJJMga99/5T8bTme15s=
+		m7U4eb4zkqJWYvfGTwzoLvyinxQ=
 		</data>
-		<key>Frameworks/App.framework/flutter_assets/assets/fonts/Roboto-Regular.ttf</key>
+		<key>Frameworks/App.framework/flutter_assets/assets/fonts/Urbanist/Urbanist-Regular.ttf</key>
 		<data>
-		VsXA04veTB8VSd2kPbN7CcYIqtM=
+		j454dbJA33FJ5Jniq8T0jxPM79A=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/assets/icons/SellerLogo.png</key>
 		<data>
@@ -190,7 +190,7 @@
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/kernel_blob.bin</key>
 		<data>
-		95XiDdbpXlh+jtos1ngbrsb4jVk=
+		hX+eR16CyqI3CZuwoZCeAwz4VBQ=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/lib/services/collection_model.json</key>
 		<data>
@@ -218,7 +218,7 @@
 		</data>
 		<key>Frameworks/FBLPromises.framework/FBLPromises</key>
 		<data>
-		tsBtBPpqCFF+3KREJ6oNDfenKJA=
+		BtBeB7hnBOg6S8DRv5DcFwTwP3s=
 		</data>
 		<key>Frameworks/FBLPromises.framework/FBLPromises_Privacy.bundle/Info.plist</key>
 		<data>
@@ -238,7 +238,7 @@
 		</data>
 		<key>Frameworks/FirebaseAppCheckInterop.framework/FirebaseAppCheckInterop</key>
 		<data>
-		hNSpaTLghTAR061cNkK7LOLJyvc=
+		jbHA6LiC7pHIVpn/uEjfHMhCYf8=
 		</data>
 		<key>Frameworks/FirebaseAppCheckInterop.framework/Info.plist</key>
 		<data>
@@ -270,7 +270,7 @@
 		</data>
 		<key>Frameworks/FirebaseAuthInterop.framework/FirebaseAuthInterop</key>
 		<data>
-		jPZJr/7gncShnI+XmMhEjHWncj4=
+		uWR1s0xczujJrPH9+ZFgEnEJH5Q=
 		</data>
 		<key>Frameworks/FirebaseAuthInterop.framework/Info.plist</key>
 		<data>
@@ -494,7 +494,7 @@
 		</data>
 		<key>Frameworks/GTMSessionFetcher.framework/GTMSessionFetcher</key>
 		<data>
-		/guVTdAMsR1b+wt8bclyQgvy+GA=
+		8Pf+B39AIRxYqiDlkRIt/jeJJqo=
 		</data>
 		<key>Frameworks/GTMSessionFetcher.framework/GTMSessionFetcher_Core_Privacy.bundle/Info.plist</key>
 		<data>
@@ -538,7 +538,7 @@
 		</data>
 		<key>Frameworks/RecaptchaInterop.framework/RecaptchaInterop</key>
 		<data>
-		iFiNWVPM5jbkILcIybhDOSBi9sk=
+		aTwKHtrJH5Vd13rhk/zs4K9CHa0=
 		</data>
 		<key>Frameworks/RecaptchaInterop.framework/_CodeSignature/CodeResources</key>
 		<data>
@@ -550,7 +550,7 @@
 		</data>
 		<key>Frameworks/Toast.framework/Toast</key>
 		<data>
-		ZHdiB5C4kvEt4F1Y71mWtXD8hgs=
+		7AdMJs/xUWpH/NK2hni6ipOlKkg=
 		</data>
 		<key>Frameworks/Toast.framework/Toast.bundle/Info.plist</key>
 		<data>
@@ -574,7 +574,7 @@
 		</data>
 		<key>Frameworks/absl.framework/absl</key>
 		<data>
-		IBJMKmPbGNVOs18f0wDt/eKhsDg=
+		3njX5lbSJsmwyLmT7ifwcAQqnak=
 		</data>
 		<key>Frameworks/absl.framework/xcprivacy.bundle/Info.plist</key>
 		<data>
@@ -614,7 +614,7 @@
 		</data>
 		<key>Frameworks/grpc.framework/grpc</key>
 		<data>
-		zJcRTgtQVrSC7vhfeph87CAQlbw=
+		ej7Mu7rllt84tSrWf0ciDztdt00=
 		</data>
 		<key>Frameworks/grpc.framework/grpc.bundle/Info.plist</key>
 		<data>
@@ -682,7 +682,7 @@
 		</data>
 		<key>Frameworks/leveldb.framework/leveldb</key>
 		<data>
-		xBExE16knsHz4WswMmPC7ewj/wg=
+		/ZuJ0U/nWmI/w9mcJ+EPDTvct0U=
 		</data>
 		<key>Frameworks/leveldb.framework/leveldb_Privacy.bundle/Info.plist</key>
 		<data>
@@ -702,7 +702,7 @@
 		</data>
 		<key>Frameworks/nanopb.framework/nanopb</key>
 		<data>
-		RStxItt2qoe1BsJgtN9bjlYaiKg=
+		9fUnIgTYweiEnDnCo2vym/+mTZE=
 		</data>
 		<key>Frameworks/nanopb.framework/nanopb_Privacy.bundle/Info.plist</key>
 		<data>
@@ -722,7 +722,7 @@
 		</data>
 		<key>Frameworks/openssl_grpc.framework/openssl_grpc</key>
 		<data>
-		By7pnQ1McjyQnCbregby6U3U84U=
+		pULXrq5oR3ovYY3vRUrb1AGQX7A=
 		</data>
 		<key>Frameworks/openssl_grpc.framework/openssl_grpc.bundle/Info.plist</key>
 		<data>
@@ -817,7 +817,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			C0kcRmVN8p9bmUD3FS9BuAr2jZi812pAaGR3fx0FICE=
+			/V39DdkYWHpR0Noe7Z5B3lWAEHLNoeltBzYMKgnd8TQ=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/Info.plist</key>
@@ -831,70 +831,70 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			4fMPZDbIoUj7KQ3+LfypdSpfViWnZnEPnXpsLDdblZg=
+			pfMEHRAuoq6Uy7dJaWsoZeRp44A9U35zkBlcCfX4Gow=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/AssetManifest.bin</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			2/c5Oq5Ky0QjAn1xlSqTZG/8TjPWnWzXI/sMJBaKkII=
+			2nOnuG1zhk4b5Sg+TfvzPKqYJflIZEqZa2goramTUvk=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/AssetManifest.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			xqeW5IPgH9v09blrMQRnV9F+jRRi90qYt1hMJzHsrv8=
+			jQFJdni/F7pU7TQjlOLSLdsRA1/Y+mMDFYrBVZcY7dk=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/FontManifest.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			uFWjcz4qCxHFMOaLi6sKMvXx7ODYMOMFEnVKe1w6Fpc=
+			bJiR4CagV0INBRB4V5clPXzPx2SfZwkwgI/hThilO8A=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/NOTICES.Z</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			9WqoG1+c0lBRT43xkqtEkwlBsVdHdU5Zs8jYD90lfZE=
+			5O/xhC/j1Dn+IG2Dmyg733eIx0HQlsDnFLEKFLCdIvA=
 			</data>
 		</dict>
-		<key>Frameworks/App.framework/flutter_assets/assets/fonts/Roboto-Black.ttf</key>
+		<key>Frameworks/App.framework/flutter_assets/assets/fonts/Urbanist/Urbanist-Black.ttf</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			Ws4NCDOrg/8Y6pTkp3RfkZxFiuTqvCmCGCJt9CdczU0=
+			JfP8W/J+n4JzYCEoDzO00F/MbifFlUT9FnvXRe0HwJ0=
 			</data>
 		</dict>
-		<key>Frameworks/App.framework/flutter_assets/assets/fonts/Roboto-Bold.ttf</key>
+		<key>Frameworks/App.framework/flutter_assets/assets/fonts/Urbanist/Urbanist-Bold.ttf</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			7GhaRhBSlv5GyHRNpKEc+BGLpsEScZQXZvelRt9qp8c=
+			JDncu6DMvsffvDM0OPPBguCPsfo7i+985EYkdNfM/Ek=
 			</data>
 		</dict>
-		<key>Frameworks/App.framework/flutter_assets/assets/fonts/Roboto-Light.ttf</key>
+		<key>Frameworks/App.framework/flutter_assets/assets/fonts/Urbanist/Urbanist-Light.ttf</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			xXbFBkInG82//+0E+S3I1qmB2vMAkU0KIMilpaVwFcc=
+			Fzx67JvMD4NB9ieAXzalkC/Px9CJw2BWEwXnnrj7ktA=
 			</data>
 		</dict>
-		<key>Frameworks/App.framework/flutter_assets/assets/fonts/Roboto-Medium.ttf</key>
+		<key>Frameworks/App.framework/flutter_assets/assets/fonts/Urbanist/Urbanist-Medium.ttf</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			nQ1VowO/0Tt5qHch9lGF6T8jXi13/jmLLcpnrFGZFfU=
+			iM2vEGbXsgH8YfdJ69PzUQs1RTgJ9xuS5JY8LG1hMog=
 			</data>
 		</dict>
-		<key>Frameworks/App.framework/flutter_assets/assets/fonts/Roboto-Regular.ttf</key>
+		<key>Frameworks/App.framework/flutter_assets/assets/fonts/Urbanist/Urbanist-Regular.ttf</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			ThR6tkuf322J0B9rjDygs83cWdYIqOIhj5olBLXJjhQ=
+			v7Q0thFr+dvns6tqtL5LgeJTNSEwDfRXh0H+eV/FoWs=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/assets/icons/SellerLogo.png</key>
@@ -1069,7 +1069,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			2r9TTxi1/pevukudQvg4wtxsQA2tuYQdrhDuFJWhlNY=
+			6hRNQ0nA2Xc3daqdc/pYkgCmh1X0U6U2TYuu3jKQ4co=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/lib/services/collection_model.json</key>
@@ -1118,7 +1118,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			7IrhzI2U8aH0QVwec3cYIqiGY1IrmTgXIM4H5qat0vw=
+			WbZbnJjNQ4O4ownkTMyBXaxfa78JgD7c6YyUsmI8pcI=
 			</data>
 		</dict>
 		<key>Frameworks/FBLPromises.framework/FBLPromises_Privacy.bundle/Info.plist</key>
@@ -1153,7 +1153,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			9FDDaPCJtGenqXR09alcLtfiQlrBoC3v3lG1JjPk/es=
+			OEsKyxNUUtqjKinS5F/hoQafpyvvMvXnCm79Jj+Q5qk=
 			</data>
 		</dict>
 		<key>Frameworks/FirebaseAppCheckInterop.framework/Info.plist</key>
@@ -1209,7 +1209,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			g6vm+RcOfHGVeph8txWjIWd1Gr2nt7IoE5wB7a1F42Y=
+			wjfllyDGd0AfnajEm7UsyoDaN2pmzSu1lFmbGCMQXLY=
 			</data>
 		</dict>
 		<key>Frameworks/FirebaseAuthInterop.framework/Info.plist</key>
@@ -1601,7 +1601,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			fWbuuhi8T7auYy7LPzE9DqsHUoRP+VUeTqbouuZzRGQ=
+			LnCBBaABDU+BvY0DRTsBO/Dmdt+rKGucZ/EgEpbBSEo=
 			</data>
 		</dict>
 		<key>Frameworks/GTMSessionFetcher.framework/GTMSessionFetcher_Core_Privacy.bundle/Info.plist</key>
@@ -1678,7 +1678,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			2npDJ8OXD0PSzJEv3INh0KKTTMTUdE6EUAITRm93Lag=
+			E39t/p1ZjluIlXOk0dl9lwvwK1zmAkkaFF3ZpfOhamE=
 			</data>
 		</dict>
 		<key>Frameworks/RecaptchaInterop.framework/_CodeSignature/CodeResources</key>
@@ -1699,7 +1699,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			+s0l7opQ31Yi70vWmxHKDeiBfJxbJfVy4i5XSzEPOKo=
+			keMbdz4xnLFHDWr9GjcYbnKpNZHq4a/3wp2XDTgDcQM=
 			</data>
 		</dict>
 		<key>Frameworks/Toast.framework/Toast.bundle/Info.plist</key>
@@ -1741,7 +1741,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			JuYcESUh15Iv36uviFoa+DzOYi4uhppXvmqXdhm2Roo=
+			EonqeQCTVnUg4XT8MsoaXm6EMClrRPEQFX7sr7Pcipg=
 			</data>
 		</dict>
 		<key>Frameworks/absl.framework/xcprivacy.bundle/Info.plist</key>
@@ -1811,7 +1811,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			VlZrBQVdUAAOtlCqfZQWmbEtTFkAhS0/jUzpBP4i4oQ=
+			tpyNAZtm6Dai0KUY+6je9nWJxixFCXzi3VTILKMwiRU=
 			</data>
 		</dict>
 		<key>Frameworks/grpc.framework/grpc.bundle/Info.plist</key>
@@ -1930,7 +1930,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			g37bftw1uYSf3WvjoMmvvYdVTORgCtBiGThj9N9B/VE=
+			IMB9XE1mw6a1jJOp8L84b/Jp9skYsoFTjh/ROiCWv0Y=
 			</data>
 		</dict>
 		<key>Frameworks/leveldb.framework/leveldb_Privacy.bundle/Info.plist</key>
@@ -1965,7 +1965,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			l5medSH+zfljVUXg/uzpOoMu8XthYouWOSdkpxkJE6I=
+			LI6V0K1vN8W4wZdmT+Q+UmZ3wU/lRPqjsLglOA8e62g=
 			</data>
 		</dict>
 		<key>Frameworks/nanopb.framework/nanopb_Privacy.bundle/Info.plist</key>
@@ -2000,7 +2000,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			TT+Lt7LWO4OSR/pbwanxuDOTl3dww4ivav98equBapc=
+			G5VRk4t11di7U6lLKQFIkDyYgnMMc6CXscqI+HVLT7o=
 			</data>
 		</dict>
 		<key>Frameworks/openssl_grpc.framework/openssl_grpc.bundle/Info.plist</key>

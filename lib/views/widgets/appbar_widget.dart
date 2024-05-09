@@ -7,7 +7,7 @@ AppBar appbarWidget(title) {
   return AppBar(
     backgroundColor: whiteColor,
     automaticallyImplyLeading: false,
-    title: Text( title).text.size(22).fontFamily(bold).make(),
+    title: Text( title).text.size(18).medium.make(),
     actions: [
       Text(intl.DateFormat('EEE,MMM d ' 'yyyy').format(DateTime.now()),
           ).text.color(greyDark2,).make(),

@@ -135,7 +135,7 @@ Widget build(BuildContext context) {
 
 Widget buildHeader(String text) {
   return Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+    padding: const EdgeInsets.symmetric(horizontal: 16),
     child: Text(
       text,
       style: TextStyle(

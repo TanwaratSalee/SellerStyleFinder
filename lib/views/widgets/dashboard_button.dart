@@ -10,8 +10,8 @@ Widget dashboardButton(context, {title, count, icon}) {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Text(title).text.size(16).make(),
-            Text(count.toString()).text.size(20).make()  // แสดงค่า count ที่รับเข้ามา
+            Text(title).text.color(whiteColor).size(16).make(),
+            Text(count.toString()).text.color(whiteColor).size(20).make()  // แสดงค่า count ที่รับเข้ามา
           ],
         ),
       ),

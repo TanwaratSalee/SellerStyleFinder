@@ -20,7 +20,7 @@ class ForgotScreen extends StatelessWidget {
           // title: Text('Forgot Password?'),
           ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[

@@ -42,7 +42,7 @@ class AddProduct extends StatelessWidget {
           ],
         ),
         body: Padding(
-          padding: const EdgeInsets.all(18.0),
+          padding: const EdgeInsets.all(18),
           child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             child: Column(
@@ -58,12 +58,12 @@ class AddProduct extends StatelessWidget {
                 Obx(
                   () => Column(
                     mainAxisAlignment: MainAxisAlignment
-                        .spaceAround, // This ensures space around rows
+                        .spaceAround, 
                     children: List.generate(
                       3,
                       (row) => Padding(
                         padding: const EdgeInsets.symmetric(
-                            vertical: 7.0), // Adds space around each row
+                            vertical: 7), 
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: List.generate(
@@ -72,7 +72,7 @@ class AddProduct extends StatelessWidget {
                               int index = row * 3 + col;
                               return Padding(
                                 padding: const EdgeInsets.all(
-                                    2.0), // Adds space around each image
+                                    2), 
                                 child: controller.pImagesList[index] != null
                                     ? Image.file(
                                         controller.pImagesList[index],
@@ -117,7 +117,7 @@ class AddProduct extends StatelessWidget {
                     controller: controller.psizeController),
                 15.heightBox,
                 customTextField(
-                    hint: "15,000.00 Bath",
+                    hint: "15,0000 Bath",
                     label: "Price",
                     controller: controller.ppriceController),
                 15.heightBox,
@@ -133,8 +133,8 @@ class AddProduct extends StatelessWidget {
                     .fontFamily(medium)
                     .make(),
                 Obx(() => Wrap(
-                      spacing: 8.0,
-                      runSpacing: 8.0,
+                      spacing: 8,
+                      runSpacing: 8,
                       children: controller.collectionList.map((collection) {
                         bool isSelected = controller.selectedCollection.contains(collection);
                         return ChoiceChip(
@@ -166,8 +166,8 @@ class AddProduct extends StatelessWidget {
                     .make(),
                 10.heightBox,
                 Obx(() => Wrap(
-                      spacing: 8.0,
-                      runSpacing: 8.0,
+                      spacing: 8,
+                      runSpacing: 8,
                       children: controller.subcollectionList.map((subcollection) {
                         bool isSelected =
                             controller.selectedSubcollection.value == subcollection;
@@ -201,15 +201,15 @@ class AddProduct extends StatelessWidget {
                     .make(),
                 10.heightBox,
                 Obx(() => Wrap(
-                      spacing: 8.0,
-                      runSpacing: 8.0,
+                      spacing: 8,
+                      runSpacing: 8,
                       children: controller.genderList.map((gender) {
                         bool isSelected =
                             controller.selectedGender.value == gender;
                         return ChoiceChip(
                           showCheckmark: false,
                           label: Text(
-                            capitalize(gender), // เฉพาะตัวอักษรแรกเป็นพิมพ์ใหญ่
+                            capitalize(gender),
                             style: TextStyle(
                               color: isSelected ? primaryApp : greyDark1,
                             ),
@@ -237,20 +237,20 @@ class AddProduct extends StatelessWidget {
                     .fontFamily(medium)
                     .make(),
                 Obx(() => Wrap(
-                      spacing: 8.0,
-                      runSpacing: 8.0,
+                      spacing: 8,
+                      runSpacing: 8,
                       children: controller.sizesList.map((size) {
                         return ChoiceChip(
                           label: Text(size),
                           selected: controller.selectedSizes.contains(size),
                           onSelected: (selected) {
                             if (selected) {
-                              // ถ้าตัวเลือกถูกเลือก เพิ่มเข้าไปในรายการ
+                              
                               if (!controller.selectedSizes.contains(size)) {
                                 controller.selectedSizes.add(size);
                               }
                             } else {
-                              // ถ้าตัวเลือกไม่ถูกเลือก ลบออกจากรายการ
+                              
                               controller.selectedSizes.remove(size);
                             }
                           },
@@ -270,8 +270,8 @@ class AddProduct extends StatelessWidget {
                     const SizedBox(height: 10),
                     Obx(
                       () => Wrap(
-                        spacing: 10.0,
-                        runSpacing: 10.0,
+                        spacing: 10,
+                        runSpacing: 10,
                         children: List.generate(
                           controller.allColors.length,
                           (index) => GestureDetector(
@@ -292,10 +292,9 @@ class AddProduct extends StatelessWidget {
                                 border: Border.all(
                                   color: controller.selectedColorIndexes
                                           .contains(index)
-                                      ? Colors
-                                          .blueAccent // เปลี่ยนสีเมื่อถูกเลือก
+                                      ? primaryApp 
                                       : Colors
-                                          .transparent, // ลบขอบเมื่อไม่ถูกเลือก
+                                          .transparent, 
                                   width: 2,
                                 ),
                               ),
@@ -327,8 +326,8 @@ class AddProduct extends StatelessWidget {
                     .fontFamily(medium)
                     .make(),
                 Obx(() => Wrap(
-                      spacing: 8.0,
-                      runSpacing: 8.0,
+                      spacing: 8,
+                      runSpacing: 8,
                       children: controller.mixandmatchList.map((mixandmatch) {
                         bool isSelected =
                             controller.selectedMixandmatch.value == mixandmatch;

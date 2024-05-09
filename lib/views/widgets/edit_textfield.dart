@@ -39,7 +39,7 @@ Widget editTextField({
                 isDense: true,
                 hintStyle: TextStyle(color: greyDark1),
                 contentPadding:
-                    EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0),
+                    EdgeInsets.symmetric(vertical: 8.0, horizontal: 20),
                 enabledBorder: UnderlineInputBorder(
                   borderSide: BorderSide(color: whiteColor),
                 ),

@@ -136,7 +136,7 @@ class _MatchDetailScreenState extends State<MatchDetailScreen> {
                           children: [
                             Center(
                               child: Padding(
-                                padding: const EdgeInsets.all(8.0),
+                                padding: const EdgeInsets.all(8),
                                 child: Container(
                                   width: 160,
                                   height: 160,
@@ -212,7 +212,7 @@ class _MatchDetailScreenState extends State<MatchDetailScreen> {
                           children: [
                             Center(
                               child: Padding(
-                                padding: const EdgeInsets.all(8.0),
+                                padding: const EdgeInsets.all(8),
                                 child: Container(
                                   width: 160,
                                   height: 160,
@@ -280,7 +280,7 @@ class _MatchDetailScreenState extends State<MatchDetailScreen> {
                     Expanded(
                       child: Center(
                         child: Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.all(8),
                           child: Container(
                             width: 80,
                             height: 80,
@@ -435,7 +435,7 @@ class _MatchDetailScreenState extends State<MatchDetailScreen> {
                   ),
                   child: const Center(
                     child: Padding(
-                      padding: EdgeInsets.all(8.0),
+                      padding: EdgeInsets.all(8),
                       child: Text(
                         'Choosing a simple shirt with a high-waisted mini or long skirt can create a comfortable but still stylish look.',
                         textAlign: TextAlign.start,

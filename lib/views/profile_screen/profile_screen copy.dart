@@ -54,7 +54,7 @@ class _CopyProfileScreenState extends State<CopyProfileScreen> {
             controller.snapshotData = snapshot.data!.docs[0];
 
             return Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(8),
               child: Column(
                 children: [
                   ListTile(
@@ -78,7 +78,7 @@ class _CopyProfileScreenState extends State<CopyProfileScreen> {
                   const Divider(color: thinGrey0),
                   10.heightBox,
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(8),
                     child: Column(
                       children: List.generate(
                         profileButtonsIcons.length,
