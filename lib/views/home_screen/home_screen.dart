@@ -34,7 +34,6 @@ class HomeScreen extends StatelessWidget {
                   var ordersData = orderSnapshot.data!.docs;
                   var totalProductsInOrders = ordersData.length;
 
-                  // ตรวจสอบและนับจำนวนการขายทั้งหมดที่มีทุกฟิลด์เป็น true
                   var totalSales = ordersData.where((order) =>
                     order['order_confirmed'] == true &&
                     order['order_delivered'] == true &&

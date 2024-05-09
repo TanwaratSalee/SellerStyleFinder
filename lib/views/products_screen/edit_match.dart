@@ -15,6 +15,7 @@ class EditMatchProduct extends StatefulWidget {
 }
 
 class _EditMatchProductState extends State<EditMatchProduct> {
+
   final PageController _topController = PageController(viewportFraction: 0.6);
   final PageController _bottomController = PageController(viewportFraction: 0.6);
   final MatchController controller = Get.put(MatchController());
@@ -32,30 +33,30 @@ class _EditMatchProductState extends State<EditMatchProduct> {
   void initState() {
     super.initState();
 
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
-      product1 = widget.product1;
-      product2 = widget.product2;
-    
-    List<int> preselectedIndices = [];
-    controller.selectedColorIndexes.addAll(preselectedIndices);
+      WidgetsBinding.instance!.addPostFrameCallback((_) {
+        product1 = widget.product1;
+        product2 = widget.product2;
+      
+      List<int> preselectedIndices = [];
+      controller.selectedColorIndexes.addAll(preselectedIndices);
+      });
+
+    _topController.addListener(() {
+      int nextIndex = _topController.page!.round();
+      if (_currentTopIndex != nextIndex) {
+          _currentTopIndex = nextIndex;
+          print("Top Page Index Updated: $_currentTopIndex");
+      }
     });
 
-_topController.addListener(() {
-  int nextIndex = _topController.page!.round();
-  if (_currentTopIndex != nextIndex) {
-      _currentTopIndex = nextIndex;
-      print("Top Page Index Updated: $_currentTopIndex");
-  }
-});
-
-_bottomController.addListener(() {
-  int nextIndex = _bottomController.page!.round();
-  if (_currentLowerIndex != nextIndex) {
-    _currentLowerIndex = nextIndex;
-    print("Bottom Page Index Updated: $_currentLowerIndex");
-  }
-});
-  }
+    _bottomController.addListener(() {
+      int nextIndex = _bottomController.page!.round();
+      if (_currentLowerIndex != nextIndex) {
+        _currentLowerIndex = nextIndex;
+        print("Bottom Page Index Updated: $_currentLowerIndex");
+      }
+    });
+      }
 
   @override
   void dispose() {
