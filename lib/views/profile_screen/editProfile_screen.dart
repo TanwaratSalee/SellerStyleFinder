@@ -82,6 +82,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         child: Image.asset(
                           imgProfile,
                           width: 100,
+                          height: 100,
                           fit: BoxFit.cover,
                         ),
                       )
@@ -97,6 +98,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             child: Image.network(
                               controller.snapshotData['imageUrl'],
                               width: 100,
+                              height: 100,
                               fit: BoxFit.cover,
                             ),
                           )
@@ -110,6 +112,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             child: Image.file(
                               File(controller.profileImgPath.value),
                               width: 100,
+                              height: 100,
                               fit: BoxFit.cover,
                             ),
                           )

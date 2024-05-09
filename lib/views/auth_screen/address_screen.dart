@@ -99,7 +99,7 @@ class _AddressFormFormState extends State<AddressForm> {
             title: "Save"),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(18.0),
+        padding: const EdgeInsets.all(18),
         child: Column(
           children: [
             // customTextField(

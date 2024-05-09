@@ -60,7 +60,7 @@ class _OrderDetailsState extends State<OrderDetails> {
           ),
           body: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(8),
               child: Column(
                 children: [
                   Visibility(
@@ -110,7 +110,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                       ],
                     )
                         .box
-                        .padding(const EdgeInsets.all(8.0))
+                        .padding(const EdgeInsets.all(8))
                         .outerShadowMd
                         .white
                         .border(color: thinGrey01)
@@ -144,7 +144,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 16.0, vertical: 8.0),
+                            horizontal: 16, vertical: 8),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [

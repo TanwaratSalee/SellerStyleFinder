@@ -46,7 +46,7 @@ class _SelectItemPageState extends State<SelectItemPage> {
                   ),
                   child: ListTile(
                     contentPadding: const EdgeInsets.symmetric(
-                        vertical: 8.0, horizontal: 12.0),
+                        vertical: 8.0, horizontal: 12),
                     leading: Container(
                       width: 60,
                       decoration: BoxDecoration(

@@ -58,7 +58,7 @@
 //         body: Column(
 //           children: [
 //             // Padding(
-//             //   padding: const EdgeInsets.all(8.0),
+//             //   padding: const EdgeInsets.all(8),
 //             //   child: TextField(
 //             //     controller: searchController,
 //             //     decoration: InputDecoration(
@@ -66,7 +66,7 @@
 //             //       hintText: 'Search for products...',
 //             //       prefixIcon: const Icon(Icons.search),
 //             //       border: OutlineInputBorder(
-//             //         borderRadius: BorderRadius.circular(25.0),
+//             //         borderRadius: BorderRadius.circular(25),
 //             //       ),
 //             //     ),
 //             //     onChanged: (value) {

@@ -6,7 +6,6 @@ import 'package:seller_finalproject/const/const.dart';
 import 'package:seller_finalproject/const/styles.dart';
 import 'package:seller_finalproject/controllers/loading_Indcator.dart';
 import 'package:seller_finalproject/controllers/products_controller.dart';
-import 'package:seller_finalproject/views/products_screen/component/product_dropdown.dart';
 import 'package:seller_finalproject/views/products_screen/component/product_images.dart';
 import 'package:seller_finalproject/views/widgets/custom_textfield.dart';
 
@@ -65,7 +64,7 @@ class _EditProductState extends State<EditProduct> {
           ],
         ),
         body: Padding(
-          padding: const EdgeInsets.all(18.0),
+          padding: const EdgeInsets.all(18),
           child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             child: Column(
@@ -84,7 +83,7 @@ class _EditProductState extends State<EditProduct> {
                     children: List.generate(
                       (controller.pImagesList.length / 3).ceil(),
                       (row) => Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 7.0),
+                        padding: const EdgeInsets.symmetric(vertical: 7),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: List.generate(

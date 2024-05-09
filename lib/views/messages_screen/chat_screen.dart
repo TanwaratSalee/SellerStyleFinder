@@ -12,7 +12,7 @@ class ChatScreen extends StatelessWidget {
         title: Text( chat),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(8),
         child: Column(children: [
           Expanded(
               child: ListView.builder(

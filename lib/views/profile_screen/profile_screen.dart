@@ -130,7 +130,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   children: [
                     "Actions".text.size(16).fontFamily(medium).make(),
                     ListTile(
-                      leading: const Icon(Icons.logout),
+                      leading: const Icon(Icons.logout,size: 22,),
                       title: const Text('Logout').text.size(15).make(),
                       onTap: () async {
                         await Get.find<AuthController>().signoutMethod(context);

@@ -14,7 +14,7 @@ class _ReviewScreenState extends State<ReviewScreen>
   void initState() {
     super.initState();
     _tabController =
-        TabController(length: 2, vsync: this); // กำหนดจำนวน tabs และ vsync
+        TabController(length: 2, vsync: this); 
   }
 
   @override
@@ -40,7 +40,7 @@ class _ReviewScreenState extends State<ReviewScreen>
           onPressed: () => Get.back(),
         ),
         bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(50.0),
+          preferredSize: const Size.fromHeight(50),
           child: TabBar(
             controller: _tabController,
             tabs: const [
@@ -65,7 +65,7 @@ class _ReviewScreenState extends State<ReviewScreen>
 
 Widget _buildReviewProduct(BuildContext context) {
   return Padding(
-    padding: const EdgeInsets.all(8.0),
+    padding: const EdgeInsets.all(8),
     child: Column(
       children: <Widget>[
         YourWidget(),
@@ -80,14 +80,14 @@ Widget _buildReviewProduct(BuildContext context) {
 
 Widget _botton(BuildContext context) {
   return Container(
-      alignment: Alignment.centerRight, // จัดตำแหน่งชิดขวากลาง
+      alignment: Alignment.centerRight, 
       margin:
-          const EdgeInsets.only(right: 20.0), // กำหนดระยะห่างจากขวา 20.0 พิกเซล
+          const EdgeInsets.only(right: 20), 
       child: Container(
         height: 28,
         width: 70,
         margin: const EdgeInsets.only(top: 5),
-        padding: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
           color: whiteColor,
           borderRadius: BorderRadius.circular(8),
@@ -141,8 +141,8 @@ Widget _buildReviewHigh() {
 Widget _buildReviewCard() {
   return Container(
     width: 200,
-    margin: const EdgeInsets.all(5.0),
-    padding: const EdgeInsets.all(10.0),
+    margin: const EdgeInsets.all(5),
+    padding: const EdgeInsets.all(10),
     decoration: BoxDecoration(
       color: whiteColor,
       borderRadius: BorderRadius.circular(8),
@@ -155,7 +155,7 @@ Widget _buildReviewCard() {
       ],
     ),
     child: Column(
-      // crossAxisAlignment: CrossAxisAlignment.start,
+      
       children: [
         const Row(
           children: [
@@ -195,8 +195,8 @@ Widget _buildReviewProductCard() {
   return Container(
     height: 142,
     width: 387,
-    margin: const EdgeInsets.all(5.0),
-    padding: const EdgeInsets.all(10.0),
+    margin: const EdgeInsets.all(5),
+    padding: const EdgeInsets.all(10),
     decoration: BoxDecoration(
       color: whiteColor,
       borderRadius: BorderRadius.circular(8),
@@ -221,7 +221,7 @@ Widget _buildReviewProductCard() {
         ),
         Expanded(
           child: Padding(
-            padding: const EdgeInsets.only(left: 10.0),
+            padding: const EdgeInsets.only(left: 10),
             child: Column(
               children: [
                 const Text('Reviewer Name',

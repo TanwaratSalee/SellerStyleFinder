@@ -43,11 +43,11 @@ class HomeScreen extends StatelessWidget {
                   ).length;
 
                   return Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(8),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             dashboardButton(context,
@@ -64,16 +64,17 @@ class HomeScreen extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
+                            // dashboardButton(context,
+                            //     title: rating, count: 60, icon: icStar),
                             dashboardButton(context,
-                                title: rating, count: 60, icon: icStar),
-                            dashboardButton(context,
-                                title: totalSale, count: totalSales.toString(), icon: icOrders) // แสดงจำนวนการขายทั้งหมด
+                                title: totalSale, count: totalSales.toString(), icon: icOrders),
+                                170.widthBox
                           ],
                         ),
                         10.heightBox,
                         const Divider(color: thinGrey0),
                         20.heightBox,
-                        Text(popular),
+                        Text(popular).text.size(16).medium.make(),
                         10.heightBox,
                         Expanded(
                           child: ListView.builder(
