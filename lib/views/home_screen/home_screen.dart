@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:seller_finalproject/const/const.dart';
 import 'package:seller_finalproject/const/styles.dart';
@@ -45,7 +45,7 @@ class HomeScreen extends StatelessWidget {
                     padding: const EdgeInsets.all(8),
                     child: Column(
                       children: [
-                        Row(
+                        Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
@@ -56,20 +56,22 @@ class HomeScreen extends StatelessWidget {
                             dashboardButton(context,
                                 title: orders,
                                 count: "$totalProductsInOrders",
-                                icon: icOrders)
+                                icon: icOrders),
+                            dashboardButton(context,
+                                title: totalSale, count: totalSales.toString(), icon: icOrders)    
                           ],
                         ),
                         10.heightBox,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            // dashboardButton(context,
-                            //     title: rating, count: 60, icon: icStar),
-                            dashboardButton(context,
-                                title: totalSale, count: totalSales.toString(), icon: icOrders),
-                                170.widthBox
-                          ],
-                        ),
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        //   children: [
+                        //     dashboardButton(context,
+                        //         title: rating, count: 60, icon: icStar),
+                        //     dashboardButton(context,
+                        //         title: totalSale, count: totalSales.toString(), icon: icOrders),
+                        //         170.widthBox
+                        //   ],
+                        // ),
                         10.heightBox,
                         const Divider(color: thinGrey0),
                         20.heightBox,
