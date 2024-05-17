@@ -236,6 +236,42 @@
       "languageVersion": "2.15"
     },
     {
+      "name": "google_identity_services_web",
+      "rootUri": "file:///C:/Users/P/AppData/Local/Pub/Cache/hosted/pub.dev/google_identity_services_web-0.3.1+1",
+      "packageUri": "lib/",
+      "languageVersion": "3.3"
+    },
+    {
+      "name": "google_sign_in",
+      "rootUri": "file:///C:/Users/P/AppData/Local/Pub/Cache/hosted/pub.dev/google_sign_in-6.2.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.2"
+    },
+    {
+      "name": "google_sign_in_android",
+      "rootUri": "file:///C:/Users/P/AppData/Local/Pub/Cache/hosted/pub.dev/google_sign_in_android-6.1.23",
+      "packageUri": "lib/",
+      "languageVersion": "3.2"
+    },
+    {
+      "name": "google_sign_in_ios",
+      "rootUri": "file:///C:/Users/P/AppData/Local/Pub/Cache/hosted/pub.dev/google_sign_in_ios-5.7.6",
+      "packageUri": "lib/",
+      "languageVersion": "3.2"
+    },
+    {
+      "name": "google_sign_in_platform_interface",
+      "rootUri": "file:///C:/Users/P/AppData/Local/Pub/Cache/hosted/pub.dev/google_sign_in_platform_interface-2.4.5",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
+      "name": "google_sign_in_web",
+      "rootUri": "file:///C:/Users/P/AppData/Local/Pub/Cache/hosted/pub.dev/google_sign_in_web-0.12.4",
+      "packageUri": "lib/",
+      "languageVersion": "3.3"
+    },
+    {
       "name": "http",
       "rootUri": "file:///C:/Users/P/AppData/Local/Pub/Cache/hosted/pub.dev/http-1.2.1",
       "packageUri": "lib/",
@@ -494,7 +530,7 @@
       "languageVersion": "3.2"
     }
   ],
-  "generated": "2024-05-09T17:34:03.907770Z",
+  "generated": "2024-05-17T13:37:26.558830Z",
   "generator": "pub",
   "generatorVersion": "3.3.4"
 }

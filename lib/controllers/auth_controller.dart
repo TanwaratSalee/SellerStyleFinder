@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:seller_finalproject/const/const.dart';
 import 'package:get/get.dart';
 import 'package:seller_finalproject/views/auth_screen/create_screen.dart';
+import 'package:seller_finalproject/views/auth_screen/creategoogle_screen.dart';
 import 'package:seller_finalproject/views/home_screen/home.dart';
 import 'package:path/path.dart';
 import 'dart:io';
@@ -111,6 +113,49 @@ Future<void> loginMethod() async {
   }
 }
 
+  Future<void> signInWithGoogle(BuildContext context) async {
+
+    isloading.value = true;
+
+    try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      final GoogleSignInAuthentication? googleAuth =
+          await googleUser?.authentication;
+      final OAuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
+      final UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithCredential(credential);
+
+      final String email = userCredential.user?.email ?? "No Email";
+      final String name = userCredential.user?.displayName ?? "No Name";
+      final String uid = userCredential.user?.uid ?? "";
+
+      // Check if the user's uid exists in Firestore
+      final DocumentSnapshot userDoc = await FirebaseFirestore.instance.collection('users').doc(uid).get();
+
+
+      if (userCredential.user != null) {
+        var vendorSnapshot = await await FirebaseFirestore.instance
+            .collection('vendors')
+            .where('email', isEqualTo: email)
+            .get();
+
+        if (vendorSnapshot.docs.isEmpty) {
+          Get.offAll(() => CreateAccountGoogle(email: email, uid: uid));
+        } else {
+          Get.offAll(() => const Home());
+        }
+      }
+
+    } catch (e) {
+      print("Error signing in with Google: $e");
+    } finally {
+      isloading.value = false;
+    }
+  }
+
 
 Future<void> CreateAccountMethod(BuildContext context, Map<String, String> addressDetails) async {
   if (emailController.text.isEmpty || passwordController.text.isEmpty) {
@@ -153,9 +198,6 @@ Future<void> CreateAccountMethod(BuildContext context, Map<String, String> addre
   }
 }
 
-
-
-
 void clearAllData() {
   emailController.clear();
   passwordController.clear();
@@ -165,8 +207,6 @@ void clearAllData() {
   descriptionController.clear();
   imageFile.value = null; // Clear the selected image
 }
-
-
   //image
   Future<void> pickImage() async {
     try {

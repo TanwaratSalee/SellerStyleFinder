@@ -124,7 +124,7 @@ class LoginScreen extends StatelessWidget {
                           onTap: () {
                             switch (index) {
                               case 0: // Google
-                                // controller.signInWithGoogle(context);
+                                controller.signInWithGoogle(context);
                                 break;
                             }
                           },
@@ -139,7 +139,7 @@ class LoginScreen extends StatelessWidget {
                             ),
                             child: Image.asset(
                               socialIconList[index],
-                              width: 80,
+                              width: 89,
                               height: 24,
                             ),
                           ),

@@ -134,7 +134,6 @@ androidx/lifecycle/LifecycleCoroutineScope.class
 androidx/lifecycle/LifecycleRegistry.class
 androidx/lifecycle/OnLifecycleEvent.class
 androidx/lifecycle/PausingDispatcherKt.class
-androidx/lifecycle/Transformations.class
 androidx/lifecycle/ViewTreeViewModelKt.class
 androidx/lifecycle/viewmodel/ViewModelFactoryDsl.class
 androidx/multidex/MultiDex$V14$ElementConstructor.class
@@ -162,6 +161,7 @@ androidx/versionedparcelable/VersionedParcelize.class
 androidx/viewpager/widget/ViewPager$DecorView.class
 androidx/window/core/ExperimentalWindowApi.class
 androidx/window/embedding/SplitRule$LayoutDir.class
+com/google/android/gms/auth/api/accounttransfer/AuthenticatorTransferCompletionStatus.class
 com/google/android/gms/auth/api/phone/SmsCodeAutofillClient$PermissionState.class
 com/google/android/gms/common/AccountPicker.class
 com/google/android/gms/common/BlockingServiceConnection.class
@@ -197,6 +197,7 @@ com/google/android/gms/common/util/IOUtils.class
 com/google/android/gms/common/wrappers/PackageManagerWrapper.class
 com/google/android/gms/dynamic/ObjectWrapper.class
 com/google/android/gms/dynamite/DynamiteModule.class
+com/google/android/gms/internal/auth/zzbv.class
 com/google/android/gms/internal/base/zad.class
 com/google/android/gms/internal/base/zae.class
 com/google/android/gms/internal/common/zzac.class

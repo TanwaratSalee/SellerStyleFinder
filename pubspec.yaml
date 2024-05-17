@@ -49,6 +49,8 @@ dependencies:
   pattern_formatter: ^3.0.0
   flutter_launcher_icons: ^0.13.1
   firebase_service: ^0.0.1+1
+  google_sign_in: ^6.2.1
+  http: ^1.2.1
 
 dev_dependencies:
   flutter_test:
