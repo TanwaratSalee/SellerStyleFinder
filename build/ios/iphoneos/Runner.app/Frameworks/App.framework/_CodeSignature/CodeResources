@@ -6,23 +6,27 @@
 	<dict>
 		<key>Info.plist</key>
 		<data>
-		QJETILOPBwjioLrmTLs9PY5FL+s=
+		h5OB7aKzS5WR9SemvZAyN6FEkJs=
 		</data>
 		<key>flutter_assets/AssetManifest.bin</key>
 		<data>
-		G/MInG7zbckLZ7AGp2XqVDdtLEc=
+		1oYxAOCR3SQ0JKmgHvt7r31b3oU=
 		</data>
 		<key>flutter_assets/AssetManifest.json</key>
 		<data>
-		BpCGK76FCBcpknYnb5yD1n3xICk=
+		UzRWlMWT2xdjxpOfqYLHxZWzjdw=
 		</data>
 		<key>flutter_assets/FontManifest.json</key>
 		<data>
-		iyZsKiyoDh6Nz2BDChu3zatwGjo=
+		VjMdFvyJ7JLCOVKkl6mW+xPWZdw=
 		</data>
 		<key>flutter_assets/NOTICES.Z</key>
 		<data>
-		avo74CBvJoKiV020eRpmKtP+A7k=
+		fBiiaE9IERIC5CSNEaFbgAvPI3Y=
+		</data>
+		<key>flutter_assets/assets/.DS_Store</key>
+		<data>
+		ljr1rB0/poSg9lNUBHT20P8GnXo=
 		</data>
 		<key>flutter_assets/assets/fonts/Roboto-Black.ttf</key>
 		<data>
@@ -44,9 +48,33 @@
 		<data>
 		VsXA04veTB8VSd2kPbN7CcYIqtM=
 		</data>
+		<key>flutter_assets/assets/fonts/Urbanist/Urbanist-Black.ttf</key>
+		<data>
+		GNm1FNjsZFTUOjFHwJAjW7wFDN0=
+		</data>
+		<key>flutter_assets/assets/fonts/Urbanist/Urbanist-Bold.ttf</key>
+		<data>
+		Sx2EeO+vhYhdmijcfOO/KElUrXQ=
+		</data>
+		<key>flutter_assets/assets/fonts/Urbanist/Urbanist-Light.ttf</key>
+		<data>
+		mg5hs2UfJEgzphXBu+a/r9F1HUc=
+		</data>
+		<key>flutter_assets/assets/fonts/Urbanist/Urbanist-Medium.ttf</key>
+		<data>
+		m7U4eb4zkqJWYvfGTwzoLvyinxQ=
+		</data>
+		<key>flutter_assets/assets/fonts/Urbanist/Urbanist-Regular.ttf</key>
+		<data>
+		j454dbJA33FJ5Jniq8T0jxPM79A=
+		</data>
 		<key>flutter_assets/assets/icons/SellerLogo.png</key>
 		<data>
 		/ZsfSPqdcHliUMaOtfJW4hPphV8=
+		</data>
+		<key>flutter_assets/assets/icons/ShopLogo.png</key>
+		<data>
+		/QODro8vS4VmHKONUkWz2Md+uL0=
 		</data>
 		<key>flutter_assets/assets/icons/account.png</key>
 		<data>
@@ -138,11 +166,11 @@
 		</data>
 		<key>flutter_assets/kernel_blob.bin</key>
 		<data>
-		tC/QXvRcGQTrW6yvw31fF81YEMU=
+		DYFjSUgz6NltaQUD7wAzEl5xjNQ=
 		</data>
 		<key>flutter_assets/lib/services/collection_model.json</key>
 		<data>
-		80Eq7JhBSQGb2eSXj+YimW0tSIg=
+		5eVdZXXe0ZAFHK7LK1goLKjKQP0=
 		</data>
 		<key>flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
 		<data>
@@ -171,28 +199,28 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			7z7Uokr+2RFoHv1dIApDWYGIVGWW7SzldqVi7+MMexE=
+			2nOnuG1zhk4b5Sg+TfvzPKqYJflIZEqZa2goramTUvk=
 			</data>
 		</dict>
 		<key>flutter_assets/AssetManifest.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			qEZj3VdA+FX5Ds9idw7DanB1/SKx7W+8jbVCRqTSHoc=
+			jQFJdni/F7pU7TQjlOLSLdsRA1/Y+mMDFYrBVZcY7dk=
 			</data>
 		</dict>
 		<key>flutter_assets/FontManifest.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			uFWjcz4qCxHFMOaLi6sKMvXx7ODYMOMFEnVKe1w6Fpc=
+			bJiR4CagV0INBRB4V5clPXzPx2SfZwkwgI/hThilO8A=
 			</data>
 		</dict>
 		<key>flutter_assets/NOTICES.Z</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			w20XYTSPNH7PzPnMAXa2HMu5pSi9stbb7iTfa4bUzOo=
+			5O/xhC/j1Dn+IG2Dmyg733eIx0HQlsDnFLEKFLCdIvA=
 			</data>
 		</dict>
 		<key>flutter_assets/assets/fonts/Roboto-Black.ttf</key>
@@ -230,11 +258,53 @@
 			ThR6tkuf322J0B9rjDygs83cWdYIqOIhj5olBLXJjhQ=
 			</data>
 		</dict>
+		<key>flutter_assets/assets/fonts/Urbanist/Urbanist-Black.ttf</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			JfP8W/J+n4JzYCEoDzO00F/MbifFlUT9FnvXRe0HwJ0=
+			</data>
+		</dict>
+		<key>flutter_assets/assets/fonts/Urbanist/Urbanist-Bold.ttf</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			JDncu6DMvsffvDM0OPPBguCPsfo7i+985EYkdNfM/Ek=
+			</data>
+		</dict>
+		<key>flutter_assets/assets/fonts/Urbanist/Urbanist-Light.ttf</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			Fzx67JvMD4NB9ieAXzalkC/Px9CJw2BWEwXnnrj7ktA=
+			</data>
+		</dict>
+		<key>flutter_assets/assets/fonts/Urbanist/Urbanist-Medium.ttf</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			iM2vEGbXsgH8YfdJ69PzUQs1RTgJ9xuS5JY8LG1hMog=
+			</data>
+		</dict>
+		<key>flutter_assets/assets/fonts/Urbanist/Urbanist-Regular.ttf</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			v7Q0thFr+dvns6tqtL5LgeJTNSEwDfRXh0H+eV/FoWs=
+			</data>
+		</dict>
 		<key>flutter_assets/assets/icons/SellerLogo.png</key>
 		<dict>
 			<key>hash2</key>
 			<data>
 			j0N8aeNKojgWYyBkYHipjNyYCBkNHXZ4kun9oreAg38=
+			</data>
+		</dict>
+		<key>flutter_assets/assets/icons/ShopLogo.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			tPNcICwjCJ4IYRXBS2yySmFGUPvraPue22UYiKJw1kk=
 			</data>
 		</dict>
 		<key>flutter_assets/assets/icons/account.png</key>
@@ -395,14 +465,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			/vZV3I3eqSaKYIby8/WML9ORM+QdiFgC/UO6ATWpTaQ=
+			xaV3lP2HAvrY9aTOIn8aSvf4+ixYEHTRiaRFjlPDsM0=
 			</data>
 		</dict>
 		<key>flutter_assets/lib/services/collection_model.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			lWM+jehuLVeuaJNwKmG72n+AwoS5WKNgExNKLO/dOXA=
+			q5MS+1tCDzxFBhFuvMbfWpeKq1/PiQ3UnbnD9VFE/aI=
 			</data>
 		</dict>
 		<key>flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
