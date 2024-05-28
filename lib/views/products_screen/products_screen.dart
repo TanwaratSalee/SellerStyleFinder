@@ -279,7 +279,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
     )
         .box
         .rounded
-        .border(color: thinGrey01)
+        .border(color: greyColor)
         .margin(const EdgeInsets.symmetric(vertical: 4, horizontal: 12))
         .padding(
             const EdgeInsets.symmetric(vertical: 8, horizontal: 12))

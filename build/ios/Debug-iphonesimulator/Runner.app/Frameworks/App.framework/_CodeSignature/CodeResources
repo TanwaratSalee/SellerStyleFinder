@@ -10,11 +10,11 @@
 		</data>
 		<key>flutter_assets/AssetManifest.bin</key>
 		<data>
-		1oYxAOCR3SQ0JKmgHvt7r31b3oU=
+		l7g4Wwd9snXqMIx3T3Bu3HtL1aM=
 		</data>
 		<key>flutter_assets/AssetManifest.json</key>
 		<data>
-		UzRWlMWT2xdjxpOfqYLHxZWzjdw=
+		Riim3WIH6QuJxk5Ue77sBQEw1TE=
 		</data>
 		<key>flutter_assets/FontManifest.json</key>
 		<data>
@@ -22,11 +22,7 @@
 		</data>
 		<key>flutter_assets/NOTICES.Z</key>
 		<data>
-		fBiiaE9IERIC5CSNEaFbgAvPI3Y=
-		</data>
-		<key>flutter_assets/assets/.DS_Store</key>
-		<data>
-		ljr1rB0/poSg9lNUBHT20P8GnXo=
+		h+nTb4Bb+aY7EuOypm6/OYOsnTg=
 		</data>
 		<key>flutter_assets/assets/fonts/Urbanist/Urbanist-Black.ttf</key>
 		<data>
@@ -142,11 +138,11 @@
 		</data>
 		<key>flutter_assets/isolate_snapshot_data</key>
 		<data>
-		SIm4/1Paq4sWKgTicGS1/n3+2I0=
+		iiuuqMV6oM4owJWfpE28hCDbAv8=
 		</data>
 		<key>flutter_assets/kernel_blob.bin</key>
 		<data>
-		mG0hsUJp2zBm2Tz8UUwsu9uN5/k=
+		HdAeCdYdw1qMIs8VwOWUT2ZzBWc=
 		</data>
 		<key>flutter_assets/lib/services/collection_model.json</key>
 		<data>
@@ -179,14 +175,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			2nOnuG1zhk4b5Sg+TfvzPKqYJflIZEqZa2goramTUvk=
+			tC/S4A6lqQmKjunHduSfbsVbqczd08FEtTOEyggTKps=
 			</data>
 		</dict>
 		<key>flutter_assets/AssetManifest.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			jQFJdni/F7pU7TQjlOLSLdsRA1/Y+mMDFYrBVZcY7dk=
+			sIyuljkrnJU3GpxM3tl7RV1bzoNVpnEnnQP/sTYwx4E=
 			</data>
 		</dict>
 		<key>flutter_assets/FontManifest.json</key>
@@ -200,7 +196,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			5O/xhC/j1Dn+IG2Dmyg733eIx0HQlsDnFLEKFLCdIvA=
+			ylOmhLIKKMlsuVXTS6am49DBpn7OSaAvlkLfZja+5TQ=
 			</data>
 		</dict>
 		<key>flutter_assets/assets/fonts/Urbanist/Urbanist-Black.ttf</key>
@@ -403,14 +399,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			anOb2f9bedJ1njfLAJCJBLpvzqbr//Igm8Bh1zQ9Yk4=
+			uWxb3nBXN5pmBgye1a+qjBFyUEcqh/MzcJMSPkV4q/Y=
 			</data>
 		</dict>
 		<key>flutter_assets/kernel_blob.bin</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			Tc6BFk2D8mJVKUcPKJSmKh7kXaLP0NoA62oQfKa93pw=
+			kQIuedEZPH0v5z6SBTKFs1RvqcAZ/gqRjE5hpKyx+cY=
 			</data>
 		</dict>
 		<key>flutter_assets/lib/services/collection_model.json</key>

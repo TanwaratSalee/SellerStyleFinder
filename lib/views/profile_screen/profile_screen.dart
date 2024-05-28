@@ -32,7 +32,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           Expanded(
             child: FutureBuilder<QuerySnapshot>(
               future: StoreServices.getProfile(currentUser?.uid ?? ''),
-              builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              builder: (BuildContext context,
+                  AsyncSnapshot<QuerySnapshot> snapshot) {
                 if (!snapshot.hasData) {
                   return loadingIndicator(circleColor: primaryApp);
                 } else if (snapshot.data!.docs.isEmpty) {
@@ -55,14 +56,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         imgProfile,
                                         width: 100,
                                         fit: BoxFit.cover,
-                                      ).box.roundedFull.clip(Clip.antiAlias).make(),
+                                      )
+                                          .box
+                                          .roundedFull
+                                          .clip(Clip.antiAlias)
+                                          .make(),
                                     )
                                   : ClipRRect(
                                       borderRadius: BorderRadius.circular(50),
                                       child: Image.network(
                                         controller.snapshotData['imageUrl'],
                                         width: 100,
-                                      ).box.roundedFull.clip(Clip.antiAlias).make(),
+                                      )
+                                          .box
+                                          .roundedFull
+                                          .clip(Clip.antiAlias)
+                                          .make(),
                                     ),
                             ),
                             15.widthBox,
@@ -87,7 +96,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                       ),
                       10.heightBox,
-                      const Divider(color: thinGrey0),
+                      const Divider(color: greyThin),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -96,11 +105,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               icMe,
                               width: 22,
                             ),
-                            title: const Text('Edit Account').text.size(15).make(),
-                            trailing: const Icon(Icons.arrow_forward_ios, size: 18),
+                            title:
+                                const Text('Edit Account').text.size(15).make(),
+                            trailing:
+                                const Icon(Icons.arrow_forward_ios, size: 18),
                             onTap: () {
                               Get.to(() => EditProfileScreen(
-                                    username: controller.snapshotData['vendor_name'],
+                                    username:
+                                        controller.snapshotData['vendor_name'],
                                   ));
                             },
                           ),
@@ -110,7 +122,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               width: 22,
                             ),
                             title: const Text('Message').text.size(15).make(),
-                            trailing: const Icon(Icons.arrow_forward_ios, size: 18),
+                            trailing:
+                                const Icon(Icons.arrow_forward_ios, size: 18),
                             onTap: () {
                               Get.to(() => const MessagesScreen());
                             },
@@ -121,7 +134,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               width: 22,
                             ),
                             title: const Text('Review').text.size(15).make(),
-                            trailing: const Icon(Icons.arrow_forward_ios, size: 18),
+                            trailing:
+                                const Icon(Icons.arrow_forward_ios, size: 18),
                             onTap: () {
                               Get.to(() => ReviewScreen());
                             },
@@ -140,7 +154,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-   Widget buildActionsSection(BuildContext context) {
+  Widget buildActionsSection(BuildContext context) {
     return Column(
       children: [
         const Padding(
@@ -158,16 +172,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
               const SizedBox(width: 8),
               const Text('Logout')
                   .text
-                  .color(greyDark1)
+                  .color(greyColor)
                   .fontFamily(regular)
                   .make(),
             ],
           ),
         )
             .box
-            .color(thinGrey01)
+            .color(greyColor)
             .rounded
-            .margin(const EdgeInsets.fromLTRB(24,0,24,30))
+            .margin(const EdgeInsets.fromLTRB(24, 0, 24, 30))
             .padding(const EdgeInsets.symmetric(horizontal: 8))
             .make(),
       ],
@@ -187,7 +201,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   .text
                   .size(18)
                   .fontFamily(regular)
-                  .color(greyDark2)
+                  .color(greyDark)
                   .make(),
               45.heightBox,
               const Divider(
@@ -200,7 +214,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   children: [
                     Expanded(
                       child: TextButton(
-                        child: const Text('Cancel',style: TextStyle(color: redColor, fontFamily: medium, fontSize: 14)),
+                        child: const Text('Cancel',
+                            style: TextStyle(
+                                color: redColor,
+                                fontFamily: medium,
+                                fontSize: 14)),
                         onPressed: () => Navigator.of(context).pop(),
                       ),
                     ),
@@ -208,7 +226,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         width: 1, thickness: 1, color: greyColor),
                     Expanded(
                       child: TextButton(
-                        child: const Text('Logout',style: TextStyle(color: greyDark1, fontFamily: medium, fontSize: 14),),
+                        child: const Text(
+                          'Logout',
+                          style: TextStyle(
+                              color: greyColor,
+                              fontFamily: medium,
+                              fontSize: 14),
+                        ),
                         onPressed: () async {
                           await Get.put(AuthController())
                               .signoutMethod(context);
@@ -226,5 +250,4 @@ class _ProfileScreenState extends State<ProfileScreen> {
       },
     );
   }
-
 }

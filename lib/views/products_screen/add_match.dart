@@ -100,7 +100,7 @@ class _AddMatchProductState extends State<AddMatchProduct> {
         text,
         style: TextStyle(
           fontSize: 16,
-          color: greyDark1,
+          color: greyColor,
           fontFamily: medium,
         ),
       ),
@@ -115,7 +115,7 @@ class _AddMatchProductState extends State<AddMatchProduct> {
         const Text("Suitable for gender")
             .text
             .size(16)
-            .color(greyDark1)
+            .color(greyColor)
             .fontFamily(medium)
             .make(),
         const SizedBox(height: 10),
@@ -129,7 +129,7 @@ class _AddMatchProductState extends State<AddMatchProduct> {
                   label: Text(
                     capitalize(gender),
                     style: TextStyle(
-                      color: isSelected ? primaryApp : greyDark1,
+                      color: isSelected ? primaryApp : greyColor,
                     ),
                   ).text.size(18).fontFamily(regular).make(),
                   selected: isSelected,
@@ -139,7 +139,7 @@ class _AddMatchProductState extends State<AddMatchProduct> {
                     }
                   },
                   selectedColor: thinPrimaryApp,
-                  backgroundColor: thinGrey0,
+                  backgroundColor: greyThin,
                   side: isSelected
                       ? const BorderSide(color: primaryApp, width: 2)
                       : const BorderSide(color: greyColor),
@@ -158,7 +158,7 @@ class _AddMatchProductState extends State<AddMatchProduct> {
         const Text("Collection")
             .text
             .size(16)
-            .color(greyDark1)
+            .color(greyColor)
             .fontFamily(medium)
             .make(),
         const SizedBox(height: 10),
@@ -172,7 +172,7 @@ class _AddMatchProductState extends State<AddMatchProduct> {
                   label: Text(
                     capitalize(collection),
                     style: TextStyle(
-                      color: isSelected ? primaryApp : greyDark1,
+                      color: isSelected ? primaryApp : greyColor,
                     ),
                   ),
                   selected: isSelected,
@@ -180,7 +180,7 @@ class _AddMatchProductState extends State<AddMatchProduct> {
                     controller.toggleCollection(collection);
                   },
                   selectedColor: thinPrimaryApp,
-                  backgroundColor: thinGrey0,
+                  backgroundColor: greyThin,
                   side: isSelected
                       ? const BorderSide(color: primaryApp, width: 2)
                       : const BorderSide(color: greyColor),
@@ -198,7 +198,7 @@ class _AddMatchProductState extends State<AddMatchProduct> {
         const Text("Choose product colors")
             .text
             .size(16)
-            .color(greyDark1)
+            .color(greyColor)
             .fontFamily(medium)
             .make(),
         const SizedBox(height: 15),

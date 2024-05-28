@@ -8,7 +8,7 @@ Widget productImages({required label, onPass}) {
       .size(16)
       .makeCentered()
       .box
-      .color(thinGrey01)
+      .color(greyColor)
       .size(100, 100)
       .roundedSM
       .make();

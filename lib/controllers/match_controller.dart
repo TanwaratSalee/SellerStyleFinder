@@ -1,10 +1,8 @@
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_service/firebase_service.dart';
 import 'package:get/get.dart';
 import 'package:seller_finalproject/const/const.dart';
 import 'package:seller_finalproject/models/collection_model.dart';
-import 'package:seller_finalproject/models/product_model.dart';
 
 class MatchController extends GetxController {
   var isloading = false.obs;

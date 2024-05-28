@@ -42,7 +42,7 @@ class _CreateAccountState extends State<CreateAccount> {
                 onTap: controller.pickImage,
                 child: Obx(() => CircleAvatar(
                       radius: 60,
-                      backgroundColor: thinGrey01,
+                      backgroundColor: greyColor,
                       child: controller.imageFile.value == null
                           ? const Icon(Icons.add_a_photo,
                               color: greyColor, size: 50)

@@ -86,7 +86,7 @@ class LoginScreen extends StatelessWidget {
                             child: const Text(forgotPassword)
                                 .text
                                 .size(14)
-                                .color(greyDark1)
+                                .color(greyColor)
                                 .fontFamily(medium)
                                 .make())),
                     10.heightBox,
@@ -104,14 +104,14 @@ class LoginScreen extends StatelessWidget {
                     Row(
                       children: [
                         const Expanded(
-                          child: Divider(color: greyDark1, height: 1),
+                          child: Divider(color: greyColor, height: 1),
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 15),
-                          child: loginWith.text.color(greyDark2).make(),
+                          child: loginWith.text.color(greyDark).make(),
                         ),
                         const Expanded(
-                          child: Divider(color: greyDark1, height: 1),
+                          child: Divider(color: greyColor, height: 1),
                         ),
                       ],
                     ),

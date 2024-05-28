@@ -143,7 +143,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     .make(),
               ),
               
-              const Divider(color: thinGrey0,),
+              const Divider(color: greyThin,),
               15.heightBox,
                 editTextField(
                   label: 'Shop Name :',
@@ -166,7 +166,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     .color(blackColor)
                     .make(),
               ),
-              const Divider(color: thinGrey0),
+              const Divider(color: greyThin),
               editTextField(
                   label: address,
                   controller: controller.shopAddressController,

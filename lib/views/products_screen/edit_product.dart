@@ -73,7 +73,7 @@ class _EditProductState extends State<EditProduct> {
                 const Text("Choose product images")
                     .text
                     .size(16)
-                    .color(greyDark1)
+                    .color(greyColor)
                     .fontFamily(medium)
                     .make(),
                 15.heightBox,
@@ -170,7 +170,7 @@ class _EditProductState extends State<EditProduct> {
                 const Text("Collection")
                     .text
                     .size(16)
-                    .color(greyDark1)
+                    .color(greyColor)
                     .fontFamily(medium)
                     .make(),
                 Obx(() => Wrap(
@@ -191,7 +191,7 @@ class _EditProductState extends State<EditProduct> {
                             }
                           },
                           selectedColor: thinPrimaryApp,
-                          backgroundColor: thinGrey0,
+                          backgroundColor: greyThin,
                           side: isSelected
                               ? const BorderSide(color: primaryApp, width: 2)
                               : const BorderSide(color: greyColor),
@@ -202,7 +202,7 @@ class _EditProductState extends State<EditProduct> {
                 const Text("Type of product")
                     .text
                     .size(16)
-                    .color(greyDark1)
+                    .color(greyColor)
                     .fontFamily(medium)
                     .make(),
                 10.heightBox,
@@ -217,7 +217,7 @@ class _EditProductState extends State<EditProduct> {
                           label: Text(
                             capitalize(subcollection),
                             style: TextStyle(
-                              color: isSelected ? primaryApp : greyDark1,
+                              color: isSelected ? primaryApp : greyColor,
                             ),
                           ).text.size(18).fontFamily(regular).make(),
                           selected: isSelected,
@@ -227,7 +227,7 @@ class _EditProductState extends State<EditProduct> {
                             }
                           },
                           selectedColor: thinPrimaryApp,
-                          backgroundColor: thinGrey0,
+                          backgroundColor: greyThin,
                           side: isSelected
                               ? const BorderSide(color: primaryApp, width: 2)
                               : const BorderSide(color: greyColor),
@@ -237,7 +237,7 @@ class _EditProductState extends State<EditProduct> {
                 const Text("Suitable for gender")
                     .text
                     .size(16)
-                    .color(greyDark1)
+                    .color(greyColor)
                     .fontFamily(medium)
                     .make(),
                 10.heightBox,
@@ -251,7 +251,7 @@ class _EditProductState extends State<EditProduct> {
                           label: Text(
                             capitalize(gender),
                             style: TextStyle(
-                              color: isSelected ? primaryApp : greyDark1,
+                              color: isSelected ? primaryApp : greyColor,
                             ),
                           ).text.size(18).fontFamily(regular).make(),
                           selected: isSelected,
@@ -261,7 +261,7 @@ class _EditProductState extends State<EditProduct> {
                             }
                           },
                           selectedColor: thinPrimaryApp,
-                          backgroundColor: thinGrey0,
+                          backgroundColor: greyThin,
                           side: isSelected ? const BorderSide(color: primaryApp, width: 2) : const BorderSide(color: greyColor),
                         );
                       }).toList(),
@@ -270,7 +270,7 @@ class _EditProductState extends State<EditProduct> {
                 const Text("Size of product")
                     .text
                     .size(16)
-                    .color(greyDark1)
+                    .color(greyColor)
                     .fontFamily(medium)
                     .make(),
                 Obx(() => Wrap(
@@ -299,7 +299,7 @@ class _EditProductState extends State<EditProduct> {
                     const Text("Choose product colors")
                         .text
                         .size(16)
-                        .color(greyDark1)
+                        .color(greyColor)
                         .fontFamily(medium)
                         .make(),
                     const SizedBox(height: 10),
@@ -347,7 +347,7 @@ class _EditProductState extends State<EditProduct> {
                 const Text("Show mix and match")
                     .text
                     .size(16)
-                    .color(greyDark1)
+                    .color(greyColor)
                     .fontFamily(medium)
                     .make(),
                 Obx(() => Wrap(
@@ -360,7 +360,7 @@ class _EditProductState extends State<EditProduct> {
                           label: Text(
                             capitalize(mixandmatch),
                             style: TextStyle(
-                              color: isSelected ? primaryApp : greyDark1,
+                              color: isSelected ? primaryApp : greyColor,
                             ),
                           ).text.size(18).fontFamily(regular).make(),
                           selected: isSelected,
@@ -370,7 +370,7 @@ class _EditProductState extends State<EditProduct> {
                             }
                           },
                           selectedColor: thinPrimaryApp,
-                          backgroundColor: thinGrey0,
+                          backgroundColor: greyThin,
                           side: isSelected ? const BorderSide(color: primaryApp, width: 2) : const BorderSide(color: greyColor),
                         );
                       }).toList(),

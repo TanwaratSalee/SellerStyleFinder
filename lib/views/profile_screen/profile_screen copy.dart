@@ -49,7 +49,7 @@ class _CopyProfileScreenState extends State<CopyProfileScreen> {
         future: StoreServices.getProfile(currentUser!.uid),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) {
-            return loadingIndicator(circleColor: thinGrey01);
+            return loadingIndicator(circleColor: greyColor);
           } else {
             controller.snapshotData = snapshot.data!.docs[0];
 
@@ -75,7 +75,7 @@ class _CopyProfileScreenState extends State<CopyProfileScreen> {
                          "${controller.snapshotData['email']}",
                          ),
                   ),
-                  const Divider(color: thinGrey0),
+                  const Divider(color: greyThin),
                   10.heightBox,
                   Padding(
                     padding: const EdgeInsets.all(8),
@@ -105,7 +105,7 @@ class _CopyProfileScreenState extends State<CopyProfileScreen> {
                             children: [
                               Icon(
                                 profileButtonsIcons[index],
-                                color: greyDark2,
+                                color: greyDark,
                                 size: 2,
                               ),
                               if (index == 1)

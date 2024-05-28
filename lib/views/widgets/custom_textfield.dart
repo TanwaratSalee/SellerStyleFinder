@@ -17,20 +17,20 @@ Widget customTextField({
       hintText: hint,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(8),
-        borderSide: const BorderSide(color: thinGrey01),
+        borderSide: const BorderSide(color: greyColor),
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(8),
-        borderSide: const BorderSide(color: thinGrey01),
+        borderSide: const BorderSide(color: greyColor),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(8),
         borderSide: const BorderSide(color: greyColor),
       ),
     ),
-    style: const TextStyle(color: greyDark2),
+    style: const TextStyle(color: greyDark),
     maxLines: isDesc ? 4 : 1,
     keyboardType: keyboardType,
     inputFormatters: inputFormatters,
-  ).box.color(thinGrey0).roundedSM.make();
+  ).box.color(greyThin).roundedSM.make();
 }

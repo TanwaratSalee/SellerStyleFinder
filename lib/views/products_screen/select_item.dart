@@ -39,7 +39,7 @@ class _SelectItemPageState extends State<SelectItemPage> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
                     border: Border.all(
-                      color: selectedIndex == index ? primaryApp : thinGrey0,
+                      color: selectedIndex == index ? primaryApp : greyThin,
                       width: 2.0,
                     ),
                    

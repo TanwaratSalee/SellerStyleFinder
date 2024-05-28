@@ -51,7 +51,7 @@ class AddProduct extends StatelessWidget {
                 const Text("Choose product images")
                     .text
                     .size(16)
-                    .color(greyDark1)
+                    .color(greyColor)
                     .fontFamily(medium)
                     .make(),
                 15.heightBox,
@@ -129,7 +129,7 @@ class AddProduct extends StatelessWidget {
                 const Text("Collection")
                     .text
                     .size(16)
-                    .color(greyDark1)
+                    .color(greyColor)
                     .fontFamily(medium)
                     .make(),
                 Obx(() => Wrap(
@@ -150,7 +150,7 @@ class AddProduct extends StatelessWidget {
                             }
                           },
                           selectedColor: thinPrimaryApp,
-                          backgroundColor: thinGrey0,
+                          backgroundColor: greyThin,
                           side: isSelected
                               ? const BorderSide(color: primaryApp, width: 2)
                               : const BorderSide(color: greyColor),
@@ -161,7 +161,7 @@ class AddProduct extends StatelessWidget {
                 const Text("Type of product")
                     .text
                     .size(16)
-                    .color(greyDark1)
+                    .color(greyColor)
                     .fontFamily(medium)
                     .make(),
                 10.heightBox,
@@ -176,7 +176,7 @@ class AddProduct extends StatelessWidget {
                           label: Text(
                             capitalize(subcollection),
                             style: TextStyle(
-                              color: isSelected ? primaryApp : greyDark1,
+                              color: isSelected ? primaryApp : greyColor,
                             ),
                           ).text.size(18).fontFamily(regular).make(),
                           selected: isSelected,
@@ -186,7 +186,7 @@ class AddProduct extends StatelessWidget {
                             }
                           },
                           selectedColor: thinPrimaryApp,
-                          backgroundColor: thinGrey0,
+                          backgroundColor: greyThin,
                           side: isSelected
                               ? const BorderSide(color: primaryApp, width: 2)
                               : const BorderSide(color: greyColor),
@@ -196,7 +196,7 @@ class AddProduct extends StatelessWidget {
                 const Text("Suitable for gender")
                     .text
                     .size(16)
-                    .color(greyDark1)
+                    .color(greyColor)
                     .fontFamily(medium)
                     .make(),
                 10.heightBox,
@@ -211,7 +211,7 @@ class AddProduct extends StatelessWidget {
                           label: Text(
                             capitalize(gender),
                             style: TextStyle(
-                              color: isSelected ? primaryApp : greyDark1,
+                              color: isSelected ? primaryApp : greyColor,
                             ),
                           ).text.size(18).fontFamily(regular).make(),
                           selected: isSelected,
@@ -221,7 +221,7 @@ class AddProduct extends StatelessWidget {
                             }
                           },
                           selectedColor: thinPrimaryApp,
-                          backgroundColor: thinGrey0,
+                          backgroundColor: greyThin,
                           side: isSelected
                               ? const BorderSide(color: primaryApp, width: 2)
                               : const BorderSide(color: greyColor),
@@ -233,7 +233,7 @@ class AddProduct extends StatelessWidget {
                 const Text("Size of product")
                     .text
                     .size(16)
-                    .color(greyDark1)
+                    .color(greyColor)
                     .fontFamily(medium)
                     .make(),
                 Obx(() => Wrap(
@@ -264,7 +264,7 @@ class AddProduct extends StatelessWidget {
                     const Text("Choose product colors")
                         .text
                         .size(16)
-                        .color(greyDark1)
+                        .color(greyColor)
                         .fontFamily(medium)
                         .make(),
                     const SizedBox(height: 10),
@@ -322,7 +322,7 @@ class AddProduct extends StatelessWidget {
                 const Text("Show mix and match")
                     .text
                     .size(16)
-                    .color(greyDark1)
+                    .color(greyColor)
                     .fontFamily(medium)
                     .make(),
                 Obx(() => Wrap(
@@ -336,7 +336,7 @@ class AddProduct extends StatelessWidget {
                           label: Text(
                             capitalize(mixandmatch),
                             style: TextStyle(
-                              color: isSelected ? primaryApp : greyDark1,
+                              color: isSelected ? primaryApp : greyColor,
                             ),
                           ).text.size(18).fontFamily(regular).make(),
                           selected: isSelected,
@@ -347,7 +347,7 @@ class AddProduct extends StatelessWidget {
                             }
                           },
                           selectedColor: thinPrimaryApp,
-                          backgroundColor: thinGrey0,
+                          backgroundColor: greyThin,
                           side: isSelected
                               ? const BorderSide(color: primaryApp, width: 2)
                               : const BorderSide(color: greyColor),

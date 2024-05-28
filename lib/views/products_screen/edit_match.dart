@@ -140,7 +140,7 @@ Widget buildHeader(String text) {
       text,
       style: TextStyle(
         fontSize: 16,
-        color: greyDark1,
+        color: greyColor,
         fontFamily: medium,
       ),
     ),
@@ -155,7 +155,7 @@ Widget buildGenderChips(MatchController controller) {
       const Text("Suitable for gender")
           .text
           .size(16)
-          .color(greyDark1)
+          .color(greyColor)
           .fontFamily(medium)
           .make(),
       const SizedBox(height: 10),
@@ -169,7 +169,7 @@ Widget buildGenderChips(MatchController controller) {
                 label: Text(
                   capitalize(gender),
                   style: TextStyle(
-                    color: isSelected ? primaryApp : greyDark1,
+                    color: isSelected ? primaryApp : greyColor,
                   ),
                 ).text.size(18).fontFamily(regular).make(),
                 selected: isSelected,
@@ -179,7 +179,7 @@ Widget buildGenderChips(MatchController controller) {
                   }
                 },
                 selectedColor: thinPrimaryApp,
-                backgroundColor: thinGrey0,
+                backgroundColor: greyThin,
                 side: isSelected
                     ? const BorderSide(color: primaryApp, width: 2)
                     : const BorderSide(color: greyColor),
@@ -197,7 +197,7 @@ Widget buildCollectionChips(MatchController controller) {
       const Text("Collection")
           .text
           .size(16)
-          .color(greyDark1)
+          .color(greyColor)
           .fontFamily(medium)
           .make(),
       const SizedBox(height: 10),
@@ -210,7 +210,7 @@ Widget buildCollectionChips(MatchController controller) {
             label: Text(
               capitalize(collection),
               style: TextStyle(
-                color: isSelected ? primaryApp : greyDark1,
+                color: isSelected ? primaryApp : greyColor,
               ),
             ).text.size(14).fontFamily(regular).make(),
             selected: isSelected,
@@ -224,7 +224,7 @@ Widget buildCollectionChips(MatchController controller) {
               }
             },
             selectedColor: thinPrimaryApp,
-            backgroundColor: thinGrey0,
+            backgroundColor: greyThin,
             side: isSelected
                 ? const BorderSide(color: primaryApp, width: 2)
                 : const BorderSide(color: greyColor),
@@ -242,7 +242,7 @@ Widget buildColorChoices(MatchController controller) {
       const Text("Choose product colors")
           .text
           .size(16)
-          .color(greyDark1)
+          .color(greyColor)
           .fontFamily(medium)
           .make(),
       const SizedBox(height: 15),

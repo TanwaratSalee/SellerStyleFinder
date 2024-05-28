@@ -73,7 +73,7 @@ class HomeScreen extends StatelessWidget {
                         //   ],
                         // ),
                         10.heightBox,
-                        const Divider(color: thinGrey0),
+                        const Divider(color: greyThin),
                         20.heightBox,
                         Text(popular).text.size(16).medium.make(),
                         10.heightBox,

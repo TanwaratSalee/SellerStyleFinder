@@ -54,7 +54,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                       docID: widget.data.id);
                 },
                 title: "Confirm Order",
-                textColor: thinGrey01,
+                textColor: greyColor,
               ),
             ),
           ),
@@ -113,7 +113,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                         .padding(const EdgeInsets.all(8))
                         .outerShadowMd
                         .white
-                        .border(color: thinGrey01)
+                        .border(color: greyColor)
                         .rounded
                         .make(),
                   ),
@@ -195,10 +195,10 @@ class _OrderDetailsState extends State<OrderDetails> {
                       .box
                       .outerShadowMd
                       .white
-                      .border(color: thinGrey01)
+                      .border(color: greyColor)
                       .rounded
                       .make(),
-                  // const Divider(color: thinGrey0),
+                  // const Divider(color: greyThin),
                   10.heightBox,
                   Column(children: [
                     10.heightBox,
@@ -247,7 +247,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                                       style: const TextStyle(
                                           fontSize: 14,
                                           fontFamily: regular,
-                                          color: greyDark1),
+                                          color: greyColor),
                                     ),
                                   ],
                                 ),
@@ -271,7 +271,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                       .box
                       .outerShadowMd
                       .white
-                      // .border(color: thinGrey01)
+                      // .border(color: greyColor)
                       .rounded
                       .make(),
                 ],

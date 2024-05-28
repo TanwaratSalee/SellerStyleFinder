@@ -201,7 +201,7 @@ class _OrdersScreenState extends State<OrdersScreen>
                       .make(),
                   Row(
                     children: [
-                      const Icon(Icons.calendar_month, color: greyDark1),
+                      const Icon(Icons.calendar_month, color: greyColor),
                       const SizedBox(width: 10),
                       Text(intl.DateFormat().add_yMd().format(time)),
                     ],
@@ -215,7 +215,7 @@ class _OrdersScreenState extends State<OrdersScreen>
       )
           .box
           .margin(const EdgeInsets.symmetric(vertical: 8))
-          .border(color: thinGrey01)
+          .border(color: greyColor)
           .rounded
           .make(),
     );
@@ -242,7 +242,7 @@ class _OrdersScreenState extends State<OrdersScreen>
                       overflow: TextOverflow.ellipsis),
                   Text(
                     "${NumberFormat('#,##0').format(double.parse(order['price'].toString()))} Bath",
-                  ).text.size(14).fontFamily(regular).color(greyDark1).make(),
+                  ).text.size(14).fontFamily(regular).color(greyColor).make(),
                 ],
               ),
             ),
