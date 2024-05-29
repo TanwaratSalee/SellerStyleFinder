@@ -7,20 +7,19 @@ Widget chatBubble(DocumentSnapshot data) {
   var time = intl.DateFormat("h:mma").format(t);
 
   return Directionality(
-
-    // textDirection: TextDirection.rtl, 
-    textDirection:data['uid'] == currentUser!.uid ? TextDirection.ltr : TextDirection.rtl,
+    textDirection: data['uid'] == currentUser!.uid ? TextDirection.ltr : TextDirection.rtl,
     child: Container(
       padding: const EdgeInsets.all(12),
       margin: const EdgeInsets.only(bottom: 8),
-      decoration: const BoxDecoration(
-        color: primaryApp,
-        borderRadius: BorderRadius.only(
+      decoration: BoxDecoration(
+        color: data['uid'] == currentUser!.uid ? greyDark : primaryApp,
+        borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(20),
           topRight: Radius.circular(20),
-          bottomLeft: Radius.circular(20)
-        )),
-        child: Column(
+          bottomLeft: Radius.circular(20),
+        ),
+      ),
+      child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             "${data['msg']}".text.white.size(16).make(),
@@ -28,5 +27,6 @@ Widget chatBubble(DocumentSnapshot data) {
             time.text.color(whiteColor.withOpacity(0.5)).make()
           ],
         ),
-    ));
+    ),
+  );
 }

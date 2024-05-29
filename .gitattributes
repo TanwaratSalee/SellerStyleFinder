@@ -20,3 +20,7 @@ build/
 *.ipr
 *.iws
 .vscode/
+
+build/app/outputs/apk/debug/app-debug.apk
+build/ios/Debug-iphonesimulator/gRPC-Core/grpc.framework/grpc
+ß

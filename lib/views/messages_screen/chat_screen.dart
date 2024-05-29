@@ -64,20 +64,16 @@ class ChatScreen extends StatelessWidget {
               children: [
                 Expanded(
                   child: TextFormField(
-  controller: controller.msgController,
-  keyboardType: TextInputType.text,
-  decoration: const InputDecoration(
-    isDense: true,
-    hintText: "Enter message",
-    border: OutlineInputBorder(
-      borderSide: BorderSide(color: primaryApp)
-    ),
-    focusedBorder: OutlineInputBorder(
-      borderSide: BorderSide(color: primaryApp)
-    ),
-  ),
-),
-
+                    controller: controller.msgController,
+                    decoration: const InputDecoration(
+                      isDense: true,
+                      hintText: "Enter message",
+                      border: OutlineInputBorder(
+                          borderSide: BorderSide(color: primaryApp)),
+                      focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: primaryApp)),
+                    ),
+                  ),
                 ),
                 IconButton(
                   onPressed: () {
