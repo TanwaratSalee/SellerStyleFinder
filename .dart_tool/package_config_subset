@@ -140,7 +140,6 @@ file:///Users/thanwarat/.pub-cache/hosted/pub.dev/fluttertoast-8.2.5/
 file:///Users/thanwarat/.pub-cache/hosted/pub.dev/fluttertoast-8.2.5/lib/
 get
 2.15
-<<<<<<< HEAD
 file:///Users/thanwarat/.pub-cache/hosted/pub.dev/get-4.6.6/
 file:///Users/thanwarat/.pub-cache/hosted/pub.dev/get-4.6.6/lib/
 google_identity_services_web
@@ -167,34 +166,6 @@ google_sign_in_web
 3.3
 file:///Users/thanwarat/.pub-cache/hosted/pub.dev/google_sign_in_web-0.12.4/
 file:///Users/thanwarat/.pub-cache/hosted/pub.dev/google_sign_in_web-0.12.4/lib/
-=======
-file:///C:/Users/P/AppData/Local/Pub/Cache/hosted/pub.dev/get-4.6.6/
-file:///C:/Users/P/AppData/Local/Pub/Cache/hosted/pub.dev/get-4.6.6/lib/
-google_identity_services_web
-3.3
-file:///C:/Users/P/AppData/Local/Pub/Cache/hosted/pub.dev/google_identity_services_web-0.3.1+1/
-file:///C:/Users/P/AppData/Local/Pub/Cache/hosted/pub.dev/google_identity_services_web-0.3.1+1/lib/
-google_sign_in
-3.2
-file:///C:/Users/P/AppData/Local/Pub/Cache/hosted/pub.dev/google_sign_in-6.2.1/
-file:///C:/Users/P/AppData/Local/Pub/Cache/hosted/pub.dev/google_sign_in-6.2.1/lib/
-google_sign_in_android
-3.2
-file:///C:/Users/P/AppData/Local/Pub/Cache/hosted/pub.dev/google_sign_in_android-6.1.23/
-file:///C:/Users/P/AppData/Local/Pub/Cache/hosted/pub.dev/google_sign_in_android-6.1.23/lib/
-google_sign_in_ios
-3.2
-file:///C:/Users/P/AppData/Local/Pub/Cache/hosted/pub.dev/google_sign_in_ios-5.7.6/
-file:///C:/Users/P/AppData/Local/Pub/Cache/hosted/pub.dev/google_sign_in_ios-5.7.6/lib/
-google_sign_in_platform_interface
-3.0
-file:///C:/Users/P/AppData/Local/Pub/Cache/hosted/pub.dev/google_sign_in_platform_interface-2.4.5/
-file:///C:/Users/P/AppData/Local/Pub/Cache/hosted/pub.dev/google_sign_in_platform_interface-2.4.5/lib/
-google_sign_in_web
-3.3
-file:///C:/Users/P/AppData/Local/Pub/Cache/hosted/pub.dev/google_sign_in_web-0.12.4/
-file:///C:/Users/P/AppData/Local/Pub/Cache/hosted/pub.dev/google_sign_in_web-0.12.4/lib/
->>>>>>> origin/main
 http
 3.3
 file:///Users/thanwarat/.pub-cache/hosted/pub.dev/http-1.2.1/

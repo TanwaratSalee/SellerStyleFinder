@@ -237,61 +237,37 @@
     },
     {
       "name": "google_identity_services_web",
-<<<<<<< HEAD
       "rootUri": "file:///Users/thanwarat/.pub-cache/hosted/pub.dev/google_identity_services_web-0.3.1+1",
-=======
-      "rootUri": "file:///C:/Users/P/AppData/Local/Pub/Cache/hosted/pub.dev/google_identity_services_web-0.3.1+1",
->>>>>>> origin/main
       "packageUri": "lib/",
       "languageVersion": "3.3"
     },
     {
       "name": "google_sign_in",
-<<<<<<< HEAD
       "rootUri": "file:///Users/thanwarat/.pub-cache/hosted/pub.dev/google_sign_in-6.2.1",
-=======
-      "rootUri": "file:///C:/Users/P/AppData/Local/Pub/Cache/hosted/pub.dev/google_sign_in-6.2.1",
->>>>>>> origin/main
       "packageUri": "lib/",
       "languageVersion": "3.2"
     },
     {
       "name": "google_sign_in_android",
-<<<<<<< HEAD
       "rootUri": "file:///Users/thanwarat/.pub-cache/hosted/pub.dev/google_sign_in_android-6.1.23",
-=======
-      "rootUri": "file:///C:/Users/P/AppData/Local/Pub/Cache/hosted/pub.dev/google_sign_in_android-6.1.23",
->>>>>>> origin/main
       "packageUri": "lib/",
       "languageVersion": "3.2"
     },
     {
       "name": "google_sign_in_ios",
-<<<<<<< HEAD
       "rootUri": "file:///Users/thanwarat/.pub-cache/hosted/pub.dev/google_sign_in_ios-5.7.6",
-=======
-      "rootUri": "file:///C:/Users/P/AppData/Local/Pub/Cache/hosted/pub.dev/google_sign_in_ios-5.7.6",
->>>>>>> origin/main
       "packageUri": "lib/",
       "languageVersion": "3.2"
     },
     {
       "name": "google_sign_in_platform_interface",
-<<<<<<< HEAD
       "rootUri": "file:///Users/thanwarat/.pub-cache/hosted/pub.dev/google_sign_in_platform_interface-2.4.5",
-=======
-      "rootUri": "file:///C:/Users/P/AppData/Local/Pub/Cache/hosted/pub.dev/google_sign_in_platform_interface-2.4.5",
->>>>>>> origin/main
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
     {
       "name": "google_sign_in_web",
-<<<<<<< HEAD
       "rootUri": "file:///Users/thanwarat/.pub-cache/hosted/pub.dev/google_sign_in_web-0.12.4",
-=======
-      "rootUri": "file:///C:/Users/P/AppData/Local/Pub/Cache/hosted/pub.dev/google_sign_in_web-0.12.4",
->>>>>>> origin/main
       "packageUri": "lib/",
       "languageVersion": "3.3"
     },
@@ -554,11 +530,7 @@
       "languageVersion": "3.2"
     }
   ],
-<<<<<<< HEAD
-  "generated": "2024-05-22T17:27:13.767900Z",
-=======
-  "generated": "2024-05-17T13:37:26.558830Z",
->>>>>>> origin/main
+  "generated": "2024-05-29T07:41:01.666705Z",
   "generator": "pub",
   "generatorVersion": "3.3.1"
 }
