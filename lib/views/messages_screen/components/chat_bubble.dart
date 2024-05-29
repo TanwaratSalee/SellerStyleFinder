@@ -1,14 +1,19 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:seller_finalproject/const/const.dart';
+import 'package:intl/intl.dart' as intl;
 
-Widget chatBubble() {
+Widget chatBubble(DocumentSnapshot data) {
+  var t = data['created_on'] == null ? DateTime.now() : data['created_on'].toDate();
+  var time = intl.DateFormat("h:mma").format(t);
+
   return Directionality(
-    //textDirection: datal ['uid'] == currentUser!.uid ? TextDirection.rtl : TextDirection.ltr
-    textDirection: TextDirection.rtl, 
+
+    // textDirection: TextDirection.rtl, 
+    textDirection:data['uid'] == currentUser!.uid ? TextDirection.ltr : TextDirection.rtl,
     child: Container(
       padding: const EdgeInsets.all(12),
       margin: const EdgeInsets.only(bottom: 8),
       decoration: const BoxDecoration(
-        // color: data['uid'] == currentUser!.uid ? red : blackColor,
         color: primaryApp,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(20),
@@ -18,11 +23,9 @@ Widget chatBubble() {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // "${data['msg]}".text.white.size(16).make(),
-            Text( "Your message here..."),
+            "${data['msg']}".text.white.size(16).make(),
             10.heightBox,
-            // time.text.color(whiteColor.withOpacity(0.5)).make(),
-            Text( "10.45PM")
+            time.text.color(whiteColor.withOpacity(0.5)).make()
           ],
         ),
     ));
