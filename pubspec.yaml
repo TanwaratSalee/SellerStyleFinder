@@ -55,11 +55,13 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.13.1
 
 flutter_icons:
-  androig: "launher_ios"
+  android: true
   ios: true
-  image_path: "assets/icons/ShopLogo.png"   
+  image_path_android: /Users/tanwarat/Downloads/flutter_seller_app/assets/icons/setting/iconseller.png
+  image_path_ios: /Users/tanwarat/Downloads/flutter_seller_app/assets/icons/setting/iconseller.png
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

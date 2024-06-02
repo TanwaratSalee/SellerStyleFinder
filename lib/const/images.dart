@@ -20,3 +20,6 @@ const icLogout = "assets/icons/setting/logout.png";
 const icMe = "assets/icons/setting/account.png";
 const icMessage = "assets/icons/setting/message.png";
 const icReview = "assets/icons/setting/review.png";
+
+//login
+const icbag = "assets/icons/setting/iconseller.png";

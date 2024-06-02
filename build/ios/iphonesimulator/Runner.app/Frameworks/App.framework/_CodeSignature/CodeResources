@@ -10,11 +10,11 @@
 		</data>
 		<key>flutter_assets/AssetManifest.bin</key>
 		<data>
-		l7g4Wwd9snXqMIx3T3Bu3HtL1aM=
+		xbEv0Xn0sBH4I85X4IPswqX4vDQ=
 		</data>
 		<key>flutter_assets/AssetManifest.json</key>
 		<data>
-		Riim3WIH6QuJxk5Ue77sBQEw1TE=
+		hlRxEG95ddDIsVdEezxljU6Aix4=
 		</data>
 		<key>flutter_assets/FontManifest.json</key>
 		<data>
@@ -100,6 +100,10 @@
 		<data>
 		f7r3F6I3NbN7S9b71YsM0pcZhCo=
 		</data>
+		<key>flutter_assets/assets/icons/setting/iconseller.png</key>
+		<data>
+		8oMjlBz2fOe6GHrFTEd0xKOkbb8=
+		</data>
 		<key>flutter_assets/assets/icons/setting/logout.png</key>
 		<data>
 		bxXms5EJTH3hbFOwrqssYwEgOss=
@@ -138,11 +142,11 @@
 		</data>
 		<key>flutter_assets/isolate_snapshot_data</key>
 		<data>
-		iiuuqMV6oM4owJWfpE28hCDbAv8=
+		x7LdqPxzjzbKrlJYtnGD5gmvnJE=
 		</data>
 		<key>flutter_assets/kernel_blob.bin</key>
 		<data>
-		rJ1Mx5PlUrm2S+fou0M/iRhxkO0=
+		Wv4cLyv9pTmHNh4Ywk/iofMAsos=
 		</data>
 		<key>flutter_assets/lib/services/collection_model.json</key>
 		<data>
@@ -175,14 +179,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			tC/S4A6lqQmKjunHduSfbsVbqczd08FEtTOEyggTKps=
+			naAX2mxr3TGDnA4avGN/q4fIJQVPvy8U09FSjtU2pF0=
 			</data>
 		</dict>
 		<key>flutter_assets/AssetManifest.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			sIyuljkrnJU3GpxM3tl7RV1bzoNVpnEnnQP/sTYwx4E=
+			yz65OtDVDMa0U+I8cTSKmURBymfwdgRC+dcjsCw8+ag=
 			</data>
 		</dict>
 		<key>flutter_assets/FontManifest.json</key>
@@ -332,6 +336,13 @@
 			faY1Yde78Tqfdw/ezzU9Kz9sJzpQivY+qwqK4TfU+vg=
 			</data>
 		</dict>
+		<key>flutter_assets/assets/icons/setting/iconseller.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			haawleytC8SKr6F6G+b9vOoxTKTOaRn2mGEvHzm131E=
+			</data>
+		</dict>
 		<key>flutter_assets/assets/icons/setting/logout.png</key>
 		<dict>
 			<key>hash2</key>
@@ -399,14 +410,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			uWxb3nBXN5pmBgye1a+qjBFyUEcqh/MzcJMSPkV4q/Y=
+			GOtFsTFR8YvTLWzyBz8DcE06KLJg695GJ3ET6N9qALQ=
 			</data>
 		</dict>
 		<key>flutter_assets/kernel_blob.bin</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			vCXIISX3bzpBYtYplIxfm37ObhopF/0AgPPWgZ4E9xA=
+			67/nlG+1U7GxK9hnnxhLKHsGZOdxrG/ISEqwRucTX18=
 			</data>
 		</dict>
 		<key>flutter_assets/lib/services/collection_model.json</key>

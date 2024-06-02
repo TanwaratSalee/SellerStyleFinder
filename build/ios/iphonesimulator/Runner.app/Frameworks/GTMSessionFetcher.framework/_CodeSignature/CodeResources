@@ -29,6 +29,10 @@
 	<dict>
 		<key>GTMSessionFetcher_Core_Privacy.bundle/Info.plist</key>
 		<dict>
+			<key>hash</key>
+			<data>
+			C6Djd4/+0qYs87QzH5dn+SS6RsM=
+			</data>
 			<key>hash2</key>
 			<data>
 			4NzX+fEZfZnQ1v5kNfP612fddPNiL4rj27U6nqRl31w=
@@ -36,6 +40,10 @@
 		</dict>
 		<key>GTMSessionFetcher_Core_Privacy.bundle/PrivacyInfo.xcprivacy</key>
 		<dict>
+			<key>hash</key>
+			<data>
+			GqeAMkwbcNQeG0K4qQhQh2vHhHo=
+			</data>
 			<key>hash2</key>
 			<data>
 			PkqTy+hqzvfdfgY6KMhJmS9Vbn9SytxfN8HosOG1RoY=
@@ -43,6 +51,10 @@
 		</dict>
 		<key>GTMSessionFetcher_Full_Privacy.bundle/Info.plist</key>
 		<dict>
+			<key>hash</key>
+			<data>
+			H6RPpF2OMYpzIkciMu5mnldwT68=
+			</data>
 			<key>hash2</key>
 			<data>
 			SuUuZdCzTzpfN57PA7YGQWZpOSuZ1oBSyTlxQloF5Q4=
@@ -50,6 +62,10 @@
 		</dict>
 		<key>GTMSessionFetcher_Full_Privacy.bundle/PrivacyInfo.xcprivacy</key>
 		<dict>
+			<key>hash</key>
+			<data>
+			ZajnvEs/MYRS3X4TPLAhBWi8mc4=
+			</data>
 			<key>hash2</key>
 			<data>
 			dLDNcvwjwe8wLyLuJ1P2GBfNxa8P96fy0GMrUk+4rOo=

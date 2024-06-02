@@ -17,7 +17,7 @@ const appname = "eMart Seller App",
     totalSale = "Total Sales",
     popular = "Popular Products",
     orders = "Orders",
-    loginTo = "Shop Login",
+    loginTo = "Welcome to",
     products = "Products",
     settings = "Setting",
     featured = "Featured",
@@ -34,7 +34,6 @@ const aboutaccount = "About Account", aboutyou = "About You";
 
 //Edit account
 const address = 'Address :',
-city = 'City :',
-state = 'State / Province :',
-postal = 'Postal / Zip code :';
-
+    city = 'City :',
+    state = 'State / Province :',
+    postal = 'Postal / Zip code :';
