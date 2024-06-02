@@ -48,9 +48,10 @@ class _ProductsScreenState extends State<ProductsScreen> {
             buildMatchesTab(context),
           ],
         ),
+        
       ),
-    );
-  }
+    );  
+    }
 
   Widget buildProductsTab(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
@@ -69,6 +70,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                 await controller.getCollection();
                 controller.populateCollectionList();
                 Get.to(() => const AddProduct());
+                
               },
             ),
             Expanded(
@@ -76,8 +78,13 @@ class _ProductsScreenState extends State<ProductsScreen> {
                 itemCount: data.length,
                 itemBuilder: (context, index) {
                   var doc = data[index].data() as Map<String, dynamic>;
+                  String documentId = data[index].id;
                   return ListTile(
-                    onTap: () => Get.to(() => ProductDetails(data: doc)),
+                    onTap: () {
+                print(controller.productId);
+               Get.to(() => ProductDetails(data: doc));
+              },
+                    // onTap: () => 
                     leading: Image.network(
                       doc['p_imgs'][0],
                       width: 50,
@@ -92,9 +99,10 @@ class _ProductsScreenState extends State<ProductsScreen> {
                       onSelected: (String value) {
                         if (value == 'edit') {
                           Get.to(() => EditProduct(
-                              productData: doc, documentId: data[index].id));
+                              productData: doc, documentId: documentId));
+                              print(controller.productId);  
                         } else if (value == 'delete') {
-                          controller.removeProduct(data[index].id);
+                          controller.removeProduct(documentId);
                         }
                       },
                       itemBuilder: (BuildContext context) =>
@@ -153,7 +161,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                 onTap: () async {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) =>  AddMatchProduct()),
+                    MaterialPageRoute(builder: (context) => AddMatchProduct()),
                   );
                 },
               ),
@@ -170,122 +178,130 @@ class _ProductsScreenState extends State<ProductsScreen> {
               onTap: () async {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) =>  AddMatchProduct()),
+                  MaterialPageRoute(builder: (context) => AddMatchProduct()),
                 );
               },
             ),
             Expanded(
               child: ListView.builder(
-              itemCount: validPairs.length,
-              itemBuilder: (context, index) {
-                var pair = validPairs[index];
-                var product1 = pair.value[0].data() as Map<String, dynamic>;
-                var product2 = pair.value[1].data() as Map<String, dynamic>;
+                itemCount: validPairs.length,
+                itemBuilder: (context, index) {
+                  var pair = validPairs[index];
+                  var product1 = pair.value[0].data() as Map<String, dynamic>;
+                  var product2 = pair.value[1].data() as Map<String, dynamic>;
 
-                String price1 = product1['p_price'].toString();
-                String price2 = product2['p_price'].toString();
+                  String documentId1 = pair.value[0].id;
+                  String documentId2 = pair.value[1].id;
+                  String price1 = product1['p_price'].toString();
+                  String price2 = product2['p_price'].toString();
 
-                String name1 = product1['p_name'].toString();
-                String name2 = product2['p_name'].toString();
+                  String name1 = product1['p_name'].toString();
+                  String name2 = product2['p_name'].toString();
 
-                String productImage1 = product1['p_imgs'][0];
-                String productImage2 = product2['p_imgs'][0];
+                  String productImage1 = product1['p_imgs'][0];
+                  String productImage2 = product2['p_imgs'][0];
 
-
-    return Column(
-      children: [
-        Row(
-          children: [
-            Image.network(
-              productImage1,
-              width: 55,
-              height: 55,
-              fit: BoxFit.cover,
-            ),
-            const SizedBox(width: 10),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('$name1').text.size(16).medium.make(),
-                  2.heightBox,
-                  Text("${NumberFormat('#,##0').format(double.parse(price1.toString()).toInt())} Bath")
-                      .text
-                      .light
-                      .make(),
-                ],
+                  return Column(
+                    children: [
+                      Row(
+                        children: [
+                          Image.network(
+                            productImage1,
+                            width: 55,
+                            height: 55,
+                            fit: BoxFit.cover,
+                          ),
+                          const SizedBox(width: 10),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('$name1').text.size(16).medium.make(),
+                                2.heightBox,
+                                Text("${NumberFormat('#,##0').format(double.parse(price1.toString()).toInt())} Bath")
+                                    .text
+                                    .light
+                                    .make(),
+                              ],
+                            ),
+                          ),
+                          PopupMenuButton<String>(
+                            onSelected: (String value) {
+                              if (value == 'edit') {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => EditMatchProduct(
+                                          product1: product1,
+                                          product2: product2)),
+                                );
+                              } else if (value == 'delete') {
+                                controller.resetMixMatchData(pair.value[0].id);
+                                controller.resetMixMatchData(pair.value[1].id);
+                              }
+                            },
+                            itemBuilder: (BuildContext context) =>
+                                <PopupMenuEntry<String>>[
+                              const PopupMenuItem<String>(
+                                  value: 'edit', child: Text('Edit')),
+                              const PopupMenuItem<String>(
+                                  value: 'delete', child: Text('Delete')),
+                            ],
+                          ),
+                        ],
+                      ),
+                      5.heightBox,
+                      Row(
+                        children: [
+                          Image.network(
+                            productImage2,
+                            width: 55,
+                            height: 55,
+                            fit: BoxFit.cover,
+                          ),
+                          const SizedBox(width: 10),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('$name2').text.size(16).medium.make(),
+                                2.heightBox,
+                                Text("${NumberFormat('#,##0').format(double.parse(price2.toString()).toInt())} Bath")
+                                    .text
+                                    .light
+                                    .make(),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      10.heightBox,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          const Text('Total price:')
+                              .text
+                              .fontFamily(regular)
+                              .make(),
+                          5.widthBox,
+                          Text("${NumberFormat('#,##0').format((double.parse(price1.toString()) + double.parse(price2.toString())).toInt())} Bath")
+                              .text
+                              .fontFamily(regular)
+                              .make(),
+                        ],
+                      ),
+                    ],
+                  )
+                      .box
+                      .rounded
+                      .border(color: greyColor)
+                      .margin(const EdgeInsets.symmetric(
+                          vertical: 4, horizontal: 12))
+                      .padding(const EdgeInsets.symmetric(
+                          vertical: 8, horizontal: 12))
+                      .make();
+                },
               ),
-            ),
-            PopupMenuButton<String>(
-              onSelected: (String value) {
-                  if (value == 'edit') {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) =>  EditMatchProduct(product1: product1, product2: product2)),
-                    );
-                } else if (value == 'delete') {
-                  controller.resetMixMatchData(pair.value[0].id);
-                  controller.resetMixMatchData(pair.value[1].id);
-                }
-              },
-              itemBuilder: (BuildContext context) =>
-                  <PopupMenuEntry<String>>[
-                const PopupMenuItem<String>(
-                    value: 'edit', child: Text('Edit')),
-                const PopupMenuItem<String>(
-                    value: 'delete', child: Text('Delete')),
-              ],
-            ),
-          ],
-        ),
-        5.heightBox,
-        Row(
-          children: [
-            Image.network(
-              productImage2,
-              width: 55,
-              height: 55,
-              fit: BoxFit.cover,
-            ),
-            const SizedBox(width: 10),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('$name2').text.size(16).medium.make(),
-                  2.heightBox,
-                  Text("${NumberFormat('#,##0').format(double.parse(price2.toString()).toInt())} Bath")
-                      .text
-                      .light
-                      .make(),
-                ],
-              ),
-            ),
-          ],
-        ),
-        10.heightBox,
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            const Text('Total price:').text.fontFamily(regular).make(),
-            5.widthBox,
-            Text("${NumberFormat('#,##0').format((double.parse(price1.toString()) + double.parse(price2.toString())).toInt())} Bath")
-                .text
-                .fontFamily(regular)
-                .make(),
-          ],
-        ),
-      ],
-    )
-        .box
-        .rounded
-        .border(color: greyColor)
-        .margin(const EdgeInsets.symmetric(vertical: 4, horizontal: 12))
-        .padding(
-            const EdgeInsets.symmetric(vertical: 8, horizontal: 12))
-        .make();
-  },
-),
             ),
           ],
         );

@@ -76,8 +76,7 @@ class _OrdersScreenState extends State<OrdersScreen>
           );
         }
 
-        var data = snapshot.data!.docs
-            .where((order) =>
+        var data = snapshot.data!.docs.where((order) =>
                 order['order_placed'] == true &&
                 order['order_confirmed'] == false &&
                 order['order_delivered'] == false &&

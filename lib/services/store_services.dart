@@ -11,22 +11,20 @@ class StoreServices {
   }
 
   static getOrders(uid) {
-    return firestore.collection(ordersCollection).where('vendors', arrayContains: uid).snapshots();
+    return firestore.collection(ordersCollection).where('vendor_id', /* arrayContains */isEqualTo: uid).snapshots();
   }
 
   static getProducts(uid) {
     return firestore.collection(productsCollection).where('vendor_id', isEqualTo: uid).snapshots();
   }
 
-  static Stream<QuerySnapshot> getUserOrders(String userId) {
-    return firestore.collection(ordersCollection).where('vendors', isEqualTo: userId).orderBy('order_date', descending: true)  .snapshots();
-  }
+  // static Stream<QuerySnapshot> getUserOrders(String userId) {
+  //   return firestore.collection(ordersCollection).where('vendors', isEqualTo: userId).orderBy('order_date', descending: true)  .snapshots();
+  // }
 
-  static Stream<QuerySnapshot> getOrdersByStatus(String userId, String status) {
-    return FirebaseFirestore.instance.collection(ordersCollection).where('user_id', isEqualTo: userId).where('status', isEqualTo: status).snapshots();
-  }
-
-
+  // static Stream<QuerySnapshot> getOrdersByStatus(String userId, String status) {
+  //   return FirebaseFirestore.instance.collection(ordersCollection).where('user_id', isEqualTo: userId).where('status', isEqualTo: status).snapshots();
+  // }
 
 }
 

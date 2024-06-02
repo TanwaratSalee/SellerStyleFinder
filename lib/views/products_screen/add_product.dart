@@ -31,11 +31,10 @@ class AddProduct extends StatelessWidget {
                         await controller.uploadProduct(context);
                         Get.back();
                         controller.isloading(false);
-                        VxToast.show(context,
-                            msg: "Product saved successfully.");
+                        VxToast.show(context, msg: "Product saved successfully.");
+                        print(controller.productId);  
                       } else {
-                        VxToast.show(context,
-                            msg: "Please fill in all required fields.");
+                        VxToast.show(context, msg: "Please fill in all required fields.");
                       }
                     },
                     child: const Text(save).text.fontFamily(medium).size(18).make())
@@ -57,13 +56,11 @@ class AddProduct extends StatelessWidget {
                 15.heightBox,
                 Obx(
                   () => Column(
-                    mainAxisAlignment: MainAxisAlignment
-                        .spaceAround, 
+                    mainAxisAlignment: MainAxisAlignment.spaceAround, 
                     children: List.generate(
                       3,
                       (row) => Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 7), 
+                        padding: const EdgeInsets.symmetric(vertical: 7), 
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: List.generate(
@@ -71,8 +68,7 @@ class AddProduct extends StatelessWidget {
                             (col) {
                               int index = row * 3 + col;
                               return Padding(
-                                padding: const EdgeInsets.all(
-                                    2), 
+                                padding: const EdgeInsets.all(2), 
                                 child: controller.pImagesList[index] != null
                                     ? Image.file(
                                         controller.pImagesList[index],
@@ -192,7 +188,8 @@ class AddProduct extends StatelessWidget {
                               : const BorderSide(color: greyColor),
                         );
                       }).toList(),
-                    )),10.heightBox,
+                    )),
+                10.heightBox,
                 const Text("Suitable for gender")
                     .text
                     .size(16)
@@ -228,7 +225,6 @@ class AddProduct extends StatelessWidget {
                         );
                       }).toList(),
                     )),
-                    
                 10.heightBox,
                 const Text("Size of product")
                     .text
@@ -245,12 +241,10 @@ class AddProduct extends StatelessWidget {
                           selected: controller.selectedSizes.contains(size),
                           onSelected: (selected) {
                             if (selected) {
-                              
                               if (!controller.selectedSizes.contains(size)) {
                                 controller.selectedSizes.add(size);
                               }
                             } else {
-                              
                               controller.selectedSizes.remove(size);
                             }
                           },
@@ -293,8 +287,7 @@ class AddProduct extends StatelessWidget {
                                   color: controller.selectedColorIndexes
                                           .contains(index)
                                       ? primaryApp 
-                                      : Colors
-                                          .transparent, 
+                                      : Colors.transparent, 
                                   width: 2,
                                 ),
                               ),
@@ -303,9 +296,7 @@ class AddProduct extends StatelessWidget {
                                         .contains(index)
                                     ? Icon(
                                         Icons.done,
-                                        color: controller.allColors[index]
-                                                    ['color'] ==
-                                                whiteColor
+                                        color: controller.allColors[index]['color'] == whiteColor
                                             ? Colors.black
                                             : whiteColor,
                                       )
@@ -342,8 +333,7 @@ class AddProduct extends StatelessWidget {
                           selected: isSelected,
                           onSelected: (selected) {
                             if (selected) {
-                              controller.selectedMixandmatch.value =
-                                  mixandmatch;
+                              controller.selectedMixandmatch.value = mixandmatch;
                             }
                           },
                           selectedColor: thinPrimaryApp,
@@ -363,3 +353,4 @@ class AddProduct extends StatelessWidget {
     );
   }
 }
+

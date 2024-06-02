@@ -117,7 +117,6 @@ class _OrderDetailsState extends State<OrderDetails> {
                         .rounded
                         .make(),
                   ),
-
                   10.heightBox,
                   Column(
                     children: [
@@ -128,7 +127,6 @@ class _OrderDetailsState extends State<OrderDetails> {
                         title2: "Shipping Method",
                       ),
                       orderPlaceDetails(
-                        // d1: DateTime.now(),
                         d1: intl.DateFormat()
                             .add_yMd()
                             .format((widget.data['order_date'].toDate())),
@@ -151,7 +149,6 @@ class _OrderDetailsState extends State<OrderDetails> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                // "Shipping Address".text.fontFamily(semibold).make(),
                                 const Text("Shipping Address")
                                     .text
                                     .size(15)
@@ -161,7 +158,6 @@ class _OrderDetailsState extends State<OrderDetails> {
                                 "${widget.data['order_by_firstname']} ${widget.data['order_by_surname']}"
                                     .text
                                     .make(),
-                                // "${widget.data['order_by_email']}".text.make(),
                                 "${widget.data['order_by_address']}"
                                     .text
                                     .make(),
@@ -198,7 +194,6 @@ class _OrderDetailsState extends State<OrderDetails> {
                       .border(color: greyColor)
                       .rounded
                       .make(),
-                  // const Divider(color: greyThin),
                   10.heightBox,
                   Column(children: [
                     10.heightBox,
@@ -208,70 +203,57 @@ class _OrderDetailsState extends State<OrderDetails> {
                         .fontFamily(medium)
                         .make(),
                     10.heightBox,
-                    ListView(
+                    ListView.builder(
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
-                      children:
-                          List.generate(controller.orders.length, (index) {
-                        return ListView(
-                          physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          children:
-                              List.generate(controller.orders.length, (index) {
-                            return Row(
+                      itemCount: controller.orders.length,
+                      itemBuilder: (context, index) {
+                        return Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(width: 10),
+                            Text("${controller.orders[index]['qty']}x",
+                                style: const TextStyle(
+                                    fontSize: 14, fontFamily: regular)),
+                            const SizedBox(width: 15),
+                            Image.network(
+                              controller.orders[index]['img'],
+                              width: 70,
+                              height: 70,
+                              fit: BoxFit.cover,
+                            ),
+                            const SizedBox(width: 10),
+                            Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const SizedBox(width: 10),
-                                Text("${controller.orders[index]['qty']}x",
-                                    style: const TextStyle(
-                                        fontSize: 14, fontFamily: regular)),
-                                const SizedBox(width: 15),
-                                Image.network(
-                                  controller.orders[index]['img'],
-                                  width: 70,
-                                  height: 70,
-                                  fit: BoxFit.cover,
-                                ),
-                                const SizedBox(width: 10),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      controller.orders[index]['title'],
-                                      style: const TextStyle(
-                                          fontSize: 16, fontFamily: medium),
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                    Text(
-                                      "${NumberFormat('#,##0').format(double.parse(controller.orders[index]['price'].toString()))} Bath",
-                                      style: const TextStyle(
-                                          fontSize: 14,
-                                          fontFamily: regular,
-                                          color: greyColor),
-                                    ),
-                                  ],
-                                ),
                                 SizedBox(
-                                    width:
-                                        10), // Provide spacing between text and the color box
-                                // Container(
-                                //   width: 30,
-                                //   height: 20,
-                                //   color:
-                                //       Color(controller.orders[index]['color']),
-                                // ),
+                                  width: 180,
+                                  child: Text(
+                                    controller.orders[index]['title'],
+                                    style: const TextStyle(
+                                        fontSize: 16, fontFamily: medium),
+                                        maxLines: 1,
+                                                  overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                                Text(
+                                  "${NumberFormat('#,##0').format(double.parse(controller.orders[index]['price'].toString()))} Bath",
+                                  style: const TextStyle(
+                                      fontSize: 14,
+                                      fontFamily: regular,
+                                      color: greyColor),
+                                ),
                               ],
-                            );
-                          }).toList(),
-                        ).box.padding(EdgeInsets.all(8)).make();
-                      }).toList(),
+                            ),
+                          ],
+                        ).box.padding(const EdgeInsets.all(8)).make();
+                      },
                     ),
                     20.heightBox,
                   ])
                       .box
                       .outerShadowMd
                       .white
-                      // .border(color: greyColor)
                       .rounded
                       .make(),
                 ],
