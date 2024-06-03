@@ -331,7 +331,7 @@ class _EditProductState extends State<EditProduct> {
                                     ? Icon(
                                         Icons.done,
                                         color: controller.allColors[index]['color'] == whiteColor
-                                            ? Colors.black
+                                            ? blackColor
                                             : whiteColor,
                                       )
                                     : const SizedBox(),

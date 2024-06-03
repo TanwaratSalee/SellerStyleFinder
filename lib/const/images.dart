@@ -5,6 +5,7 @@ const icChat = "assets/icons/chat.png";
 const icHome = "assets/icons/home.png";
 const icGeneralSettings = "assets/icons/general_setting.png";
 const icOrders = "assets/icons/orders.png";
+const icTotalsales = "assets/icons/totalsales.jpg";
 const icProducts = "assets/icons/products.png";
 const icProfile = "assets/icons/profile.png";
 const icShopSettings = "assets/icons/shop_setting.png";

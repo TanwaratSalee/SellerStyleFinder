@@ -136,51 +136,60 @@ class LoginScreen extends StatelessWidget {
                               const Text(
                                 "How to Sign Up for the Seller StyleFinder App",
                                 style: TextStyle(
-                                  fontSize: 32,
-                                ),
+                                    fontSize: 32, fontFamily: semiBold),
                               ),
-                              SizedBox(height: 30),
+                              SizedBox(height: 40),
                               const Text(
-                                'If you already have an account with the StyleFinder app, you can seamlessly use the same email and password to create your store with us.\n\n\nIf you do not yet have an account with the StyleFinder app, please follow these steps:',
+                                'If you already have an account with the StyleFinder app, you can seamlessly use the same email and password to create your store with us.',
                                 style: TextStyle(
-                                  fontSize: 16,
-                                ),
+                                    fontSize: 16, fontFamily: regular),
                               ),
-                              10.heightBox,
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: const Text(
-                                  '1. Download the StyleFinder app.',
-                                  style: TextStyle(
-                                    fontSize: 16,
+                              20.heightBox,
+                              Text(
+                                    'If you do not yet have an account with the StyleFinder app, please follow these steps:',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontFamily: regular,
+                                    ),
                                   ),
-                                ),
-                              ),
+                              
                               Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: const Text(
-                                  '2. Register and log in using the app.',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: const Text(
-                                  '3. Once registered, you can use the same email and password to create your store account through the Seller StyleFinder app.',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                  ),
+                                padding: const EdgeInsets.only(left: 18),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: const [
+                                    SizedBox(height: 8),
+                                    Text(
+                                      '1. Download the StyleFinder app.',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontFamily: regular,
+                                      ),
+                                    ),
+                                    SizedBox(height: 8),
+                                    Text(
+                                      '2. Register and log in using the app.',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontFamily: regular,
+                                      ),
+                                    ),
+                                    SizedBox(height: 8),
+                                    Text(
+                                      '3. Once registered, you can use the same email and password to create your store account through the Seller StyleFinder app.',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontFamily: regular,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                               SizedBox(height: 70),
                               const Text(
                                 'Thank you for choosing StyleFinder to meet your fashion needs. We sincerely hope that you will enjoy and appreciate our service.',
                                 style: TextStyle(
-                                  fontSize: 18,
-                                  fontFamily: regular
-                                ),
+                                    fontSize: 18, fontFamily: regular),
                               ),
                             ],
                           ),
@@ -193,7 +202,7 @@ class LoginScreen extends StatelessWidget {
                     style: TextStyle(
                       decoration: TextDecoration.underline,
                       fontSize: 14,
-                      color: Colors.black,
+                      color: blackColor,
                     ),
                   ),
                 ),

@@ -31,7 +31,7 @@ class _CreateAccountState extends State<CreateAccount> {
       appBar: AppBar(
         title: const Text("Create Shop Account"),
         backgroundColor: whiteColor,
-        foregroundColor: Colors.black,
+        foregroundColor: blackColor,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),

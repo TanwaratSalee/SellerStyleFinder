@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:seller_finalproject/const/const.dart';
 import 'package:seller_finalproject/const/styles.dart';
 import 'package:seller_finalproject/controllers/loading_Indcator.dart';
+import 'package:seller_finalproject/controllers/profile_controller.dart';
 import 'package:seller_finalproject/services/store_services.dart';
 import 'package:seller_finalproject/views/products_screen/product_details.dart';
 import 'package:seller_finalproject/views/widgets/appbar_widget.dart';
@@ -23,7 +24,9 @@ class HomeScreen extends StatelessWidget {
             return loadingIndicator();
           } else {
             var productsData = productSnapshot.data!.docs;
-            productsData = productsData.sortedBy((a, b) => a['p_wishlist'].length.compareTo(b['p_wishlist'].length));
+
+            // Sort productsData by wishlist length in descending order
+            productsData.sort((a, b) => b['p_wishlist'].length.compareTo(a['p_wishlist'].length));
 
             return StreamBuilder(
               stream: StoreServices.getOrders(currentUser!.uid),
@@ -34,56 +37,52 @@ class HomeScreen extends StatelessWidget {
                   var ordersData = orderSnapshot.data!.docs;
                   var totalProductsInOrders = ordersData.length;
 
-                  var totalSales = ordersData.where((order) =>
-                    order['order_confirmed'] == true &&
-                    order['order_delivered'] == true &&
-                    order['order_on_delivery'] == true &&
-                    order['order_placed'] == true
-                  ).length;
+                  var totalSales = ordersData
+                      .where((order) =>
+                          order['order_confirmed'] == true &&
+                          order['order_delivered'] == true &&
+                          order['order_on_delivery'] == true &&
+                          order['order_placed'] == true)
+                      .length;
 
                   return Padding(
                     padding: const EdgeInsets.all(8),
                     child: Column(
                       children: [
                         Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             dashboardButton(context,
                                 title: products,
                                 count: "${productsData.length}",
                                 icon: icProducts),
+                            5.heightBox,
                             dashboardButton(context,
                                 title: orders,
                                 count: "$totalProductsInOrders",
                                 icon: icOrders),
+                            5.heightBox,
                             dashboardButton(context,
-                                title: totalSale, count: totalSales.toString(), icon: icOrders)    
+                                title: totalSale,
+                                count: totalSales.toString(),
+                                icon: icTotalsales)
                           ],
-                        ),
-                        10.heightBox,
-                        // Row(
-                        //   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        //   children: [
-                        //     dashboardButton(context,
-                        //         title: rating, count: 60, icon: icStar),
-                        //     dashboardButton(context,
-                        //         title: totalSale, count: totalSales.toString(), icon: icOrders),
-                        //         170.widthBox
-                        //   ],
-                        // ),
-                        10.heightBox,
+                        ).box.padding(EdgeInsets.symmetric(horizontal: 18)).make(),
                         const Divider(color: greyThin),
                         20.heightBox,
-                        Text(popular).text.size(16).medium.make(),
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: Text(popular).text.size(20).fontFamily(semiBold).make()
+                        ).paddingOnly(left: 20),
                         10.heightBox,
                         Expanded(
                           child: ListView.builder(
                             physics: const BouncingScrollPhysics(),
-                            itemCount: productsData.length,
+                            itemCount: productsData.length > 10 ? 10 : productsData.length,
                             itemBuilder: (context, index) {
                               if (productsData[index]['p_wishlist'].isEmpty) {
-                                return const SizedBox.shrink(); // Use shrink for more semantically correct empty space
+                                return const SizedBox.shrink();
                               }
                               return ListTile(
                                 onTap: () async {
@@ -110,7 +109,11 @@ class HomeScreen extends StatelessWidget {
                                   height: 80,
                                   fit: BoxFit.cover,
                                 ),
-                                title: Text(productsData[index]['p_name']).text.size(16).fontFamily(medium).make(),
+                                title: Text("${index + 1}. ${productsData[index]['p_name']}")
+                                    .text
+                                    .size(16)
+                                    .fontFamily(medium)
+                                    .make(),
                                 subtitle: Text(
                                   "${NumberFormat('#,##0').format(double.tryParse(productsData[index]['p_price'])?.toInt() ?? 0)} Bath",
                                 ),

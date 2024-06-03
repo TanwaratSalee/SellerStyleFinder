@@ -39,7 +39,7 @@ class MatchController extends GetxController {
 
   final selectedColorIndexes = <int>[].obs;
   final List<Map<String, dynamic>> allColors = [
-    {'name': 'Black', 'color': Colors.black},
+    {'name': 'Black', 'color': blackColor},
     {'name': 'Grey', 'color': greyColor},
     {'name': 'White', 'color': whiteColor},
     {'name': 'Purple', 'color': Colors.purple},
