@@ -21,16 +21,16 @@ Widget customTextField({
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(8),
-        borderSide: const BorderSide(color: greyColor),
+        borderSide: const BorderSide(color: greyLine),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(8),
         borderSide: const BorderSide(color: greyColor),
       ),
     ),
-    style: const TextStyle(color: greyDark),
+    style: const TextStyle(color: blackColor),
     maxLines: isDesc ? 4 : 1,
     keyboardType: keyboardType,
     inputFormatters: inputFormatters,
-  ).box.color(greyThin).roundedSM.make();
+  );
 }

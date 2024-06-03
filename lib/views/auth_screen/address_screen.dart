@@ -69,7 +69,7 @@ class _AddressFormFormState extends State<AddressForm> {
         title: const Text("Shop Address").text.size(24).fontFamily(medium).make(),
       ),
       bottomNavigationBar: SizedBox(
-        height: 70,
+        height: 55,
         child: ourButton(
             onPress: () async {
               if (/* controller.firstnameController.value.text.isEmpty ||
@@ -97,9 +97,9 @@ class _AddressFormFormState extends State<AddressForm> {
             color: primaryApp,
             textColor: whiteColor,
             title: "Save"),
-      ),
+      ).box.padding(EdgeInsets.fromLTRB(25, 0, 25, 30)).make(),
       body: Padding(
-        padding: const EdgeInsets.all(18),
+        padding: const EdgeInsets.symmetric(horizontal: 28),
         child: Column(
           children: [
             // customTextField(
@@ -109,19 +109,19 @@ class _AddressFormFormState extends State<AddressForm> {
             // customTextField(
             //     label: "Surname",
             //     controller: controller.surnameController.value),
-            15.heightBox,
+            20.heightBox,
             customTextField(
                 label: "Address",
                 controller: controller.addressController.value),
-            15.heightBox,
+            20.heightBox,
             customTextField(
                 label: "City",
                 controller: controller.cityController.value),
-            15.heightBox,
+            20.heightBox,
             customTextField(
                 label: "State",
                 controller: controller.stateController.value),
-            15.heightBox,
+            20.heightBox,
             customTextField(
                 label: "Postal Code",
                 controller: controller.postalCodeController.value),
