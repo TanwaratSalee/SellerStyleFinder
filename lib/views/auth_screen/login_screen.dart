@@ -95,7 +95,7 @@ class LoginScreen extends StatelessWidget {
                       child: const Text(forgotPassword)
                           .text
                           .size(14)
-                          .color(greyColor)
+                          .color(blackColor)
                           .fontFamily(medium)
                           .make(),
                     ),
@@ -105,7 +105,7 @@ class LoginScreen extends StatelessWidget {
                     child: controller.isloading.value
                         ? loadingIndicator()
                         : ourButton(
-                            title: 'Login',
+                            title: 'Sign In',
                             onPress: () async {
                               await controller.loginMethod();
                             },
@@ -145,13 +145,14 @@ class LoginScreen extends StatelessWidget {
                                     fontSize: 32,
                                   ),
                                 ),
-                                SizedBox(height: 50),
+                                SizedBox(height: 30),
                                 const Text(
                                   'If you already have an account with the StyleFinder app, you can seamlessly use the same email and password to create your store with us.\n\n\nIf you do not yet have an account with the StyleFinder app, please follow these steps:',
                                   style: TextStyle(
                                     fontSize: 16,
                                   ),
                                 ),
+                                10.heightBox,
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: const Text(
@@ -198,7 +199,7 @@ class LoginScreen extends StatelessWidget {
                     style: TextStyle(
                       decoration: TextDecoration.underline,
                       fontSize: 14,
-                      color: Colors.grey,
+                      color: Colors.black,
                     ),
                   ),
                 ),
