@@ -21,10 +21,6 @@
 	<dict>
 		<key>AppAuthCore_Privacy.bundle/Info.plist</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			uiFwz+MXypnnLSSGAxLGwweOr7c=
-			</data>
 			<key>hash2</key>
 			<data>
 			E6eoM6lPhOWaisiqTWxW+2wfxFKgW7Z/PfRLkGCaNH8=
@@ -32,10 +28,6 @@
 		</dict>
 		<key>AppAuthCore_Privacy.bundle/PrivacyInfo.xcprivacy</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			MCDRptixYfA+qALBX9b4uxq3rwo=
-			</data>
 			<key>hash2</key>
 			<data>
 			Wt6WL6rqHt273QbEz4qHLOxVT2TFWgDgATYATTeOHO0=

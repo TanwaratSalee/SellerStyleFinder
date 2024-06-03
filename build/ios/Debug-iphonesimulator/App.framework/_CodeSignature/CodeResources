@@ -10,15 +10,15 @@
 		</data>
 		<key>flutter_assets/AssetManifest.bin</key>
 		<data>
-		xbEv0Xn0sBH4I85X4IPswqX4vDQ=
+		wkFvZpsZ8xd9KaHRJ9ACedgDyDI=
 		</data>
 		<key>flutter_assets/AssetManifest.json</key>
 		<data>
-		hlRxEG95ddDIsVdEezxljU6Aix4=
+		KFLwrzdhV0SSLMRToF8z9PgzVIo=
 		</data>
 		<key>flutter_assets/FontManifest.json</key>
 		<data>
-		VjMdFvyJ7JLCOVKkl6mW+xPWZdw=
+		qWB7Guq03kZaCd9y/lJ88p/BaYA=
 		</data>
 		<key>flutter_assets/NOTICES.Z</key>
 		<data>
@@ -43,6 +43,10 @@
 		<key>flutter_assets/assets/fonts/Urbanist/Urbanist-Regular.ttf</key>
 		<data>
 		j454dbJA33FJ5Jniq8T0jxPM79A=
+		</data>
+		<key>flutter_assets/assets/fonts/Urbanist/Urbanist-SemiBold.ttf</key>
+		<data>
+		JoyTlbsY0mmJsktSSXeTGNH5XCI=
 		</data>
 		<key>flutter_assets/assets/icons/SellerLogo.png</key>
 		<data>
@@ -142,11 +146,11 @@
 		</data>
 		<key>flutter_assets/isolate_snapshot_data</key>
 		<data>
-		x7LdqPxzjzbKrlJYtnGD5gmvnJE=
+		iiuuqMV6oM4owJWfpE28hCDbAv8=
 		</data>
 		<key>flutter_assets/kernel_blob.bin</key>
 		<data>
-		ibuEfmldf8HhKu/CIKIMxeFzsyk=
+		zozeimyLQNYBRbS8BpnRYP9e2D8=
 		</data>
 		<key>flutter_assets/lib/services/collection_model.json</key>
 		<data>
@@ -179,21 +183,21 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			naAX2mxr3TGDnA4avGN/q4fIJQVPvy8U09FSjtU2pF0=
+			iNujmAWCsg67rIoJv2iKlKwn4NQSKrZKWUMKT94RK64=
 			</data>
 		</dict>
 		<key>flutter_assets/AssetManifest.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			yz65OtDVDMa0U+I8cTSKmURBymfwdgRC+dcjsCw8+ag=
+			5pOgZzxax2PtmY5tRJZfNQKELS/N+JrSreoYiKwSdxQ=
 			</data>
 		</dict>
 		<key>flutter_assets/FontManifest.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			bJiR4CagV0INBRB4V5clPXzPx2SfZwkwgI/hThilO8A=
+			Z8II4L8qHAtWMUYRbUgFF3mZXJjpXHkr3GQIHsvvW+I=
 			</data>
 		</dict>
 		<key>flutter_assets/NOTICES.Z</key>
@@ -236,6 +240,13 @@
 			<key>hash2</key>
 			<data>
 			v7Q0thFr+dvns6tqtL5LgeJTNSEwDfRXh0H+eV/FoWs=
+			</data>
+		</dict>
+		<key>flutter_assets/assets/fonts/Urbanist/Urbanist-SemiBold.ttf</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			TkWWJX6bbOk0PV+TQhlp1BFgzv5V7qnQYR5iaiUVWrI=
 			</data>
 		</dict>
 		<key>flutter_assets/assets/icons/SellerLogo.png</key>
@@ -410,14 +421,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			GOtFsTFR8YvTLWzyBz8DcE06KLJg695GJ3ET6N9qALQ=
+			uWxb3nBXN5pmBgye1a+qjBFyUEcqh/MzcJMSPkV4q/Y=
 			</data>
 		</dict>
 		<key>flutter_assets/kernel_blob.bin</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			YHyjEQdKtTFr4KzolESC1utSuetU1Vt8JpiLUEPvKiU=
+			XSMzcmFwPdvNSI4TOUpjwGvy3csArP78oZcLnbcQI5s=
 			</data>
 		</dict>
 		<key>flutter_assets/lib/services/collection_model.json</key>

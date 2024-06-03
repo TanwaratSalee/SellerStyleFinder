@@ -21,10 +21,6 @@
 	<dict>
 		<key>openssl_grpc.bundle/Info.plist</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			r2lFZyxBQMyWQQlktxwN9qT24u4=
-			</data>
 			<key>hash2</key>
 			<data>
 			CgtKXhasrYZjAUIkvKxX7bHlhDwBxXG2Q72i5k1Z8TE=
@@ -32,10 +28,6 @@
 		</dict>
 		<key>openssl_grpc.bundle/PrivacyInfo.xcprivacy</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			U7WM6H59FffP9Htm/es+F6Fe4q4=
-			</data>
 			<key>hash2</key>
 			<data>
 			SMwLNyeKt9zx4V4Bagi8Dg1kPZyuLQYcTZQlPy1SyIo=

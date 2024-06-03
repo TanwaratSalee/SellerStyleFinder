@@ -21,10 +21,6 @@
 	<dict>
 		<key>nanopb_Privacy.bundle/Info.plist</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			8MUepa7lY7+d+CG8TQnWyJdXS1E=
-			</data>
 			<key>hash2</key>
 			<data>
 			UpXrq+8DOosqHV+fGxu7mcnWTjcJEhUEUQLZRssOyDk=
@@ -32,10 +28,6 @@
 		</dict>
 		<key>nanopb_Privacy.bundle/PrivacyInfo.xcprivacy</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			KY5lfwC2TvsgFj4wt7hkMmainbs=
-			</data>
 			<key>hash2</key>
 			<data>
 			cpujy9D0WMeM1h7fFzUO2v4ONMqG4xTsZMjLIszSG1Q=

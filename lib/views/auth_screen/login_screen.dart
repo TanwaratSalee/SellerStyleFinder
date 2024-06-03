@@ -36,9 +36,8 @@ class LoginScreen extends StatelessWidget {
                     width: 320,
                     height: 320,
                   ),
-                  20.heightBox,
                   Container(
-                    padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: const Text(
                             'Enjoy selling and discovering the best fashion brands. Wishing you a successful first day!')
                         .text
@@ -86,18 +85,21 @@ class LoginScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: TextButton(
-                      onPressed: () {
-                        Get.to(() => ForgotScreen());
-                      },
-                      child: const Text(forgotPassword)
-                          .text
-                          .size(14)
-                          .color(blackColor)
-                          .fontFamily(medium)
-                          .make(),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 18),
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: TextButton(
+                        onPressed: () {
+                          Get.to(() => ForgotScreen());
+                        },
+                        child: const Text(forgotPassword)
+                            .text
+                            .size(14)
+                            .color(greyDark)
+                            .fontFamily(medium)
+                            .make(),
+                      ),
                     ),
                   ),
                   10.heightBox,
@@ -126,69 +128,61 @@ class LoginScreen extends StatelessWidget {
                       isScrollControlled: true,
                       builder: (BuildContext context) {
                         return Container(
-                          height: 700,
-                          padding: const EdgeInsets.all(20.0),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                // Container(
-                                //   width: 200,
-                                //   height: 4,
-                                //   color: Colors.black,
-                                //   margin: const EdgeInsets.only(bottom: 20.0),
-                                // ),
-                                const Text(
-                                  "How to Sign Up for the Seller StyleFinder App",
-                                  style: TextStyle(
-                                    fontSize: 32,
-                                  ),
+                          height: 720,
+                          padding: const EdgeInsets.all(32),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                "How to Sign Up for the Seller StyleFinder App",
+                                style: TextStyle(
+                                  fontSize: 32,
                                 ),
-                                SizedBox(height: 30),
-                                const Text(
-                                  'If you already have an account with the StyleFinder app, you can seamlessly use the same email and password to create your store with us.\n\n\nIf you do not yet have an account with the StyleFinder app, please follow these steps:',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                  ),
+                              ),
+                              SizedBox(height: 30),
+                              const Text(
+                                'If you already have an account with the StyleFinder app, you can seamlessly use the same email and password to create your store with us.\n\n\nIf you do not yet have an account with the StyleFinder app, please follow these steps:',
+                                style: TextStyle(
+                                  fontSize: 16,
                                 ),
-                                10.heightBox,
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: const Text(
-                                    '1. Download the StyleFinder app.',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: const Text(
-                                    '2. Register and log in using the app.',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: const Text(
-                                    '3. Once registered, you can use the same email and password to create your store account through the Seller StyleFinder app.',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(height: 70),
-                                const Text(
-                                  'Thank you for choosing StyleFinder to meet your fashion needs. We sincerely hope that you will enjoy and appreciate our service.',
+                              ),
+                              10.heightBox,
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: const Text(
+                                  '1. Download the StyleFinder app.',
                                   style: TextStyle(
                                     fontSize: 16,
                                   ),
                                 ),
-                              ],
-                            ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: const Text(
+                                  '2. Register and log in using the app.',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: const Text(
+                                  '3. Once registered, you can use the same email and password to create your store account through the Seller StyleFinder app.',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(height: 70),
+                              const Text(
+                                'Thank you for choosing StyleFinder to meet your fashion needs. We sincerely hope that you will enjoy and appreciate our service.',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontFamily: regular
+                                ),
+                              ),
+                            ],
                           ),
                         );
                       },
