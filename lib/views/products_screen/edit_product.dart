@@ -1,6 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously
 
 import 'dart:io';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:seller_finalproject/const/const.dart';
 import 'package:seller_finalproject/const/styles.dart';
@@ -129,42 +130,46 @@ class _EditProductState extends State<EditProduct> {
                   ),
                 ),
                 25.heightBox,
-                customTextField(
-                  hint: "Name of product",
-                  label: "Name of product",
+                customTextFieldInput(
+                  // hint: "Name of product",
+                  heading: "Name of product",
                   controller: controller.pnameController,
                 ),
                 15.heightBox,
-                customTextField(
-                  hint: "About this product",
-                  label: "About product",
+                customTextFieldInput(
+                  // hint: "About this product",
+                  heading: "About product",
                   controller: controller.pabproductController,
                 ),
                 15.heightBox,
-                customTextField(
-                  hint: "Description this Product",
-                  label: "Description",
+                customTextFieldInput(
+                  // hint: "Description this Product",
+                  heading: "Description",
                   isDesc: true,
                   controller: controller.pdescController,
                 ),
                 15.heightBox,
-                customTextField(
-                  hint: "Size & Fit",
-                  label: "Size & Fit",
+                customTextFieldInput(
+                  // hint: "Size & Fit",
+                  heading: "Size & Fit",
                   isDesc: true,
                   controller: controller.psizeController,
                 ),
                 15.heightBox,
-                customTextField(
-                  hint: "15,000.00 Bath",
-                  label: "Price",
+                customTextFieldInput(
+                  // hint: "15,000.00 Bath",
+                  heading: "Price",
                   controller: controller.ppriceController,
+                   keyboardType: TextInputType.number,
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 ),
                 15.heightBox,
-                customTextField(
-                  hint: "20",
-                  label: "Quantity",
+                customTextFieldInput(
+                  // hint: "20",
+                  heading: "Quantity",
                   controller: controller.pquantityController,
+                   keyboardType: TextInputType.number,
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 ),
                 15.heightBox,
                 const Text("Collection")

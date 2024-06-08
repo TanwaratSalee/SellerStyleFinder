@@ -58,7 +58,8 @@ Widget customTextFieldInput({
         controller: controller,
         decoration: InputDecoration(
           isDense: true,
-          contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+          contentPadding:
+              const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
             borderSide: const BorderSide(color: redColor),
@@ -73,10 +74,7 @@ Widget customTextFieldInput({
           ),
         ),
         style: const TextStyle(
-          color: blackColor,
-          fontSize: 14, 
-fontFamily: regular
-        ),
+            color: blackColor, fontSize: 14, fontFamily: regular),
         maxLines: isDesc ? 3 : 1,
         keyboardType: keyboardType,
         inputFormatters: inputFormatters,

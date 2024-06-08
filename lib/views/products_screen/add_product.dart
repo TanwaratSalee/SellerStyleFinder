@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:seller_finalproject/const/const.dart';
 import 'package:seller_finalproject/const/styles.dart';
@@ -100,7 +101,6 @@ class AddProduct extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     customTextFieldInput(
-                      // hint: "Name of product",
                       heading: "Name of product",
                       controller: controller.pnameController,
                     ),
@@ -123,14 +123,18 @@ class AddProduct extends StatelessWidget {
                         controller: controller.psizeController),
                     10.heightBox,
                     customTextFieldInput(
-                        // hint: "100,0000 Bath",
-                        heading: "Price",
-                        controller: controller.ppriceController),
+                      heading: "Price",
+                      controller: controller.ppriceController,
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                    ),
                     10.heightBox,
                     customTextFieldInput(
-                        // hint: "20",
-                        heading: "Quantity",
-                        controller: controller.pquantityController),
+                      heading: "Quantity",
+                      controller: controller.pquantityController,
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                    ),
                     10.heightBox,
                     const Text("Collection")
                         .text
@@ -261,13 +265,11 @@ class AddProduct extends StatelessWidget {
                             bool isSelected =
                                 controller.selectedGender.value == gender;
                             return Container(
-                              width:
-                                  110, // Set the width of the container to 180
+                              width: 110,
                               child: ChoiceChip(
                                 showCheckmark: false,
                                 label: Align(
-                                  alignment: Alignment
-                                      .center, // Center the text within the chip
+                                  alignment: Alignment.center,
                                   child: Text(
                                     capitalize(gender),
                                     style: TextStyle(
@@ -317,8 +319,7 @@ class AddProduct extends StatelessWidget {
                             return SizedBox(
                               width: 100,
                               child: ChoiceChip(
-                                showCheckmark:
-                                    false, // Ensure no checkmark is shown
+                                showCheckmark: false,
                                 label: Center(
                                   child: Text(
                                     size,
@@ -412,13 +413,14 @@ class AddProduct extends StatelessWidget {
                         ),
                       ),
                     ),
-                    10.heightBox,
+                    15.heightBox,
                     const Text("Show mix and match")
                         .text
                         .size(16)
-                        .color(greyColor)
+                        .color(blackColor)
                         .fontFamily(medium)
-                        .make(),
+                        .make(),                    8.heightBox,
+
                     Center(
                       child: Obx(() => Wrap(
                             spacing: 8,
@@ -432,8 +434,7 @@ class AddProduct extends StatelessWidget {
                                 child: ChoiceChip(
                                   showCheckmark: false,
                                   label: Container(
-                                    width:
-                                        70, // กำหนดขนาดความกว้างให้ label ภายใน ChoiceChip
+                                    width: 70,
                                     alignment: Alignment.center,
                                     child: Text(
                                       capitalize(mixandmatch),
@@ -466,7 +467,6 @@ class AddProduct extends StatelessWidget {
                   ],
                 ).paddingSymmetric(horizontal: 16),
                 100.heightBox,
-                
               ],
             ),
           ),

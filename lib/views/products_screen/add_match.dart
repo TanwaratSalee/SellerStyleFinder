@@ -10,9 +10,6 @@ class AddMatchProduct extends StatefulWidget {
 }
 
 class _AddMatchProductState extends State<AddMatchProduct> {
-  final PageController _topController = PageController(viewportFraction: 0.6);
-  final PageController _bottomController =
-      PageController(viewportFraction: 0.6);
   final MatchController controller = Get.put(MatchController());
 
   int _currentTopIndex = 0;
@@ -21,25 +18,10 @@ class _AddMatchProductState extends State<AddMatchProduct> {
   @override
   void initState() {
     super.initState();
-    _topController.addListener(() {
-      int nextIndex = _topController.page!.round();
-      if (_currentTopIndex != nextIndex) {
-        _currentTopIndex = nextIndex;
-      }
-    });
-
-    _bottomController.addListener(() {
-      int nextIndex = _bottomController.page!.round();
-      if (_currentLowerIndex != nextIndex) {
-        _currentLowerIndex = nextIndex;
-      }
-    });
   }
 
   @override
   void dispose() {
-    _topController.dispose();
-    _bottomController.dispose();
     controller.resetController();
     super.dispose();
   }
@@ -50,7 +32,7 @@ class _AddMatchProductState extends State<AddMatchProduct> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Match Product'),
+        title: const Text('Match Product').text.size(24).fontFamily(medium).make(),
         actions: <Widget>[
           TextButton(
             onPressed: () {
@@ -63,269 +45,221 @@ class _AddMatchProductState extends State<AddMatchProduct> {
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            SizedBox(
-              height: 110,
-              child: buildTopPageView(_topController, controller),
-            ),
-            const SizedBox(height: 10),
-            SizedBox(
-              height: 110,
-              child: buildLowerPageView(_bottomController, controller),
-            ),
+            FutureBuilder<Rxn<List<Product>>>(
+              future: controller.fetchTopProductsByVendor(currentUser!.uid),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasError) {
+                  return Center(child: Text('Error: ${snapshot.error}'));
+                } else if (snapshot.data?.value != null &&
+                    snapshot.data!.value!.isNotEmpty) {
+                  return SizedBox(
+                    width: 370,
+                    child: VxSwiper.builder(
+                      itemCount: snapshot.data!.value!.length,
+                      viewportFraction: 0.6,
+                      onPageChanged: (index) {
+                        _currentTopIndex = index;
+                        controller.onTopProductSelected(snapshot.data!.value![index]);
+                      },
+                      itemBuilder: (context, index) {
+                        Product product = snapshot.data!.value![index];
+                        return Center(
+                          child: Image.network(
+                            product.imageUrls[0],
+                            fit: BoxFit.cover,
+                          ).box.roundedSM.clip(Clip.antiAlias).make(),
+                        ).box.white.margin(EdgeInsets.symmetric(horizontal: 6,vertical: 2)).make();
+                      },
+                      
+                    ),
+                    
+                  );
+                  
+                } else {
+                  return Center(child: Text('No data available'));
+                }
+              },
+            ).box.color(greyThin).make(),
+            const SizedBox(height: 5),
+            FutureBuilder<Rxn<List<Product>>>(
+              future: controller.fetchLowerProductsByVendor(currentUser!.uid),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasError) {
+                  return Center(child: Text('Error: ${snapshot.error}'));
+                } else if (snapshot.data?.value != null &&
+                    snapshot.data!.value!.isNotEmpty) {
+                  return SizedBox(
+                    width: 370,
+                    child: VxSwiper.builder(
+                      itemCount: snapshot.data!.value!.length,
+                      viewportFraction: 0.6,
+                      onPageChanged: (index) {
+                        _currentLowerIndex = index;
+                        controller.onLowerProductSelected(snapshot.data!.value![index]);
+                      },
+                      itemBuilder: (context, index) {
+                        Product product = snapshot.data!.value![index];
+                        return Center(
+                          child: Image.network(
+                            product.imageUrls[0],
+                            fit: BoxFit.cover,
+                          ).box.roundedSM.clip(Clip.antiAlias).make(),
+                        ).box.white.margin(EdgeInsets.symmetric(horizontal: 6,vertical: 2)).make();
+                      },
+                    ),
+                  );
+                } else {
+                  return Center(child: Text('No data available'));
+                }
+              },
+            ).box.color(greyThin).make(),
             const SizedBox(height: 20),
-            buildGenderChips(controller),
+            const Text("Suitable for gender")
+                .text
+                .size(16)
+                .color(blackColor)
+                .fontFamily(medium)
+                .make(),
+            const SizedBox(height: 10),
+            Obx(() => Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: controller.genderList.map((gender) {
+                    bool isSelected = controller.selectedGender.value == gender;
+                    return Container(
+                      width: 110,
+                      child: ChoiceChip(
+                        showCheckmark: false,
+                        label: Container(
+                          width: 80,
+                          alignment: Alignment.center,
+                          child: Text(
+                            capitalize(gender),
+                            style: TextStyle(
+                              color: isSelected ? primaryApp : greyColor,
+                              fontFamily: isSelected ? semiBold : regular,
+                            ),
+                          ).text.size(14).make(),
+                        ),
+                        selected: isSelected,
+                        onSelected: (selected) {
+                          if (selected) {
+                            controller.selectedGender.value = gender;
+                          }
+                        },
+                        selectedColor: thinPrimaryApp,
+                        backgroundColor: whiteColor,
+                        side: isSelected
+                            ? const BorderSide(color: primaryApp, width: 2)
+                            : const BorderSide(color: greyLine),
+                      ),
+                    );
+                  }).toList(),
+                )),
             const SizedBox(height: 15),
-            buildCollectionChips(controller),
+            const Text("Collection")
+                .text
+                .size(16)
+                .color(blackColor)
+                .fontFamily(medium)
+                .make(),
+            const SizedBox(height: 10),
+            Obx(() => Wrap(
+                  spacing: 8,
+                  runSpacing: 1,
+                  children: controller.collectionList.map((collection) {
+                    bool isSelected = controller.isCollectionSelected(collection);
+                    return ChoiceChip(
+                      showCheckmark: false,
+                      label: Container(
+                        width: 80,
+                        alignment: Alignment.center,
+                        child: Text(
+                          capitalize(collection),
+                          style: TextStyle(
+                            color: isSelected ? primaryApp : greyColor,
+                            fontFamily: isSelected ? semiBold : regular,
+                          ),
+                        ).text.size(14).make(),
+                      ),
+                      selected: isSelected,
+                      onSelected: (selected) {
+                        controller.toggleCollection(collection);
+                      },
+                      selectedColor: thinPrimaryApp,
+                      backgroundColor: whiteColor,
+                      side: isSelected
+                          ? const BorderSide(color: primaryApp, width: 2)
+                          : const BorderSide(color: greyLine, width: 1.3),
+                    );
+                  }).toList(),
+                )),
             const SizedBox(height: 15),
-            customTextField(
-                    hint: "Explain clothing matching",
-                    label: "Explain clothing matching",
+            customTextFieldInput(
+                    heading: "Explain clothing matching",
                     isDesc: true,
                     controller: controller.psizeController)
                 .box
                 .padding(EdgeInsetsDirectional.all(12))
                 .make(),
             const SizedBox(height: 20),
-            buildColorChoices(controller),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget buildHeader(String text) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Text(
-        text,
-        style: TextStyle(
-          fontSize: 16,
-          color: greyColor,
-          fontFamily: medium,
-        ),
-      ),
-    );
-  }
-
-  Widget buildGenderChips(MatchController controller) {
-    String capitalize(String s) => s[0].toUpperCase() + s.substring(1);
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text("Suitable for gender")
-            .text
-            .size(16)
-            .color(greyColor)
-            .fontFamily(medium)
-            .make(),
-        const SizedBox(height: 10),
-        Obx(() => Wrap(
-              spacing: 8,
-              runSpacing: 8,
-              children: controller.genderList.map((gender) {
-                bool isSelected = controller.selectedGender.value == gender;
-                return ChoiceChip(
-                  showCheckmark: false,
-                  label: Text(
-                    capitalize(gender),
-                    style: TextStyle(
-                      color: isSelected ? primaryApp : greyColor,
-                    ),
-                  ).text.size(18).fontFamily(regular).make(),
-                  selected: isSelected,
-                  onSelected: (selected) {
-                    if (selected) {
-                      controller.selectedGender.value = gender;
-                    }
-                  },
-                  selectedColor: thinPrimaryApp,
-                  backgroundColor: greyThin,
-                  side: isSelected
-                      ? const BorderSide(color: primaryApp, width: 2)
-                      : const BorderSide(color: greyColor),
-                );
-              }).toList(),
-            )),
-      ],
-    );
-  }
-
-  Widget buildCollectionChips(MatchController controller) {
-    String capitalize(String s) => s[0].toUpperCase() + s.substring(1);
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text("Collection")
-            .text
-            .size(16)
-            .color(greyColor)
-            .fontFamily(medium)
-            .make(),
-        const SizedBox(height: 10),
-        Obx(() => Wrap(
-              spacing: 8,
-              runSpacing: 8,
-              children: controller.collectionList.map((collection) {
-                bool isSelected = controller.isCollectionSelected(collection);
-                return ChoiceChip(
-                  showCheckmark: false,
-                  label: Text(
-                    capitalize(collection),
-                    style: TextStyle(
-                      color: isSelected ? primaryApp : greyColor,
-                    ),
-                  ),
-                  selected: isSelected,
-                  onSelected: (selected) {
-                    controller.toggleCollection(collection);
-                  },
-                  selectedColor: thinPrimaryApp,
-                  backgroundColor: greyThin,
-                  side: isSelected
-                      ? const BorderSide(color: primaryApp, width: 2)
-                      : const BorderSide(color: greyColor),
-                );
-              }).toList(),
-            )),
-      ],
-    );
-  }
-
-  Widget buildColorChoices(MatchController controller) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text("Choose product colors")
-            .text
-            .size(16)
-            .color(greyColor)
-            .fontFamily(medium)
-            .make(),
-        const SizedBox(height: 15),
-        Obx(
-          () => Wrap(
-            spacing: 10,
-            runSpacing: 10,
-            children: List.generate(
-              controller.allColors.length,
-              (index) => GestureDetector(
-                onTap: () {
-                  if (controller.selectedColorIndexes.contains(index)) {
-                    controller.selectedColorIndexes.remove(index);
-                  } else {
-                    controller.selectedColorIndexes.add(index);
-                  }
-                },
-                child: Container(
-                  width: 50,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    color: controller.allColors[index]['color'],
-                    border: Border.all(
-                      color: controller.selectedColorIndexes.contains(index)
-                          ? primaryApp
-                          : Colors.transparent,
-                      width: 2,
-                    ),
-                  ),
-                  child: Center(
-                    child: controller.selectedColorIndexes.contains(index)
-                        ? Icon(
-                            Icons.done,
-                            color: controller.allColors[index]['color'] ==
-                                    whiteColor
-                                ? blackColor
-                                : whiteColor,
-                          )
-                        : const SizedBox(),
+            const Text("Choose product colors")
+                .text
+                .size(16)
+                .color(blackColor)
+                .fontFamily(medium)
+                .make(),
+            const SizedBox(height: 15),
+            Obx(
+              () => Wrap(
+                spacing: 25,
+                runSpacing: 15,
+                children: List.generate(
+                  controller.allColors.length,
+                  (index) => GestureDetector(
+                    onTap: () {
+                      if (controller.selectedColorIndexes.contains(index)) {
+                        controller.selectedColorIndexes.remove(index);
+                      } else {
+                        controller.selectedColorIndexes.add(index);
+                      }
+                    },
+                    child: Container(
+                      width: 45,
+                      height: 45,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(7),
+                        color: controller.allColors[index]['color'],
+                        border: Border.all(
+                          color: controller.selectedColorIndexes.contains(index)
+                              ? primaryApp
+                              : Colors.transparent,
+                          width: 2,
+                        ),
+                      ),
+                      child: Center(
+                        child: controller.selectedColorIndexes.contains(index)
+                            ? Icon(
+                                Icons.done,
+                                color: controller.allColors[index]['color'] ==
+                                        whiteColor
+                                    ? blackColor
+                                    : whiteColor,
+                              )
+                            : const SizedBox(),
+                      ),
+                    ).box.border(color: greyLine).roundedSM.make(),
                   ),
                 ),
               ),
             ),
-          ),
+          ],
         ),
-      ],
-    );
-  }
-
-  Widget buildTopPageView(
-      PageController controller, MatchController matchController) {
-    return FutureBuilder<Rxn<List<Product>>>(
-      future: matchController.fetchTopProductsByVendor(currentUser!.uid),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator());
-        } else if (snapshot.hasError) {
-          return Center(child: Text('Error: ${snapshot.error}'));
-        } else if (snapshot.data?.value != null &&
-            snapshot.data!.value!.isNotEmpty) {
-          return buildPageView(controller, snapshot.data!.value!,
-              matchController.onTopProductSelected);
-        } else {
-          return Center(child: Text('No data available'));
-        }
-      },
-    );
-  }
-
-  Widget buildLowerPageView(
-      PageController controller, MatchController matchController) {
-    return FutureBuilder<Rxn<List<Product>>>(
-      future: matchController.fetchLowerProductsByVendor(currentUser!.uid),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator());
-        } else if (snapshot.hasError) {
-          return Center(child: Text('Error: ${snapshot.error}'));
-        } else if (snapshot.data?.value != null &&
-            snapshot.data!.value!.isNotEmpty) {
-          return buildPageView(controller, snapshot.data!.value!,
-              matchController.onLowerProductSelected);
-        } else {
-          return Center(child: Text('No data available'));
-        }
-      },
-    );
-  }
-
-  Widget buildPageView(PageController controller, List<Product> products,
-      Function(Product) onSelectProduct) {
-    return PageView.builder(
-      controller: controller,
-      itemCount: products.length,
-      onPageChanged: (index) {
-        if (controller == _topController) {
-          _currentTopIndex = index;
-        } else if (controller == _bottomController) {
-          _currentLowerIndex = index;
-        }
-        onSelectProduct(products[index]);
-      },
-      itemBuilder: (context, index) {
-        Product product = products[index];
-        double scale = 1;
-        if (controller.position.haveDimensions) {
-          double pageOffset = controller.page! - index;
-          scale = (1 - (pageOffset.abs() * 0.2)).clamp(0.8, 1);
-        }
-
-        final double baseSize = 90;
-        final double height = Curves.easeInOut.transform(scale) * baseSize;
-        final double width = Curves.easeInOut.transform(scale) * baseSize;
-
-        return Center(
-          child: SizedBox(
-            height: height,
-            width: width,
-            child: Image.network(
-              product.imageUrls[0],
-              fit: BoxFit.cover,
-            ),
-          ),
-        );
-      },
-      physics: const BouncingScrollPhysics(),
+      ),
     );
   }
 
