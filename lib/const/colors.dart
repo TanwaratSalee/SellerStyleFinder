@@ -9,8 +9,12 @@ const Color golden = Color.fromRGBO(245, 214, 50, 1);
 const Color redThinColor = Color.fromRGBO(255, 193, 193, 1);
 const Color redColor = Color.fromRGBO(249, 109, 109, 1);
 const Color greyThin = Color.fromARGB(240, 236, 232, 232);
-const Color greyLine = Color.fromRGBO(206, 207, 210, 1);
-const Color greyColor = Color.fromRGBO(110, 115, 119, 1);
-const Color greyDark = Color.fromRGBO(91, 91, 93, 1);
+const Color greyLine = Color.fromRGBO(213, 216, 225, 1);
+const Color greyColor = Color.fromRGBO(131, 134, 135, 1);
+const Color greyDark = Color.fromRGBO(51, 51, 51, 1);
 
-const Color whiteOpacity = Color.fromRGBO(255, 255, 255, 0.92);
+const Color whiteOpacity = Color.fromRGBO(237, 235, 235, 0.918);
+
+const Color greyMessage = Color.fromRGBO(180, 179, 179, 1);
+const Color primaryMessage = Color.fromRGBO(94, 213, 212 ,1);
+// const Color primaryMessage = Color.fromRGBO(121, 211, 211, 1);

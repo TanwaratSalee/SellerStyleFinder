@@ -53,21 +53,21 @@ class ProductsController extends GetxController {
 
   final selectedColorIndexes = <int>[].obs;
   final List<Map<String, dynamic>> allColors = [
-    {'name': 'Black', 'color': blackColor},
-    {'name': 'Grey', 'color': greyColor},
-    {'name': 'White', 'color': whiteColor},
-    {'name': 'Purple', 'color': Colors.purple},
-    {'name': 'Deep Purple', 'color': Colors.deepPurple},
-    {'name': 'Blue', 'color': Colors.lightBlue},
-    {'name': 'Blue', 'color': const Color.fromARGB(255, 36, 135, 216)},
-    {'name': 'Blue Grey', 'color': const Color.fromARGB(255, 96, 139, 115)},
-    {'name': 'Green', 'color': const Color.fromARGB(255, 17, 82, 50)},
-    {'name': 'Green', 'color': Colors.green},
-    {'name': 'Green Accent', 'color': Colors.greenAccent},
+    {'name': 'Black', 'color': Colors.black},
+    {'name': 'Grey', 'color': Colors.grey},
+    {'name': 'White', 'color': Colors.white},
+    {'name': 'Purple', 'color': const Color.fromRGBO(98, 28, 141, 1)},
+    {'name': 'Deep Purple', 'color': const Color.fromRGBO(202, 147, 235, 1)},
+    {'name': 'Blue', 'color': Color.fromRGBO(32, 47, 179, 1)},
+    {'name': 'Blue', 'color': const Color.fromRGBO(48, 176, 232, 1)},
+    {'name': 'Blue Grey', 'color': const Color.fromRGBO(83, 205, 191, 1)},
+    {'name': 'Green', 'color': const Color.fromRGBO(23, 119, 15, 1)},
+    {'name': 'Green', 'color': Color.fromRGBO(98, 207, 47, 1)},
     {'name': 'Yellow', 'color': Colors.yellow},
     {'name': 'Orange', 'color': Colors.orange},
-    {'name': 'Red', 'color': redColor},
-    {'name': 'Red Accent', 'color': const Color.fromARGB(255, 237, 101, 146)},
+    {'name': 'Pink', 'color': Colors.pinkAccent},
+    {'name': 'Red', 'color': Colors.red},
+    {'name': 'Brown', 'color': Color.fromARGB(255, 121, 58, 31)},
   ];
 
   Rxn<Product> selectedTopProduct = Rxn<Product>();
