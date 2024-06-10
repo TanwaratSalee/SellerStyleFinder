@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:seller_finalproject/const/const.dart';
 import 'package:seller_finalproject/const/styles.dart';
 import 'package:seller_finalproject/controllers/auth_controller.dart';
 import 'package:seller_finalproject/controllers/loading_Indcator.dart';
 import 'package:seller_finalproject/views/auth_screen/forgot_screen.dart';
+import 'package:seller_finalproject/views/widgets/custom_textfield.dart';
 import 'package:seller_finalproject/views/widgets/our_button.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -21,7 +23,7 @@ class LoginScreen extends StatelessWidget {
         padding: const EdgeInsets.all(12),
         child: Column(
           children: [
-            100.heightBox,
+            Spacer(),
             Obx(
               () => Column(
                 children: [
@@ -33,8 +35,8 @@ class LoginScreen extends StatelessWidget {
                       .make(),
                   Image.asset(
                     icbag,
-                    width: 320,
-                    height: 320,
+                    width: 280,
+                    height: 280,
                   ),
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -47,46 +49,59 @@ class LoginScreen extends StatelessWidget {
                         .make(),
                   ),
                   30.heightBox,
-                  Container(
-                    width: 360,
-                    height: 50,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(color: greyLine, width: 1),
-                    ),
-                    child: TextFormField(
-                      controller: controller.emailController,
-                      decoration: const InputDecoration(
-                        border: InputBorder.none,
-                        hintText: email,
-                        contentPadding:
-                            EdgeInsets.symmetric(horizontal: 22, vertical: 8),
+                  // Container(
+                  //   width: 360,
+                  //   height: 50,
+                  //   decoration: BoxDecoration(
+                  //     color: Colors.white,
+                  //     borderRadius: BorderRadius.circular(8),
+                  //     border: Border.all(color: greyLine, width: 1),
+                  //   ),
+                  //   child: TextFormField(
+                  //     controller: controller.emailController,
+                  //     decoration: const InputDecoration(
+                  //       border: InputBorder.none,
+                  //       hintText: email,
+                  //       contentPadding:
+                  //           EdgeInsets.symmetric(horizontal: 22, vertical: 8),
+                  //     ),
+                  //   ),
+                  // ),
+                  Column(
+                    children: [
+                      customTextField(
+                          controller: controller.emailController,
+                          label: 'Email'),
+                      15.heightBox,
+                      customTextFieldPassword(
+                        label: password,
+                        isPass: true,
+                        readOnly: false,
+                        controller: controller.passwordController,
                       ),
-                    ),
-                  ),
-                  10.heightBox,
-                  Container(
-                    width: 360,
-                    height: 50,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(color: greyLine, width: 1),
-                    ),
-                    child: TextFormField(
-                      obscureText: true,
-                      controller: controller.passwordController,
-                      decoration: const InputDecoration(
-                        border: InputBorder.none,
-                        hintText: password,
-                        contentPadding:
-                            EdgeInsets.symmetric(horizontal: 22, vertical: 8),
-                      ),
-                    ),
-                  ),
+                    ],
+                  ).paddingSymmetric(horizontal: 12),
+                  // Container(
+                  //   width: 360,
+                  //   height: 50,
+                  //   decoration: BoxDecoration(
+                  //     color: Colors.white,
+                  //     borderRadius: BorderRadius.circular(8),
+                  //     border: Border.all(color: greyLine, width: 1),
+                  //   ),
+                  //   child: TextFormField(
+                  //     obscureText: true,
+                  //     controller: controller.passwordController,
+                  //     decoration: const InputDecoration(
+                  //       border: InputBorder.none,
+                  //       hintText: password,
+                  //       contentPadding:
+                  //           EdgeInsets.symmetric(horizontal: 22, vertical: 8),
+                  //     ),
+                  //   ),
+                  // ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 18),
+                    padding: const EdgeInsets.only(right: 10),
                     child: Align(
                       alignment: Alignment.centerRight,
                       child: TextButton(
@@ -103,16 +118,46 @@ class LoginScreen extends StatelessWidget {
                     ),
                   ),
                   10.heightBox,
-                  SizedBox(
-                    child: controller.isloading.value
-                        ? loadingIndicator()
-                        : ourButton(
-                            title: 'Sign In',
-                            onPress: () async {
-                              await controller.loginMethod();
-                            },
-                          ),
-                  ),
+
+                  // SizedBox(
+                  //   child: ourButton(
+                  //     title: 'Sign In',
+                  //     color: primaryApp,
+                  //     textColor: whiteColor,
+                  //     onPress: () async {
+                  //       await controller.loginMethod();
+                  //     },
+                  //   )
+                  // ),
+
+                  controller.isloading.value
+                      ? const CircularProgressIndicator(
+                          valueColor: AlwaysStoppedAnimation(primaryApp),
+                        )
+                      : ourButton(
+                          color: primaryApp,
+                          title: 'Sign in',
+                          textColor: whiteColor,
+                          onPress: () async {
+                            controller.isloading(true);
+                            await controller.loginMethod();
+                          },
+                        )
+                          .box
+                          .margin(const EdgeInsets.symmetric(
+                              vertical: 28, horizontal: 20))
+                          .make(),
+
+                  // ourButton(
+                  //   child: controller.isloading.value
+                  //       ? loadingIndicator()
+                  //       : ourButton(
+                  //           title: 'Sign In',
+                  //           onPress: () async {
+                  //             await controller.loginMethod();
+                  //           },
+                  //         ),
+                  // ),
                 ],
               ),
             ),
@@ -146,13 +191,12 @@ class LoginScreen extends StatelessWidget {
                               ),
                               20.heightBox,
                               Text(
-                                    'If you do not yet have an account with the StyleFinder app, please follow these steps:',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontFamily: regular,
-                                    ),
-                                  ),
-                              
+                                'If you do not yet have an account with the StyleFinder app, please follow these steps:',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontFamily: regular,
+                                ),
+                              ),
                               Padding(
                                 padding: const EdgeInsets.only(left: 18),
                                 child: Column(

@@ -1,26 +1,34 @@
 import 'package:seller_finalproject/const/const.dart';
 import 'package:seller_finalproject/const/styles.dart';
 
-Widget ourButton(
-    {required String title,
-    Color color = primaryApp,
-    required VoidCallback onPress,
-    Color textColor = whiteColor}) {
-  return ElevatedButton(
+Widget ourButton({
+  VoidCallback? onPress,
+  Color? color,
+  Color? textColor,
+  String? title,
+  Color? borderColor, 
+  double elevation = 2.0,
+}) {
+  return SizedBox(
+    child: ElevatedButton(
       style: ElevatedButton.styleFrom(
-          backgroundColor: color, // Background color
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
-          minimumSize: const Size(340, 50),
-          padding: const EdgeInsets.all(12.0)),
+        backgroundColor: color,
+        elevation: elevation,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+          side: BorderSide(color: borderColor ?? Colors.transparent, width: 1), 
+        ),
+        minimumSize: const Size(double.infinity, 55),
+      ),
       onPressed: onPress,
       child: Text(
-        title,
-      )
-          .text
-          .size(18)
-          .fontFamily(regular)
-          .color(whiteColor)
-          .make() // Pass textColor to Text
-      );
+        title ?? '',
+        style: TextStyle(
+          fontSize: 16,
+          color: textColor ?? whiteColor,
+          fontFamily: medium,
+        ),
+      ),
+    ),
+  );
 }

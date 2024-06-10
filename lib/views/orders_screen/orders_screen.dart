@@ -200,7 +200,7 @@ class _OrdersScreenState extends State<OrdersScreen>
                       .make(),
                   Row(
                     children: [
-                      const Icon(Icons.calendar_month, color: greyColor),
+                      const Icon(Icons.calendar_month, color: greyDark),
                       const SizedBox(width: 10),
                       Text(intl.DateFormat().add_yMd().format(time)),
                     ],
@@ -209,13 +209,15 @@ class _OrdersScreenState extends State<OrdersScreen>
               ),
               ...buildProductList(order['orders'])
             ],
-          ),
+          ).paddingSymmetric(horizontal: 8, vertical: 6),
         ),
       )
           .box
+          .white
           .margin(const EdgeInsets.symmetric(vertical: 8))
-          .border(color: greyColor)
-          .rounded
+          .outerShadowMd
+          .border(color: greyLine)
+          .roundedSM
           .make(),
     );
   }

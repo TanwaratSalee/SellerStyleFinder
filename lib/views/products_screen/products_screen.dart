@@ -31,7 +31,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Products').text.size(24).fontFamily(medium).make(),
+          title: const Text('Products').text.size(24).fontFamily(medium).makeCentered(),
           bottom: const TabBar(
             labelColor: primaryApp,
             unselectedLabelColor: greyColor,
@@ -214,7 +214,6 @@ class _ProductsScreenState extends State<ProductsScreen> {
                   String documentId2 = pair.value[1].id;
                   String price1 = product1['p_price'].toString();
                   String price2 = product2['p_price'].toString();
-
                   String name1 = product1['p_name'].toString();
                   String name2 = product2['p_name'].toString();
 

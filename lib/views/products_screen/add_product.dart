@@ -419,7 +419,8 @@ class AddProduct extends StatelessWidget {
                         .size(16)
                         .color(blackColor)
                         .fontFamily(medium)
-                        .make(),                    8.heightBox,
+                        .make(),                    
+                        8.heightBox,
 
                     Center(
                       child: Obx(() => Wrap(
