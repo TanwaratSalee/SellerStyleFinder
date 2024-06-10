@@ -21,6 +21,37 @@ class _OrdersScreenState extends State<OrdersScreen>
   late TabController _tabController;
   final OrdersController controller = Get.put(OrdersController());
 
+  Future<int> _getOrderCount(String filter) async {
+    var snapshot = await StoreServices.getOrders(currentUser!.uid).first;
+    var data = snapshot.docs.where((order) {
+      switch (filter) {
+        case 'New':
+          return order['order_placed'] == true &&
+              order['order_confirmed'] == false &&
+              order['order_delivered'] == false &&
+              order['order_on_delivery'] == false;
+        case 'Order':
+          return order['order_placed'] == true &&
+              order['order_confirmed'] == true &&
+              order['order_delivered'] == false &&
+              order['order_on_delivery'] == false;
+        case 'Delivery':
+          return order['order_placed'] == true &&
+              order['order_confirmed'] == true &&
+              order['order_delivered'] == false &&
+              order['order_on_delivery'] == true;
+        case 'History':
+          return order['order_placed'] == true &&
+              order['order_confirmed'] == true &&
+              order['order_delivered'] == true &&
+              order['order_on_delivery'] == true;
+        default:
+          return false;
+      }
+    }).toList();
+    return data.length;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -38,32 +69,55 @@ class _OrdersScreenState extends State<OrdersScreen>
     return Scaffold(
       appBar: AppBar(
         title: appbarWidget(orders),
-        bottom: TabBar(
-          controller: _tabController,
-          labelColor: primaryApp,
-          indicatorColor: primaryApp,
-          indicatorWeight: 2.0,
-          tabs: const [
-            Tab(text: 'New'),
-            Tab(text: 'Order'),
-            Tab(text: 'Delivery'),
-            Tab(text: 'History'),
-          ],
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(48.0),
+          child: FutureBuilder<Map<String, int>>(
+            future: Future.wait([
+              _getOrderCount('New'),
+              _getOrderCount('Order'),
+              _getOrderCount('Delivery'),
+              _getOrderCount('History'),
+            ]).then((counts) => {
+                  'New': counts[0],
+                  'Order': counts[1],
+                  'Delivery': counts[2],
+                  'History': counts[3],
+                }),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+                return const Center(child: CircularProgressIndicator());
+              }
+
+              var counts = snapshot.data!;
+              return TabBar(
+                controller: _tabController,
+                labelColor: primaryApp,
+                indicatorColor: primaryApp,
+                indicatorWeight: 2.0,
+                tabs: [
+                  Tab(text: 'New (${counts['New']})'),
+                  Tab(text: 'Order (${counts['Order']})'),
+                  Tab(text: 'Delivery (${counts['Delivery']})'),
+                  Tab(text: 'History (${counts['History']})'),
+                ],
+              );
+            },
+          ),
         ),
       ),
       body: TabBarView(
         controller: _tabController,
         children: [
-          buildNew(context),
-          buildOrders(context),
-          buildDelivery(context),
-          buildHistory(context),
+          buildOrderList('New'),
+          buildOrderList('Order'),
+          buildOrderList('Delivery'),
+          buildOrderList('History'),
         ],
       ),
     );
   }
 
-  Widget buildNew(BuildContext context) {
+  Widget buildOrderList(String filter) {
     return StreamBuilder<QuerySnapshot>(
       stream: StoreServices.getOrders(currentUser!.uid),
       builder: (context, snapshot) {
@@ -76,109 +130,47 @@ class _OrdersScreenState extends State<OrdersScreen>
           );
         }
 
-        var data = snapshot.data!.docs.where((order) =>
-                order['order_placed'] == true &&
-                order['order_confirmed'] == false &&
-                order['order_delivered'] == false &&
-                order['order_on_delivery'] == false)
-            .toList();
+        var data = snapshot.data!.docs.where((order) {
+          switch (filter) {
+            case 'New':
+              return order['order_placed'] == true &&
+                  order['order_confirmed'] == false &&
+                  order['order_delivered'] == false &&
+                  order['order_on_delivery'] == false;
+            case 'Order':
+              return order['order_placed'] == true &&
+                  order['order_confirmed'] == true &&
+                  order['order_delivered'] == false &&
+                  order['order_on_delivery'] == false;
+            case 'Delivery':
+              return order['order_placed'] == true &&
+                  order['order_confirmed'] == true &&
+                  order['order_delivered'] == false &&
+                  order['order_on_delivery'] == true;
+            case 'History':
+              return order['order_placed'] == true &&
+                  order['order_confirmed'] == true &&
+                  order['order_delivered'] == true &&
+                  order['order_on_delivery'] == true;
+            default:
+              return false;
+          }
+        }).toList();
 
-        return buildOrderList(data);
-      },
-    );
-  }
-
-  Widget buildOrders(BuildContext context) {
-    return StreamBuilder<QuerySnapshot>(
-      stream: StoreServices.getOrders(currentUser!.uid),
-      builder: (context, snapshot) {
-        if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-          return const Center(
-            child: Text(
-              'No order yet!',
-              style: TextStyle(fontSize: 18, color: greyColor),
+        return Padding(
+          padding: const EdgeInsets.all(8),
+          child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Column(
+              children: List.generate(data.length, (index) {
+                var order = data[index];
+                var time = order['order_date'].toDate();
+                return buildOrderItem(order, time);
+              }),
             ),
-          );
-        }
-
-        var data = snapshot.data!.docs
-            .where((order) =>
-                order['order_placed'] == true &&
-                order['order_confirmed'] == true &&
-                order['order_delivered'] == false &&
-                order['order_on_delivery'] == false)
-            .toList();
-
-        return buildOrderList(data);
+          ),
+        );
       },
-    );
-  }
-
-  Widget buildDelivery(BuildContext context) {
-    return StreamBuilder<QuerySnapshot>(
-      stream: StoreServices.getOrders(currentUser!.uid),
-      builder: (context, snapshot) {
-        if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-          return const Center(
-            child: Text(
-              'No order yet!',
-              style: TextStyle(fontSize: 18, color: greyColor),
-            ),
-          );
-        }
-
-        var data = snapshot.data!.docs
-            .where((order) =>
-                order['order_placed'] == true &&
-                order['order_confirmed'] == true &&
-                order['order_delivered'] == true &&
-                order['order_on_delivery'] == false)
-            .toList();
-
-        return buildOrderList(data);
-      },
-    );
-  }
-
-  Widget buildHistory(BuildContext context) {
-    return StreamBuilder<QuerySnapshot>(
-      stream: StoreServices.getOrders(currentUser!.uid),
-      builder: (context, snapshot) {
-        if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-          return const Center(
-            child: Text(
-              'No order yet!',
-              style: TextStyle(fontSize: 18, color: greyColor),
-            ),
-          );
-        }
-
-        var data = snapshot.data!.docs
-            .where((order) =>
-                order['order_placed'] == true &&
-                order['order_confirmed'] == true &&
-                order['order_delivered'] == true &&
-                order['order_on_delivery'] == true)
-            .toList();
-
-        return buildOrderList(data);
-      },
-    );
-  }
-
-  Widget buildOrderList(List<DocumentSnapshot> data) {
-    return Padding(
-      padding: const EdgeInsets.all(8),
-      child: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Column(
-          children: List.generate(data.length, (index) {
-            var order = data[index];
-            var time = order['order_date'].toDate();
-            return buildOrderItem(order, time);
-          }),
-        ),
-      ),
     );
   }
 
@@ -215,9 +207,9 @@ class _OrdersScreenState extends State<OrdersScreen>
           .box
           .white
           .margin(const EdgeInsets.symmetric(vertical: 8))
-          .outerShadowMd
+          .outerShadow
           .border(color: greyLine)
-          .roundedSM
+          .rounded
           .make(),
     );
   }
