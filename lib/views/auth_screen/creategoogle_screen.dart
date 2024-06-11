@@ -129,6 +129,7 @@ class _CreateAccountGoogleState extends State<CreateAccountGoogle> {
                 ? SizedBox.shrink()
                 : ourButton(
                     title: 'Next',
+                    // color: : primaryApp,
                     onPress: () {
                      
                       if (controller.shopNameController.text.isEmpty ||

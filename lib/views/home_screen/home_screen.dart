@@ -19,18 +19,21 @@ class HomeScreen extends StatelessWidget {
       appBar: appbarWidget(dashboard),
       body: StreamBuilder(
         stream: StoreServices.getProducts(currentUser!.uid),
-        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> productSnapshot) {
+        builder: (BuildContext context,
+            AsyncSnapshot<QuerySnapshot> productSnapshot) {
           if (!productSnapshot.hasData) {
             return loadingIndicator();
           } else {
             var productsData = productSnapshot.data!.docs;
 
             // Sort productsData by wishlist length in descending order
-            productsData.sort((a, b) => b['p_wishlist'].length.compareTo(a['p_wishlist'].length));
+            productsData.sort((a, b) =>
+                b['p_wishlist'].length.compareTo(a['p_wishlist'].length));
 
             return StreamBuilder(
               stream: StoreServices.getOrders(currentUser!.uid),
-              builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> orderSnapshot) {
+              builder: (BuildContext context,
+                  AsyncSnapshot<QuerySnapshot> orderSnapshot) {
                 if (!orderSnapshot.hasData) {
                   return loadingIndicator();
                 } else {
@@ -68,55 +71,109 @@ class HomeScreen extends StatelessWidget {
                                 count: totalSales.toString(),
                                 icon: icTotalsales)
                           ],
-                        ).box.padding(EdgeInsets.symmetric(horizontal: 18)).make(),
-                        const Divider(color: greyThin),
-                        20.heightBox,
+                        )
+                            .box
+                            .padding(EdgeInsets.symmetric(horizontal: 18))
+                            .make(),
+                        const Divider(color: greyLine),
+                        10.heightBox,
                         Align(
-                          alignment: Alignment.topLeft,
-                          child: Text(popular).text.size(20).fontFamily(semiBold).make()
-                        ).paddingOnly(left: 20),
+                                alignment: Alignment.topLeft,
+                                child: Text(popular)
+                                    .text
+                                    .size(20)
+                                    .fontFamily(semiBold)
+                                    .make())
+                            .paddingOnly(left: 20),
                         10.heightBox,
                         Expanded(
                           child: ListView.builder(
                             physics: const BouncingScrollPhysics(),
-                            itemCount: productsData.length > 10 ? 10 : productsData.length,
+                            itemCount: productsData.length > 10
+                                ? 10
+                                : productsData.length,
                             itemBuilder: (context, index) {
                               if (productsData[index]['p_wishlist'].isEmpty) {
                                 return const SizedBox.shrink();
                               }
-                              return ListTile(
-                                onTap: () async {
-                                  var productSnapshot = await FirebaseFirestore.instance
-                                      .collection('products')
-                                      .where('p_name', isEqualTo: productsData[index]['p_name'])
-                                      .get();
+                              return Column(
+                                children: [
+                                  ListTile(
+                                    onTap: () async {
+                                      var productSnapshot =
+                                          await FirebaseFirestore.instance
+                                              .collection('products')
+                                              .where('p_name',
+                                                  isEqualTo: productsData[index]
+                                                      ['p_name'])
+                                              .get();
 
-                                  if (productSnapshot.docs.isNotEmpty) {
-                                    var productData = productSnapshot.docs.first.data();
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => ProductDetails(data: productData),
-                                      ),
-                                    );
-                                  } else {
-                                    // Handle product not found
-                                  }
-                                },
-                                leading: Image.network(
-                                  productsData[index]['p_imgs'][0],
-                                  width: 60,
-                                  height: 80,
-                                  fit: BoxFit.cover,
-                                ),
-                                title: Text("${index + 1}. ${productsData[index]['p_name']}")
-                                    .text
-                                    .size(16)
-                                    .fontFamily(medium)
-                                    .make(),
-                                subtitle: Text(
-                                  "${NumberFormat('#,##0').format(double.tryParse(productsData[index]['p_price'])?.toInt() ?? 0)} Bath",
-                                ),
+                                      if (productSnapshot.docs.isNotEmpty) {
+                                        var productData =
+                                            productSnapshot.docs.first.data();
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                ProductDetails(
+                                                    data: productData),
+                                          ),
+                                        );
+                                      } else {
+                                        // Handle product not found
+                                      }
+                                    },
+                                    title: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Column(
+                                          children: [
+                                            SizedBox(height: 20),
+                                            Text("${index + 1}.")
+                                                .text
+                                                .size(16)
+                                                .fontFamily(medium)
+                                                .color(greyDark)
+                                                .make(),
+                                          ],
+                                        ),
+                                        SizedBox(width: 10),
+                                        Image.network(
+                                          productsData[index]['p_imgs'][0],
+                                          width: 55,
+                                          height: 70,
+                                          fit: BoxFit.cover,
+                                        ),
+                                        SizedBox(width: 10),
+                                        Flexible(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(productsData[index]
+                                                      ['p_name'])
+                                                  .text
+                                                  .size(16)
+                                                  .fontFamily(medium)
+                                                  .make(),
+                                              Text(
+                                                "${NumberFormat('#,##0').format(double.tryParse(productsData[index]['p_price'])?.toInt() ?? 0)} Bath",
+                                              )
+                                                  .text
+                                                  .size(14)
+                                                  .color(greyColor)
+                                                  .fontFamily(medium)
+                                                  .make(),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Divider(color: greyLine)
+                                      .paddingSymmetric(horizontal: 12),
+                                ],
                               );
                             },
                           ),

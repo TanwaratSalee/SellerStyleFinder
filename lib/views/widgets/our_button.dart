@@ -18,7 +18,7 @@ Widget ourButton({
           borderRadius: BorderRadius.circular(8),
           side: BorderSide(color: borderColor ?? Colors.transparent, width: 1), 
         ),
-        minimumSize: const Size(double.infinity, 55),
+        minimumSize: const Size(double.infinity, 45),
       ),
       onPressed: onPress,
       child: Text(

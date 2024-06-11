@@ -1,10 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:seller_finalproject/const/const.dart';
 import 'package:seller_finalproject/const/styles.dart';
 import 'package:seller_finalproject/controllers/auth_controller.dart';
-import 'package:seller_finalproject/controllers/loading_Indcator.dart';
 import 'package:seller_finalproject/views/auth_screen/forgot_screen.dart';
 import 'package:seller_finalproject/views/widgets/custom_textfield.dart';
 import 'package:seller_finalproject/views/widgets/our_button.dart';
@@ -18,7 +15,7 @@ class LoginScreen extends StatelessWidget {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.white,
+      backgroundColor: whiteColor,
       body: Padding(
         padding: const EdgeInsets.all(12),
         child: Column(
@@ -35,20 +32,19 @@ class LoginScreen extends StatelessWidget {
                       .make(),
                   Image.asset(
                     icbag,
-                    width: 280,
-                    height: 280,
+                    width: 250,
+                    height: 250,
                   ),
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: const Text(
-                            'Enjoy selling and discovering the best fashion brands. Wishing you a successful first day!')
+                    child: const Text('Enjoy selling and discovering the best fashion brands. Wishing you a successful first day!')
                         .text
                         .align(TextAlign.center)
                         .size(14)
                         .color(greyColor)
                         .make(),
                   ),
-                  30.heightBox,
+                  20.heightBox,
                   // Container(
                   //   width: 360,
                   //   height: 50,
@@ -70,8 +66,7 @@ class LoginScreen extends StatelessWidget {
                   Column(
                     children: [
                       customTextField(
-                          controller: controller.emailController,
-                          label: 'Email'),
+                          controller: controller.emailController, label: 'Email'),
                       15.heightBox,
                       customTextFieldPassword(
                         label: password,
@@ -144,9 +139,24 @@ class LoginScreen extends StatelessWidget {
                           },
                         )
                           .box
-                          .margin(const EdgeInsets.symmetric(
-                              vertical: 28, horizontal: 20))
+                          .margin(const EdgeInsets.symmetric(horizontal: 20))
                           .make(),
+                  SizedBox(height: 15),
+                  Row(
+                    children: [
+                      const Expanded(
+                        child: Divider(color: greyLine, height: 1),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                        child: loginWith.text.color(greyColor).make(),
+                      ),
+                      const Expanded(
+                        child: Divider(color: greyLine, height: 1),
+                      ),
+                    ],
+                  ).marginSymmetric(horizontal: 30),
+                  SizedBox(height: 15),
 
                   // ourButton(
                   //   child: controller.isloading.value
@@ -158,6 +168,46 @@ class LoginScreen extends StatelessWidget {
                   //           },
                   //         ),
                   // ),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: List.generate(
+                      socialIconList.length,
+                      (index) => Expanded(
+                        child: GestureDetector(
+                          onTap: () {
+                            switch (index) {
+                              case 0:
+                                controller.signInWithGoogle(context);
+                                break;
+                            }
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.fromLTRB(0, 12, 0, 12),
+                            margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(
+                                color: greyLine,
+                                width: 1,
+                              ),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  socialIconList[index],
+                                  height: 20,
+                                ),
+                                SizedBox(width: 10),
+                                Text('Sign in with Google'),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -187,13 +237,13 @@ class LoginScreen extends StatelessWidget {
                               const Text(
                                 'If you already have an account with the StyleFinder app, you can seamlessly use the same email and password to create your store with us.',
                                 style: TextStyle(
-                                    fontSize: 16, fontFamily: regular),
+                                    fontSize: 14, fontFamily: regular),
                               ),
                               20.heightBox,
                               Text(
                                 'If you do not yet have an account with the StyleFinder app, please follow these steps:',
                                 style: TextStyle(
-                                  fontSize: 16,
+                                  fontSize: 14,
                                   fontFamily: regular,
                                 ),
                               ),
@@ -206,7 +256,7 @@ class LoginScreen extends StatelessWidget {
                                     Text(
                                       '1. Download the StyleFinder app.',
                                       style: TextStyle(
-                                        fontSize: 16,
+                                        fontSize: 14,
                                         fontFamily: regular,
                                       ),
                                     ),
@@ -214,7 +264,7 @@ class LoginScreen extends StatelessWidget {
                                     Text(
                                       '2. Register and log in using the app.',
                                       style: TextStyle(
-                                        fontSize: 16,
+                                        fontSize: 14,
                                         fontFamily: regular,
                                       ),
                                     ),
@@ -222,7 +272,7 @@ class LoginScreen extends StatelessWidget {
                                     Text(
                                       '3. Once registered, you can use the same email and password to create your store account through the Seller StyleFinder app.',
                                       style: TextStyle(
-                                        fontSize: 16,
+                                        fontSize: 14,
                                         fontFamily: regular,
                                       ),
                                     ),

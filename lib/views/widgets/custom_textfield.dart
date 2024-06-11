@@ -15,7 +15,10 @@ Widget customTextField({
     decoration: InputDecoration(
       isDense: true,
       labelText: label,
-      hintText: hint,
+      labelStyle: const TextStyle(
+              color: greyDark, fontFamily: regular, fontSize: 14),
+          hintStyle: const TextStyle(
+              color: greyDark, fontFamily: regular, fontSize: 12),
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(8),
         borderSide: const BorderSide(color: greyColor),
@@ -26,17 +29,20 @@ Widget customTextField({
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(8),
-        borderSide: const BorderSide(color: greyColor),
+        borderSide: const BorderSide(color: Color.fromRGBO(149, 155, 155, 1)),
       ),
-      contentPadding: EdgeInsets.symmetric(vertical: 12, horizontal: 16), 
+      contentPadding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
     ),
-    style: const TextStyle(color: blackColor),
+    style: TextStyle(
+      color: blackColor,
+      fontSize: 14,
+      fontFamily: regular,
+    ),
     maxLines: isDesc ? 5 : 1,
     keyboardType: keyboardType,
     inputFormatters: inputFormatters,
   );
 }
-
 
 Widget customTextFieldInput({
   required TextEditingController controller,
@@ -104,7 +110,8 @@ class customTextFieldPassword extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _customTextFieldPasswordState createState() => _customTextFieldPasswordState();
+  _customTextFieldPasswordState createState() =>
+      _customTextFieldPasswordState();
 }
 
 class _customTextFieldPasswordState extends State<customTextFieldPassword> {

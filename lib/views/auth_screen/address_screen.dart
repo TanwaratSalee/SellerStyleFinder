@@ -1,11 +1,11 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:seller_finalproject/const/const.dart';
 import 'package:seller_finalproject/const/styles.dart';
 import 'package:seller_finalproject/controllers/auth_controller.dart';
 import 'package:seller_finalproject/views/widgets/custom_textfield.dart';
 import 'package:seller_finalproject/views/widgets/our_button.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart'; 
-
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class AddressForm extends StatefulWidget {
   final String documentId;
@@ -39,7 +39,7 @@ class _AddressFormFormState extends State<AddressForm> {
   void showLoadingDialog() {
     showDialog(
       context: context,
-      barrierDismissible: false, 
+      barrierDismissible: false,
       builder: (BuildContext context) {
         return Dialog(
           child: Container(
@@ -69,64 +69,65 @@ class _AddressFormFormState extends State<AddressForm> {
         title: const Text("Shop Address").text.size(24).fontFamily(medium).make(),
       ),
       bottomNavigationBar: SizedBox(
-        height: 55,
+        height: 45,
         child: ourButton(
-            onPress: () async {
-              if (/* controller.firstnameController.value.text.isEmpty ||
-                  controller.surnameController.value.text.isEmpty || */
-                  controller.addressController.value.text.isEmpty ||
-                  controller.cityController.value.text.isEmpty ||
-                  controller.stateController.value.text.isEmpty ||
-                  controller.postalCodeController.value.text.isEmpty) {
-                VxToast.show(context, msg: "All fields are required.");
-                return;
-              }
-              showLoadingDialog();
-              Map<String, String> addressDetails = {
-                // 'firstname': controller.firstnameController.value.text,
-                // 'surname': controller.surnameController.value.text,
-                'address': controller.addressController.value.text,
-                'city': controller.cityController.value.text,
-                'state': controller.stateController.value.text,
-                'postalCode': controller.postalCodeController.value.text,
-              };
-               await Get.find<AuthController>().CreateAccountMethod(context, addressDetails);
+          onPress: () async {
+            if (controller.addressController.value.text.isEmpty ||
+                controller.cityController.value.text.isEmpty ||
+                controller.stateController.value.text.isEmpty ||
+                controller.postalCodeController.value.text.isEmpty) {
+              VxToast.show(context, msg: "All fields are required.");
+              return;
+            }
+            showLoadingDialog();
+            Map<String, String> addressDetails = {
+              'address': controller.addressController.value.text,
+              'city': controller.cityController.value.text,
+              'state': controller.stateController.value.text,
+              'postalCode': controller.postalCodeController.value.text,
+            };
+            await Get.find<AuthController>().CreateAccountMethod(context, addressDetails);
 
-              Navigator.pop(context); 
-            },
-            color: primaryApp,
-            textColor: whiteColor,
-            title: "Save"),
-      ).box.padding(EdgeInsets.fromLTRB(25, 0, 25, 30)).make(),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 28),
-        child: Column(
-          children: [
-            // customTextField(
-            //     label: "Firstname",
-            //     controller: controller.firstnameController.value),
-            // 15.heightBox,
-            // customTextField(
-            //     label: "Surname",
-            //     controller: controller.surnameController.value),
-            20.heightBox,
-            customTextField(
+            Navigator.pop(context);
+          },
+          color: primaryApp,
+          textColor: whiteColor,
+          title: "Save",
+        ),
+      ).box.padding(EdgeInsets.fromLTRB(25, 0, 25, 40)).make(),
+      body: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).unfocus();
+        },
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 28),
+          child: Column(
+            children: [
+              20.heightBox,
+              Image.asset(imgAddress,width: 250,
+                    height: 250,),
+              customTextField(
                 label: "Address",
-                controller: controller.addressController.value),
-            20.heightBox,
-            customTextField(
+                controller: controller.addressController.value,
+              ),
+              15.heightBox,
+              customTextField(
                 label: "City",
-                controller: controller.cityController.value),
-            20.heightBox,
-            customTextField(
+                controller: controller.cityController.value,
+              ),
+              15.heightBox,
+              customTextField(
                 label: "State",
-                controller: controller.stateController.value),
-            20.heightBox,
-            customTextField(
+                controller: controller.stateController.value,
+              ),
+              15.heightBox,
+              customTextField(
                 label: "Postal Code",
-                controller: controller.postalCodeController.value),
-            const SizedBox(height: 20),
-          ],
+                controller: controller.postalCodeController.value,
+              ),
+              const SizedBox(height: 20),
+            ],
+          ),
         ),
       ),
     );

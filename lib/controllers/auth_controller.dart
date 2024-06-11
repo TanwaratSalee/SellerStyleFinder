@@ -16,13 +16,13 @@ class AuthController extends GetxController {
   Rx<XFile?> imageFile = Rx<XFile?>(null);
   final ImagePicker _picker = ImagePicker();
 
-   var firstnameController = TextEditingController().obs;
-   var surnameController = TextEditingController().obs;
-   var addressController = TextEditingController().obs;
-   var cityController = TextEditingController().obs;
-   var stateController = TextEditingController().obs;
-   var postalCodeController = TextEditingController().obs;
-   var phoneController = TextEditingController().obs;
+  var firstnameController = TextEditingController().obs;
+  var surnameController = TextEditingController().obs;
+  var addressController = TextEditingController().obs;
+  var cityController = TextEditingController().obs;
+  var stateController = TextEditingController().obs;
+  var postalCodeController = TextEditingController().obs;
+  var phoneController = TextEditingController().obs;
   //textcontrollers
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
@@ -69,7 +69,10 @@ class AuthController extends GetxController {
 
   //Check account have vendors
   Future<void> checkVendorData(String userId, BuildContext context) async {
-    var vendorDoc = await FirebaseFirestore.instance.collection(vendorsCollection).doc(userId).get();
+    var vendorDoc = await FirebaseFirestore.instance
+        .collection(vendorsCollection)
+        .doc(userId)
+        .get();
     isloading(false);
     if (!vendorDoc.exists) {
       Get.offAll(() => const CreateAccount());
@@ -81,40 +84,38 @@ class AuthController extends GetxController {
   }
 
   //signup account
-Future<void> loginMethod() async {
-  if (emailController.text.isEmpty || passwordController.text.isEmpty) {
-    return;
-  }
-
-  try {
-    isloading.value = true;
-
-    var userEmail = emailController.text.trim().toLowerCase();
-    var userCredential = await auth.signInWithEmailAndPassword(
-        email: userEmail,
-        password: passwordController.text.trim());
-
-    if (userCredential.user != null) {
-      var vendorSnapshot = await firestore
-          .collection('vendors')
-          .where('email', isEqualTo: userEmail)
-          .get();
-
-      if (vendorSnapshot.docs.isEmpty) {
-        Get.offAll(() => const CreateAccount());
-      } else {
-        Get.offAll(() => const Home());
-      }
+  Future<void> loginMethod() async {
+    if (emailController.text.isEmpty || passwordController.text.isEmpty) {
+      return;
     }
-  } on FirebaseAuthException catch (e) {
-    print(e.message);
-  } finally {
-    isloading.value = false;
+
+    try {
+      isloading.value = true;
+
+      var userEmail = emailController.text.trim().toLowerCase();
+      var userCredential = await auth.signInWithEmailAndPassword(
+          email: userEmail, password: passwordController.text.trim());
+
+      if (userCredential.user != null) {
+        var vendorSnapshot = await firestore
+            .collection('vendors')
+            .where('email', isEqualTo: userEmail)
+            .get();
+
+        if (vendorSnapshot.docs.isEmpty) {
+          Get.offAll(() => const CreateAccount());
+        } else {
+          Get.offAll(() => const Home());
+        }
+      }
+    } on FirebaseAuthException catch (e) {
+      print(e.message);
+    } finally {
+      isloading.value = false;
+    }
   }
-}
 
   Future<void> signInWithGoogle(BuildContext context) async {
-
     isloading.value = true;
 
     try {
@@ -133,8 +134,8 @@ Future<void> loginMethod() async {
       final String uid = userCredential.user?.uid ?? "";
 
       // Check if the user's uid exists in Firestore
-      final DocumentSnapshot userDoc = await FirebaseFirestore.instance.collection('users').doc(uid).get();
-
+      final DocumentSnapshot userDoc =
+          await FirebaseFirestore.instance.collection('users').doc(uid).get();
 
       if (userCredential.user != null) {
         var vendorSnapshot = await await FirebaseFirestore.instance
@@ -148,7 +149,6 @@ Future<void> loginMethod() async {
           Get.offAll(() => const Home());
         }
       }
-
     } catch (e) {
       print("Error signing in with Google: $e");
     } finally {
@@ -156,61 +156,66 @@ Future<void> loginMethod() async {
     }
   }
 
-
-Future<void> CreateAccountMethod(BuildContext context, Map<String, String> addressDetails) async {
-  if (emailController.text.isEmpty || passwordController.text.isEmpty) {
-    VxToast.show(context, msg: "Please enter all required fields.");
-    return;
-  }
-
-  isloading.value = true;
-
-  try {
-    String imageUrl = '';
-    if (imageFile.value != null) {
-      var file = File(imageFile.value!.path);
-      var filename = basename(file.path);
-      var destination = 'images/vendors/${FirebaseAuth.instance.currentUser?.uid}/$filename';
-      Reference ref = FirebaseStorage.instance.ref(destination);
-      await ref.putFile(file);
-      imageUrl = await ref.getDownloadURL();
+  Future<void> CreateAccountMethod(
+      BuildContext context, Map<String, String> addressDetails) async {
+    if (emailController.text.isEmpty || passwordController.text.isEmpty) {
+      VxToast.show(context, msg: "Please enter all required fields.");
+      return;
     }
 
-    var userRef = FirebaseFirestore.instance.collection('vendors').doc(FirebaseAuth.instance.currentUser?.uid);
-    await userRef.set({
-      'email': emailController.text.trim().toLowerCase(),
-      'id': FirebaseAuth.instance.currentUser?.uid,
-      'imageUrl': imageUrl,
-      'shop_desc': descriptionController.text,
-      'shop_website': websiteController.text,
-      'shop_mobile': mobileController.text,
-      'vendor_name': shopNameController.text,
-      'vendor_id': FirebaseAuth.instance.currentUser?.uid,
-      'addresses': [addressDetails]
-    });
+    isloading.value = true;
 
-    VxToast.show(context, msg: "Account successfully created.");
-    Get.offAll(() => const Home());
-  } catch (e) {
-    VxToast.show(context, msg: "Error: ${e.toString()}");
-  } finally {
-    isloading.value = false;
+    try {
+      String imageUrl = '';
+      if (imageFile.value != null) {
+        var file = File(imageFile.value!.path);
+        var filename = basename(file.path);
+        var destination =
+            'images/vendors/${FirebaseAuth.instance.currentUser?.uid}/$filename';
+        Reference ref = FirebaseStorage.instance.ref(destination);
+        await ref.putFile(file);
+        imageUrl = await ref.getDownloadURL();
+      }
+
+      var userRef = FirebaseFirestore.instance
+          .collection('vendors')
+          .doc(FirebaseAuth.instance.currentUser?.uid);
+      await userRef.set({
+        'email': emailController.text.trim().toLowerCase(),
+        'id': FirebaseAuth.instance.currentUser?.uid,
+        'imageUrl': imageUrl,
+        'shop_desc': descriptionController.text,
+        'shop_website': websiteController.text,
+        'shop_mobile': mobileController.text,
+        'vendor_name': shopNameController.text,
+        'vendor_id': FirebaseAuth.instance.currentUser?.uid,
+        'addresses': [addressDetails]
+      });
+
+      VxToast.show(context, msg: "Account successfully created.");
+      Get.offAll(() => const Home());
+    } catch (e) {
+      VxToast.show(context, msg: "Error: ${e.toString()}");
+    } finally {
+      isloading.value = false;
+    }
   }
-}
 
-void clearAllData() {
-  emailController.clear();
-  passwordController.clear();
-  shopNameController.clear();
-  mobileController.clear();
-  websiteController.clear();
-  descriptionController.clear();
-  imageFile.value = null; // Clear the selected image
-}
+  void clearAllData() {
+    emailController.clear();
+    passwordController.clear();
+    shopNameController.clear();
+    mobileController.clear();
+    websiteController.clear();
+    descriptionController.clear();
+    imageFile.value = null; // Clear the selected image
+  }
+
   //image
   Future<void> pickImage() async {
     try {
-      final XFile? pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+      final XFile? pickedFile =
+          await _picker.pickImage(source: ImageSource.gallery);
       if (pickedFile != null) {
         imageFile.value = pickedFile; // Correctly updating the Rx value
         update(); // This might not be necessary unless you have other reactive states to update

@@ -68,7 +68,7 @@ class _OrdersScreenState extends State<OrdersScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: appbarWidget(orders),
+        title: Text('Orders'),
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(48.0),
           child: FutureBuilder<Map<String, int>>(

@@ -31,7 +31,11 @@ class _ProductsScreenState extends State<ProductsScreen> {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Products').text.size(24).fontFamily(medium).makeCentered(),
+          title: const Text('Products')
+              .text
+              .size(24)
+              .fontFamily(medium)
+              .makeCentered(),
           bottom: const TabBar(
             labelColor: primaryApp,
             unselectedLabelColor: greyColor,
@@ -112,6 +116,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                         ),
                       ),
                       trailing: PopupMenuButton<String>(
+                        icon: Icon(Icons.more_vert),
                         onSelected: (String value) {
                           if (value == 'edit') {
                             Get.to(() => EditProduct(
@@ -245,6 +250,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                             ),
                           ),
                           PopupMenuButton<String>(
+                            icon: Icon(Icons.more_vert),
                             onSelected: (String value) {
                               if (value == 'edit') {
                                 Navigator.push(
@@ -312,8 +318,6 @@ class _ProductsScreenState extends State<ProductsScreen> {
                     ],
                   )
                       .box
-                      .rounded
-                      .border(color: greyColor)
                       .margin(const EdgeInsets.symmetric(
                           vertical: 4, horizontal: 12))
                       .padding(const EdgeInsets.symmetric(
@@ -322,6 +326,9 @@ class _ProductsScreenState extends State<ProductsScreen> {
                 },
               ),
             ),
+            Divider(
+              color: greyLine,
+            )
           ],
         );
       },

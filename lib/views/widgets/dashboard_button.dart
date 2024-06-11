@@ -10,7 +10,7 @@ Widget dashboardButton(context, {title, count, icon}) {
     children: [
       Image.asset(
         icon,
-        width: 25,
+        width: 20,
         color: primaryApp,
       ),
       10.widthBox,
@@ -20,7 +20,7 @@ Widget dashboardButton(context, {title, count, icon}) {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(title).text.fontFamily(semiBold).color(primaryApp).size(16).make(),
-            Text(count.toString()).text.color(primaryApp).fontFamily(semiBold).size(20).make()  // แสดงค่า count ที่รับเข้ามา
+            Text(count.toString()).text.color(primaryApp).fontFamily(semiBold).size(20).make()  
           ],
         ),
       ),
@@ -32,7 +32,7 @@ Widget dashboardButton(context, {title, count, icon}) {
   .rounded
   .border(color: primaryApp)
   // .size(size.width * 0.4, 80)
-  .padding(const EdgeInsets.all(14.0))
+  .padding(const EdgeInsets.fromLTRB(16,12,16,7))
   .margin(const EdgeInsets.only(bottom: 5))
   .make();
 }

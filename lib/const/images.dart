@@ -16,6 +16,8 @@ const imgProfile = "assets/profile.png";
 const imgBg = "assets/icons/background.png";
 const icGmail = "assets/icons/gmail-icon.png";
 const iconsStore = "assets/icons/iconsStore.png";
+const imgAddress = "assets/addressScreen.png";
+
 
 
 //Setting page
