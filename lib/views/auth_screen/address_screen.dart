@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:seller_finalproject/const/const.dart';
 import 'package:seller_finalproject/const/styles.dart';
@@ -123,6 +122,7 @@ class _AddressFormFormState extends State<AddressForm> {
               15.heightBox,
               customTextField(
                 label: "Postal Code",
+                keyboardType: TextInputType.number,
                 controller: controller.postalCodeController.value,
               ),
               const SizedBox(height: 20),

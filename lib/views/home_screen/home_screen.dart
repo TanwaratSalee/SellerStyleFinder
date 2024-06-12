@@ -9,6 +9,7 @@ import 'package:seller_finalproject/services/store_services.dart';
 import 'package:seller_finalproject/views/products_screen/product_details.dart';
 import 'package:seller_finalproject/views/widgets/appbar_widget.dart';
 import 'package:seller_finalproject/views/widgets/dashboard_button.dart';
+import 'package:get/get.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -121,6 +122,10 @@ class HomeScreen extends StatelessWidget {
                                         );
                                       } else {
                                         // Handle product not found
+                                        Get.snackbar('Error',
+                                            'Product not found',
+                                            snackPosition:
+                                                SnackPosition.BOTTOM);
                                       }
                                     },
                                     title: Row(

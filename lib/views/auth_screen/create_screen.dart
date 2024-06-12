@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:seller_finalproject/const/const.dart';
+import 'package:seller_finalproject/const/styles.dart';
 import 'package:seller_finalproject/controllers/auth_controller.dart';
 import 'package:seller_finalproject/controllers/loading_Indcator.dart';
 import 'package:seller_finalproject/views/auth_screen/address_screen.dart';
 import 'package:seller_finalproject/views/widgets/custom_textfield.dart';
 import 'package:seller_finalproject/views/widgets/our_button.dart';
+import 'package:seller_finalproject/views/widgets/phonenumber_input.dart';
 
 class CreateAccount extends StatefulWidget {
   const CreateAccount({Key? key}) : super(key: key);
@@ -29,7 +31,7 @@ class _CreateAccountState extends State<CreateAccount> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Create Shop Account"),
+        title: const Text("Create Shop Account").text.size(22).fontFamily(medium).make(),
         backgroundColor: whiteColor,
         foregroundColor: blackColor,
       ),
@@ -104,7 +106,7 @@ class _CreateAccountState extends State<CreateAccount> {
                                 label: 'Mobile phone',
                                 hint: 'Mobile number',
                                 keyboardType: TextInputType.number,
-                                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                                inputFormatters: [PhoneNumberInputFormatter()],
                               ),
                               const SizedBox(height: 20),
                               controller.isloading.value ? loadingIndicator() : SizedBox.shrink(),

@@ -22,37 +22,37 @@ class Home extends GetView<HomeController> {
           currentIndex: controller.navIndex.value,
           type: BottomNavigationBarType.fixed,
           selectedItemColor: primaryApp,
-          unselectedItemColor: greyColor,
+          unselectedItemColor: greyDark,
           items: [
             BottomNavigationBarItem(
               icon: Image.asset(
                 icHome,
-                color: controller.navIndex.value == 0 ? primaryApp : greyColor,
-                width: 22,
+                color: controller.navIndex.value == 0 ? primaryApp : greyDark,
+                width: controller.navIndex.value == 0 ? 22 : 18,
               ),
               label: dashboard,
             ),
             BottomNavigationBarItem(
               icon: Image.asset(
                 icProducts,
-                color: controller.navIndex.value == 1 ? primaryApp : greyColor,
-                width: 22,
+                color: controller.navIndex.value == 1 ? primaryApp : greyDark,
+                width: controller.navIndex.value == 0 ? 22 : 18,
               ),
               label: products,
             ),
             BottomNavigationBarItem(
               icon: Image.asset(
                 icOrders,
-                color: controller.navIndex.value == 2 ? primaryApp : greyColor,
-                width: 22,
+                color: controller.navIndex.value == 2 ? primaryApp : greyDark,
+                width: controller.navIndex.value == 0 ? 22 : 18,
               ),
               label: orders,
             ),
             BottomNavigationBarItem(
               icon: Image.asset(
                 icGeneralSettings,
-                color: controller.navIndex.value == 3 ? primaryApp : greyColor,
-                width: 22,
+                color: controller.navIndex.value == 3 ? primaryApp : greyDark,
+                width: controller.navIndex.value == 0 ? 22 : 18,
               ),
               label: settings,
             ),

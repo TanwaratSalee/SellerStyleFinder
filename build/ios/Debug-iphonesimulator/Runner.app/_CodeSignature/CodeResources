@@ -18,7 +18,7 @@
 		</data>
 		<key>Assets.car</key>
 		<data>
-		XF0P3hxX43/JATU635S6gKuh22E=
+		M/E+Nu+HEAj3z7ltCZ/YGKanbaM=
 		</data>
 		<key>Base.lproj/LaunchScreen.storyboardc/01J-lp-oVM-view-Ze5-6b-2t3.nib</key>
 		<data>
@@ -46,7 +46,7 @@
 		</data>
 		<key>Frameworks/App.framework/App</key>
 		<data>
-		nNAzVrwJxqR5oTlJNBl0anGMbGY=
+		VNzrILNDd/+ZQpW2Yf8TV3KL9+M=
 		</data>
 		<key>Frameworks/App.framework/Info.plist</key>
 		<data>
@@ -54,7 +54,7 @@
 		</data>
 		<key>Frameworks/App.framework/_CodeSignature/CodeResources</key>
 		<data>
-		fPxNNOPce8ZGUKdKqkhsJj6RNJU=
+		QvEoEkqLt7KUYJPWUBn2T+IGDSk=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/AssetManifest.bin</key>
 		<data>
@@ -218,7 +218,7 @@
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/kernel_blob.bin</key>
 		<data>
-		O5iUsjb5g34CIErU9mV3AYe+xso=
+		zqgPqM47SfAreAqtucSZezVK4Ak=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/lib/services/collection_model.json</key>
 		<data>
@@ -1230,7 +1230,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			dLKmgeFkDiLVW2t0X2YSqLmDBaSDLT5N+Khy7126l+g=
+			Ap1rbhEMDaM/OzbfCiRZlU87A7i+njXXFBQa/MJluYA=
 			</data>
 		</dict>
 		<key>Base.lproj/LaunchScreen.storyboardc/01J-lp-oVM-view-Ze5-6b-2t3.nib</key>
@@ -1279,7 +1279,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			Cqaytd2Y7s6NVkM83PDk+VX2cWMDt3hcRnqFDF9Weqs=
+			tlI8/FvJR4upPXN+Du0/1/giLSkyKPpBU5bpnpKi9lE=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/Info.plist</key>
@@ -1293,7 +1293,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			bGM9iT5jFsTqFOt/xjgMenZe4ieI49MM+BdbNEFGXRs=
+			oIQ8o0V+HhhDMO0wV9ap5iBzGSAqsO6FMI+7zQEVtLs=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/AssetManifest.bin</key>
@@ -1580,7 +1580,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			3SOnnUBBC+avDODy9c7rHm2fcPAsfx6ALuQRtGaMhvQ=
+			b9H2wgvI+kDJ92WVMzuEEsGAGgLgLs1FEjzWWabszDQ=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/lib/services/collection_model.json</key>
