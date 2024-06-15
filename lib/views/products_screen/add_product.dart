@@ -5,7 +5,6 @@ import 'package:seller_finalproject/const/styles.dart';
 import 'package:seller_finalproject/controllers/loading_Indcator.dart';
 import 'package:seller_finalproject/controllers/products_controller.dart';
 import 'package:seller_finalproject/views/products_screen/component/product_images.dart';
-import 'package:seller_finalproject/views/products_screen/products_screen.dart';
 import 'package:seller_finalproject/views/widgets/custom_textfield.dart';
 
 class AddProduct extends StatelessWidget {
@@ -46,7 +45,8 @@ class AddProduct extends StatelessWidget {
                         .text
                         .fontFamily(medium)
                         .size(18)
-                        .make())
+                        .make()
+                        )
           ],
         ),
         body: Padding(
