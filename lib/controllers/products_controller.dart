@@ -145,7 +145,7 @@ class ProductsController extends GetxController {
     } else if (part == 'lower') {
       selectedLowerProduct.value = product;
     }
-    update(); // Triggers UI update
+    update(); 
   }
 
   getCollection() async {
@@ -271,9 +271,7 @@ class ProductsController extends GetxController {
         'p_sex': selectedGender.value,
         'p_productsize': selectedSizes,
         'p_part': selectedMixandmatch.value,
-        'p_colors': selectedColorIndexes
-            .map((index) => allColors[index]['color'].value)
-            .toList(),
+        'p_colors': selectedColorIndexes.map((index) => allColors[index]['color'].value).toList(),
         'p_imgs': FieldValue.arrayUnion(pImagesLinks),
         'p_wishlist': FieldValue.arrayUnion([]),
         'p_desc': pdescController.text,
@@ -330,13 +328,13 @@ class ProductsController extends GetxController {
     // Print the raw color data
     List<dynamic> colorNumbers = productData['p_colors'] ?? [];
     print('Raw color data: $colorNumbers');
-    selectedColorIndexes.clear(); // Clear existing selections
+    colorNumbers.clear();
     for (var colorNumber in colorNumbers) {
       if (colorNumber is int) {
         int colorIndex =
             allColors.indexWhere((color) => color['number'] == colorNumber);
         if (colorIndex != -1) {
-          selectedColorIndexes.add(colorIndex);
+          colorNumbers.add(colorIndex);
         } else {
           print('Color number $colorNumber not found in allColors.');
         }
@@ -344,7 +342,7 @@ class ProductsController extends GetxController {
         print('Invalid color number: $colorNumber');
       }
     }
-    print('Selected Color Indexes: $selectedColorIndexes');
+    print('Selected Color Indexes: $colorNumbers');
 
     if (productData['p_collection'] != null) {
       selectedCollection

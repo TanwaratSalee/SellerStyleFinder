@@ -36,7 +36,7 @@ class Home extends GetView<HomeController> {
               icon: Image.asset(
                 icProducts,
                 color: controller.navIndex.value == 1 ? primaryApp : greyDark,
-                width: controller.navIndex.value == 0 ? 22 : 18,
+                width: controller.navIndex.value == 1 ? 22 : 18,
               ),
               label: products,
             ),
@@ -44,7 +44,7 @@ class Home extends GetView<HomeController> {
               icon: Image.asset(
                 icOrders,
                 color: controller.navIndex.value == 2 ? primaryApp : greyDark,
-                width: controller.navIndex.value == 0 ? 22 : 18,
+                width: controller.navIndex.value == 2 ? 22 : 18,
               ),
               label: orders,
             ),
@@ -52,7 +52,7 @@ class Home extends GetView<HomeController> {
               icon: Image.asset(
                 icGeneralSettings,
                 color: controller.navIndex.value == 3 ? primaryApp : greyDark,
-                width: controller.navIndex.value == 0 ? 22 : 18,
+                width: controller.navIndex.value == 3 ? 22 : 18,
               ),
               label: settings,
             ),
