@@ -30,7 +30,7 @@ class AddProduct extends StatelessWidget {
                     onPressed: () async {
                       if (controller.isDataComplete()) {
                         controller.isloading(true);
-                        await controller.uploadImages();
+                        await controller.uploadImages(context);
                         await controller.uploadProduct(context);
                         Get.back();
                         controller.isloading(false);
