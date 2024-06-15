@@ -46,7 +46,7 @@
 		</data>
 		<key>Frameworks/App.framework/App</key>
 		<data>
-		tUh8a2O2R8lHAGP4ipQn/v5dUXs=
+		5QyZARcNdrzZYEPqIP9Of3mDzS4=
 		</data>
 		<key>Frameworks/App.framework/Info.plist</key>
 		<data>
@@ -54,15 +54,15 @@
 		</data>
 		<key>Frameworks/App.framework/_CodeSignature/CodeResources</key>
 		<data>
-		iD3Na7WtIYMh2SY4Ih1LuhqZDY8=
+		60qDPGJHF0puqXhRkZovkczaV2s=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/AssetManifest.bin</key>
 		<data>
-		QQJHoEaj3O5TliTFiB0V/sRpCkM=
+		ZFyWfg1FRKh3bP/K3v5vKmaEJxg=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/AssetManifest.json</key>
 		<data>
-		aGngvNCtV+bW7t983vRR+dorgIY=
+		+maxvgXzc4NRzaR5m281CSYtPeA=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/FontManifest.json</key>
 		<data>
@@ -148,6 +148,10 @@
 		<data>
 		GvYtpRnn4OgtVxgLhwB8qGfIGIk=
 		</data>
+		<key>Frameworks/App.framework/flutter_assets/assets/icons/producgbag.png</key>
+		<data>
+		YDhPkJyeKnzrt3q9T7tetRHxufQ=
+		</data>
 		<key>Frameworks/App.framework/flutter_assets/assets/icons/products.png</key>
 		<data>
 		f0zt40kTPZvAAwVji5bjWMI9l3Q=
@@ -218,7 +222,7 @@
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/kernel_blob.bin</key>
 		<data>
-		l780pPBXEfB2317Lqp4J8Jps1RM=
+		RZ/j23wtL6OvqIpOTSbb56U0pv8=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/lib/services/collection_model.json</key>
 		<data>
@@ -1068,7 +1072,7 @@
 		</data>
 		<key>Frameworks/grpc.framework/grpc</key>
 		<data>
-		eKbcPCaQFP5PCwyXv3RN22vfqcs=
+		UNUvT+ONvZXDkyQswLQ8atZHxjI=
 		</data>
 		<key>Frameworks/grpc.framework/grpc.bundle/Info.plist</key>
 		<data>
@@ -1279,7 +1283,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			kAckOXHbdPkeOSHbpjqWBrw2PCsYUPblogpbhep9tGE=
+			UY3aKG7D+KYhtlZtJJcE+iE4JdhQzXvr/iheTyV9woc=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/Info.plist</key>
@@ -1293,21 +1297,21 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			Op6uLiz/g3wZCKj1BjRo/i/5IvHN4Mw4MlSKQ+LcQZ8=
+			r/Mvw8rxS4TelRxsEpkWZLr3oPrv0+xVx9PATqGpKRw=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/AssetManifest.bin</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			TLVHK1cTtP2jdqOtdONzRIbZDLmD11c1WfVAp87rKZ4=
+			6VzdnOZYCk7oMZueOFoRoAVAyMiiQ3OjmKE4IQ71o+0=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/AssetManifest.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			ar2Kn1biFQM9YWExSWNFgDhZ8cYxrtMecCYMNxURNjY=
+			RlQRcPBdUB+SAJEiNDLR+stqjzaOxWd67oelviBMINw=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/FontManifest.json</key>
@@ -1457,6 +1461,13 @@
 			HJr4HCGZ+h5qZLd0VoXigJP2uULreUtMrivY5lQMml8=
 			</data>
 		</dict>
+		<key>Frameworks/App.framework/flutter_assets/assets/icons/producgbag.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			4IbJLcW69cpqGU3RLBLVH5ieFIKOjMmveJpGf2LlfEE=
+			</data>
+		</dict>
 		<key>Frameworks/App.framework/flutter_assets/assets/icons/products.png</key>
 		<dict>
 			<key>hash2</key>
@@ -1580,7 +1591,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			EHhqqUpRNG/jgr+ExpScUyiP4YEaHdXPXk7jIeZnXOs=
+			afcrhFRAk9jv53/kDy5C2wAAI33tU4Ms8vPLZMmwSYU=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/lib/services/collection_model.json</key>
@@ -2811,7 +2822,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			UqsRMoKXKhX5gTWN2lOGZ117EUR0RV7g85RK3ZnNRiU=
+			jMiA2xQUs/RostXHECGWG7EzA5q7dEUN1r/dgWvGRh8=
 			</data>
 		</dict>
 		<key>Frameworks/grpc.framework/grpc.bundle/Info.plist</key>
