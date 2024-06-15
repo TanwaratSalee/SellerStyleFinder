@@ -13,7 +13,7 @@ class ProductsController extends GetxController {
   var isloading = false.obs;
   var productId = ''.obs;
 
-  //text field controllers
+  // Text field controllers
   var pnameController = TextEditingController();
   var pabproductController = TextEditingController();
   var pdescController = TextEditingController();
@@ -26,52 +26,106 @@ class ProductsController extends GetxController {
   List<Collection> collection = [];
   var pImagesLinks = [];
   var pImagesList = RxList<dynamic>(List.filled(9, null, growable: true));
-  
-  List<String> imagesToDelete = []; 
+
+  List<String> imagesToDelete = [];
   var collectionsvalue = ''.obs;
   var selectedColorIndex = 0.obs;
   var selectedCollections = <String>[].obs;
 
   List<String> sizesList = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
   final selectedSizes = <String>[].obs;
-  List<String> genderList = [ 'all','male', 'female'];
+  List<String> genderList = ['all', 'male', 'female'];
   RxString selectedGender = ''.obs;
-  List<String> mixandmatchList = [ 'top','lower', 'not specified'];
+  List<String> mixandmatchList = ['top', 'lower', 'not specified'];
   RxString selectedMixandmatch = ''.obs;
-  List<String> collectionList = [ 'summer','winter','autumn','dinner','everydaylook'];
+  List<String> collectionList = [
+    'summer',
+    'winter',
+    'autumn',
+    'dinner',
+    'everydaylook'
+  ];
   final selectedCollection = <String>[].obs;
-  List<String> subcollectionList = [ 'dresses','outerwear & Costs','blazers','suits','blouses & Tops','knitwear','t-shirts','skirts','pants','denim','activewear'];
+  List<String> subcollectionList = [
+    'dresses',
+    'outerwear & Costs',
+    'blazers',
+    'suits',
+    'blouses & Tops',
+    'knitwear',
+    't-shirts',
+    'skirts',
+    'pants',
+    'denim',
+    'activewear'
+  ];
   RxString selectedSubcollection = ''.obs;
+
+  final CollectionReference vendersCollection =
+      FirebaseFirestore.instance.collection('venders');
+  final String userId = currentUser!.uid;
 
   RxString selectedSkinColor = ''.obs;
   List<Map<String, dynamic>> skinColorList = [
-    {'name': 'Light', 'color': const Color(0xFFFFDBAC)},   
-    {'name': 'Medium', 'color': const Color(0xFFE5A073)},  
-    {'name': 'Medium', 'color': const Color(0xFFCD8C5C)},  
-    {'name': 'Dark', 'color': const Color(0xFF5C3836)},    
+    {'name': 'Light', 'color': const Color(0xFFFFDBAC)},
+    {'name': 'Medium', 'color': const Color(0xFFE5A073)},
+    {'name': 'Medium', 'color': const Color(0xFFCD8C5C)},
+    {'name': 'Dark', 'color': const Color(0xFF5C3836)},
   ];
 
   final selectedColorIndexes = <int>[].obs;
   final List<Map<String, dynamic>> allColors = [
-    {'name': 'Black', 'color': Colors.black},
-    {'name': 'Grey', 'color': Colors.grey},
-    {'name': 'White', 'color': Colors.white},
-    {'name': 'Purple', 'color': const Color.fromRGBO(98, 28, 141, 1)},
-    {'name': 'Deep Purple', 'color': const Color.fromRGBO(202, 147, 235, 1)},
-    {'name': 'Blue', 'color': Color.fromRGBO(32, 47, 179, 1)},
-    {'name': 'Blue', 'color': const Color.fromRGBO(48, 176, 232, 1)},
-    {'name': 'Blue Grey', 'color': const Color.fromRGBO(83, 205, 191, 1)},
-    {'name': 'Green', 'color': const Color.fromRGBO(23, 119, 15, 1)},
-    {'name': 'Green', 'color': Color.fromRGBO(98, 207, 47, 1)},
-    {'name': 'Yellow', 'color': Colors.yellow},
-    {'name': 'Orange', 'color': Colors.orange},
-    {'name': 'Pink', 'color': Colors.pinkAccent},
-    {'name': 'Red', 'color': Colors.red},
-    {'name': 'Brown', 'color': Color.fromARGB(255, 121, 58, 31)},
+    {'name': 'Black', 'color': Colors.black, 'value': 0xFF000000},
+    {'name': 'Grey', 'color': greyColor, 'value': 0xFF808080},
+    {'name': 'White', 'color': whiteColor, 'value': 0xFFFFFFFF},
+    {
+      'name': 'Purple',
+      'color': const Color.fromRGBO(98, 28, 141, 1),
+      'value': 0xFF621C8D
+    },
+    {
+      'name': 'Deep Purple',
+      'color': const Color.fromRGBO(202, 147, 235, 1),
+      'value': 0xFFCA93EB
+    },
+    {
+      'name': 'Blue',
+      'color': Color.fromRGBO(32, 47, 179, 1),
+      'value': 0xFF202FB3
+    },
+    {
+      'name': 'Blue',
+      'color': const Color.fromRGBO(48, 176, 232, 1),
+      'value': 0xFF30B0E8
+    },
+    {
+      'name': 'Blue Grey',
+      'color': const Color.fromRGBO(83, 205, 191, 1),
+      'value': 0xFF53CDBF
+    },
+    {
+      'name': 'Green',
+      'color': const Color.fromRGBO(23, 119, 15, 1),
+      'value': 0xFF17770F
+    },
+    {
+      'name': 'Green',
+      'color': Color.fromRGBO(98, 207, 47, 1),
+      'value': 0xFF62CF2F
+    },
+    {'name': 'Yellow', 'color': Colors.yellow, 'value': 0xFFFFFF00},
+    {'name': 'Orange', 'color': Colors.orange, 'value': 0xFFFFA500},
+    {'name': 'Pink', 'color': Colors.pinkAccent, 'value': 0xFFFF4081},
+    {'name': 'Red', 'color': Colors.red, 'value': 0xFFFF0000},
+    {
+      'name': 'Brown',
+      'color': Color.fromARGB(255, 121, 58, 31),
+      'value': 0xFF793A1F
+    },
   ];
 
   Rxn<Product> selectedTopProduct = Rxn<Product>();
-  Rxn<Product> selectedLowerProduct = Rxn<Product>(); 
+  Rxn<Product> selectedLowerProduct = Rxn<Product>();
 
   void toggleCollection(String collection) {
     if (selectedCollections.contains(collection)) {
@@ -95,7 +149,8 @@ class ProductsController extends GetxController {
   }
 
   getCollection() async {
-    var data = await rootBundle.loadString("lib/services/collection_model.json");
+    var data =
+        await rootBundle.loadString("lib/services/collection_model.json");
     var cat = collectionModelFromJson(data);
     collection = cat.collections;
     populateCollectionList();
@@ -133,10 +188,12 @@ class ProductsController extends GetxController {
     }
   }
 
-  uploadImages() async {
+  Future<void> uploadImages(BuildContext context) async {
     pImagesLinks.clear();
+    bool hasImage = false;
     for (var item in pImagesList) {
       if (item != null && item is File) {
+        hasImage = true;
         var filename = basename(item.path);
         var destination = 'images/vendors/${currentUser!.uid}/$filename';
         Reference ref = FirebaseStorage.instance.ref().child(destination);
@@ -144,40 +201,99 @@ class ProductsController extends GetxController {
         var n = await ref.getDownloadURL();
         pImagesLinks.add(n);
       } else if (item is String) {
+        hasImage = true;
         pImagesLinks.add(item);
       }
     }
-  }
 
-  RxList<String> selectedTopProductImages = RxList<String>();
-  RxList<String> selectedLowerProductImages = RxList<String>();
-
-  void updateProductImages(List<String> images, String part) {
-    if (part == 'top') {
-      selectedTopProductImages.assignAll(images);
-    } else if (part == 'lower') {
-      selectedLowerProductImages.assignAll(images);
+    if (!hasImage) {
+      VxToast.show(context, msg: "You must add at least one image.");
+      throw Exception("No images selected");
     }
   }
 
-  List<String> getProductImages(String part) {
-    if (part == 'top') {
-      return selectedTopProductImages;
-    } else if (part == 'lower') {
-      return selectedLowerProductImages;
-    }
-    return [];
-  }
+  Future<void> uploadProduct(BuildContext context) async {
+    try {
+      if (pnameController.text.isEmpty) {
+        VxToast.show(context, msg: "You forgot to enter the product name.");
+        return;
+      }
+      if (ppriceController.text.isEmpty) {
+        VxToast.show(context, msg: "You forgot to enter the product price.");
+        return;
+      }
+      if (pquantityController.text.isEmpty) {
+        VxToast.show(context, msg: "You forgot to enter the product quantity.");
+        return;
+      }
+      if (selectedCollection.isEmpty) {
+        VxToast.show(context,
+            msg: "You forgot to select the product collection.");
+        return;
+      }
+      if (selectedSubcollection.value.isEmpty) {
+        VxToast.show(context, msg: "You forgot to select the product type.");
+        return;
+      }
+      if (selectedGender.value.isEmpty) {
+        VxToast.show(context,
+            msg: "You forgot to select the gender suitability.");
+        return;
+      }
+      if (selectedSizes.isEmpty) {
+        VxToast.show(context, msg: "You forgot to specify the product sizes.");
+        return;
+      }
+      if (selectedColorIndexes.isEmpty) {
+        VxToast.show(context, msg: "You forgot to select the product colors.");
+        return;
+      }
+      if (selectedMixandmatch.value.isEmpty) {
+        VxToast.show(context,
+            msg:
+                "You forgot to select whether the product is a top or lower part.");
+        return;
+      }
 
-  void initializeImages(List<String> imageUrls) {
-    // Clear existing list and add fresh from imageUrls ensuring it's growable
-    pImagesList.clear();
-    for (int i = 0; i < imageUrls.length; i++) {
-      pImagesList.add(imageUrls[i]);
-    }
-    // Ensure there are always 9 slots in the list
-    while (pImagesList.length < 9) {
-      pImagesList.add(null);
+      isloading(true);
+      // Make sure images are uploaded first if they aren't already
+      if (pImagesLinks.isEmpty) {
+        await uploadImages(context);
+      }
+      var store = firestore.collection(productsCollection).doc();
+      productId.value = store.id;
+      await store.set({
+        // Default
+        'p_id': productId.value,
+        'is_featured': false,
+        'p_collection': selectedCollection,
+        'p_subcollection': selectedSubcollection.value,
+        'p_sex': selectedGender.value,
+        'p_productsize': selectedSizes,
+        'p_part': selectedMixandmatch.value,
+        'p_colors': selectedColorIndexes
+            .map((index) => allColors[index]['color'].value)
+            .toList(),
+        'p_imgs': FieldValue.arrayUnion(pImagesLinks),
+        'p_wishlist': FieldValue.arrayUnion([]),
+        'p_desc': pdescController.text,
+        'p_name': pnameController.text,
+        'p_aboutProduct': pabproductController.text,
+        'p_size': psizeController.text,
+        'p_price': ppriceController.text,
+        'p_quantity': pquantityController.text,
+        // 'p_seller': Get.find<HomeController>().username,
+        'p_rating': "5.0",
+        'vendor_id': currentUser!.uid,
+        'featured_id': '',
+        'vendor_reference': vendersCollection.doc(userId),
+      });
+      isloading(false);
+      VxToast.show(context, msg: "Product successfully uploaded.");
+    } catch (e) {
+      isloading(false);
+      VxToast.show(context, msg: "Failed to upload product: $e");
+      print(e.toString()); // For debugging purposes
     }
   }
 
@@ -200,39 +316,72 @@ class ProductsController extends GetxController {
     selectedMixandmatch.value = productData['p_part'] ?? '';
     selectedSubcollection.value = productData['p_subcollection'] ?? '';
 
-    List<dynamic> colorMaps = productData['p_colors'] ?? [];
+    // Print out the values
+    print('Product Name: ${pnameController.text}');
+    print('About Product: ${pabproductController.text}');
+    print('Description: ${pdescController.text}');
+    print('Size: ${psizeController.text}');
+    print('Price: ${ppriceController.text}');
+    print('Quantity: ${pquantityController.text}');
+    print('Gender: ${selectedGender.value}');
+    print('Mix and Match: ${selectedMixandmatch.value}');
+    print('Subcollection: ${selectedSubcollection.value}');
+
+    // Print the raw color data
+    List<dynamic> colorNumbers = productData['p_colors'] ?? [];
+    print('Raw color data: $colorNumbers');
     selectedColorIndexes.clear(); // Clear existing selections
-    for (var colorMap in colorMaps) {
-      if (colorMap is Map && colorMap.containsKey('number')) {
-        int colorNumber = colorMap['number'];
-        int colorIndex = allColors.indexWhere((color) => color['number'] == colorNumber);
+    for (var colorNumber in colorNumbers) {
+      if (colorNumber is int) {
+        int colorIndex =
+            allColors.indexWhere((color) => color['number'] == colorNumber);
         if (colorIndex != -1) {
           selectedColorIndexes.add(colorIndex);
+        } else {
+          print('Color number $colorNumber not found in allColors.');
         }
+      } else {
+        print('Invalid color number: $colorNumber');
       }
     }
+    print('Selected Color Indexes: $selectedColorIndexes');
 
     if (productData['p_collection'] != null) {
-      selectedCollection.assignAll(List<String>.from(productData['p_collection']));
+      selectedCollection
+          .assignAll(List<String>.from(productData['p_collection']));
     } else {
       selectedCollection.clear();
     }
+    print('Selected Collection: $selectedCollection');
 
     if (productData['p_productsize'] != null) {
       selectedSizes.assignAll(List<String>.from(productData['p_productsize']));
     } else {
       selectedSizes.clear();
     }
+    print('Selected Sizes: $selectedSizes');
 
     if (productData['p_imgs'] != null) {
       initializeImages(List<String>.from(productData['p_imgs']));
     }
   }
-  
+
+  void initializeImages(List<String> imageUrls) {
+    // Clear existing list and add fresh from imageUrls ensuring it's growable
+    pImagesList.clear();
+    for (int i = 0; i < imageUrls.length; i++) {
+      pImagesList.add(imageUrls[i]);
+    }
+    // Ensure there are always 9 slots in the list
+    while (pImagesList.length < 9) {
+      pImagesList.add(null);
+    }
+  }
 
   void removeImage(int index) {
     if (index >= 0 && index < pImagesList.length) {
-      if (pImagesList[index] is String) { // If it's a URL, add to the delete list
+      if (pImagesList[index] is String) {
+        // If it's a URL, add to the delete list
         imagesToDelete.add(pImagesList[index] as String);
       }
       pImagesList.removeAt(index); // Directly remove the item at the index
@@ -240,63 +389,20 @@ class ProductsController extends GetxController {
     }
   }
 
-  Future<void> uploadProduct(BuildContext context) async {
-    try {
-      isloading(true);
-      // Make sure images are uploaded first if they aren't already
-      if (pImagesLinks.isEmpty) {
-        await uploadImages();
-      }
-      var store = firestore.collection(productsCollection).doc();
-      productId.value = store.id;
-      await store.set({
-        //Default
-        'p_id': productId.value,
-        'is_featured': false,
-        'p_collection': selectedCollection,
-        'p_subcollection': selectedSubcollection.value,
-        'p_sex': selectedGender.value,
-        'p_productsize':selectedSizes,
-        'p_part':selectedMixandmatch.value,
-        'p_colors': selectedColorIndexes.map((index) => allColors[index]['color'].value).toList(),
-        'p_imgs': FieldValue.arrayUnion(pImagesLinks),
-        'p_wishlist': FieldValue.arrayUnion([]),
-        'p_desc': pdescController.text,
-        'p_name': pnameController.text,
-        'p_aboutProduct': pabproductController.text,
-        'p_size': psizeController.text,
-        'p_price': ppriceController.text,
-        'p_quantity': pquantityController.text,
-        'p_seller': Get.find<HomeController>().username,
-        'p_rating': "5.0",
-        'vendor_id': currentUser!.uid,
-        'featured_id': '',
-        //Mixmatch
-        'p_mixmatch': '',
-        'p_mixmatch_colors' : '',
-        'p_mixmatch_sex' : '',
-        'p_mixmatch_desc' : '',
-        'p_mixmatch_collection' : FieldValue.arrayUnion([]),
-      });
-      isloading(false);
-      VxToast.show(context, msg: "Product successfully uploaded.");
-    } catch (e) {
-      isloading(false);
-      VxToast.show(context, msg: "Failed to upload product: $e");
-      print(e.toString());  // For debugging purposes
-    }
-  }
-
   Future<void> updateProduct(BuildContext context, String documentId) async {
     try {
-      final productDoc = FirebaseFirestore.instance.collection(productsCollection).doc(documentId);
+      final productDoc = FirebaseFirestore.instance
+          .collection(productsCollection)
+          .doc(documentId);
       await productDoc.update({
         'p_collection': selectedCollection,
         'p_subcollection': selectedSubcollection.value,
         'p_sex': selectedGender.value,
         'p_productsize': selectedSizes,
         'p_part': selectedMixandmatch.value,
-        'p_colors': selectedColorIndexes.map((index) => allColors[index]['color'].value).toList(),
+        'p_colors': selectedColorIndexes
+            .map((index) => allColors[index]['color'].value)
+            .toList(),
         'p_desc': pdescController.text,
         'p_name': pnameController.text,
         'p_aboutProduct': pabproductController.text,
@@ -318,29 +424,49 @@ class ProductsController extends GetxController {
       VxToast.show(context, msg: "Product updated successfully.");
     } catch (e) {
       print("Error updating product: $e");
-      VxToast.show(context, msg: "Error updating product. Please try again later.");
+      VxToast.show(context,
+          msg: "Error updating product. Please try again later.");
     }
   }
 
-  Future<void> updateProductMatch(BuildContext context, String documentId) async {
+  bool isDataComplete() {
+    return pImagesList.any((image) => image != null) &&
+        pnameController.text.isNotEmpty &&
+        pdescController.text.isNotEmpty &&
+        ppriceController.text.isNotEmpty &&
+        pquantityController.text.isNotEmpty &&
+        selectedCollection.isNotEmpty &&
+        selectedSubcollection.isNotEmpty &&
+        selectedGender.isNotEmpty &&
+        selectedSizes.isNotEmpty &&
+        selectedColorIndexes.isNotEmpty &&
+        selectedMixandmatch.isNotEmpty;
+  }
+
+  Future<void> updateProductMatch(
+      BuildContext context, String documentId) async {
     try {
-      final productDoc = FirebaseFirestore.instance.collection(productsCollection).doc(documentId);
+      final productDoc = FirebaseFirestore.instance
+          .collection(productsCollection)
+          .doc(documentId);
 
       await productDoc.update({
         'p_mixmatch': '',
-        'p_mixmatch_colors': selectedColorIndexes.map((index) => allColors[index]['name']).toList(),
+        'p_mixmatch_colors': selectedColorIndexes
+            .map((index) => allColors[index]['name'])
+            .toList(),
         'p_mixmatch_sex': selectedGender.value,
-        'p_mixmatch_desc' : psizeController.text,
+        'p_mixmatch_desc': psizeController.text,
         'p_mixmatch_collection': selectedCollections.toList(),
       });
       VxToast.show(context, msg: "Product updated successfully.");
     } catch (e) {
       print("Error updating product: $e");
-      VxToast.show(context, msg: "Error updating product. Please try again later.");
+      VxToast.show(context,
+          msg: "Error updating product. Please try again later.");
       print(e.toString());
     }
-}
-
+  }
 
   addFeatured(docId) async {
     await firestore.collection(productsCollection).doc(docId).set({
@@ -374,11 +500,10 @@ class ProductsController extends GetxController {
     });
   }
 
-  bool isDataComplete() {
-    return pnameController.text.isNotEmpty &&
-        pabproductController.text.isNotEmpty &&
+  bool fieldProducComplete() {
+    return pImagesList.any((image) => image != null) &&
+        pnameController.text.isNotEmpty &&
         pdescController.text.isNotEmpty &&
-        psizeController.text.isNotEmpty &&
         ppriceController.text.isNotEmpty &&
         pquantityController.text.isNotEmpty &&
         selectedCollection.isNotEmpty &&
@@ -386,7 +511,7 @@ class ProductsController extends GetxController {
         selectedGender.isNotEmpty &&
         selectedSizes.isNotEmpty &&
         selectedColorIndexes.isNotEmpty &&
-        selectedMixandmatch.isNotEmpty ;
+        selectedMixandmatch.isNotEmpty;
   }
 
   void resetForm() {
@@ -406,11 +531,9 @@ class ProductsController extends GetxController {
     pImagesList.clear();
     selectedMixandmatch.value = '';
     while (pImagesList.length < 9) {
-        pImagesList.add(null);
+      pImagesList.add(null);
     }
   }
-
-  MatchProducts(text) {}
 }
 
 class Product {
@@ -450,7 +573,8 @@ class Product {
       part: data['p_part'] ?? '',
       price: data['p_price'] ?? '',
       gendermixmatch: data['p_mixmatch_sex'] ?? '',
-      collectionsmixmatch: List<String>.from(data['p_mixmatch_collection'] ?? []),
+      collectionsmixmatch:
+          List<String>.from(data['p_mixmatch_collection'] ?? []),
       colormixmatch: List<String>.from(data['p_mixmatch_colors'] ?? []),
       imageUrls: List<String>.from(data['p_imgs'] ?? []),
     );
