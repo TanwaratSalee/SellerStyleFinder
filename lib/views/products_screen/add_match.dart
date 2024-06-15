@@ -1,7 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:seller_finalproject/const/const.dart';
 import 'package:seller_finalproject/const/styles.dart';
 import 'package:seller_finalproject/controllers/match_controller.dart';
 import 'package:seller_finalproject/controllers/profile_controller.dart';
+import 'package:seller_finalproject/views/products_screen/products_screen.dart';
 import 'package:seller_finalproject/views/widgets/custom_textfield.dart';
 
 class AddMatchProduct extends StatefulWidget {
@@ -32,11 +34,13 @@ class _AddMatchProductState extends State<AddMatchProduct> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Match Product').text.size(24).fontFamily(medium).make(),
+        title:
+            const Text('Match Product').text.size(24).fontFamily(medium).make(),
         actions: <Widget>[
           TextButton(
             onPressed: () {
               onSaveButtonPressed(context);
+              Get.to(() => ProductsScreen());
             },
             child: const Text('Save', style: TextStyle(color: primaryApp)),
           ),
@@ -62,7 +66,8 @@ class _AddMatchProductState extends State<AddMatchProduct> {
                       viewportFraction: 0.6,
                       onPageChanged: (index) {
                         _currentTopIndex = index;
-                        controller.onTopProductSelected(snapshot.data!.value![index]);
+                        controller
+                            .onTopProductSelected(snapshot.data!.value![index]);
                       },
                       itemBuilder: (context, index) {
                         Product product = snapshot.data!.value![index];
@@ -71,13 +76,15 @@ class _AddMatchProductState extends State<AddMatchProduct> {
                             product.imageUrls[0],
                             fit: BoxFit.cover,
                           ).box.roundedSM.clip(Clip.antiAlias).make(),
-                        ).box.white.margin(EdgeInsets.symmetric(horizontal: 6,vertical: 2)).make();
+                        )
+                            .box
+                            .white
+                            .margin(EdgeInsets.symmetric(
+                                horizontal: 6, vertical: 2))
+                            .make();
                       },
-                      
                     ),
-                    
                   );
-                  
                 } else {
                   return Center(child: Text('No data available'));
                 }
@@ -101,7 +108,8 @@ class _AddMatchProductState extends State<AddMatchProduct> {
                       viewportFraction: 0.6,
                       onPageChanged: (index) {
                         _currentLowerIndex = index;
-                        controller.onLowerProductSelected(snapshot.data!.value![index]);
+                        controller.onLowerProductSelected(
+                            snapshot.data!.value![index]);
                       },
                       itemBuilder: (context, index) {
                         Product product = snapshot.data!.value![index];
@@ -110,7 +118,12 @@ class _AddMatchProductState extends State<AddMatchProduct> {
                             product.imageUrls[0],
                             fit: BoxFit.cover,
                           ).box.roundedSM.clip(Clip.antiAlias).make(),
-                        ).box.white.margin(EdgeInsets.symmetric(horizontal: 6,vertical: 2)).make();
+                        )
+                            .box
+                            .white
+                            .margin(EdgeInsets.symmetric(
+                                horizontal: 6, vertical: 2))
+                            .make();
                       },
                     ),
                   );
@@ -125,146 +138,157 @@ class _AddMatchProductState extends State<AddMatchProduct> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text("Suitable for gender")
-                  .text
-                  .size(16)
-                  .color(blackColor)
-                  .fontFamily(medium)
-                  .make(),
-              const SizedBox(height: 8),
-              Center(
-                child: Obx(() => Wrap(
-                      spacing: 8,
-                      runSpacing: 8,
-                      children: controller.genderList.map((gender) {
-                        bool isSelected = controller.selectedGender.value == gender;
-                        return Container(
-                          width: 105,
-                          child: ChoiceChip(
-                            showCheckmark: false,
-                            label: Container(
-                              alignment: Alignment.center,
-                              child: Text(
-                                capitalize(gender),
-                                style: TextStyle(
-                                  color: isSelected ? primaryApp : greyColor,
-                                  fontFamily: isSelected ? semiBold : regular,
+                      .text
+                      .size(16)
+                      .color(blackColor)
+                      .fontFamily(medium)
+                      .make(),
+                  const SizedBox(height: 8),
+                  Center(
+                    child: Obx(() => Wrap(
+                          spacing: 8,
+                          runSpacing: 8,
+                          children: controller.genderList.map((gender) {
+                            bool isSelected =
+                                controller.selectedGender.value == gender;
+                            return Container(
+                              width: 105,
+                              child: ChoiceChip(
+                                showCheckmark: false,
+                                label: Container(
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    capitalize(gender),
+                                    style: TextStyle(
+                                      color:
+                                          isSelected ? primaryApp : greyColor,
+                                      fontFamily:
+                                          isSelected ? semiBold : regular,
+                                    ),
+                                  ).text.size(14).make(),
                                 ),
-                              ).text.size(14).make(),
-                            ),
-                            selected: isSelected,
-                            onSelected: (selected) {
-                              if (selected) {
-                                controller.selectedGender.value = gender;
-                              }
-                            },
-                            selectedColor: thinPrimaryApp,
-                            backgroundColor: whiteColor,
-                            side: isSelected
-                                ? const BorderSide(color: primaryApp, width: 2)
-                                : const BorderSide(color: greyLine),
-                          ),
-                        );
-                      }).toList(),
-                    )),
-              ),
-              const SizedBox(height: 15),
-              const Text("Collection")
-                  .text
-                  .size(16)
-                  .color(blackColor)
-                  .fontFamily(medium)
-                  .make(),
-              const SizedBox(height: 8),
-              Center(
-                child: Obx(() => Wrap(
-                      spacing: 8,
-                      runSpacing: 1,
-                      children: controller.collectionList.map((collection) {
-                        bool isSelected = controller.isCollectionSelected(collection);
-                        return ChoiceChip(
-                          showCheckmark: false,
-                          label: Container(
-                            width: 75,
-                            alignment: Alignment.center,
-                            child: Text(
-                              capitalize(collection),
-                              style: TextStyle(
-                                color: isSelected ? primaryApp : greyColor,
-                                fontFamily: isSelected ? semiBold : regular,
+                                selected: isSelected,
+                                onSelected: (selected) {
+                                  if (selected) {
+                                    controller.selectedGender.value = gender;
+                                  }
+                                },
+                                selectedColor: thinPrimaryApp,
+                                backgroundColor: whiteColor,
+                                side: isSelected
+                                    ? const BorderSide(
+                                        color: primaryApp, width: 2)
+                                    : const BorderSide(color: greyLine),
                               ),
-                            ).text.size(14).make(),
-                          ),
-                          selected: isSelected,
-                          onSelected: (selected) {
-                            controller.toggleCollection(collection);
-                          },
-                          selectedColor: thinPrimaryApp,
-                          backgroundColor: whiteColor,
-                          side: isSelected
-                              ? const BorderSide(color: primaryApp, width: 2)
-                              : const BorderSide(color: greyLine, width: 1.3),
-                        );
-                      }).toList(),
-                    )),
-              ),
-              const SizedBox(height: 15),
-              customTextFieldInput(
+                            );
+                          }).toList(),
+                        )),
+                  ),
+                  const SizedBox(height: 15),
+                  const Text("Collection")
+                      .text
+                      .size(16)
+                      .color(blackColor)
+                      .fontFamily(medium)
+                      .make(),
+                  const SizedBox(height: 8),
+                  Center(
+                    child: Obx(() => Wrap(
+                          spacing: 8,
+                          runSpacing: 1,
+                          children: controller.collectionList.map((collection) {
+                            bool isSelected =
+                                controller.isCollectionSelected(collection);
+                            return ChoiceChip(
+                              showCheckmark: false,
+                              label: Container(
+                                width: 75,
+                                alignment: Alignment.center,
+                                child: Text(
+                                  capitalize(collection),
+                                  style: TextStyle(
+                                    color: isSelected ? primaryApp : greyColor,
+                                    fontFamily: isSelected ? semiBold : regular,
+                                  ),
+                                ).text.size(14).make(),
+                              ),
+                              selected: isSelected,
+                              onSelected: (selected) {
+                                controller.toggleCollection(collection);
+                              },
+                              selectedColor: thinPrimaryApp,
+                              backgroundColor: whiteColor,
+                              side: isSelected
+                                  ? const BorderSide(
+                                      color: primaryApp, width: 2)
+                                  : const BorderSide(
+                                      color: greyLine, width: 1.3),
+                            );
+                          }).toList(),
+                        )),
+                  ),
+                  const SizedBox(height: 15),
+                  customTextFieldInput(
                       heading: "Explain clothing matching",
                       isDesc: true,
                       controller: controller.psizeController),
-              const SizedBox(height: 15),
-              const Text("Choose product colors")
-                  .text
-                  .size(16)
-                  .color(blackColor)
-                  .fontFamily(medium)
-                  .make(),
-              const SizedBox(height: 8),
-              Center(
-                child: Obx(
-                  () => Wrap(
-                    spacing: 25,
-                    runSpacing: 15,
-                    children: List.generate(
-                      controller.allColors.length,
-                      (index) => GestureDetector(
-                        onTap: () {
-                          if (controller.selectedColorIndexes.contains(index)) {
-                            controller.selectedColorIndexes.remove(index);
-                          } else {
-                            controller.selectedColorIndexes.add(index);
-                          }
-                        },
-                        child: Container(
-                          width: 40,
-                          height: 40,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(7),
-                            color: controller.allColors[index]['color'],
-                            border: Border.all(
-                              color: controller.selectedColorIndexes.contains(index)
-                                  ? primaryApp
-                                  : Colors.transparent,
-                              width: 2,
-                            ),
+                  const SizedBox(height: 15),
+                  const Text("Choose product colors")
+                      .text
+                      .size(16)
+                      .color(blackColor)
+                      .fontFamily(medium)
+                      .make(),
+                  const SizedBox(height: 8),
+                  Center(
+                    child: Obx(
+                      () => Wrap(
+                        spacing: 25,
+                        runSpacing: 15,
+                        children: List.generate(
+                          controller.allColors.length,
+                          (index) => GestureDetector(
+                            onTap: () {
+                              if (controller.selectedColorIndexes
+                                  .contains(index)) {
+                                controller.selectedColorIndexes.remove(index);
+                              } else {
+                                controller.selectedColorIndexes.add(index);
+                              }
+                            },
+                            child: Container(
+                              width: 40,
+                              height: 40,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(7),
+                                color: controller.allColors[index]['color'],
+                                border: Border.all(
+                                  color: controller.selectedColorIndexes
+                                          .contains(index)
+                                      ? primaryApp
+                                      : Colors.transparent,
+                                  width: 2,
+                                ),
+                              ),
+                              child: Center(
+                                child: controller.selectedColorIndexes
+                                        .contains(index)
+                                    ? Icon(
+                                        Icons.done,
+                                        color: controller.allColors[index]
+                                                    ['color'] ==
+                                                whiteColor
+                                            ? blackColor
+                                            : whiteColor,
+                                      )
+                                    : const SizedBox(),
+                              ),
+                            ).box.border(color: greyLine).roundedSM.make(),
                           ),
-                          child: Center(
-                            child: controller.selectedColorIndexes.contains(index)
-                                ? Icon(
-                                    Icons.done,
-                                    color: controller.allColors[index]['color'] ==
-                                            whiteColor
-                                        ? blackColor
-                                        : whiteColor,
-                                  )
-                                : const SizedBox(),
-                          ),
-                        ).box.border(color: greyLine).roundedSM.make(),
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ),
                 ],
               ),
             )

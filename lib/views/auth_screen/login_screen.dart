@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:seller_finalproject/const/const.dart';
 import 'package:seller_finalproject/const/styles.dart';
 import 'package:seller_finalproject/controllers/auth_controller.dart';
+import 'package:seller_finalproject/views/auth_screen/create_screen.dart';
 import 'package:seller_finalproject/views/auth_screen/forgot_screen.dart';
 import 'package:seller_finalproject/views/widgets/custom_textfield.dart';
 import 'package:seller_finalproject/views/widgets/our_button.dart';
@@ -37,7 +38,8 @@ class LoginScreen extends StatelessWidget {
                   ),
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: const Text('Enjoy selling and discovering the best fashion brands. Wishing you a successful first day!')
+                    child: const Text(
+                            'Enjoy selling and discovering the best fashion brands. Wishing you a successful first day!')
                         .text
                         .align(TextAlign.center)
                         .size(14)
@@ -66,7 +68,8 @@ class LoginScreen extends StatelessWidget {
                   Column(
                     children: [
                       customTextField(
-                          controller: controller.emailController, label: 'Email'),
+                          controller: controller.emailController,
+                          label: 'Email'),
                       15.heightBox,
                       customTextFieldPassword(
                         label: password,
@@ -136,6 +139,7 @@ class LoginScreen extends StatelessWidget {
                           onPress: () async {
                             controller.isloading(true);
                             await controller.loginMethod();
+                            Get.to(() => CreateAccount());
                           },
                         )
                           .box

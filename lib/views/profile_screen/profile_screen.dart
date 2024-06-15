@@ -26,7 +26,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Setting'),
+        title: const Text(
+          'Setting',
+          style: TextStyle(fontFamily: medium),
+        ),
         centerTitle: true,
       ),
       body: Column(
@@ -85,11 +88,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       .text
                                       .size(16)
                                       .fontFamily(medium)
+                                      .fontFamily(bold)
                                       .make(),
                                   Text("${controller.snapshotData['email']}")
                                       .text
                                       .size(14)
-                                      .fontFamily(regular)
+                                      .fontFamily(medium)
                                       .make(),
                                 ],
                               ),
@@ -107,11 +111,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               icMe,
                               width: 22,
                             ),
-                            title: const Text('Edit Account').text.size(15).make(),
-                            trailing: const Icon(Icons.arrow_forward_ios, size: 18),
+                            title:
+                                const Text('Edit Account').text.size(15).make(),
+                            trailing:
+                                const Icon(Icons.arrow_forward_ios, size: 18),
                             onTap: () {
                               Get.to(() => EditProfileScreen(
-                                    username: controller.snapshotData['vendor_name'],
+                                    username:
+                                        controller.snapshotData['vendor_name'],
                                   ));
                             },
                           ),
@@ -121,9 +128,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               width: 22,
                             ),
                             title: const Text('Message').text.size(15).make(),
-                            trailing: const Icon(Icons.arrow_forward_ios, size: 18),
+                            trailing:
+                                const Icon(Icons.arrow_forward_ios, size: 18),
                             onTap: () {
-                              Get.to(() => MessagesScreen(vendorName: controller.snapshotData['vendor_name']));
+                              Get.to(() => MessagesScreen(
+                                  vendorName:
+                                      controller.snapshotData['vendor_name']));
                             },
                           ),
                           ListTile(
@@ -131,8 +141,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               icReview,
                               width: 22,
                             ),
-                            title: const Text('Review').text.size(15).make(),
-                            trailing: const Icon(Icons.arrow_forward_ios, size: 18),
+                            title: const Text('Review form customer')
+                                .text
+                                .color(greyDark)
+                                .fontFamily(medium)
+                                .size(15)
+                                .make(),
+                            trailing:
+                                const Icon(Icons.arrow_forward_ios, size: 18),
                             onTap: () {
                               Get.to(() => ReviewScreen());
                             },
@@ -166,17 +182,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(icLogout, width: 15),
+              15.widthBox,
               const SizedBox(width: 8),
               const Text('Logout')
                   .text
-                  .color(greyColor)
-                  .fontFamily(regular)
+                  .color(greyDark)
+                  .fontFamily(medium)
                   .make(),
             ],
           ),
         )
             .box
-            .color(greyColor)
+            .color(greyThin)
             .rounded
             .margin(const EdgeInsets.fromLTRB(24, 0, 24, 30))
             .padding(const EdgeInsets.symmetric(horizontal: 8))
@@ -189,60 +206,63 @@ class _ProfileScreenState extends State<ProfileScreen> {
     showDialog(
       context: context,
       builder: (BuildContext dialogContext) {
-        return Dialog(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              45.heightBox,
-              const Text('Are you sure to logout?')
-                  .text
-                  .size(18)
-                  .fontFamily(regular)
-                  .color(greyDark)
-                  .make(),
-              45.heightBox,
-              const Divider(
-                height: 1,
-                color: greyColor,
-              ),
-              IntrinsicHeight(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Expanded(
-                      child: TextButton(
-                        child: const Text('Cancel',
-                            style: TextStyle(
-                                color: redColor,
-                                fontFamily: medium,
-                                fontSize: 14)),
-                        onPressed: () => Navigator.of(context).pop(),
-                      ),
-                    ),
-                    const VerticalDivider(
-                        width: 1, thickness: 1, color: greyColor),
-                    Expanded(
-                      child: TextButton(
-                        child: const Text(
-                          'Logout',
-                          style: TextStyle(
-                              color: greyColor,
-                              fontFamily: medium,
-                              fontSize: 14),
-                        ),
-                        onPressed: () async {
-                          await Get.put(AuthController())
-                              .signoutMethod(context);
-                          Navigator.of(dialogContext).pop();
-                          Get.offAll(() => const LoginScreen());
-                        },
-                      ),
-                    ),
-                  ],
+        return FractionallySizedBox(
+          widthFactor: 0.8,
+          child: Dialog(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                30.heightBox,
+                const Text('Are you sure to logout?')
+                    .text
+                    .size(18)
+                    .fontFamily(medium)
+                    .color(greyDark)
+                    .make(),
+                30.heightBox,
+                const Divider(
+                  height: 1,
+                  color: greyColor,
                 ),
-              ),
-            ],
-          ).box.white.roundedLg.make(),
+                IntrinsicHeight(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Expanded(
+                        child: TextButton(
+                          child: const Text('Cancel',
+                              style: TextStyle(
+                                  color: redColor,
+                                  fontFamily: medium,
+                                  fontSize: 16)),
+                          onPressed: () => Navigator.of(context).pop(),
+                        ),
+                      ),
+                      const VerticalDivider(
+                          width: 2, thickness: 1, color: greyColor),
+                      Expanded(
+                        child: TextButton(
+                          child: const Text(
+                            'Logout',
+                            style: TextStyle(
+                                color: greyColor,
+                                fontFamily: medium,
+                                fontSize: 16),
+                          ),
+                          onPressed: () async {
+                            await Get.put(AuthController())
+                                .signoutMethod(context);
+                            Navigator.of(dialogContext).pop();
+                            Get.offAll(() => const LoginScreen());
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ).box.white.roundedLg.make(),
+          ),
         );
       },
     );

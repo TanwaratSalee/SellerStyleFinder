@@ -5,6 +5,7 @@ import 'package:seller_finalproject/const/styles.dart';
 import 'package:seller_finalproject/controllers/loading_Indcator.dart';
 import 'package:seller_finalproject/controllers/products_controller.dart';
 import 'package:seller_finalproject/views/products_screen/component/product_images.dart';
+import 'package:seller_finalproject/views/products_screen/products_screen.dart';
 import 'package:seller_finalproject/views/widgets/custom_textfield.dart';
 
 class AddProduct extends StatelessWidget {
@@ -419,9 +420,8 @@ class AddProduct extends StatelessWidget {
                         .size(16)
                         .color(blackColor)
                         .fontFamily(medium)
-                        .make(),                    
-                        8.heightBox,
-
+                        .make(),
+                    8.heightBox,
                     Center(
                       child: Obx(() => Wrap(
                             spacing: 8,

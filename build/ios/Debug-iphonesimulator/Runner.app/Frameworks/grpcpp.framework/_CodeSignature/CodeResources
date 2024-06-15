@@ -29,6 +29,10 @@
 	<dict>
 		<key>gRPCCertificates-Cpp.bundle/Info.plist</key>
 		<dict>
+			<key>hash</key>
+			<data>
+			75KnXBh88UPlqroYezej+owYuqU=
+			</data>
 			<key>hash2</key>
 			<data>
 			g+FOvxsD1WDvkAwWuCMmtTDx68TZODpVbbviMXh+C0A=
@@ -36,6 +40,10 @@
 		</dict>
 		<key>gRPCCertificates-Cpp.bundle/roots.pem</key>
 		<dict>
+			<key>hash</key>
+			<data>
+			fKPpDnXJArmBT4pB8zmpeWVIzCc=
+			</data>
 			<key>hash2</key>
 			<data>
 			lhQzRMSuEJWIElssQdXa9lSl+vxuI/rDf3uj0p2n53Y=
@@ -43,6 +51,10 @@
 		</dict>
 		<key>grpcpp.bundle/Info.plist</key>
 		<dict>
+			<key>hash</key>
+			<data>
+			bdg/veD5t3+nSOUzdr5MsiyMNIY=
+			</data>
 			<key>hash2</key>
 			<data>
 			EfprWNsjNhBWLssCxOvHx8dZsnZ3cuG7lcMP9VOC5zE=
@@ -50,6 +62,10 @@
 		</dict>
 		<key>grpcpp.bundle/PrivacyInfo.xcprivacy</key>
 		<dict>
+			<key>hash</key>
+			<data>
+			U7WM6H59FffP9Htm/es+F6Fe4q4=
+			</data>
 			<key>hash2</key>
 			<data>
 			SMwLNyeKt9zx4V4Bagi8Dg1kPZyuLQYcTZQlPy1SyIo=

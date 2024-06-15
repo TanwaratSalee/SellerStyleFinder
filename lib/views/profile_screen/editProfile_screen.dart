@@ -1,7 +1,9 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:ffi';
 import 'dart:io';
 
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:seller_finalproject/const/styles.dart';
 import 'package:seller_finalproject/controllers/loading_Indcator.dart';
 import 'package:seller_finalproject/controllers/profile_controller.dart';
@@ -28,7 +30,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       controller.emailController.text = controller.snapshotData['email'];
 
       String email = controller.snapshotData['email'] ?? '';
-      controller.emailController.text = email[0].toUpperCase() + email.substring(1);
+      controller.emailController.text =
+          email[0].toUpperCase() + email.substring(1);
     });
   }
 
@@ -37,40 +40,51 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     return Obx(
       () => Scaffold(
         appBar: AppBar(
-          title: const Text(editshopProfile),
+          title: const Text(
+            Shopaccout,
+            style: TextStyle(fontFamily: medium, fontSize: 32),
+          ),
           actions: [
             controller.isloading.value
                 ? loadingIndicator(circleColor: primaryApp)
                 : TextButton(
-                  onPressed: () async {
-                    controller.isloading(true);
+                    onPressed: () async {
+                      controller.isloading(true);
 
-                    if (controller.profileImgPath.value.isNotEmpty) {
-                      await controller.uploadProfileImage();
-                    } else {
-                      controller.profileImageLink = controller.snapshotData['imageUrl'];
-                    }
+                      if (controller.profileImgPath.value.isNotEmpty) {
+                        await controller.uploadProfileImage();
+                      } else {
+                        controller.profileImageLink =
+                            controller.snapshotData['imageUrl'];
+                      }
 
-                    // Pass all updated fields to updateProfile
-                    await controller.updateProfile(
-                      name: controller.nameController.text,
-                      imgUrl: controller.profileImageLink,
-                      address: controller.shopAddressController.text,
-                      city: controller.shopCityController.text,
-                      state: controller.shopStateController.text,
-                      postal: controller.shopAddressController.text,
-                    );
+                      // Pass all updated fields to updateProfile
+                      await controller.updateProfile(
+                        name: controller.nameController.text,
+                        imgUrl: controller.profileImageLink,
+                        address: controller.shopAddressController.text,
+                        city: controller.shopCityController.text,
+                        state: controller.shopStateController.text,
+                        postal: controller.shopAddressController.text,
+                      );
 
-                    VxToast.show(context, msg: "Profile updated successfully");
+                      VxToast.show(context,
+                          msg: "Profile updated successfully");
 
-                    controller.isloading(false);
-                  },
-                  child: const Text("Save")
-                )
+                      controller.isloading(false);
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 10),
+                      child: const Text(
+                        "Save",
+                        style: TextStyle(
+                            fontFamily: medium, color: greyDark, fontSize: 16),
+                      ),
+                    ))
           ],
         ),
         body: Padding(
-          padding: const EdgeInsets.all(18),
+          padding: const EdgeInsets.fromLTRB(30, 30, 30, 0),
           child: SingleChildScrollView(
             child: Column(
               children: [
@@ -122,52 +136,65 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             .make(),
 
                 10.heightBox,
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: primaryApp,
-                      textStyle: TextStyle(color: whiteColor)),
-                  onPressed: () {
-                    controller.changeImage(context);
-                  },
-                  child: const Text(changeImage),
-                ),
-                20.heightBox,
+                // ElevatedButton(
+                //   style: ElevatedButton.styleFrom(
+                //       backgroundColor: whiteColor,
+                //       textStyle: TextStyle(color: whiteColor)),
+                //   onPressed: () {
+                //     controller.changeImage(context);
+                //   },
+                //   child: const Text(changeImage),
+                // ),
+                // 20.heightBox,
 
-                Align(
-                alignment: Alignment.centerLeft,
-                child: const Text(aboutaccount)
-                    .text
-                    .size(20)
-                    .fontFamily(medium)
-                    .color(blackColor)
-                    .make(),
-              ),
-              
-              const Divider(color: greyThin,),
-              15.heightBox,
+                // Align(
+                //   alignment: Alignment.centerLeft,
+                //   child: const Text(aboutaccount)
+                //       .text
+                //       .size(20)
+                //       .fontFamily(medium)
+                //       .color(blackColor)
+                //       .make(),
+                // ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      " About Account",
+                      style: TextStyle(
+                        color: greyDark,
+                        fontFamily: medium,
+                        fontSize: 20,
+                      ),
+                    ),
+                  ),
+                ),
+
+                const Divider(
+                  color: greyThin,
+                ),
+                15.heightBox,
                 editTextField(
                   label: 'Shop Name :',
                   controller: controller.nameController,
                 ),
                 10.heightBox,
                 editTextField(
-                  label: 'Email :',
-                  controller: controller.emailController,
-                  isPass: false,
-                  readOnly: true
-                ),
+                    label: 'Email :',
+                    controller: controller.emailController,
+                    isPass: false,
+                    readOnly: true),
                 40.heightBox,
                 Align(
-                alignment: Alignment.centerLeft,
-                child: const Text(address)
-                    .text
-                    .size(20)
-                    .fontFamily(medium)
-                    .color(blackColor)
-                    .make(),
-              ),
-              const Divider(color: greyThin),
-              editTextField(
+                  alignment: Alignment.centerLeft,
+                  child: const Text(
+                    address2,
+                    style: TextStyle(fontFamily: medium),
+                  ).text.size(20).fontFamily(medium).color(blackColor).make(),
+                ),
+                const Divider(color: greyThin),
+                editTextField(
                   label: address,
                   controller: controller.shopAddressController,
                 ),
@@ -186,6 +213,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   controller: controller.shopPostalController,
                 ),
                 10.heightBox,
+                editTextField(
+                  label: 'phone :',
+                  // controller: controller.shopPostalController,
+                ),
+
                 // const Align(
                 //   alignment: Alignment.centerLeft,
                 //   child: Text(

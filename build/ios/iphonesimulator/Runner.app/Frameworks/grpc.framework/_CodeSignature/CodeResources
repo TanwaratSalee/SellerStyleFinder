@@ -21,6 +21,10 @@
 	<dict>
 		<key>grpc.bundle/Info.plist</key>
 		<dict>
+			<key>hash</key>
+			<data>
+			UepPK/HO2hCWB4/GXblztUg9MfQ=
+			</data>
 			<key>hash2</key>
 			<data>
 			yzlXy2K5yLMYHt73VvzzwrEyG2Qh7HXXzDquNW/LygY=
@@ -28,6 +32,10 @@
 		</dict>
 		<key>grpc.bundle/PrivacyInfo.xcprivacy</key>
 		<dict>
+			<key>hash</key>
+			<data>
+			U7WM6H59FffP9Htm/es+F6Fe4q4=
+			</data>
 			<key>hash2</key>
 			<data>
 			SMwLNyeKt9zx4V4Bagi8Dg1kPZyuLQYcTZQlPy1SyIo=

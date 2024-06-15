@@ -62,7 +62,8 @@ class Home extends GetView<HomeController> {
       body: Obx(
         () => Column(
           children: [
-            Expanded(child: IndexedStack(
+            Expanded(
+                child: IndexedStack(
               index: controller.navIndex.value,
               children: const [
                 HomeScreen(),

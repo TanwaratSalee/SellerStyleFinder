@@ -21,6 +21,10 @@
 	<dict>
 		<key>GoogleUtilities_Privacy.bundle/Info.plist</key>
 		<dict>
+			<key>hash</key>
+			<data>
+			W4XONScaqTK29LqAojfmNrDEJKk=
+			</data>
 			<key>hash2</key>
 			<data>
 			hgHpk2ytWdVlyvPnB7XgxtdlZhkzrcdDBOFncs2i+Tc=
@@ -28,6 +32,10 @@
 		</dict>
 		<key>GoogleUtilities_Privacy.bundle/PrivacyInfo.xcprivacy</key>
 		<dict>
+			<key>hash</key>
+			<data>
+			TrRzpkxcmDwPf9xXhrQKnuRceyI=
+			</data>
 			<key>hash2</key>
 			<data>
 			jxZCM8XSFfsGzrh4STQCHd3X05qJ15Xla6XIMqsPs/c=
