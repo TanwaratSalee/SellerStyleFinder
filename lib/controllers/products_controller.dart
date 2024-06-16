@@ -73,7 +73,7 @@ class ProductsController extends GetxController {
     {'name': 'Dark', 'color': const Color(0xFF5C3836)},
   ];
 
-  final selectedColorIndexes = <int>[].obs;
+  RxList<int> selectedColorIndexes = <int>[].obs;
   final List<Map<String, dynamic>> allColors = [
     {'name': 'Black', 'color': Colors.black, 'value': 0xFF000000},
     {'name': 'Grey', 'color': greyColor, 'value': 0xFF808080},
@@ -145,7 +145,7 @@ class ProductsController extends GetxController {
     } else if (part == 'lower') {
       selectedLowerProduct.value = product;
     }
-    update(); 
+    update();
   }
 
   getCollection() async {
@@ -271,7 +271,9 @@ class ProductsController extends GetxController {
         'p_sex': selectedGender.value,
         'p_productsize': selectedSizes,
         'p_part': selectedMixandmatch.value,
-        'p_colors': selectedColorIndexes.map((index) => allColors[index]['color'].value).toList(),
+        'p_colors': selectedColorIndexes
+            .map((index) => allColors[index]['color'].value)
+            .toList(),
         'p_imgs': FieldValue.arrayUnion(pImagesLinks),
         'p_wishlist': FieldValue.arrayUnion([]),
         'p_desc': pdescController.text,
@@ -314,7 +316,40 @@ class ProductsController extends GetxController {
     selectedMixandmatch.value = productData['p_part'] ?? '';
     selectedSubcollection.value = productData['p_subcollection'] ?? '';
 
-    // Print out the values
+    // ตั้งค่าสีที่เลือก
+    selectedColorIndexes.clear();
+    List<dynamic> colorNumbers = productData['p_colors'] ?? [];
+    for (var colorNumber in colorNumbers) {
+      int colorIndex =
+          allColors.indexWhere((color) => color['value'] == colorNumber);
+      if (colorIndex != -1) {
+        selectedColorIndexes.add(colorIndex);
+      } else {
+        print('Color number $colorNumber not found in allColors.');
+      }
+    }
+
+    // ตั้งค่าคอลเลคชั่นที่เลือก
+    if (productData['p_collection'] != null) {
+      selectedCollection
+          .assignAll(List<String>.from(productData['p_collection']));
+    } else {
+      selectedCollection.clear();
+    }
+
+    // ตั้งค่าขนาดที่เลือก
+    if (productData['p_productsize'] != null) {
+      selectedSizes.assignAll(List<String>.from(productData['p_productsize']));
+    } else {
+      selectedSizes.clear();
+    }
+
+    // ตั้งค่ารูปภาพที่มีอยู่
+    if (productData['p_imgs'] != null) {
+      initializeImages(List<String>.from(productData['p_imgs']));
+    }
+
+    // Print out the values for debugging
     print('Product Name: ${pnameController.text}');
     print('About Product: ${pabproductController.text}');
     print('Description: ${pdescController.text}');
@@ -324,44 +359,10 @@ class ProductsController extends GetxController {
     print('Gender: ${selectedGender.value}');
     print('Mix and Match: ${selectedMixandmatch.value}');
     print('Subcollection: ${selectedSubcollection.value}');
-
-    // Print the raw color data
-    List<dynamic> colorNumbers = productData['p_colors'] ?? [];
     print('Raw color data: $colorNumbers');
-    colorNumbers.clear();
-    for (var colorNumber in colorNumbers) {
-      if (colorNumber is int) {
-        int colorIndex =
-            allColors.indexWhere((color) => color['number'] == colorNumber);
-        if (colorIndex != -1) {
-          colorNumbers.add(colorIndex);
-        } else {
-          print('Color number $colorNumber not found in allColors.');
-        }
-      } else {
-        print('Invalid color number: $colorNumber');
-      }
-    }
-    print('Selected Color Indexes: $colorNumbers');
-
-    if (productData['p_collection'] != null) {
-      selectedCollection
-          .assignAll(List<String>.from(productData['p_collection']));
-    } else {
-      selectedCollection.clear();
-    }
+    print('Selected Color Indexes: $selectedColorIndexes');
     print('Selected Collection: $selectedCollection');
-
-    if (productData['p_productsize'] != null) {
-      selectedSizes.assignAll(List<String>.from(productData['p_productsize']));
-    } else {
-      selectedSizes.clear();
-    }
     print('Selected Sizes: $selectedSizes');
-
-    if (productData['p_imgs'] != null) {
-      initializeImages(List<String>.from(productData['p_imgs']));
-    }
   }
 
   void initializeImages(List<String> imageUrls) {
@@ -399,7 +400,7 @@ class ProductsController extends GetxController {
         'p_productsize': selectedSizes,
         'p_part': selectedMixandmatch.value,
         'p_colors': selectedColorIndexes
-            .map((index) => allColors[index]['color'].value)
+            .map((index) => allColors[index]['value'])
             .toList(),
         'p_desc': pdescController.text,
         'p_name': pnameController.text,
