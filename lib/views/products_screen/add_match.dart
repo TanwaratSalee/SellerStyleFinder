@@ -1,10 +1,11 @@
-import 'package:flutter/foundation.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:seller_finalproject/const/const.dart';
 import 'package:seller_finalproject/const/styles.dart';
 import 'package:seller_finalproject/controllers/match_controller.dart';
-import 'package:seller_finalproject/controllers/profile_controller.dart';
 import 'package:seller_finalproject/views/products_screen/products_screen.dart';
-import 'package:seller_finalproject/views/widgets/custom_textfield.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class AddMatchProduct extends StatefulWidget {
   @override
@@ -34,12 +35,27 @@ class _AddMatchProductState extends State<AddMatchProduct> {
 
     return Scaffold(
       appBar: AppBar(
-        title:
-            const Text('Match Product').text.size(24).fontFamily(medium).make(),
+        title: const Text('Match Product').text.size(24).fontFamily(medium).make(),
         actions: <Widget>[
           TextButton(
-            onPressed: () {
-              onSaveButtonPressed(context);
+            onPressed: () async {
+              // Retrieve necessary parameters
+              String productNameTop = controller.selectedTopProduct?.name ?? '';
+              String productNameLower = controller.selectedLowerProduct?.name ?? '';
+              String selectedGender = controller.selectedGender.value;
+              List<String> selectedCollections = controller.selectedCollections;
+              String explanation = controller.explainController.text;
+
+              // Call the onSaveButtonPressed method
+              await onSaveButtonPressed(
+                productNameTop,
+                productNameLower,
+                context,
+                selectedGender,
+                selectedCollections,
+                explanation,
+              );
+
               Get.to(() => ProductsScreen());
             },
             child: const Text('Save', style: TextStyle(color: primaryApp)),
@@ -56,8 +72,7 @@ class _AddMatchProductState extends State<AddMatchProduct> {
                   return Center(child: CircularProgressIndicator());
                 } else if (snapshot.hasError) {
                   return Center(child: Text('Error: ${snapshot.error}'));
-                } else if (snapshot.data?.value != null &&
-                    snapshot.data!.value!.isNotEmpty) {
+                } else if (snapshot.data?.value != null && snapshot.data!.value!.isNotEmpty) {
                   return SizedBox(
                     width: 390,
                     height: 200,
@@ -66,8 +81,7 @@ class _AddMatchProductState extends State<AddMatchProduct> {
                       viewportFraction: 0.6,
                       onPageChanged: (index) {
                         _currentTopIndex = index;
-                        controller
-                            .onTopProductSelected(snapshot.data!.value![index]);
+                        controller.onTopProductSelected(snapshot.data!.value![index]);
                       },
                       itemBuilder: (context, index) {
                         Product product = snapshot.data!.value![index];
@@ -76,12 +90,7 @@ class _AddMatchProductState extends State<AddMatchProduct> {
                             product.imageUrls[0],
                             fit: BoxFit.cover,
                           ).box.roundedSM.clip(Clip.antiAlias).make(),
-                        )
-                            .box
-                            .white
-                            .margin(EdgeInsets.symmetric(
-                                horizontal: 6, vertical: 2))
-                            .make();
+                        ).box.white.margin(EdgeInsets.symmetric(horizontal: 6, vertical: 2)).make();
                       },
                     ),
                   );
@@ -98,8 +107,7 @@ class _AddMatchProductState extends State<AddMatchProduct> {
                   return Center(child: CircularProgressIndicator());
                 } else if (snapshot.hasError) {
                   return Center(child: Text('Error: ${snapshot.error}'));
-                } else if (snapshot.data?.value != null &&
-                    snapshot.data!.value!.isNotEmpty) {
+                } else if (snapshot.data?.value != null && snapshot.data!.value!.isNotEmpty) {
                   return SizedBox(
                     width: 390,
                     height: 200,
@@ -108,8 +116,7 @@ class _AddMatchProductState extends State<AddMatchProduct> {
                       viewportFraction: 0.6,
                       onPageChanged: (index) {
                         _currentLowerIndex = index;
-                        controller.onLowerProductSelected(
-                            snapshot.data!.value![index]);
+                        controller.onLowerProductSelected(snapshot.data!.value![index]);
                       },
                       itemBuilder: (context, index) {
                         Product product = snapshot.data!.value![index];
@@ -118,12 +125,7 @@ class _AddMatchProductState extends State<AddMatchProduct> {
                             product.imageUrls[0],
                             fit: BoxFit.cover,
                           ).box.roundedSM.clip(Clip.antiAlias).make(),
-                        )
-                            .box
-                            .white
-                            .margin(EdgeInsets.symmetric(
-                                horizontal: 6, vertical: 2))
-                            .make();
+                        ).box.white.margin(EdgeInsets.symmetric(horizontal: 6, vertical: 2)).make();
                       },
                     ),
                   );
@@ -160,10 +162,8 @@ class _AddMatchProductState extends State<AddMatchProduct> {
                                   child: Text(
                                     capitalize(gender),
                                     style: TextStyle(
-                                      color:
-                                          isSelected ? primaryApp : greyColor,
-                                      fontFamily:
-                                          isSelected ? semiBold : regular,
+                                      color: isSelected ? primaryApp : greyColor,
+                                      fontFamily: isSelected ? semiBold : regular,
                                     ),
                                   ).text.size(14).make(),
                                 ),
@@ -176,8 +176,7 @@ class _AddMatchProductState extends State<AddMatchProduct> {
                                 selectedColor: thinPrimaryApp,
                                 backgroundColor: whiteColor,
                                 side: isSelected
-                                    ? const BorderSide(
-                                        color: primaryApp, width: 2)
+                                    ? const BorderSide(color: primaryApp, width: 2)
                                     : const BorderSide(color: greyLine),
                               ),
                             );
@@ -194,11 +193,10 @@ class _AddMatchProductState extends State<AddMatchProduct> {
                   const SizedBox(height: 8),
                   Center(
                     child: Obx(() => Wrap(
-                          spacing: 8,
+                          spacing: 6,
                           runSpacing: 1,
                           children: controller.collectionList.map((collection) {
-                            bool isSelected =
-                                controller.isCollectionSelected(collection);
+                            bool isSelected = controller.isCollectionSelected(collection);
                             return ChoiceChip(
                               showCheckmark: false,
                               label: Container(
@@ -219,76 +217,48 @@ class _AddMatchProductState extends State<AddMatchProduct> {
                               selectedColor: thinPrimaryApp,
                               backgroundColor: whiteColor,
                               side: isSelected
-                                  ? const BorderSide(
-                                      color: primaryApp, width: 2)
-                                  : const BorderSide(
-                                      color: greyLine, width: 1.3),
+                                  ? const BorderSide(color: primaryApp, width: 2)
+                                  : const BorderSide(color: greyLine, width: 1.3),
                             );
                           }).toList(),
                         )),
                   ),
                   const SizedBox(height: 15),
-                  customTextFieldInput(
-                      heading: "Explain clothing matching",
-                      isDesc: true,
-                      controller: controller.psizeController),
-                  const SizedBox(height: 15),
-                  const Text("Choose product colors")
-                      .text
-                      .size(16)
-                      .color(blackColor)
-                      .fontFamily(medium)
-                      .make(),
-                  const SizedBox(height: 8),
-                  Center(
-                    child: Obx(
-                      () => Wrap(
-                        spacing: 25,
-                        runSpacing: 15,
-                        children: List.generate(
-                          controller.allColors.length,
-                          (index) => GestureDetector(
-                            onTap: () {
-                              if (controller.selectedColorIndexes
-                                  .contains(index)) {
-                                controller.selectedColorIndexes.remove(index);
-                              } else {
-                                controller.selectedColorIndexes.add(index);
-                              }
-                            },
-                            child: Container(
-                              width: 40,
-                              height: 40,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(7),
-                                color: controller.allColors[index]['color'],
-                                border: Border.all(
-                                  color: controller.selectedColorIndexes
-                                          .contains(index)
-                                      ? primaryApp
-                                      : Colors.transparent,
-                                  width: 2,
-                                ),
-                              ),
-                              child: Center(
-                                child: controller.selectedColorIndexes
-                                        .contains(index)
-                                    ? Icon(
-                                        Icons.done,
-                                        color: controller.allColors[index]
-                                                    ['color'] ==
-                                                whiteColor
-                                            ? blackColor
-                                            : whiteColor,
-                                      )
-                                    : const SizedBox(),
-                              ),
-                            ).box.border(color: greyLine).roundedSM.make(),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 6),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(height: 10),
+                        Text(
+                          "Explain clothing matching",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontFamily: medium,
                           ),
                         ),
-                      ),
+                        SizedBox(height: 8),
+                        TextField(
+                          controller: controller.explainController,
+                          maxLines: 3,
+                          decoration: InputDecoration(
+                            hintText: 'Enter your explanation here',
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                            ),
+                            filled: true,
+                            fillColor: Color.fromRGBO(240, 240, 240, 1),
+                          ),
+                          style: TextStyle(
+                            fontSize: 14.0,
+                            fontFamily: regular,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
+                  const SizedBox(height: 100),
                 ],
               ),
             )
@@ -298,36 +268,102 @@ class _AddMatchProductState extends State<AddMatchProduct> {
     );
   }
 
-  Future<void> onSaveButtonPressed(BuildContext context) async {
-    try {
-      final topProducts = await controller
-          .fetchTopProductsByVendor(currentUser!.uid)
-          .then((rxn) => rxn.value!);
-      final lowerProducts = await controller
-          .fetchLowerProductsByVendor(currentUser!.uid)
-          .then((rxn) => rxn.value!);
+  Future<void> onSaveButtonPressed(
+    String productNameTop,
+    String productNameLower,
+    BuildContext context,
+    String selectedGender,
+    List<String> selectedCollections,
+    String explanation) async {
+    List<String> productNames = [productNameTop, productNameLower];
+    String currentUserUID = FirebaseAuth.instance.currentUser?.uid ?? '';
 
-      if (topProducts.isNotEmpty && lowerProducts.isNotEmpty) {
-        Product topProduct = topProducts[_currentTopIndex];
-        Product lowerProduct = lowerProducts[_currentLowerIndex];
-
-        if (topProduct != null && lowerProduct != null) {
-          String mixMatchValue = controller.generateRandomString(10);
-
-          await controller.updateProductMatch(
-              context, topProduct.id, mixMatchValue);
-          await controller.updateProductMatch(
-              context, lowerProduct.id, mixMatchValue);
-
-          print('Success: Products updated with MixMatch ID $mixMatchValue');
-          VxToast.show(context, msg: "Products updated successfully.");
-        }
-      } else {
-        VxToast.show(context, msg: "No products available to save.");
-      }
-    } catch (e) {
-      VxToast.show(context, msg: "Error saving products: ${e.toString()}");
-      print("Error saving products: $e");
+    if (currentUserUID.isEmpty) {
+      VxToast.show(context, msg: "User is not logged in.");
+      print('Error: User is not logged in.');
+      return;
     }
+
+    // Retrieve user details
+    FirebaseFirestore.instance
+        .collection('vendors')
+        .doc(currentUserUID)
+        .get()
+        .then((DocumentSnapshot userDoc) {
+      if (userDoc.exists) {
+        String userName = userDoc['vendor_name'] ?? '';
+        String userImg = userDoc['imageUrl'] ?? '';
+
+        // Log user details for debugging
+        print('User Name: $userName');
+        print('User Image: $userImg');
+
+        // Retrieve product details
+        FirebaseFirestore.instance
+            .collection(productsCollection)
+            .where('p_name', whereIn: productNames)
+            .get()
+            .then((QuerySnapshot querySnapshot) {
+          if (querySnapshot.docs.isNotEmpty) {
+            Map<String, dynamic> userData = {
+              'p_collection': selectedCollections,
+              'p_sex': selectedGender,
+              'p_desc': explanation,
+              'posted_by': currentUserUID,
+            };
+
+            querySnapshot.docs.forEach((doc) {
+              var data = doc.data() as Map<String, dynamic>?;
+              var wishlist = (data?['p_wishlist'] as List<dynamic>?) ?? [];
+
+              if (!wishlist.contains(currentUserUID)) {
+                userData['views'] = 0;
+                userData['favorite'] = 0;
+                if (doc['p_name'] == productNameTop) {
+                  userData['p_id_top'] = doc.id;
+                } else if (doc['p_name'] == productNameLower) {
+                  userData['p_id_lower'] = doc.id;
+                }
+              }
+            });
+
+            if (userData.keys.length > 1) {
+              // Check if any product info was added
+              FirebaseFirestore.instance
+                  .collection('storemixandmatchs')
+                  .add(userData)
+                  .then((documentReference) {
+                VxToast.show(context, msg: "Added post successful.");
+                print(
+                    'Data added in storemixandmatchs collection with document ID: ${documentReference.id}');
+                
+                // Clear the fields
+                controller.resetController();
+                
+                // Navigate back to the previous screen
+                Navigator.pop(context);
+              }).catchError((error) {
+                print('Error adding data in storemixandmatchs collection: $error');
+                VxToast.show(context, msg: "Error post.");
+              });
+            } else {
+              VxToast.show(context, msg: "Products already in wishlist.");
+            }
+          } else {
+            print('No products found matching the names.');
+            VxToast.show(context, msg: "No products found.");
+          }
+        }).catchError((error) {
+          print('Error retrieving products: $error');
+          VxToast.show(context, msg: "Error retrieving products.");
+        });
+      } else {
+        print('User not found.');
+        VxToast.show(context, msg: "User not found.");
+      }
+    }).catchError((error) {
+      print('Error retrieving user: $error');
+      VxToast.show(context, msg: "Error retrieving user.");
+    });
   }
 }

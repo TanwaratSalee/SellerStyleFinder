@@ -1,6 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:seller_finalproject/const/const.dart';
 import 'package:seller_finalproject/const/styles.dart';
 import 'package:seller_finalproject/controllers/auth_controller.dart';
@@ -27,8 +25,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Setting',
-          style: TextStyle(fontFamily: medium),
+          'Setting', style: TextStyle(fontFamily: medium, fontSize: 24),
         ),
         centerTitle: true,
       ),
@@ -78,7 +75,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           .clip(Clip.antiAlias)
                                           .make(),
                                     ),
-                            ),
+                            ).box.border(color: greyLine, width: 2).roundedFull.make(),
                             15.widthBox,
                             Expanded(
                               child: Column(
@@ -206,63 +203,67 @@ class _ProfileScreenState extends State<ProfileScreen> {
     showDialog(
       context: context,
       builder: (BuildContext dialogContext) {
-        return FractionallySizedBox(
-          widthFactor: 0.8,
-          child: Dialog(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                30.heightBox,
-                const Text('Are you sure to logout?')
-                    .text
-                    .size(18)
-                    .fontFamily(medium)
-                    .color(greyDark)
-                    .make(),
-                30.heightBox,
-                const Divider(
-                  height: 1,
-                  color: greyColor,
-                ),
-                IntrinsicHeight(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Expanded(
-                        child: TextButton(
-                          child: const Text('Cancel',
-                              style: TextStyle(
-                                  color: redColor,
-                                  fontFamily: medium,
-                                  fontSize: 16)),
-                          onPressed: () => Navigator.of(context).pop(),
-                        ),
-                      ),
-                      const VerticalDivider(
-                          width: 2, thickness: 1, color: greyColor),
-                      Expanded(
-                        child: TextButton(
-                          child: const Text(
-                            'Logout',
+        return Dialog(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              25.heightBox,
+              const Text('Confirm Logout')
+                  .text
+                  .size(22)
+                  .fontFamily(semiBold)
+                  .color(greyDark)
+                  .make(),
+              10.heightBox,
+              const Text('Are you sure you want to log out?')
+                  .text
+                  .size(14)
+                  .fontFamily(regular)
+                  .color(greyDark)
+                  .make(),
+              25.heightBox,
+              const Divider(
+                height: 1,
+                color: greyLine,
+              ),
+              IntrinsicHeight(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Expanded(
+                      child: TextButton(
+                        child: const Text('Cancel',
                             style: TextStyle(
-                                color: greyColor,
+                                color: redColor,
                                 fontFamily: medium,
-                                fontSize: 16),
-                          ),
-                          onPressed: () async {
-                            await Get.put(AuthController())
-                                .signoutMethod(context);
-                            Navigator.of(dialogContext).pop();
-                            Get.offAll(() => const LoginScreen());
-                          },
-                        ),
+                                fontSize: 14)),
+                        onPressed: () => Navigator.of(context).pop(),
                       ),
-                    ],
-                  ),
+                    ),
+                    const VerticalDivider(
+                        width: 1, thickness: 1, color: greyLine),
+                    Expanded(
+                      child: TextButton(
+                        child: const Text(
+                          'Logout',
+                          style: TextStyle(
+                              color: greyDark,
+                              fontFamily: medium,
+                              fontSize: 14),
+                        ),
+                        onPressed: () async {
+                          await Get.put(AuthController())
+                              .signoutMethod(context);
+                          Navigator.of(dialogContext).pop();
+                          Get.offAll(() => const LoginScreen());
+                        },
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ).box.white.roundedLg.make(),
-          ),
+              ),
+            ],
+          ).box.white.roundedLg.make(),
         );
       },
     );

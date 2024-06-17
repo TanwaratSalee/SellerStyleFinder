@@ -2,8 +2,6 @@
 
 import 'dart:ffi';
 import 'dart:io';
-
-import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:seller_finalproject/const/styles.dart';
 import 'package:seller_finalproject/controllers/loading_Indcator.dart';
 import 'package:seller_finalproject/controllers/profile_controller.dart';
@@ -28,10 +26,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     controller.fetchUserData().then((_) {
       controller.nameController.text = controller.snapshotData['vendor_name'];
       controller.emailController.text = controller.snapshotData['email'];
+      controller.shopPhoneController.text = controller.snapshotData['shop_mobile'] ?? '';
 
       String email = controller.snapshotData['email'] ?? '';
       controller.emailController.text =
-          email[0].toUpperCase() + email.substring(1);
+          email.isNotEmpty ? email[0].toUpperCase() + email.substring(1) : '';
     });
   }
 
@@ -42,7 +41,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         appBar: AppBar(
           title: const Text(
             Shopaccout,
-            style: TextStyle(fontFamily: medium, fontSize: 32),
+            style: TextStyle(fontFamily: medium, fontSize: 24),
           ),
           actions: [
             controller.isloading.value
@@ -65,7 +64,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         address: controller.shopAddressController.text,
                         city: controller.shopCityController.text,
                         state: controller.shopStateController.text,
-                        postal: controller.shopAddressController.text,
+                        postal: controller.shopPostalController.text,
+                        phone: controller.shopPhoneController.text, // Pass phone parameter
                       );
 
                       VxToast.show(context,
@@ -118,7 +118,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           )
                             .box
                             .roundedFull
-                            .border(color: greyColor, width: 2)
+                           .border(color: greyLine, width: 2)
                             .make()
                         //if both are emtpy
                         : ClipRRect(
@@ -132,30 +132,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           )
                             .box
                             .roundedFull
-                            .border(color: greyColor, width: 2)
+                            .border(color: greyLine, width: 2)
                             .make(),
-
+                
                 10.heightBox,
-                // ElevatedButton(
-                //   style: ElevatedButton.styleFrom(
-                //       backgroundColor: whiteColor,
-                //       textStyle: TextStyle(color: whiteColor)),
-                //   onPressed: () {
-                //     controller.changeImage(context);
-                //   },
-                //   child: const Text(changeImage),
-                // ),
-                // 20.heightBox,
-
-                // Align(
-                //   alignment: Alignment.centerLeft,
-                //   child: const Text(aboutaccount)
-                //       .text
-                //       .size(20)
-                //       .fontFamily(medium)
-                //       .color(blackColor)
-                //       .make(),
-                // ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
                   child: Align(
@@ -214,22 +194,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 ),
                 10.heightBox,
                 editTextField(
-                  label: 'phone :',
-                  // controller: controller.shopPostalController,
+                  label: 'Phone :',
+                  controller: controller.shopPhoneController,
                 ),
-
-                // const Align(
-                //   alignment: Alignment.centerLeft,
-                //   child: Text(
-                //        "Change your password"),
-                // ),
-                // 10.heightBox,
-                // customTextField(
-                //     label: password, controller: controller.oldpassController),
-                // 10.heightBox,
-                // customTextField(
-                //     label: confirmPass,
-                //     controller: controller.newpassController),
                 10.heightBox,
               ],
             ),

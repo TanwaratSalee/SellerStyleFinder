@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:seller_finalproject/const/const.dart';
-import 'package:seller_finalproject/controllers/home_controller.dart';
 import 'package:seller_finalproject/models/collection_model.dart';
 import 'package:path/path.dart';
 
@@ -350,19 +349,19 @@ class ProductsController extends GetxController {
     }
 
     // Print out the values for debugging
-    print('Product Name: ${pnameController.text}');
-    print('About Product: ${pabproductController.text}');
-    print('Description: ${pdescController.text}');
-    print('Size: ${psizeController.text}');
-    print('Price: ${ppriceController.text}');
-    print('Quantity: ${pquantityController.text}');
-    print('Gender: ${selectedGender.value}');
-    print('Mix and Match: ${selectedMixandmatch.value}');
-    print('Subcollection: ${selectedSubcollection.value}');
-    print('Raw color data: $colorNumbers');
-    print('Selected Color Indexes: $selectedColorIndexes');
-    print('Selected Collection: $selectedCollection');
-    print('Selected Sizes: $selectedSizes');
+    // print('Product Name: ${pnameController.text}');
+    // print('About Product: ${pabproductController.text}');
+    // print('Description: ${pdescController.text}');
+    // print('Size: ${psizeController.text}');
+    // print('Price: ${ppriceController.text}');
+    // print('Quantity: ${pquantityController.text}');
+    // print('Gender: ${selectedGender.value}');
+    // print('Mix and Match: ${selectedMixandmatch.value}');
+    // print('Subcollection: ${selectedSubcollection.value}');
+    // print('Raw color data: $colorNumbers');
+    // print('Selected Color Indexes: $selectedColorIndexes');
+    // print('Selected Collection: $selectedCollection');
+    // print('Selected Sizes: $selectedSizes');
   }
 
   void initializeImages(List<String> imageUrls) {
@@ -408,7 +407,7 @@ class ProductsController extends GetxController {
         'p_size': psizeController.text,
         'p_price': ppriceController.text,
         'p_quantity': pquantityController.text,
-        'p_seller': Get.find<HomeController>().username,
+        // 'p_seller': Get.find<HomeController>().username,
         'vendor_id': currentUser!.uid,
         'p_imgs': FieldValue.arrayUnion(pImagesLinks),
       });

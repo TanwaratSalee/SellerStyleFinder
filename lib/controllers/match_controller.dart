@@ -26,6 +26,7 @@ class MatchController extends GetxController {
   var subcollectionvalue = ''.obs;
   var selectedColorIndex = 0.obs;
   var selectedCollections = <String>[].obs;
+  
 
   List<String> sizesList = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
   final selectedSizes = <String>[].obs;
@@ -33,13 +34,7 @@ class MatchController extends GetxController {
   RxString selectedGender = ''.obs;
   List<String> mixandmatchList = ['top', 'lower', 'not specified'];
   RxString selectedMixandmatch = ''.obs;
-  List<String> collectionList = [
-    'summer',
-    'winter',
-    'autumn',
-    'dinner',
-    'everydaylook'
-  ];
+  List<String> collectionList = ['summer','winter','autumn','dinner','everydaylook'];
   final selectedCollection = <String>[].obs;
 
   final selectedColorIndexes = <int>[].obs;
@@ -302,4 +297,6 @@ class Product {
       imageUrls: List<String>.from(data['p_imgs'] ?? []),
     );
   }
+
+  
 }

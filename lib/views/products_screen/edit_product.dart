@@ -500,7 +500,7 @@ class _EditProductState extends State<EditProduct> {
                           )),
                     ),
                   
-                10.heightBox,
+                100.heightBox,
               ],
             ),
           ),

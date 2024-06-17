@@ -337,6 +337,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                       .padding(EdgeInsets.all(18))
                       .border(color: greyLine)
                       .make(),
+                      100.heightBox,
                 ],
               ),
             ),

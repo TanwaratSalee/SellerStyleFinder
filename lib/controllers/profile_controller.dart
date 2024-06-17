@@ -29,6 +29,7 @@ class ProfileController extends GetxController {
   var shopCityController = TextEditingController();
   var shopStateController = TextEditingController();
   var shopPostalController = TextEditingController();
+  var shopPhoneController = TextEditingController();  
 
   fetchUserData() async {
     isloading(true);
@@ -42,6 +43,7 @@ class ProfileController extends GetxController {
       // Update text fields with data from Firestore
       nameController.text = editaccount.data()?['vendor_name'] ?? '';
       emailController.text = editaccount.data()?['email'] ?? '';
+      shopPhoneController.text = editaccount.data()?['shop_mobile'] ?? '';
 
       // Fetch and handle addresses if available
       var addresses = editaccount.data()?['addresses'] as List<dynamic>? ?? [];
@@ -95,17 +97,14 @@ class ProfileController extends GetxController {
   }
 
   // Uused to update Firebase Firestore profile information.
-  updateProfile({name, imgUrl, address, city, state, postal}) async {
+  updateProfile({name, imgUrl, address, city, state, postal, phone}) async {
     var store = FirebaseFirestore.instance
         .collection(vendorsCollection)
         .doc(FirebaseAuth.instance.currentUser!.uid);
-
-    // Fetch the current user data to access the addresses array
     var doc = await store.get();
     List<dynamic> addresses = doc.data()?['addresses'] ?? [];
 
     if (addresses.isNotEmpty) {
-      // Assuming you want to update the first address
       addresses[0] = {
         'address': address,
         'city': city,
@@ -113,7 +112,6 @@ class ProfileController extends GetxController {
         'postalCode': postal
       };
     } else {
-      // If no addresses exist, create a new one
       addresses.add({
         'address': address,
         'city': city,
@@ -121,10 +119,13 @@ class ProfileController extends GetxController {
         'postalCode': postal
       });
     }
-
-    // Update the document with the new array
     await store.set(
-        {'vendor_name': name, 'imageUrl': imgUrl, 'addresses': addresses},
+        {
+          'vendor_name': name, 
+          'imageUrl': imgUrl, 
+          'addresses': addresses,
+          'shop_mobile' : phone, // Ensure the phone field is included
+        },
         SetOptions(merge: true));
 
     isloading(false);
