@@ -307,7 +307,7 @@ class _AddMatchProductState extends State<AddMatchProduct> {
           if (querySnapshot.docs.isNotEmpty) {
             Map<String, dynamic> userData = {
               'p_collection': selectedCollections,
-              'p_sex': selectedGender,
+              'gender': selectedGender,
               'p_desc': explanation,
               'posted_by': currentUserUID,
             };

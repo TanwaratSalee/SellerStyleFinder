@@ -16,7 +16,7 @@ class ProductsController extends GetxController {
   var pnameController = TextEditingController();
   var pabproductController = TextEditingController();
   var pdescController = TextEditingController();
-  var psizeController = TextEditingController();
+  var psizedesController = TextEditingController();
   var ppriceController = TextEditingController();
   var pquantityController = TextEditingController();
   var explainController = TextEditingController();
@@ -269,7 +269,7 @@ class ProductsController extends GetxController {
         'selectsize': selectedSizes,
         'part': selectedMixandmatch.value,
         'colors': selectedColorIndexes.map((index) => allColors[index]['color'].value).toList(),
-        'size': psizeController.text,
+        'sizedes': psizedesController.text,
         'price': ppriceController.text,
         'quantity': pquantityController.text,
         'rating': "5.0",
@@ -294,19 +294,19 @@ class ProductsController extends GetxController {
   }
 
   void setupProductData(Map<String, dynamic> productData) {
-    pnameController.text = productData['p_name'] ?? '';
-    pabproductController.text = productData['p_aboutProduct'] ?? '';
-    pdescController.text = productData['p_desc'] ?? '';
-    psizeController.text = productData['p_size'] ?? '';
-    ppriceController.text = productData['p_price'] ?? '';
-    pquantityController.text = productData['p_quantity'] ?? '';
-    selectedGender.value = productData['p_sex'] ?? '';
-    selectedMixandmatch.value = productData['p_part'] ?? '';
-    selectedSubcollection.value = productData['p_subcollection'] ?? '';
+    pnameController.text = productData['name'] ?? '';
+    pabproductController.text = productData['aboutProduct'] ?? '';
+    pdescController.text = productData['description'] ?? '';
+    psizedesController.text = productData['sizedes'] ?? '';
+    ppriceController.text = productData['price'] ?? '';
+    pquantityController.text = productData['quantity'] ?? '';
+    selectedGender.value = productData['gender'] ?? '';
+    selectedMixandmatch.value = productData['part'] ?? '';
+    selectedSubcollection.value = productData['subcollection'] ?? '';
 
     // ตั้งค่าสีที่เลือก
     selectedColorIndexes.clear();
-    List<dynamic> colorNumbers = productData['p_colors'] ?? [];
+    List<dynamic> colorNumbers = productData['colors'] ?? [];
     for (var colorNumber in colorNumbers) {
       int colorIndex =
           allColors.indexWhere((color) => color['value'] == colorNumber);
@@ -318,30 +318,30 @@ class ProductsController extends GetxController {
     }
 
     // ตั้งค่าคอลเลคชั่นที่เลือก
-    if (productData['p_collection'] != null) {
+    if (productData['collection'] != null) {
       selectedCollection
-          .assignAll(List<String>.from(productData['p_collection']));
+          .assignAll(List<String>.from(productData['collection']));
     } else {
       selectedCollection.clear();
     }
 
     // ตั้งค่าขนาดที่เลือก
-    if (productData['p_productsize'] != null) {
-      selectedSizes.assignAll(List<String>.from(productData['p_productsize']));
+    if (productData['selectsize'] != null) {
+      selectedSizes.assignAll(List<String>.from(productData['selectsize']));
     } else {
       selectedSizes.clear();
     }
 
     // ตั้งค่ารูปภาพที่มีอยู่
-    if (productData['p_imgs'] != null) {
-      initializeImages(List<String>.from(productData['p_imgs']));
+    if (productData['imgs'] != null) {
+      initializeImages(List<String>.from(productData['imgs']));
     }
 
     // Print out the values for debugging
     // print('Product Name: ${pnameController.text}');
     // print('About Product: ${pabproductController.text}');
     // print('Description: ${pdescController.text}');
-    // print('Size: ${psizeController.text}');
+    // print('Size: ${psizedesController.text}');
     // print('Price: ${ppriceController.text}');
     // print('Quantity: ${pquantityController.text}');
     // print('Gender: ${selectedGender.value}');
@@ -382,28 +382,28 @@ class ProductsController extends GetxController {
           .collection(productsCollection)
           .doc(documentId);
       await productDoc.update({
-        'p_collection': selectedCollection,
-        'p_subcollection': selectedSubcollection.value,
-        'p_sex': selectedGender.value,
-        'p_productsize': selectedSizes,
-        'p_part': selectedMixandmatch.value,
-        'p_colors': selectedColorIndexes
+        'collection': selectedCollection,
+        'subcollection': selectedSubcollection.value,
+        'sex': selectedGender.value,
+        'productsize': selectedSizes,
+        'part': selectedMixandmatch.value,
+        'colors': selectedColorIndexes
             .map((index) => allColors[index]['value'])
             .toList(),
-        'p_desc': pdescController.text,
-        'p_name': pnameController.text,
-        'p_aboutProduct': pabproductController.text,
-        'p_size': psizeController.text,
-        'p_price': ppriceController.text,
-        'p_quantity': pquantityController.text,
-        // 'p_seller': Get.find<HomeController>().username,
+        'description': pdescController.text,
+        'name': pnameController.text,
+        'aboutProduct': pabproductController.text,
+        'size': psizedesController.text,
+        'price': ppriceController.text,
+        'quantity': pquantityController.text,
+        // 'seller': Get.find<HomeController>().username,
         'vendor_id': currentUser!.uid,
-        'p_imgs': FieldValue.arrayUnion(pImagesLinks),
+        'imgs': FieldValue.arrayUnion(pImagesLinks),
       });
 
       if (imagesToDelete.isNotEmpty) {
         await productDoc.update({
-          'p_imgs': FieldValue.arrayRemove(imagesToDelete),
+          'imgs': FieldValue.arrayRemove(imagesToDelete),
         });
         imagesToDelete.clear();
       }
@@ -443,7 +443,7 @@ class ProductsController extends GetxController {
             .map((index) => allColors[index]['name'])
             .toList(),
         'p_mixmatch_sex': selectedGender.value,
-        'p_mixmatch_desc': psizeController.text,
+        'p_mixmatch_desc': psizedesController.text,
         'p_mixmatch_collection': selectedCollections.toList(),
       });
       VxToast.show(context, msg: "Product updated successfully.");
@@ -505,7 +505,7 @@ class ProductsController extends GetxController {
     pnameController.clear();
     pabproductController.clear();
     pdescController.clear();
-    psizeController.clear();
+    psizedesController.clear();
     ppriceController.clear();
     pquantityController.clear();
     selectedColorIndexes.clear();

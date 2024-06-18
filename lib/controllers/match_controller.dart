@@ -10,7 +10,7 @@ class MatchController extends GetxController {
   var pnameController = TextEditingController();
   var pabproductController = TextEditingController();
   var pdescController = TextEditingController();
-  var psizeController = TextEditingController();
+  var psizedesController = TextEditingController();
   var ppriceController = TextEditingController();
   var pquantityController = TextEditingController();
   var explainController = TextEditingController();
@@ -59,7 +59,7 @@ class MatchController extends GetxController {
   void resetController() {
     selectedGender.value = '';
     selectedColorIndexes.clear();
-    psizeController.clear();
+    psizedesController.clear();
     selectedCollections.clear();
   }
 
@@ -158,7 +158,7 @@ class MatchController extends GetxController {
         controller.selectedGender.isEmpty ||
         controller.selectedColorIndexes.isEmpty ||
         controller.selectedCollection.isEmpty ||
-        controller.psizeController.text.isEmpty) {
+        controller.psizedesController.text.isEmpty) {
       Get.snackbar(
         'Incomplete Data',
         'Please fill in all required fields',
@@ -185,7 +185,7 @@ class MatchController extends GetxController {
               .map((index) => allColors[index]['name'])
               .toList(),
           'p_mixmatch_sex': selectedGender.value,
-          'p_mixmatch_desc': psizeController.text,
+          'p_mixmatch_desc': psizedesController.text,
           'p_mixmatch_collection': selectedCollection.toList(),
         });
 
@@ -217,7 +217,7 @@ class MatchController extends GetxController {
               .map((index) => allColors[index]['name'])
               .toList(),
           'p_mixmatch_sex': selectedGender.value,
-          'p_mixmatch_desc': psizeController.text,
+          'p_mixmatch_desc': psizedesController.text,
           'p_mixmatch_collection': selectedCollection.toList(),
         });
 

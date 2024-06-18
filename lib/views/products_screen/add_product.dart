@@ -121,7 +121,7 @@ class AddProduct extends StatelessWidget {
                         // hint: "Size & Fit",
                         heading: "Size & Fit",
                         isDesc: true,
-                        controller: controller.psizeController),
+                        controller: controller.psizedesController),
                     10.heightBox,
                     customTextFieldInput(
                       heading: "Price",

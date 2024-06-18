@@ -31,7 +31,7 @@ class _EditMatchProductState extends State<EditMatchProduct> {
     super.initState();
     document = Get.arguments['document'];
     ItemsDetails = Get.arguments['ItemsDetails'];
-    selectedGender = document['p_sex'];
+    selectedGender = document['gender'];
     selectedCollections = List<String>.from(document['p_collection']);
     explanationController.text = document['p_desc'];
     pIdTop = document['p_id_top'];
@@ -360,7 +360,7 @@ class _EditMatchProductState extends State<EditMatchProduct> {
       'p_id_top': pIdTop,
       'p_id_lower': pIdLower,
       'p_collection': selectedCollections,
-      'p_sex': selectedGender,
+      'gender': selectedGender,
       'p_desc': explanationController.text,
     };
 

@@ -60,7 +60,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
     );
   }
 
-  Widget buildProductsTab(BuildContext context) {
+ Widget buildProductsTab(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
       stream: StoreServices.getProducts(vendorId),
       builder: (context, snapshot) {
@@ -99,7 +99,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                     children: [
                       ListTile(
                         onTap: () {
-                          print(controller.productId);
+                          print('Navigating to ItemsDetails with data: $doc');
                           Get.to(() => ItemsDetails(data: doc));
                         },
                         leading: Image.network(
@@ -133,9 +133,8 @@ class _ProductsScreenState extends State<ProductsScreen> {
                           ),
                           onSelected: (String value) {
                             if (value == 'edit') {
-                              Get.to(() => EditProduct(
-                                  productData: doc, documentId: documentId));
-                              print(controller.productId);
+                              print('Navigating to EditProduct with data: $doc');
+                              Get.to(() => EditProduct(productData: doc, documentId: documentId));
                             } else if (value == 'delete') {
                               controller.removeProduct(documentId);
                             }
@@ -162,7 +161,6 @@ class _ProductsScreenState extends State<ProductsScreen> {
       },
     );
   }
-
 Widget buildMatchesTab(BuildContext context) {
   Future<Map<String, dynamic>> fetchItemsDetails(String topId, String lowerId) async {
     final topSnapshot = await FirebaseFirestore.instance.collection('products').doc(topId).get();
