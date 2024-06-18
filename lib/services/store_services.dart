@@ -3,7 +3,7 @@ import 'package:seller_finalproject/const/firebase_consts.dart';
 
 class StoreServices {
   static getProfile(uid) {
-    return firestore.collection(vendorsCollection).where('id', isEqualTo: uid).get();
+    return firestore.collection(vendorsCollection).where('vendor_id', isEqualTo: uid).get();
   }
 
   static getMessages(uid) {

@@ -16,7 +16,7 @@ class _EditMatchProductState extends State<EditMatchProduct> {
   List<String> selectedCollections = [];
   String selectedGender = '';
   late DocumentSnapshot document;
-  Map<String, dynamic> productDetails = {};
+  Map<String, dynamic> ItemsDetails = {};
   String pIdTop = '';
   String pIdLower = '';
   String topProductImg = '';
@@ -30,16 +30,16 @@ class _EditMatchProductState extends State<EditMatchProduct> {
   void initState() {
     super.initState();
     document = Get.arguments['document'];
-    productDetails = Get.arguments['productDetails'];
+    ItemsDetails = Get.arguments['ItemsDetails'];
     selectedGender = document['p_sex'];
     selectedCollections = List<String>.from(document['p_collection']);
     explanationController.text = document['p_desc'];
     pIdTop = document['p_id_top'];
     pIdLower = document['p_id_lower'];
-    fetchProductDetails();
+    fetchItemsDetails();
   }
 
-  Future<void> fetchProductDetails() async {
+  Future<void> fetchItemsDetails() async {
     final topSnapshot = await FirebaseFirestore.instance
         .collection('products')
         .doc(pIdTop)

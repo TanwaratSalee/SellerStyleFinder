@@ -12,7 +12,7 @@ import 'package:seller_finalproject/views/products_screen/add_product.dart';
 import 'package:seller_finalproject/views/products_screen/edit_match.dart';
 import 'package:seller_finalproject/views/products_screen/edit_product.dart';
 import 'package:seller_finalproject/views/products_screen/matchdetail_screen.dart';
-import 'package:seller_finalproject/views/products_screen/product_details.dart';
+import 'package:seller_finalproject/views/products_screen/items_details.dart';
 
 class ProductsScreen extends StatefulWidget {
   const ProductsScreen({Key? key}) : super(key: key);
@@ -100,16 +100,16 @@ class _ProductsScreenState extends State<ProductsScreen> {
                       ListTile(
                         onTap: () {
                           print(controller.productId);
-                          Get.to(() => ProductDetails(data: doc));
+                          Get.to(() => ItemsDetails(data: doc));
                         },
                         leading: Image.network(
-                          doc['p_imgs'][0],
+                          doc['imgs'][0],
                           width: 50,
                           height: 50,
                           fit: BoxFit.cover,
                         ),
                         title: Text(
-                          doc['p_name'],
+                          doc['name'],
                           style: TextStyle(
                             color: blackColor,
                             fontSize: 16,
@@ -119,7 +119,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                           maxLines: 1,
                         ),
                         subtitle: Text(
-                          "${NumberFormat('#,##0').format(double.tryParse(doc['p_price'])?.toInt() ?? 0)} Bath",
+                          "${NumberFormat('#,##0').format(double.tryParse(doc['price'])?.toInt() ?? 0)} Bath",
                           style: TextStyle(
                             color: greyColor,
                             fontSize: 14,
@@ -164,24 +164,24 @@ class _ProductsScreenState extends State<ProductsScreen> {
   }
 
 Widget buildMatchesTab(BuildContext context) {
-  Future<Map<String, dynamic>> fetchProductDetails(String topId, String lowerId) async {
+  Future<Map<String, dynamic>> fetchItemsDetails(String topId, String lowerId) async {
     final topSnapshot = await FirebaseFirestore.instance.collection('products').doc(topId).get();
     final lowerSnapshot = await FirebaseFirestore.instance.collection('products').doc(lowerId).get();
 
-    final topName = topSnapshot.exists ? topSnapshot.data()!['p_name'] : 'Unknown';
-    final lowerName = lowerSnapshot.exists ? lowerSnapshot.data()!['p_name'] : 'Unknown';
-    final topImg = topSnapshot.exists ? topSnapshot.data()!['p_imgs'][0] : '';
-    final lowerImg = lowerSnapshot.exists ? lowerSnapshot.data()!['p_imgs'][0] : '';
-    final topPrice = topSnapshot.exists ? double.tryParse(topSnapshot.data()!['p_price'].toString()) : 0.0;
-    final lowerPrice = lowerSnapshot.exists ? double.tryParse(lowerSnapshot.data()!['p_price'].toString()) : 0.0;
+    final topName = topSnapshot.exists ? topSnapshot.data()!['name'] : 'Unknown';
+    final lowerName = lowerSnapshot.exists ? lowerSnapshot.data()!['name'] : 'Unknown';
+    final topImg = topSnapshot.exists ? topSnapshot.data()!['imgs'][0] : '';
+    final lowerImg = lowerSnapshot.exists ? lowerSnapshot.data()!['imgs'][0] : '';
+    final topPrice = topSnapshot.exists ? double.tryParse(topSnapshot.data()!['price'].toString()) : 0.0;
+    final lowerPrice = lowerSnapshot.exists ? double.tryParse(lowerSnapshot.data()!['price'].toString()) : 0.0;
 
     return {
-      'p_name_top': topName,
-      'p_name_lower': lowerName,
-      'p_img_top': topImg,
-      'p_img_lower': lowerImg,
-      'p_price_top': topPrice,
-      'p_price_lower': lowerPrice,
+      'name_top': topName,
+      'name_lower': lowerName,
+      'img_top': topImg,
+      'img_lower': lowerImg,
+      'price_top': topPrice,
+      'price_lower': lowerPrice,
     };
   }
 
@@ -218,32 +218,32 @@ Widget buildMatchesTab(BuildContext context) {
           var document = documents[index - 1];
 
           return FutureBuilder(
-            future: fetchProductDetails(document['p_id_top'], document['p_id_lower']),
+            future: fetchItemsDetails(document['id_top'], document['id_lower']),
             builder: (context, AsyncSnapshot<Map<String, dynamic>> productSnapshot) {
               if (!productSnapshot.hasData) {
                 return ListTile(
                   title: Center(child: CircularProgressIndicator())
                 );
               }
-              final productDetails = productSnapshot.data!;
+              final ItemsDetails = productSnapshot.data!;
 
-              String imgTop = productDetails['p_img_top'].toString();
-              String nameTop = productDetails['p_name_top'].toString();
-              double priceTop = double.parse(productDetails['p_price_top'].toString());
-              String imgLower = productDetails['p_img_lower'].toString();
-              String nameLower = productDetails['p_name_lower'].toString();
-              double priceLower = double.parse(productDetails['p_price_lower'].toString());
+              String imgTop = ItemsDetails['img_top'].toString();
+              String nameTop = ItemsDetails['name_top'].toString();
+              double priceTop = double.parse(ItemsDetails['price_top'].toString());
+              String imgLower = ItemsDetails['img_lower'].toString();
+              String nameLower = ItemsDetails['name_lower'].toString();
+              double priceLower = double.parse(ItemsDetails['price_lower'].toString());
 
               // แปลงข้อมูล List เป็น String ถ้าจำเป็น
-              var description = document['p_desc'];
+              var description = document['desc'];
               if (description is List) {
                 description = description.join(', ');
               }
-              var sex = document['p_sex'];
+              var sex = document['sex'];
               if (sex is List) {
                 sex = sex.join(', ');
               }
-              var collection = document['p_collection'];
+              var collection = document['collection'];
               if (collection is List) {
                 collection = collection.join(', ');
               }
@@ -374,7 +374,7 @@ Widget buildMatchesTab(BuildContext context) {
                           // ส่งข้อมูลไปหน้า EditMatchProduct เพื่อแก้ไขข้อมูล
                           Get.to(() => EditMatchProduct(), arguments: {
                             'document': document,
-                            'productDetails': productDetails,
+                            'ItemsDetails': ItemsDetails,
                           });
                         } else if (result == 'delete') {
                           // ลบเอกสารจาก Firestore
@@ -401,9 +401,7 @@ Widget buildMatchesTab(BuildContext context) {
       );
     },
   );
-}
-
-
+  }
 }
 //  Widget buildMatchesTab(BuildContext context) {
 //     return StreamBuilder<QuerySnapshot>(
@@ -424,8 +422,8 @@ Widget buildMatchesTab(BuildContext context) {
 
 //         for (var doc in snapshot.data!.docs) {
 //           var data = doc.data() as Map<String, dynamic>;
-//           if (data['vendor_id'] == vendorId && data['p_mixmatch'] != null) {
-//             String mixMatchKey = data['p_mixmatch'];
+//           if (data['vendor_id'] == vendorId && data['mixmatch'] != null) {
+//             String mixMatchKey = data['mixmatch'];
 //             mixMatchMap.putIfAbsent(mixMatchKey, () => []).add(doc);
 //           }
 //         }
@@ -481,13 +479,13 @@ Widget buildMatchesTab(BuildContext context) {
 
 //                   String documentId1 = pair.value[0].id;
 //                   String documentId2 = pair.value[1].id;
-//                   String price1 = product1['p_price'].toString();
-//                   String price2 = product2['p_price'].toString();
-//                   String name1 = product1['p_name'].toString();
-//                   String name2 = product2['p_name'].toString();
+//                   String price1 = product1['price'].toString();
+//                   String price2 = product2['price'].toString();
+//                   String name1 = product1['name'].toString();
+//                   String name2 = product2['name'].toString();
 
-//                   String productImage1 = product1['p_imgs'][0];
-//                   String productImage2 = product2['p_imgs'][0];
+//                   String productImage1 = product1['imgs'][0];
+//                   String productImage2 = product2['imgs'][0];
 
 //                   return Column(
 //                     children: [

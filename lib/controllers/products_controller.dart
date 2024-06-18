@@ -46,17 +46,11 @@ class ProductsController extends GetxController {
   ];
   final selectedCollection = <String>[].obs;
   List<String> subcollectionList = [
-    'dresses',
-    'outerwear & Costs',
-    'blazers',
-    'suits',
-    'blouses & Tops',
-    'knitwear',
     't-shirts',
     'skirts',
     'pants',
-    'denim',
-    'activewear'
+    'dresses',
+    'jackets'
   ];
   RxString selectedSubcollection = ''.obs;
 
@@ -263,28 +257,23 @@ class ProductsController extends GetxController {
       productId.value = store.id;
       await store.set({
         // Default
-        'p_id': productId.value,
-        'is_featured': false,
-        'p_collection': selectedCollection,
-        'p_subcollection': selectedSubcollection.value,
-        'p_sex': selectedGender.value,
-        'p_productsize': selectedSizes,
-        'p_part': selectedMixandmatch.value,
-        'p_colors': selectedColorIndexes
-            .map((index) => allColors[index]['color'].value)
-            .toList(),
-        'p_imgs': FieldValue.arrayUnion(pImagesLinks),
-        'p_wishlist': FieldValue.arrayUnion([]),
-        'p_desc': pdescController.text,
-        'p_name': pnameController.text,
-        'p_aboutProduct': pabproductController.text,
-        'p_size': psizeController.text,
-        'p_price': ppriceController.text,
-        'p_quantity': pquantityController.text,
-        // 'p_seller': Get.find<HomeController>().username,
-        'p_rating': "5.0",
+        'product_id': productId.value,
+        'name': pnameController.text,
+        'imgs': FieldValue.arrayUnion(pImagesLinks),
+        'favorite': FieldValue.arrayUnion([]),
+        'description': pdescController.text,
+        'aboutProduct': pabproductController.text,
+        'collection': selectedCollection,
+        'subcollection': selectedSubcollection.value,
+        'gender': selectedGender.value,
+        'selectsize': selectedSizes,
+        'part': selectedMixandmatch.value,
+        'colors': selectedColorIndexes.map((index) => allColors[index]['color'].value).toList(),
+        'size': psizeController.text,
+        'price': ppriceController.text,
+        'quantity': pquantityController.text,
+        'rating': "5.0",
         'vendor_id': currentUser!.uid,
-        'featured_id': '',
         'vendor_reference': vendersCollection.doc(userId),
       });
       isloading(false);
@@ -578,3 +567,4 @@ class Product {
     );
   }
 }
+

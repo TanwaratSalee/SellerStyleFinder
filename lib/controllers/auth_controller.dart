@@ -157,49 +157,47 @@ class AuthController extends GetxController {
   }
 
   Future<void> CreateAccountMethod(
-      BuildContext context, Map<String, String> addressDetails) async {
-    if (emailController.text.isEmpty || passwordController.text.isEmpty) {
-      VxToast.show(context, msg: "Please enter all required fields.");
-      return;
-    }
-
-    isloading.value = true;
-
-    try {
-      String imageUrl = '';
-      if (imageFile.value != null) {
-        var file = File(imageFile.value!.path);
-        var filename = basename(file.path);
-        var destination =
-            'images/vendors/${FirebaseAuth.instance.currentUser?.uid}/$filename';
-        Reference ref = FirebaseStorage.instance.ref(destination);
-        await ref.putFile(file);
-        imageUrl = await ref.getDownloadURL();
-      }
-
-      var userRef = FirebaseFirestore.instance
-          .collection('vendors')
-          .doc(FirebaseAuth.instance.currentUser?.uid);
-      await userRef.set({
-        'email': emailController.text.trim().toLowerCase(),
-        'id': FirebaseAuth.instance.currentUser?.uid,
-        'imageUrl': imageUrl,
-        'shop_desc': descriptionController.text,
-        'shop_website': websiteController.text,
-        'shop_mobile': mobileController.text,
-        'vendor_name': shopNameController.text,
-        'vendor_id': FirebaseAuth.instance.currentUser?.uid,
-        'addresses': [addressDetails]
-      });
-
-      VxToast.show(context, msg: "Account successfully created.");
-      Get.offAll(() => const Home());
-    } catch (e) {
-      VxToast.show(context, msg: "Error: ${e.toString()}");
-    } finally {
-      isloading.value = false;
-    }
+    BuildContext context, Map<String, String> addressDetails) async {
+  if (emailController.text.isEmpty || passwordController.text.isEmpty) {
+    VxToast.show(context, msg: "Please enter all required fields.");
+    return;
   }
+
+  isloading.value = true;
+
+  try {
+    String imageUrl = 'https://firebasestorage.googleapis.com/v0/b/new-tung.appspot.com/o/images%2FCs77utvw41dPiruedA7worPnUUj1%2Fimage_picker_67E78B2D-4FF3-4579-A9CB-54B805F63339-97366-00000318992B7C2F.png?alt=media&token=aabf22cb-b1df-42a9-95dc-3873a69a6b36';
+    if (imageFile.value != null) {
+      var file = File(imageFile.value!.path);
+      var filename = basename(file.path);
+      var destination = 'images/vendors/${FirebaseAuth.instance.currentUser?.uid}/$filename';
+      Reference ref = FirebaseStorage.instance.ref(destination);
+      await ref.putFile(file);
+      imageUrl = await ref.getDownloadURL();
+    }
+
+    var userRef = FirebaseFirestore.instance
+        .collection('vendors')
+        .doc(FirebaseAuth.instance.currentUser?.uid);
+    await userRef.set({
+      'vendor_id': FirebaseAuth.instance.currentUser?.uid,
+      'vendor_name': shopNameController.text,
+      'email': emailController.text.trim().toLowerCase(),
+      'imageUrl': imageUrl,
+      'shop_desc': descriptionController.text,
+      'shop_website': websiteController.text,
+      'shop_mobile': mobileController.text,
+      'addresses': [addressDetails]
+    });
+
+    VxToast.show(context, msg: "Account successfully created.");
+    Get.offAll(() => const Home());
+  } catch (e) {
+    VxToast.show(context, msg: "Error: ${e.toString()}");
+  } finally {
+    isloading.value = false;
+  }
+}
 
   void clearAllData() {
     emailController.clear();

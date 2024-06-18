@@ -108,7 +108,7 @@
 
 //                                 return ListTile(
 //                                   onTap: () =>
-//                                       Get.to(() => ProductDetails(data: doc)),
+//                                       Get.to(() => ItemsDetails(data: doc)),
 //                                   leading: Image.network(
 //                                     doc['p_imgs'][0],
 //                                     width: 50,
@@ -225,7 +225,7 @@
 //                             // trailing: Image.network(productImage2, width: 50, height: 50, fit: BoxFit.cover),
 //                             // title: Text('Product 1: ${product1['p_name']} - Product 2: ${product2['p_name']}'),
 //                             // subtitle: Text("Product 1 Price: ${product1['p_price']} Bath - Product 2 Price: ${price1} Bath"),
-//                             // onTap: () => Get.to(() => ProductDetails(data: pair)),
+//                             // onTap: () => Get.to(() => ItemsDetails(data: pair)),
 //                           );
 //                         },
 //                       );

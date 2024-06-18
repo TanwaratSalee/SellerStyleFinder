@@ -6,7 +6,7 @@ import 'package:seller_finalproject/const/styles.dart';
 import 'package:seller_finalproject/controllers/loading_Indcator.dart';
 import 'package:seller_finalproject/controllers/profile_controller.dart';
 import 'package:seller_finalproject/services/store_services.dart';
-import 'package:seller_finalproject/views/products_screen/product_details.dart';
+import 'package:seller_finalproject/views/products_screen/items_details.dart';
 import 'package:seller_finalproject/views/widgets/appbar_widget.dart';
 import 'package:seller_finalproject/views/widgets/dashboard_button.dart';
 import 'package:get/get.dart';
@@ -29,7 +29,7 @@ class HomeScreen extends StatelessWidget {
 
             // Sort productsData by wishlist length in descending order
             productsData.sort((a, b) =>
-                b['p_wishlist'].length.compareTo(a['p_wishlist'].length));
+                b['favorite'].length.compareTo(a['favorite'].length));
 
             return StreamBuilder(
               stream: StoreServices.getOrders(currentUser!.uid),
@@ -94,7 +94,7 @@ class HomeScreen extends StatelessWidget {
                                 ? 10
                                 : productsData.length,
                             itemBuilder: (context, index) {
-                              if (productsData[index]['p_wishlist'].isEmpty) {
+                              if (productsData[index]['favorite'].isEmpty) {
                                 return const SizedBox.shrink();
                               }
                               return Column(
@@ -116,7 +116,7 @@ class HomeScreen extends StatelessWidget {
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) =>
-                                                ProductDetails(
+                                                ItemsDetails(
                                                     data: productData),
                                           ),
                                         );

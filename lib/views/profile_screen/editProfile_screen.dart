@@ -26,7 +26,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     controller.fetchUserData().then((_) {
       controller.nameController.text = controller.snapshotData['vendor_name'];
       controller.emailController.text = controller.snapshotData['email'];
-      controller.shopPhoneController.text = controller.snapshotData['shop_mobile'] ?? '';
+      controller.shopPhoneController.text =
+          controller.snapshotData['shop_mobile'] ?? '';
 
       String email = controller.snapshotData['email'] ?? '';
       controller.emailController.text =
@@ -65,7 +66,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         city: controller.shopCityController.text,
                         state: controller.shopStateController.text,
                         postal: controller.shopPostalController.text,
-                        phone: controller.shopPhoneController.text, // Pass phone parameter
+                        phone: controller
+                            .shopPhoneController.text, // Pass phone parameter
                       );
 
                       VxToast.show(context,
@@ -118,7 +120,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           )
                             .box
                             .roundedFull
-                           .border(color: greyLine, width: 2)
+                            .border(color: greyLine, width: 2)
                             .make()
                         //if both are emtpy
                         : ClipRRect(
@@ -134,7 +136,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             .roundedFull
                             .border(color: greyLine, width: 2)
                             .make(),
-                
+
                 10.heightBox,
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),

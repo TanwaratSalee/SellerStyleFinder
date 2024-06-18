@@ -314,7 +314,7 @@ class _AddMatchProductState extends State<AddMatchProduct> {
 
             querySnapshot.docs.forEach((doc) {
               var data = doc.data() as Map<String, dynamic>?;
-              var wishlist = (data?['p_wishlist'] as List<dynamic>?) ?? [];
+              var wishlist = (data?['favorite'] as List<dynamic>?) ?? [];
 
               if (!wishlist.contains(currentUserUID)) {
                 userData['views'] = 0;

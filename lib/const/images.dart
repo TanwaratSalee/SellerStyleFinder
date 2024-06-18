@@ -18,6 +18,7 @@ const icGmail = "assets/icons/gmail-icon.png";
 const iconsStore = "assets/icons/iconsStore.png";
 const imgAddress = "assets/addressScreen.png";
 const icproductbag = "assets/icons/productbag.png";
+const icSeeAll = "assets/icons/seeall.png";
 
 //Setting page
 const icLogout = "assets/icons/setting/logout.png";

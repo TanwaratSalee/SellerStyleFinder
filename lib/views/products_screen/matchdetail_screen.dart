@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:get/get.dart';
 import 'package:seller_finalproject/const/const.dart';
 import 'package:seller_finalproject/const/styles.dart';
+import 'package:seller_finalproject/views/products_screen/items_details.dart'; // Import the ProductDetails screen
 
 class MatchDetailsScreen extends StatelessWidget {
   @override
@@ -16,14 +18,6 @@ class MatchDetailsScreen extends StatelessWidget {
     // Ensure sex and collection are strings
     final String sexString = sex is List ? sex.join(', ') : sex.toString();
     final String collectionString = collection is List ? collection.join(', ') : collection.toString();
-
-    // Logging data
-    print('Received in MatchDetailsScreen:');
-    print('Top Product: $topProduct');
-    print('Lower Product: $lowerProduct');
-    print('Description: $description');
-    print('Sex: $sexString');
-    print('Collection: $collectionString');
 
     return Scaffold(
       appBar: AppBar(title: Text("Match Details")),
@@ -42,6 +36,24 @@ class MatchDetailsScreen extends StatelessWidget {
                           child: Column(
                             children: [
                               GestureDetector(
+                                onTap: () async {
+                                  var productSnapshot = await FirebaseFirestore.instance
+                                      .collection('products')
+                                      .doc(topProduct['p_id_top']) // Use the ID of the top product
+                                      .get();
+
+                                  if (productSnapshot.exists) {
+                                    var productData = productSnapshot.data();
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => ItemsDetails(data: productData),
+                                      ),
+                                    );
+                                  } else {
+                                    Get.snackbar('Error', 'Product not found', snackPosition: SnackPosition.BOTTOM);
+                                  }
+                                },
                                 child: Container(
                                   child: Center(
                                     child: ClipRRect(
@@ -105,6 +117,24 @@ class MatchDetailsScreen extends StatelessWidget {
                           child: Column(
                             children: [
                               GestureDetector(
+                                onTap: () async {
+                                  var productSnapshot = await FirebaseFirestore.instance
+                                      .collection('products')
+                                      .doc(lowerProduct['id']) // Use the ID of the lower product
+                                      .get();
+
+                                  if (productSnapshot.exists) {
+                                    var productData = productSnapshot.data();
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => ItemsDetails(data: productData),
+                                      ),
+                                    );
+                                  } else {
+                                    Get.snackbar('Error', 'Product not found', snackPosition: SnackPosition.BOTTOM);
+                                  }
+                                },
                                 child: Container(
                                   child: Center(
                                     child: ClipRRect(
@@ -151,122 +181,115 @@ class MatchDetailsScreen extends StatelessWidget {
                       ],
                     ),
                     30.heightBox,
-                    // Text("Description: $description"),
-                    // Text("Sex: $sexString"),
-                    // Text("Collection: $collectionString"),
-
                     Column(
                       children: [
                         Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        'Suitable for gender',
-                      ).text.fontFamily(regular).size(16).make(),
-                    ),
-                    Column(
-                      children: [
-                        SizedBox(height: 10),
-                        Container(
-                          height: 40,
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: sexString.split(', ').length,
-                            itemBuilder: (context, index) {
-                              String item = sexString.split(', ')[index];
-                              String capitalizedItem =
-                                  item[0].toUpperCase() + item.substring(1);
-                              return Container(
-                                alignment: Alignment.center,
-                                child: capitalizedItem.text
-                                    .size(14)
-                                    .color(greyDark)
-                                    .fontFamily(medium)
-                                    .make(),
-                              )
-                                  .box
-                                  .color(thinPrimaryApp)
-                                  .margin(EdgeInsets.symmetric(horizontal: 6))
-                                  .roundedLg
-                                  .padding(EdgeInsets.symmetric(
-                                      horizontal: 24, vertical: 12))
-                                  .make();
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                    10.heightBox,
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        'Opportunity suitable for',
-                      ).text.fontFamily(regular).size(16).make(),
-                    ),
-                    Column(
-                      children: [
-                        SizedBox(height: 10),
-                        Container(
-                          height: 40,
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: collectionString.split(', ').length,
-                            itemBuilder: (context, index) {
-                              String item = collectionString.split(', ')[index];
-                              return Container(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  "${item[0].toUpperCase()}${item.substring(1)}",
-                                )
-                                    .text
-                                    .size(14)
-                                    .color(greyDark)
-                                    .fontFamily(medium)
-                                    .make(),
-                              )
-                                  .box
-                                  .color(thinPrimaryApp)
-                                  .margin(EdgeInsets.symmetric(horizontal: 6))
-                                  .roundedLg
-                                  .padding(EdgeInsets.symmetric(
-                                      horizontal: 24, vertical: 12))
-                                  .make();
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                    10.heightBox,
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        'The reason for match',
-                        style: TextStyle(
-                          fontFamily: regular,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      width: double.infinity,
-                      height: 100,
-                      decoration: BoxDecoration(
-                        color: greyThin,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Align(
-                        alignment: Alignment.topLeft,
-                        child: Padding(
-                          padding: EdgeInsets.all(12),
+                          alignment: Alignment.centerLeft,
                           child: Text(
-                            description,
+                            'Suitable for gender',
+                          ).text.fontFamily(regular).size(16).make(),
+                        ),
+                        Column(
+                          children: [
+                            SizedBox(height: 10),
+                            Container(
+                              height: 40,
+                              child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: sexString.split(', ').length,
+                                itemBuilder: (context, index) {
+                                  String item = sexString.split(', ')[index];
+                                  String capitalizedItem = item[0].toUpperCase() + item.substring(1);
+                                  return Container(
+                                    alignment: Alignment.center,
+                                    child: capitalizedItem.text
+                                        .size(14)
+                                        .color(greyDark)
+                                        .fontFamily(medium)
+                                        .make(),
+                                  )
+                                      .box
+                                      .color(thinPrimaryApp)
+                                      .margin(EdgeInsets.symmetric(horizontal: 6))
+                                      .roundedLg
+                                      .padding(EdgeInsets.symmetric(horizontal: 24, vertical: 12))
+                                      .make();
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                        10.heightBox,
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            'Opportunity suitable for',
+                          ).text.fontFamily(regular).size(16).make(),
+                        ),
+                        Column(
+                          children: [
+                            SizedBox(height: 10),
+                            Container(
+                              height: 40,
+                              child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: collectionString.split(', ').length,
+                                itemBuilder: (context, index) {
+                                  String item = collectionString.split(', ')[index];
+                                  return Container(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      "${item[0].toUpperCase()}${item.substring(1)}",
+                                    )
+                                        .text
+                                        .size(14)
+                                        .color(greyDark)
+                                        .fontFamily(medium)
+                                        .make(),
+                                  )
+                                      .box
+                                      .color(thinPrimaryApp)
+                                      .margin(EdgeInsets.symmetric(horizontal: 6))
+                                      .roundedLg
+                                      .padding(EdgeInsets.symmetric(horizontal: 24, vertical: 12))
+                                      .make();
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                        10.heightBox,
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            'The reason for match',
                             style: TextStyle(
-                              color: blackColor,
-                              fontSize: 14,
+                              fontFamily: regular,
+                              fontSize: 16,
                             ),
                           ),
                         ),
-                      ),
-                    )
+                        Container(
+                          width: double.infinity,
+                          height: 100,
+                          decoration: BoxDecoration(
+                            color: greyThin,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Align(
+                            alignment: Alignment.topLeft,
+                            child: Padding(
+                              padding: EdgeInsets.all(12),
+                              child: Text(
+                                description,
+                                style: TextStyle(
+                                  color: blackColor,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
                       ],
                     ).paddingSymmetric(horizontal: 12)
                   ],
