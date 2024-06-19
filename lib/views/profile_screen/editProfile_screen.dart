@@ -1,5 +1,3 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'dart:ffi';
 import 'dart:io';
 import 'package:seller_finalproject/const/styles.dart';
@@ -24,10 +22,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   void initState() {
     super.initState();
     controller.fetchUserData().then((_) {
-      controller.nameController.text = controller.snapshotData['vendor_name'];
+      controller.nameController.text = controller.snapshotData['name'];
       controller.emailController.text = controller.snapshotData['email'];
       controller.shopPhoneController.text =
-          controller.snapshotData['shop_mobile'] ?? '';
+          controller.snapshotData['mobile'] ?? '';
 
       String email = controller.snapshotData['email'] ?? '';
       controller.emailController.text =
@@ -74,6 +72,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           msg: "Profile updated successfully");
 
                       controller.isloading(false);
+                      // Get.back(result: true);
                     },
                     child: Padding(
                       padding: const EdgeInsets.only(right: 10),
@@ -90,52 +89,80 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                //if data image url and contoller path is empty
-                controller.snapshotData['imageUrl'] == '' &&
-                        controller.profileImgPath.isEmpty
-                    ? ClipRRect(
-                        borderRadius: BorderRadius.circular(50),
-                        child: Image.asset(
-                          imgProfile,
-                          width: 100,
-                          height: 100,
-                          fit: BoxFit.cover,
+                Stack(
+                  children: [
+                    Container(
+                      child: //if data image url and contoller path is empty
+                          controller.snapshotData['imageUrl'] == '' &&
+                                  controller.profileImgPath.isEmpty
+                              ? ClipRRect(
+                                  borderRadius: BorderRadius.circular(50),
+                                  child: Image.asset(
+                                    imgProfile,
+                                    width: 100,
+                                    height: 100,
+                                    fit: BoxFit.cover,
+                                  ),
+                                )
+                                  .box
+                                  .roundedFull
+                                  .border(color: greyColor, width: 2)
+                                  .make()
+                              // if data is not empty but controller path is empty
+                              : controller.snapshotData['imageUrl'] != '' &&
+                                      controller.profileImgPath.isEmpty
+                                  ? ClipRRect(
+                                      borderRadius: BorderRadius.circular(50),
+                                      child: Image.network(
+                                        controller.snapshotData['imageUrl'],
+                                        width: 100,
+                                        height: 100,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    )
+                                      .box
+                                      .roundedFull
+                                      .border(color: greyLine, width: 2)
+                                      .make()
+                                  : ClipRRect(
+                                      borderRadius: BorderRadius.circular(50),
+                                      child: Image.file(
+                                        File(controller.profileImgPath.value),
+                                        width: 100,
+                                        height: 100,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    )
+                                      .box
+                                      .roundedFull
+                                      .border(color: greyLine, width: 2)
+                                      .make(),
+                    ),
+                    Positioned(
+                      bottom: 0,
+                      right: 0,
+                      child: GestureDetector(
+                        onTap: () {
+                          controller.changeImage(context);
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: primaryApp,
+                            shape: BoxShape.circle,
+                          ),
+                          padding: EdgeInsets.all(8),
+                          child: Icon(
+                            Icons.edit,
+                            color: whiteColor,
+                            size: 20,
+                          ),
                         ),
-                      )
-                        .box
-                        .roundedFull
-                        .border(color: greyColor, width: 2)
-                        .make()
-                    // if data is not empty but controller path is empty
-                    : controller.snapshotData['imageUrl'] != '' &&
-                            controller.profileImgPath.isEmpty
-                        ? ClipRRect(
-                            borderRadius: BorderRadius.circular(50),
-                            child: Image.network(
-                              controller.snapshotData['imageUrl'],
-                              width: 100,
-                              height: 100,
-                              fit: BoxFit.cover,
-                            ),
-                          )
-                            .box
-                            .roundedFull
-                            .border(color: greyLine, width: 2)
-                            .make()
-                        //if both are emtpy
-                        : ClipRRect(
-                            borderRadius: BorderRadius.circular(50),
-                            child: Image.file(
-                              File(controller.profileImgPath.value),
-                              width: 100,
-                              height: 100,
-                              fit: BoxFit.cover,
-                            ),
-                          )
-                            .box
-                            .roundedFull
-                            .border(color: greyLine, width: 2)
-                            .make(),
+                      ),
+                    ),
+                  ],
+                ),
+
+                //if both are emtpy
 
                 10.heightBox,
                 Padding(
@@ -180,26 +207,26 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   label: address,
                   controller: controller.shopAddressController,
                 ),
-                10.heightBox,
+                5.heightBox,
                 editTextField(
                   label: city,
                   controller: controller.shopCityController,
                 ),
+                5.heightBox,
                 editTextField(
                   label: state,
                   controller: controller.shopStateController,
                 ),
-                10.heightBox,
+                5.heightBox,
                 editTextField(
                   label: postal,
                   controller: controller.shopPostalController,
                 ),
-                10.heightBox,
+                5.heightBox,
                 editTextField(
                   label: 'Phone :',
                   controller: controller.shopPhoneController,
                 ),
-                10.heightBox,
               ],
             ),
           ),

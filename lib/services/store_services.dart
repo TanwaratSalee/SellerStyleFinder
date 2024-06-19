@@ -2,19 +2,19 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:seller_finalproject/const/firebase_consts.dart';
 
 class StoreServices {
-  static getProfile(uid) {
+  static Future<QuerySnapshot> getProfile(String uid) {
     return firestore.collection(vendorsCollection).where('vendor_id', isEqualTo: uid).get();
   }
 
-  static getMessages(uid) {
+  static Stream<QuerySnapshot> getMessages(String uid) {
     return firestore.collection(chatsCollection).where('toId', isEqualTo: uid).snapshots();
   }
 
-  static getOrders(uid) {
-    return firestore.collection(ordersCollection).where('vendor_id', /* arrayContains */isEqualTo: uid).snapshots();
+  static Stream<QuerySnapshot> getOrders(String uid) {
+    return firestore.collection(ordersCollection).where('vendor_id', isEqualTo: uid).snapshots();
   }
 
-  static getProducts(uid) {
+  static Stream<QuerySnapshot> getProducts(String uid) {
     return firestore.collection(productsCollection).where('vendor_id', isEqualTo: uid).snapshots();
   }
 

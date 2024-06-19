@@ -14,11 +14,11 @@ class HomeController extends GetxController {
   getUsername() async {
     var n = await firestore
         .collection(vendorsCollection)
-        .where('id', isEqualTo: currentUser!.uid)
+        .where('vendor_id', isEqualTo: currentUser!.uid)
         .get()
         .then((value) {
       if (value.docs.isNotEmpty) {
-        return value.docs.single['vendor_name'];
+        return value.docs.single['name'];
       }
     });
 

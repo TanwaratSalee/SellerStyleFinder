@@ -65,7 +65,7 @@ class _CreateAccountState extends State<CreateAccount> {
                                           height: 120,
                                         ),
                                       ),
-                              ),
+                              ).box.border(color: greyLine, width: 2).roundedFull.make(),
                             ),
                           ),
                           Positioned(

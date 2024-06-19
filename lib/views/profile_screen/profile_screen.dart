@@ -7,7 +7,7 @@ import 'package:seller_finalproject/controllers/profile_controller.dart';
 import 'package:seller_finalproject/services/store_services.dart';
 import 'package:seller_finalproject/views/auth_screen/login_screen.dart';
 import 'package:seller_finalproject/views/messages_screen/messages_screen.dart';
-import 'package:seller_finalproject/views/profile_screen/editProfile_screen.dart';
+import 'package:seller_finalproject/views/profile_screen/editprofile_screen.dart';
 import 'package:seller_finalproject/views/profile_screen/review_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -81,7 +81,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text("${controller.snapshotData['vendor_name']}")
+                                  Text("${controller.snapshotData['name']}")
                                       .text
                                       .size(16)
                                       .fontFamily(medium)
@@ -112,11 +112,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 const Text('Edit Account').text.size(15).make(),
                             trailing:
                                 const Icon(Icons.arrow_forward_ios, size: 18),
-                            onTap: () {
-                              Get.to(() => EditProfileScreen(
+                            onTap: () async {
+                              bool? result = await Get.to(() => EditProfileScreen(
                                     username:
-                                        controller.snapshotData['vendor_name'],
+                                        controller.snapshotData['name'],
                                   ));
+                              if (result == true) {
+                                setState(() {
+                                  // Refresh data
+                                  controller.fetchUserData();
+                                });
+                              }
                             },
                           ),
                           ListTile(
@@ -130,7 +136,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             onTap: () {
                               Get.to(() => MessagesScreen(
                                   vendorName:
-                                      controller.snapshotData['vendor_name']));
+                                      controller.snapshotData['name']));
                             },
                           ),
                           ListTile(
