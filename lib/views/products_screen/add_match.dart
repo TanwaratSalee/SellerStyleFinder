@@ -4,7 +4,6 @@ import 'package:seller_finalproject/const/const.dart';
 import 'package:seller_finalproject/const/styles.dart';
 import 'package:seller_finalproject/controllers/match_controller.dart';
 import 'package:seller_finalproject/views/products_screen/products_screen.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AddMatchProduct extends StatefulWidget {
@@ -286,7 +285,7 @@ class _AddMatchProductState extends State<AddMatchProduct> {
 
     // Retrieve user details
     FirebaseFirestore.instance
-        .collection('vendors')
+        .collection(vendorsCollection)
         .doc(currentUserUID)
         .get()
         .then((DocumentSnapshot userDoc) {

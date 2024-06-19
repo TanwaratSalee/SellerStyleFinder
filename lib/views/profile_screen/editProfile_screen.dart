@@ -1,5 +1,3 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'dart:ffi';
 import 'dart:io';
 import 'package:seller_finalproject/const/styles.dart';
@@ -74,6 +72,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           msg: "Profile updated successfully");
 
                       controller.isloading(false);
+                      // Get.back(result: true);
                     },
                     child: Padding(
                       padding: const EdgeInsets.only(right: 10),

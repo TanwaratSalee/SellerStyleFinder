@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:seller_finalproject/const/const.dart';
 import 'package:seller_finalproject/const/styles.dart';
 import 'package:seller_finalproject/controllers/auth_controller.dart';
@@ -112,11 +114,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 const Text('Edit Account').text.size(15).make(),
                             trailing:
                                 const Icon(Icons.arrow_forward_ios, size: 18),
-                            onTap: () {
-                              Get.to(() => EditProfileScreen(
+                            onTap: () async {
+                              bool? result = await Get.to(() => EditProfileScreen(
                                     username:
                                         controller.snapshotData['vendor_name'],
                                   ));
+                              if (result == true) {
+                                setState(() {
+                                  // Refresh data
+                                  controller.fetchUserData();
+                                });
+                              }
                             },
                           ),
                           ListTile(
