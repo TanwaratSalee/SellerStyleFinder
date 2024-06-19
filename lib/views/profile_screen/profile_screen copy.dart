@@ -31,7 +31,7 @@
 //           IconButton(
 //             onPressed: () {
 //               Get.to(() => EditProfileScreen(
-//                     username: controller.snapshotData['vendor_name'],
+//                     username: controller.snapshotData['name'],
 //                   ));
 //             },
 //             icon: const Icon(Icons.edit),
@@ -69,7 +69,7 @@
 //                             width: 100,
 //                           ).box.roundedFull.clip(Clip.antiAlias).make(),
 //                     title: Text(
-//                          "${controller.snapshotData['vendor_name']}",
+//                          "${controller.snapshotData['name']}",
 //                          ),
 //                     subtitle: Text(
 //                          "${controller.snapshotData['email']}",
@@ -87,7 +87,7 @@
 //                             switch (index) {
 //                               case 0:
 //                                Get.to(() => EditProfileScreen(
-//                                 username: controller.snapshotData['vendor_name'],));
+//                                 username: controller.snapshotData['name'],));
 
 //                                 break;
 //                               case 1:

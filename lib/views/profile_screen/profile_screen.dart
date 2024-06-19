@@ -1,6 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:seller_finalproject/const/const.dart';
 import 'package:seller_finalproject/const/styles.dart';
 import 'package:seller_finalproject/controllers/auth_controller.dart';
@@ -83,7 +81,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text("${controller.snapshotData['vendor_name']}")
+                                  Text("${controller.snapshotData['name']}")
                                       .text
                                       .size(16)
                                       .fontFamily(medium)
@@ -117,7 +115,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             onTap: () async {
                               bool? result = await Get.to(() => EditProfileScreen(
                                     username:
-                                        controller.snapshotData['vendor_name'],
+                                        controller.snapshotData['name'],
                                   ));
                               if (result == true) {
                                 setState(() {
@@ -138,7 +136,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             onTap: () {
                               Get.to(() => MessagesScreen(
                                   vendorName:
-                                      controller.snapshotData['vendor_name']));
+                                      controller.snapshotData['name']));
                             },
                           ),
                           ListTile(

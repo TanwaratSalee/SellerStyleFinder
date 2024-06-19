@@ -22,10 +22,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   void initState() {
     super.initState();
     controller.fetchUserData().then((_) {
-      controller.nameController.text = controller.snapshotData['vendor_name'];
+      controller.nameController.text = controller.snapshotData['name'];
       controller.emailController.text = controller.snapshotData['email'];
       controller.shopPhoneController.text =
-          controller.snapshotData['shop_mobile'] ?? '';
+          controller.snapshotData['mobile'] ?? '';
 
       String email = controller.snapshotData['email'] ?? '';
       controller.emailController.text =

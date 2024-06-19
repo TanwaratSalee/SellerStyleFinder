@@ -290,7 +290,7 @@ class _AddMatchProductState extends State<AddMatchProduct> {
         .get()
         .then((DocumentSnapshot userDoc) {
       if (userDoc.exists) {
-        String userName = userDoc['vendor_name'] ?? '';
+        String userName = userDoc['name'] ?? '';
         String userImg = userDoc['imageUrl'] ?? '';
 
         // Log user details for debugging

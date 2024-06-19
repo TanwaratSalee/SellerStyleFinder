@@ -61,107 +61,115 @@ class _ProductsScreenState extends State<ProductsScreen> {
   }
 
  Widget buildProductsTab(BuildContext context) {
-    return StreamBuilder<QuerySnapshot>(
-      stream: StoreServices.getProducts(vendorId),
-      builder: (context, snapshot) {
-        if (!snapshot.hasData) {
-          return loadingIndicator();
-        }
-        var data = snapshot.data!.docs;
-        return Column(
-          children: [
-            ListTile(
-              leading: const Icon(
-                Icons.add,
-                color: greyDark,
-                size: 28,
-              ),
-              title: const Text(
-                'Add new product',
-                style: TextStyle(color: greyDark),
-              ),
-              onTap: () async {
-                await controller.getCollection();
-                controller.populateCollectionList();
-                Get.to(() => const AddProduct());
-              },
+  return StreamBuilder<QuerySnapshot>(
+    stream: StoreServices.getProducts(vendorId),
+    builder: (context, snapshot) {
+      if (!snapshot.hasData) {
+        return loadingIndicator();
+      }
+      var data = snapshot.data!.docs;
+      return Column(
+        children: [
+          ListTile(
+            leading: const Icon(
+              Icons.add,
+              color: greyDark,
+              size: 28,
             ),
-            Divider(
-              color: greyLine,
-            ).paddingSymmetric(horizontal: 14),
-            Expanded(
-              child: ListView.builder(
-                itemCount: data.length,
-                itemBuilder: (context, index) {
-                  var doc = data[index].data() as Map<String, dynamic>;
-                  String documentId = data[index].id;
-                  return Column(
-                    children: [
-                      ListTile(
-                        onTap: () {
-                          print('Navigating to ItemsDetails with data: $doc');
-                          Get.to(() => ItemsDetails(data: doc));
-                        },
-                        leading: Image.network(
-                          doc['imgs'][0],
-                          width: 50,
-                          height: 50,
-                          fit: BoxFit.cover,
+            title: const Text(
+              'Add new product',
+              style: TextStyle(color: greyDark),
+            ),
+            onTap: () async {
+              await controller.getCollection();
+              controller.populateCollectionList();
+              Get.to(() => const AddProduct());
+            },
+          ),
+          Divider(
+            color: greyLine,
+          ).paddingSymmetric(horizontal: 14),
+          Expanded(
+            child: ListView.builder(
+              itemCount: data.length,
+              itemBuilder: (context, index) {
+                var doc = data[index].data() as Map<String, dynamic>;
+                String documentId = data[index].id;
+                return Column(
+                  children: [
+                    ListTile(
+                      onTap: () {
+                        print('Navigating to ItemsDetails with data: $doc');
+                        Get.to(() => ItemsDetails(data: doc));
+                      },
+                      leading: doc['imgs'] != null && doc['imgs'].isNotEmpty
+                          ? Image.network(
+                              doc['imgs'][0],
+                              width: 50,
+                              height: 50,
+                              fit: BoxFit.cover,
+                            )
+                          : Image.asset(
+                              'assets/images/placeholder.png', // Add a placeholder image
+                              width: 50,
+                              height: 50,
+                              fit: BoxFit.cover,
+                            ),
+                      title: Text(
+                        doc['name'],
+                        style: TextStyle(
+                          color: blackColor,
+                          fontSize: 16,
+                          fontFamily: medium,
                         ),
-                        title: Text(
-                          doc['name'],
-                          style: TextStyle(
-                            color: blackColor,
-                            fontSize: 16,
-                            fontFamily: medium,
-                          ),
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                        ),
-                        subtitle: Text(
-                          "${NumberFormat('#,##0').format(double.tryParse(doc['price'])?.toInt() ?? 0)} Bath",
-                          style: TextStyle(
-                            color: greyColor,
-                            fontSize: 14,
-                            fontFamily: medium,
-                          ),
-                        ),
-                        trailing: PopupMenuButton<String>(
-                          icon: Icon(
-                            Icons.more_vert,
-                            color: greyColor,
-                          ),
-                          onSelected: (String value) {
-                            if (value == 'edit') {
-                              print('Navigating to EditProduct with data: $doc');
-                              Get.to(() => EditProduct(productData: doc, documentId: documentId));
-                            } else if (value == 'delete') {
-                              controller.removeProduct(documentId);
-                            }
-                          },
-                          itemBuilder: (BuildContext context) =>
-                              <PopupMenuEntry<String>>[
-                            const PopupMenuItem<String>(
-                                value: 'edit', child: Text('Edit')),
-                            const PopupMenuItem<String>(
-                                value: 'delete', child: Text('Delete')),
-                          ],
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                      ),
+                      subtitle: Text(
+                        "${NumberFormat('#,##0').format(double.tryParse(doc['price'])?.toInt() ?? 0)} Bath",
+                        style: TextStyle(
+                          color: greyColor,
+                          fontSize: 14,
+                          fontFamily: medium,
                         ),
                       ),
-                      Divider(
-                        color: greyLine,
-                      ).paddingSymmetric(horizontal: 14),
-                    ],
-                  );
-                },
-              ),
+                      trailing: PopupMenuButton<String>(
+                        icon: Icon(
+                          Icons.more_vert,
+                          color: greyColor,
+                        ),
+                        onSelected: (String value) {
+                          if (value == 'edit') {
+                            print('Navigating to EditProduct with data: $doc');
+                            Get.to(() => EditProduct(productData: doc, documentId: documentId));
+                          } else if (value == 'delete') {
+                            controller.removeProduct(documentId);
+                          }
+                        },
+                        itemBuilder: (BuildContext context) =>
+                            <PopupMenuEntry<String>>[
+                          const PopupMenuItem<String>(
+                              value: 'edit', child: Text('Edit')),
+                          const PopupMenuItem<String>(
+                              value: 'delete', child: Text('Delete')),
+                        ],
+                      ),
+                    ),
+                    Divider(
+                      color: greyLine,
+                    ).paddingSymmetric(horizontal: 14),
+                  ],
+                );
+              },
             ),
-          ],
-        );
-      },
-    );
-  }
-Widget buildMatchesTab(BuildContext context) {
+          ),
+        ],
+      );
+    },
+  );
+}
+
+  Widget buildMatchesTab(BuildContext context) {
   Future<Map<String, dynamic>> fetchItemsDetails(String topId, String lowerId) async {
     final topSnapshot = await FirebaseFirestore.instance.collection('products').doc(topId).get();
     final lowerSnapshot = await FirebaseFirestore.instance.collection('products').doc(lowerId).get();

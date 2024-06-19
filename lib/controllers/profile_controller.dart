@@ -41,9 +41,9 @@ class ProfileController extends GetxController {
           .get();
 
       // Update text fields with data from Firestore
-      nameController.text = editaccount.data()?['vendor_name'] ?? '';
+      nameController.text = editaccount.data()?['name'] ?? '';
       emailController.text = editaccount.data()?['email'] ?? '';
-      shopPhoneController.text = editaccount.data()?['shop_mobile'] ?? '';
+      shopPhoneController.text = editaccount.data()?['mobile'] ?? '';
 
       // Fetch and handle addresses if available
       var addresses = editaccount.data()?['addresses'] as List<dynamic>? ?? [];
@@ -121,10 +121,10 @@ class ProfileController extends GetxController {
     }
     await store.set(
         {
-          'vendor_name': name, 
+          'name': name, 
           'imageUrl': imgUrl, 
           'addresses': addresses,
-          'shop_mobile' : phone, // Ensure the phone field is included
+          'mobile' : phone, // Ensure the phone field is included
         },
         SetOptions(merge: true));
 
@@ -149,9 +149,9 @@ class ProfileController extends GetxController {
       {
         'shop_name': shopname,
         'shop_address': shopaddress,
-        'shop_mobile': shopmobile,
-        'shop_website': shopwebsite,
-        'shop_desc': shopdesc
+        'mobile': shopmobile,
+        'website': shopwebsite,
+        'description': shopdesc
       },
       SetOptions(merge: true),
     );

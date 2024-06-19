@@ -84,8 +84,11 @@ class AuthController extends GetxController {
   }
 
   //signup account
-  Future<void> loginMethod() async {
+  Future<void> loginMethod(BuildContext context) async {
     if (emailController.text.isEmpty || passwordController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Please fill in all fields')),
+      );
       return;
     }
 
@@ -109,7 +112,9 @@ class AuthController extends GetxController {
         }
       }
     } on FirebaseAuthException catch (e) {
-      print(e.message);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(e.message ?? 'An error occurred')),
+      );
     } finally {
       isloading.value = false;
     }
@@ -157,47 +162,50 @@ class AuthController extends GetxController {
   }
 
   Future<void> CreateAccountMethod(
-    BuildContext context, Map<String, String> addressDetails) async {
-  if (emailController.text.isEmpty || passwordController.text.isEmpty) {
-    VxToast.show(context, msg: "Please enter all required fields.");
-    return;
-  }
-
-  isloading.value = true;
-
-  try {
-    String imageUrl = 'https://firebasestorage.googleapis.com/v0/b/new-tung.appspot.com/o/images%2FCs77utvw41dPiruedA7worPnUUj1%2Fimage_picker_0B4BC2B2-A8E1-4F17-96B7-E638F473E164-97366-000003F7D0AB776D.png?alt=media&token=aa53d66f-a313-422e-8d45-7042212ebb36';
-    if (imageFile.value != null) {
-      var file = File(imageFile.value!.path);
-      var filename = basename(file.path);
-      var destination = 'images/vendors/${FirebaseAuth.instance.currentUser?.uid}/$filename';
-      Reference ref = FirebaseStorage.instance.ref(destination);
-      await ref.putFile(file);
-      imageUrl = await ref.getDownloadURL();
+      BuildContext context, Map<String, String> addressDetails) async {
+    if (emailController.text.isEmpty || passwordController.text.isEmpty) {
+      VxToast.show(context, msg: "Please enter all required fields.");
+      return;
     }
 
-    var userRef = FirebaseFirestore.instance
-        .collection('vendors')
-        .doc(FirebaseAuth.instance.currentUser?.uid);
-    await userRef.set({
-      'vendor_id': FirebaseAuth.instance.currentUser?.uid,
-      'vendor_name': shopNameController.text,
-      'email': emailController.text.trim().toLowerCase(),
-      'imageUrl': imageUrl,
-      'shop_desc': descriptionController.text,
-      'shop_website': websiteController.text,
-      'shop_mobile': mobileController.text,
-      'addresses': [addressDetails]
-    });
+    isloading.value = true;
 
-    VxToast.show(context, msg: "Account successfully created.");
-    Get.offAll(() => const Home());
-  } catch (e) {
-    VxToast.show(context, msg: "Error: ${e.toString()}");
-  } finally {
-    isloading.value = false;
+    try {
+      String imageUrl =
+          'https://firebasestorage.googleapis.com/v0/b/new-tung.appspot.com/o/images%2FCs77utvw41dPiruedA7worPnUUj1%2Fimage_picker_0B4BC2B2-A8E1-4F17-96B7-E638F473E164-97366-000003F7D0AB776D.png?alt=media&token=aa53d66f-a313-422e-8d45-7042212ebb36';
+      if (imageFile.value != null) {
+        var file = File(imageFile.value!.path);
+        var filename = basename(file.path);
+        var destination =
+            'images/vendors/${FirebaseAuth.instance.currentUser?.uid}/$filename';
+        Reference ref = FirebaseStorage.instance.ref(destination);
+        await ref.putFile(file);
+        imageUrl = await ref.getDownloadURL();
+      }
+
+      var userRef = FirebaseFirestore.instance
+          .collection(vendorsCollection)
+          .doc(FirebaseAuth.instance.currentUser?.uid);
+      await userRef.set({
+        'vendor_id': FirebaseAuth.instance.currentUser?.uid,
+        'name': shopNameController.text,
+        'email': emailController.text.trim().toLowerCase(),
+        'imageUrl': imageUrl,
+        'official' : false,
+        'description': descriptionController.text,
+        'website': websiteController.text,
+        'mobile': mobileController.text,
+        'addresses': [addressDetails]
+      });
+
+      VxToast.show(context, msg: "Account successfully created.");
+      Get.offAll(() => const Home());
+    } catch (e) {
+      VxToast.show(context, msg: "Error: ${e.toString()}");
+    } finally {
+      isloading.value = false;
+    }
   }
-}
 
   void clearAllData() {
     emailController.clear();
@@ -215,8 +223,8 @@ class AuthController extends GetxController {
       final XFile? pickedFile =
           await _picker.pickImage(source: ImageSource.gallery);
       if (pickedFile != null) {
-        imageFile.value = pickedFile; 
-        update(); 
+        imageFile.value = pickedFile;
+        update();
       }
     } catch (e) {
       print('Image picker error: $e');

@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:seller_finalproject/const/const.dart';
 import 'package:seller_finalproject/const/styles.dart';
@@ -6,6 +7,7 @@ import 'package:seller_finalproject/views/auth_screen/create_screen.dart';
 import 'package:seller_finalproject/views/auth_screen/forgot_screen.dart';
 import 'package:seller_finalproject/views/widgets/custom_textfield.dart';
 import 'package:seller_finalproject/views/widgets/our_button.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -116,18 +118,6 @@ class LoginScreen extends StatelessWidget {
                     ),
                   ),
                   10.heightBox,
-
-                  // SizedBox(
-                  //   child: ourButton(
-                  //     title: 'Sign In',
-                  //     color: primaryApp,
-                  //     textColor: whiteColor,
-                  //     onPress: () async {
-                  //       await controller.loginMethod();
-                  //     },
-                  //   )
-                  // ),
-
                   controller.isloading.value
                       ? const CircularProgressIndicator(
                           valueColor: AlwaysStoppedAnimation(primaryApp),
@@ -138,8 +128,7 @@ class LoginScreen extends StatelessWidget {
                           textColor: whiteColor,
                           onPress: () async {
                             controller.isloading(true);
-                            await controller.loginMethod();
-                            Get.to(() => CreateAccount());
+                            await controller.loginMethod(context);
                           },
                         )
                           .box
@@ -161,18 +150,6 @@ class LoginScreen extends StatelessWidget {
                     ],
                   ).marginSymmetric(horizontal: 30),
                   SizedBox(height: 15),
-
-                  // ourButton(
-                  //   child: controller.isloading.value
-                  //       ? loadingIndicator()
-                  //       : ourButton(
-                  //           title: 'Sign In',
-                  //           onPress: () async {
-                  //             await controller.loginMethod();
-                  //           },
-                  //         ),
-                  // ),
-
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: List.generate(
@@ -227,10 +204,11 @@ class LoginScreen extends StatelessWidget {
                       isScrollControlled: true,
                       builder: (BuildContext context) {
                         return Container(
-                          height: 720,
+                          height: 650,
                           padding: const EdgeInsets.all(32),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               const Text(
                                 "How to Sign Up for the Seller StyleFinder App",
