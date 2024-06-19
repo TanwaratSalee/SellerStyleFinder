@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:seller_finalproject/const/const.dart';
 import 'package:seller_finalproject/const/styles.dart';
@@ -103,10 +102,10 @@ class HomeScreen extends StatelessWidget {
                                     onTap: () async {
                                       var productSnapshot =
                                           await FirebaseFirestore.instance
-                                              .collection('products')
-                                              .where('p_name',
+                                              .collection(productsCollection)
+                                              .where('name',
                                                   isEqualTo: productsData[index]
-                                                      ['p_name'])
+                                                      ['name'])
                                               .get();
 
                                       if (productSnapshot.docs.isNotEmpty) {
@@ -145,7 +144,7 @@ class HomeScreen extends StatelessWidget {
                                         ),
                                         SizedBox(width: 10),
                                         Image.network(
-                                          productsData[index]['p_imgs'][0],
+                                          productsData[index]['imgs'][0],
                                           width: 55,
                                           height: 70,
                                           fit: BoxFit.cover,
@@ -157,13 +156,13 @@ class HomeScreen extends StatelessWidget {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Text(productsData[index]
-                                                      ['p_name'])
+                                                      ['name'])
                                                   .text
                                                   .size(16)
                                                   .fontFamily(medium)
                                                   .make(),
                                               Text(
-                                                "${NumberFormat('#,##0').format(double.tryParse(productsData[index]['p_price'])?.toInt() ?? 0)} Bath",
+                                                "${NumberFormat('#,##0').format(double.tryParse(productsData[index]['price'])?.toInt() ?? 0)} Bath",
                                               )
                                                   .text
                                                   .size(14)

@@ -90,52 +90,80 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                //if data image url and contoller path is empty
-                controller.snapshotData['imageUrl'] == '' &&
-                        controller.profileImgPath.isEmpty
-                    ? ClipRRect(
-                        borderRadius: BorderRadius.circular(50),
-                        child: Image.asset(
-                          imgProfile,
-                          width: 100,
-                          height: 100,
-                          fit: BoxFit.cover,
+                Stack(
+                  children: [
+                    Container(
+                      child: //if data image url and contoller path is empty
+                          controller.snapshotData['imageUrl'] == '' &&
+                                  controller.profileImgPath.isEmpty
+                              ? ClipRRect(
+                                  borderRadius: BorderRadius.circular(50),
+                                  child: Image.asset(
+                                    imgProfile,
+                                    width: 100,
+                                    height: 100,
+                                    fit: BoxFit.cover,
+                                  ),
+                                )
+                                  .box
+                                  .roundedFull
+                                  .border(color: greyColor, width: 2)
+                                  .make()
+                              // if data is not empty but controller path is empty
+                              : controller.snapshotData['imageUrl'] != '' &&
+                                      controller.profileImgPath.isEmpty
+                                  ? ClipRRect(
+                                      borderRadius: BorderRadius.circular(50),
+                                      child: Image.network(
+                                        controller.snapshotData['imageUrl'],
+                                        width: 100,
+                                        height: 100,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    )
+                                      .box
+                                      .roundedFull
+                                      .border(color: greyLine, width: 2)
+                                      .make()
+                                  : ClipRRect(
+                                      borderRadius: BorderRadius.circular(50),
+                                      child: Image.file(
+                                        File(controller.profileImgPath.value),
+                                        width: 100,
+                                        height: 100,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    )
+                                      .box
+                                      .roundedFull
+                                      .border(color: greyLine, width: 2)
+                                      .make(),
+                    ),
+                    Positioned(
+                      bottom: 0,
+                      right: 0,
+                      child: GestureDetector(
+                        onTap: () {
+                          controller.changeImage(context);
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: primaryApp,
+                            shape: BoxShape.circle,
+                          ),
+                          padding: EdgeInsets.all(8),
+                          child: Icon(
+                            Icons.edit,
+                            color: whiteColor,
+                            size: 20,
+                          ),
                         ),
-                      )
-                        .box
-                        .roundedFull
-                        .border(color: greyColor, width: 2)
-                        .make()
-                    // if data is not empty but controller path is empty
-                    : controller.snapshotData['imageUrl'] != '' &&
-                            controller.profileImgPath.isEmpty
-                        ? ClipRRect(
-                            borderRadius: BorderRadius.circular(50),
-                            child: Image.network(
-                              controller.snapshotData['imageUrl'],
-                              width: 100,
-                              height: 100,
-                              fit: BoxFit.cover,
-                            ),
-                          )
-                            .box
-                            .roundedFull
-                            .border(color: greyLine, width: 2)
-                            .make()
-                        //if both are emtpy
-                        : ClipRRect(
-                            borderRadius: BorderRadius.circular(50),
-                            child: Image.file(
-                              File(controller.profileImgPath.value),
-                              width: 100,
-                              height: 100,
-                              fit: BoxFit.cover,
-                            ),
-                          )
-                            .box
-                            .roundedFull
-                            .border(color: greyLine, width: 2)
-                            .make(),
+                      ),
+                    ),
+                  ],
+                ),
+
+                //if both are emtpy
 
                 10.heightBox,
                 Padding(

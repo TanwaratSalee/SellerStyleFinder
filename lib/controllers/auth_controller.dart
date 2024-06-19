@@ -166,7 +166,7 @@ class AuthController extends GetxController {
   isloading.value = true;
 
   try {
-    String imageUrl = 'https://firebasestorage.googleapis.com/v0/b/new-tung.appspot.com/o/images%2FCs77utvw41dPiruedA7worPnUUj1%2Fimage_picker_67E78B2D-4FF3-4579-A9CB-54B805F63339-97366-00000318992B7C2F.png?alt=media&token=aabf22cb-b1df-42a9-95dc-3873a69a6b36';
+    String imageUrl = 'https://firebasestorage.googleapis.com/v0/b/new-tung.appspot.com/o/images%2FCs77utvw41dPiruedA7worPnUUj1%2Fimage_picker_0B4BC2B2-A8E1-4F17-96B7-E638F473E164-97366-000003F7D0AB776D.png?alt=media&token=aa53d66f-a313-422e-8d45-7042212ebb36';
     if (imageFile.value != null) {
       var file = File(imageFile.value!.path);
       var filename = basename(file.path);
@@ -215,8 +215,8 @@ class AuthController extends GetxController {
       final XFile? pickedFile =
           await _picker.pickImage(source: ImageSource.gallery);
       if (pickedFile != null) {
-        imageFile.value = pickedFile; // Correctly updating the Rx value
-        update(); // This might not be necessary unless you have other reactive states to update
+        imageFile.value = pickedFile; 
+        update(); 
       }
     } catch (e) {
       print('Image picker error: $e');
