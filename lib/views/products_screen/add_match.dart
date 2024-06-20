@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get/get.dart';
 import 'package:seller_finalproject/const/const.dart';
 import 'package:seller_finalproject/const/styles.dart';
 import 'package:seller_finalproject/controllers/match_controller.dart';
 import 'package:seller_finalproject/views/products_screen/products_screen.dart';
-import 'package:get/get.dart';
 
 class AddMatchProduct extends StatefulWidget {
   @override
@@ -57,7 +57,7 @@ class _AddMatchProductState extends State<AddMatchProduct> {
 
               Get.to(() => ProductsScreen());
             },
-            child: const Text('Save', style: TextStyle(color: primaryApp)),
+            child: const Text('Save', style: TextStyle(color: primaryApp, fontSize: 14, fontFamily: medium)),
           ),
         ],
       ),
@@ -68,7 +68,7 @@ class _AddMatchProductState extends State<AddMatchProduct> {
               future: controller.fetchTopProductsByVendor(currentUser!.uid),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator());
+                  return const Center(child: CircularProgressIndicator());
                 } else if (snapshot.hasError) {
                   return Center(child: Text('Error: ${snapshot.error}'));
                 } else if (snapshot.data?.value != null && snapshot.data!.value!.isNotEmpty) {
@@ -89,21 +89,21 @@ class _AddMatchProductState extends State<AddMatchProduct> {
                             product.imageUrls[0],
                             fit: BoxFit.cover,
                           ).box.roundedSM.clip(Clip.antiAlias).make(),
-                        ).box.white.margin(EdgeInsets.symmetric(horizontal: 6, vertical: 2)).make();
+                        ).box.white.margin(const EdgeInsets.symmetric(horizontal: 6, vertical: 2)).make();
                       },
                     ),
                   );
                 } else {
-                  return Center(child: Text('No data available'));
+                  return const Center(child: Text('No data available'));
                 }
               },
-            ).box.color(greyThin).make(),
+            ),
             const SizedBox(height: 5),
             FutureBuilder<Rxn<List<Product>>>(
               future: controller.fetchLowerProductsByVendor(currentUser!.uid),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator());
+                  return const Center(child: CircularProgressIndicator());
                 } else if (snapshot.hasError) {
                   return Center(child: Text('Error: ${snapshot.error}'));
                 } else if (snapshot.data?.value != null && snapshot.data!.value!.isNotEmpty) {
@@ -124,15 +124,15 @@ class _AddMatchProductState extends State<AddMatchProduct> {
                             product.imageUrls[0],
                             fit: BoxFit.cover,
                           ).box.roundedSM.clip(Clip.antiAlias).make(),
-                        ).box.white.margin(EdgeInsets.symmetric(horizontal: 6, vertical: 2)).make();
+                        ).box.white.margin(const EdgeInsets.symmetric(horizontal: 6, vertical: 2)).make();
                       },
                     ),
                   );
                 } else {
-                  return Center(child: Text('No data available'));
+                  return const Center(child: Text('No data available'));
                 }
               },
-            ).box.color(greyThin).make(),
+            ),
             Padding(
               padding: const EdgeInsets.all(24),
               child: Column(
@@ -228,19 +228,19 @@ class _AddMatchProductState extends State<AddMatchProduct> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(height: 10),
-                        Text(
+                        const SizedBox(height: 10),
+                        const Text(
                           "Explain clothing matching",
                           style: TextStyle(
                             fontSize: 16,
                             fontFamily: medium,
                           ),
                         ),
-                        SizedBox(height: 8),
+                        const SizedBox(height: 8),
                         TextField(
                           controller: controller.explainController,
                           maxLines: 3,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             hintText: 'Enter your explanation here',
                             border: OutlineInputBorder(
                               borderSide: BorderSide.none,
@@ -248,7 +248,7 @@ class _AddMatchProductState extends State<AddMatchProduct> {
                             filled: true,
                             fillColor: Color.fromRGBO(240, 240, 240, 1),
                           ),
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 14.0,
                             fontFamily: regular,
                             color: Colors.black,
@@ -293,48 +293,48 @@ class _AddMatchProductState extends State<AddMatchProduct> {
         String userName = userDoc['name'] ?? '';
         String userImg = userDoc['imageUrl'] ?? '';
 
-        // Log user details for debugging
         print('User Name: $userName');
         print('User Image: $userImg');
 
         // Retrieve product details
         FirebaseFirestore.instance
             .collection(productsCollection)
-            .where('p_name', whereIn: productNames)
+            .where('name', whereIn: productNames)
             .get()
             .then((QuerySnapshot querySnapshot) {
           if (querySnapshot.docs.isNotEmpty) {
             Map<String, dynamic> userData = {
-              'p_collection': selectedCollections,
+              'collection': selectedCollections,
               'gender': selectedGender,
-              'p_desc': explanation,
-              'posted_by': currentUserUID,
+              'description': explanation,
+              'vendor_id': currentUserUID,
+              'favorite_userid': FieldValue.arrayUnion([]),
+              'created_at': Timestamp.now(),
             };
 
             querySnapshot.docs.forEach((doc) {
               var data = doc.data() as Map<String, dynamic>?;
-              var wishlist = (data?['favorite'] as List<dynamic>?) ?? [];
+              var wishlist = (data?['favorite_count'] as List<dynamic>?) ?? [];
 
               if (!wishlist.contains(currentUserUID)) {
                 userData['views'] = 0;
-                userData['favorite'] = 0;
-                if (doc['p_name'] == productNameTop) {
-                  userData['p_id_top'] = doc.id;
-                } else if (doc['p_name'] == productNameLower) {
-                  userData['p_id_lower'] = doc.id;
+                userData['favorite_count'] = 0;
+                if (doc['name'] == productNameTop) {
+                  userData['product_id_top'] = doc.id;
+                } else if (doc['name'] == productNameLower) {
+                  userData['product_id_lower'] = doc.id;
                 }
               }
             });
 
-            if (userData.keys.length > 1) {
-              // Check if any product info was added
+            if (userData.containsKey('product_id_top') && userData.containsKey('product_id_lower')) {
+              // Check if both product IDs were added
               FirebaseFirestore.instance
                   .collection('storemixandmatchs')
                   .add(userData)
                   .then((documentReference) {
                 VxToast.show(context, msg: "Added post successful.");
-                print(
-                    'Data added in storemixandmatchs collection with document ID: ${documentReference.id}');
+                print('Data added in storemixandmatchs collection with document ID: ${documentReference.id}');
                 
                 // Clear the fields
                 controller.resetController();

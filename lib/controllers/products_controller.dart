@@ -33,7 +33,7 @@ class ProductsController extends GetxController {
 
   List<String> sizesList = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
   final selectedSizes = <String>[].obs;
-  List<String> genderList = ['all', 'male', 'female'];
+  List<String> genderList = ['all', 'men', 'women'];
   RxString selectedGender = ''.obs;
   List<String> mixandmatchList = ['top', 'lower', 'not specified'];
   RxString selectedMixandmatch = ''.obs;
@@ -50,7 +50,8 @@ class ProductsController extends GetxController {
     'skirts',
     'pants',
     'dresses',
-    'jackets'
+    'jackets',
+    'suits'
   ];
   RxString selectedSubcollection = ''.obs;
 
@@ -333,7 +334,6 @@ class ProductsController extends GetxController {
   void removeImage(int index) {
     if (index >= 0 && index < pImagesList.length) {
       if (pImagesList[index] is String) {
-        // If it's a URL, add to the delete list
         imagesToDelete.add(pImagesList[index] as String);
       }
       pImagesList.removeAt(index); // Directly remove the item at the index
@@ -349,19 +349,16 @@ class ProductsController extends GetxController {
       await productDoc.update({
         'collection': selectedCollection,
         'subcollection': selectedSubcollection.value,
-        'sex': selectedGender.value,
+        'gender': selectedGender.value,
         'productsize': selectedSizes,
         'part': selectedMixandmatch.value,
-        'colors': selectedColorIndexes
-            .map((index) => allColors[index]['value'])
-            .toList(),
+        'colors': selectedColorIndexes.map((index) => allColors[index]['value']).toList(),
         'description': pdescController.text,
         'name': pnameController.text,
         'aboutProduct': pabproductController.text,
         'size': psizedesController.text,
         'price': ppriceController.text,
         'quantity': pquantityController.text,
-        // 'seller': Get.find<HomeController>().username,
         'vendor_id': currentUser!.uid,
         'imgs': FieldValue.arrayUnion(pImagesLinks),
       });
@@ -373,7 +370,7 @@ class ProductsController extends GetxController {
         imagesToDelete.clear();
       }
 
-      VxToast.show(context, msg: "Product updated successfully.");
+      // VxToast.show(context, msg: "Product updated successfully.");
     } catch (e) {
       print("Error updating product: $e");
       VxToast.show(context,
@@ -394,32 +391,7 @@ class ProductsController extends GetxController {
         selectedColorIndexes.isNotEmpty &&
         selectedMixandmatch.isNotEmpty;
   }
-
-  Future<void> updateProductMatch(
-      BuildContext context, String documentId) async {
-    try {
-      final productDoc = FirebaseFirestore.instance
-          .collection(productsCollection)
-          .doc(documentId);
-
-      await productDoc.update({
-        'p_mixmatch': '',
-        'p_mixmatch_colors': selectedColorIndexes
-            .map((index) => allColors[index]['name'])
-            .toList(),
-        'p_mixmatch_sex': selectedGender.value,
-        'p_mixmatch_desc': psizedesController.text,
-        'p_mixmatch_collection': selectedCollections.toList(),
-      });
-      VxToast.show(context, msg: "Product updated successfully.");
-    } catch (e) {
-      print("Error updating product: $e");
-      VxToast.show(context,
-          msg: "Error updating product. Please try again later.");
-      print(e.toString());
-    }
-  }
-
+  
   addFeatured(docId) async {
     await firestore.collection(productsCollection).doc(docId).set({
       'featured_id': currentUser!.uid,
@@ -438,18 +410,8 @@ class ProductsController extends GetxController {
     await firestore.collection(productsCollection).doc(docId).delete();
   }
 
-  void resetMixMatchData(String documentId) async {
-    FirebaseFirestore.instance.collection('products').doc(documentId).update({
-      'p_mixmatch': '',
-      'p_mixmatch_colors': [],
-      'p_mixmatch_sex': '',
-      'p_mixmatch_desc': '',
-      'p_mixmatch_collection': [],
-    }).then((value) {
-      print("MixMatch data reset to empty successfully.");
-    }).catchError((error) {
-      print("Failed to reset MixMatch data: $error");
-    });
+  removeMatch(docId) async {
+    await firestore.collection(storematchsCollection).doc(docId).delete();
   }
 
   bool fieldProducComplete() {

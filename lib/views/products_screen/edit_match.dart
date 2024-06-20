@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -32,10 +31,13 @@ class _EditMatchProductState extends State<EditMatchProduct> {
     document = Get.arguments['document'];
     ItemsDetails = Get.arguments['ItemsDetails'];
     selectedGender = document['gender'];
-    selectedCollections = List<String>.from(document['p_collection']);
-    explanationController.text = document['p_desc'];
-    pIdTop = document['p_id_top'];
-    pIdLower = document['p_id_lower'];
+    Map<String, dynamic> docData = document.data() as Map<String, dynamic>;
+    selectedCollections = docData.containsKey('collection')
+        ? List<String>.from(docData['collection'])
+        : [];
+    explanationController.text = document['description'];
+    pIdTop = document['product_id_top'];
+    pIdLower = document['product_id_lower'];
     fetchItemsDetails();
   }
 
@@ -51,19 +53,19 @@ class _EditMatchProductState extends State<EditMatchProduct> {
 
     if (topSnapshot.exists) {
       setState(() {
-        topProductImg = topSnapshot.data()!['p_imgs'][0];
-        topProductName = topSnapshot.data()!['p_name'];
+        topProductImg = topSnapshot.data()!['imgs'][0];
+        topProductName = topSnapshot.data()!['name'];
         topProductPrice =
-            double.tryParse(topSnapshot.data()!['p_price'].toString()) ?? 0.0;
+            double.tryParse(topSnapshot.data()!['price'].toString()) ?? 0.0;
       });
     }
 
     if (lowerSnapshot.exists) {
       setState(() {
-        lowerProductImg = lowerSnapshot.data()!['p_imgs'][0];
-        lowerProductName = lowerSnapshot.data()!['p_name'];
+        lowerProductImg = lowerSnapshot.data()!['imgs'][0];
+        lowerProductName = lowerSnapshot.data()!['name'];
         lowerProductPrice =
-            double.tryParse(lowerSnapshot.data()!['p_price'].toString()) ?? 0.0;
+            double.tryParse(lowerSnapshot.data()!['price'].toString()) ?? 0.0;
       });
     }
   }
@@ -94,28 +96,11 @@ class _EditMatchProductState extends State<EditMatchProduct> {
           padding: const EdgeInsets.all(8),
           child: Column(
             children: [
-              // const Text("Product IDs")
-              //     .text
-              //     .size(16)
-              //     .color(blackColor)
-              //     .fontFamily(medium)
-              //     .make(),
-              // const SizedBox(height: 8),
-              // Text("Top Product ID: $pIdTop").text.size(14).color(blackColor).make(),
-              // const SizedBox(height: 8),
-              // Text("Lower Product ID: $pIdLower").text.size(14).color(blackColor).make(),
-              // const SizedBox(height: 15),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Column(
                     children: [
-                      // const Text("Top Product")
-                      //     .text
-                      //     .size(16)
-                      //     .color(blackColor)
-                      //     .fontFamily(medium)
-                      //     .make(),
                       if (topProductImg.isNotEmpty)
                         ClipRRect(
                           borderRadius: BorderRadius.only(
@@ -129,7 +114,6 @@ class _EditMatchProductState extends State<EditMatchProduct> {
                             fit: BoxFit.cover,
                           ),
                         ),
-
                       SizedBox(
                         width: 130,
                         child: Text(
@@ -165,13 +149,6 @@ class _EditMatchProductState extends State<EditMatchProduct> {
                   const SizedBox(width: 5),
                   Column(
                     children: [
-                      // const Text("Lower Product")
-                      //     .text
-                      //     .size(16)
-                      //     .color(blackColor)
-                      //     .fontFamily(medium)
-                      //     .make(),
-                      // const SizedBox(height: 8),
                       if (lowerProductImg.isNotEmpty)
                         ClipRRect(
                           borderRadius: BorderRadius.only(
@@ -219,7 +196,7 @@ class _EditMatchProductState extends State<EditMatchProduct> {
                   Wrap(
                     spacing: 8,
                     runSpacing: 8,
-                    children: ['male', 'female', 'other'].map((gender) {
+                    children: ['men', 'women', 'other'].map((gender) {
                       bool isSelected = selectedGender == gender;
                       return Container(
                         width: 105,
@@ -357,11 +334,11 @@ class _EditMatchProductState extends State<EditMatchProduct> {
     }
 
     Map<String, dynamic> userData = {
-      'p_id_top': pIdTop,
-      'p_id_lower': pIdLower,
-      'p_collection': selectedCollections,
+      'product_id_top': pIdTop,
+      'product_id_lower': pIdLower,
+      'collection': selectedCollections,
       'gender': selectedGender,
-      'p_desc': explanationController.text,
+      'description': explanationController.text,
     };
 
     await FirebaseFirestore.instance

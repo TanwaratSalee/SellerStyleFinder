@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:seller_finalproject/const/const.dart';
 import 'package:seller_finalproject/const/styles.dart';
 import 'package:seller_finalproject/views/products_screen/items_details.dart'; // Import the ProductDetails screen
@@ -9,15 +9,24 @@ import 'package:seller_finalproject/views/products_screen/items_details.dart'; /
 class MatchDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final Map<String, dynamic> topProduct = Get.arguments['topProduct'];
-    final Map<String, dynamic> lowerProduct = Get.arguments['lowerProduct'];
-    final String description = Get.arguments['description'];
+    final Map<String, dynamic>? topProduct = Get.arguments['topProduct'];
+    final Map<String, dynamic>? lowerProduct = Get.arguments['lowerProduct'];
+    final String? description = Get.arguments['description'];
     final dynamic sex = Get.arguments['sex']; // Changed to dynamic to handle both String and List
     final dynamic collection = Get.arguments['collection']; // Changed to dynamic to handle both String and List
 
     // Ensure sex and collection are strings
     final String sexString = sex is List ? sex.join(', ') : sex.toString();
     final String collectionString = collection is List ? collection.join(', ') : collection.toString();
+
+    if (topProduct == null || lowerProduct == null || description == null) {
+      return Scaffold(
+        appBar: AppBar(title: Text("Match Details")),
+        body: Center(
+          child: Text('Invalid match data'),
+        ),
+      );
+    }
 
     return Scaffold(
       appBar: AppBar(title: Text("Match Details")),
@@ -39,7 +48,7 @@ class MatchDetailsScreen extends StatelessWidget {
                                 onTap: () async {
                                   var productSnapshot = await FirebaseFirestore.instance
                                       .collection('products')
-                                      .doc(topProduct['p_id_top']) // Use the ID of the top product
+                                      .doc(topProduct['product_id']) // Use the ID of the top product
                                       .get();
 
                                   if (productSnapshot.exists) {
@@ -87,13 +96,8 @@ class MatchDetailsScreen extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                "${NumberFormat('#,##0').format(topProduct['price'])} Bath",
-                              )
-                                  .text
-                                  .color(greyDark)
-                                  .fontFamily(regular)
-                                  .size(12)
-                                  .make(),
+                                "${NumberFormat('#,##0').format(double.tryParse(topProduct['price'].toString()) ?? 0)} Bath",
+                              ).text.color(greyDark).fontFamily(regular).size(12).make(),
                             ],
                           ).box.border(color: greyLine).rounded.make(),
                         ),
@@ -104,12 +108,7 @@ class MatchDetailsScreen extends StatelessWidget {
                             const Icon(
                               Icons.add,
                               color: whiteColor,
-                            )
-                                .box
-                                .color(primaryApp)
-                                .roundedFull
-                                .padding(EdgeInsets.all(4))
-                                .make(),
+                            ).box.color(primaryApp).roundedFull.padding(EdgeInsets.all(4)).make(),
                           ],
                         ),
                         const SizedBox(width: 5),
@@ -120,7 +119,7 @@ class MatchDetailsScreen extends StatelessWidget {
                                 onTap: () async {
                                   var productSnapshot = await FirebaseFirestore.instance
                                       .collection('products')
-                                      .doc(lowerProduct['id']) // Use the ID of the lower product
+                                      .doc(lowerProduct['product_id']) // Use the ID of the lower product
                                       .get();
 
                                   if (productSnapshot.exists) {
@@ -168,13 +167,8 @@ class MatchDetailsScreen extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                "${NumberFormat('#,##0').format(lowerProduct['price'])} Bath",
-                              )
-                                  .text
-                                  .color(greyDark)
-                                  .fontFamily(regular)
-                                  .size(12)
-                                  .make(),
+                                "${NumberFormat('#,##0').format(double.tryParse(lowerProduct['price'].toString()) ?? 0)} Bath",
+                              ).text.color(greyDark).fontFamily(regular).size(12).make(),
                             ],
                           ).box.border(color: greyLine).rounded.make(),
                         ),
@@ -202,18 +196,8 @@ class MatchDetailsScreen extends StatelessWidget {
                                   String capitalizedItem = item[0].toUpperCase() + item.substring(1);
                                   return Container(
                                     alignment: Alignment.center,
-                                    child: capitalizedItem.text
-                                        .size(14)
-                                        .color(greyDark)
-                                        .fontFamily(medium)
-                                        .make(),
-                                  )
-                                      .box
-                                      .color(thinPrimaryApp)
-                                      .margin(EdgeInsets.symmetric(horizontal: 6))
-                                      .roundedLg
-                                      .padding(EdgeInsets.symmetric(horizontal: 24, vertical: 12))
-                                      .make();
+                                    child: capitalizedItem.text.size(14).color(greyDark).fontFamily(medium).make(),
+                                  ).box.color(thinPrimaryApp).margin(EdgeInsets.symmetric(horizontal: 6)).roundedLg.padding(EdgeInsets.symmetric(horizontal: 24, vertical: 12)).make();
                                 },
                               ),
                             ),
@@ -240,19 +224,8 @@ class MatchDetailsScreen extends StatelessWidget {
                                     alignment: Alignment.center,
                                     child: Text(
                                       "${item[0].toUpperCase()}${item.substring(1)}",
-                                    )
-                                        .text
-                                        .size(14)
-                                        .color(greyDark)
-                                        .fontFamily(medium)
-                                        .make(),
-                                  )
-                                      .box
-                                      .color(thinPrimaryApp)
-                                      .margin(EdgeInsets.symmetric(horizontal: 6))
-                                      .roundedLg
-                                      .padding(EdgeInsets.symmetric(horizontal: 24, vertical: 12))
-                                      .make();
+                                    ).text.size(14).color(greyDark).fontFamily(medium).make(),
+                                  ).box.color(thinPrimaryApp).margin(EdgeInsets.symmetric(horizontal: 6)).roundedLg.padding(EdgeInsets.symmetric(horizontal: 24, vertical: 12)).make();
                                 },
                               ),
                             ),

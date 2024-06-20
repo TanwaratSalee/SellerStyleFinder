@@ -191,11 +191,11 @@ class AuthController extends GetxController {
         'name': shopNameController.text,
         'email': emailController.text.trim().toLowerCase(),
         'imageUrl': imageUrl,
-        'official' : false,
         'description': descriptionController.text,
         'website': websiteController.text,
         'mobile': mobileController.text,
-        'addresses': [addressDetails]
+        'addresses': [addressDetails],
+        'official': false,
       });
 
       VxToast.show(context, msg: "Account successfully created.");

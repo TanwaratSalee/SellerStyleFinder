@@ -30,7 +30,7 @@ class MatchController extends GetxController {
 
   List<String> sizesList = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
   final selectedSizes = <String>[].obs;
-  List<String> genderList = ['all', 'male', 'female'];
+  List<String> genderList = ['all', 'men', 'women'];
   RxString selectedGender = ''.obs;
   List<String> mixandmatchList = ['top', 'lower', 'not specified'];
   RxString selectedMixandmatch = ''.obs;
@@ -113,7 +113,7 @@ class MatchController extends GetxController {
       var productsQuery = FirebaseFirestore.instance
           .collection('products')
           .where('vendor_id', isEqualTo: vendorId)
-          .where('p_part', isEqualTo: part);
+          .where('part', isEqualTo: part);
       var querySnapshot = await productsQuery.get();
       for (var doc in querySnapshot.docs) {
         products.add(Product.fromFirestore(doc));
@@ -195,7 +195,6 @@ class MatchController extends GetxController {
             msg: "Error updating product: Document ID is empty.");
       }
     } catch (e) {
-      // แสดงข้อความเมื่อเกิดข้อผิดพลาดในการอัปเดต
       VxToast.show(context,
           msg: "Error updating product. Please try again later.");
       print("Error updating product: $e");
@@ -272,7 +271,7 @@ class Product {
     return Product(
       id: json['id'] ?? '',
       name: json['name'] ?? '',
-      vendorId: json['vendorId'] ?? '',
+      vendorId: json['vendor_id'] ?? '',
       part: json['part'] ?? '',
       price: json['price'] ?? '',
       mixmatch: json['mixmatch'] ?? '',
@@ -289,12 +288,12 @@ class Product {
 
     return Product(
       id: doc.id,
-      name: data['p_name'] ?? '',
+      name: data['name'] ?? '',
       vendorId: data['vendor_id'] ?? '',
-      part: data['p_part'] ?? '',
-      price: data['p_price'] ?? '',
-      mixmatch: data['p_mixmatch'] ?? '',
-      imageUrls: List<String>.from(data['p_imgs'] ?? []),
+      part: data['part'] ?? '',
+      price: data['price'] ?? '',
+      mixmatch: data['mixmatch'] ?? '',
+      imageUrls: List<String>.from(data['imgs'] ?? []),
     );
   }
 

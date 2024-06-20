@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
 import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 import 'package:seller_finalproject/const/const.dart';
 import 'package:seller_finalproject/const/styles.dart';
 import 'package:seller_finalproject/controllers/loading_Indcator.dart';
@@ -60,355 +61,306 @@ class _ProductsScreenState extends State<ProductsScreen> {
     );
   }
 
- Widget buildProductsTab(BuildContext context) {
-  return StreamBuilder<QuerySnapshot>(
-    stream: StoreServices.getProducts(vendorId),
-    builder: (context, snapshot) {
-      if (!snapshot.hasData) {
-        return loadingIndicator();
-      }
-      var data = snapshot.data!.docs;
-      return Column(
-        children: [
-          ListTile(
-            leading: const Icon(
-              Icons.add,
-              color: greyDark,
-              size: 28,
-            ),
-            title: const Text(
-              'Add new product',
-              style: TextStyle(color: greyDark),
-            ),
-            onTap: () async {
-              await controller.getCollection();
-              controller.populateCollectionList();
-              Get.to(() => const AddProduct());
-            },
-          ),
-          Divider(
-            color: greyLine,
-          ).paddingSymmetric(horizontal: 14),
-          Expanded(
-            child: ListView.builder(
-              itemCount: data.length,
-              itemBuilder: (context, index) {
-                var doc = data[index].data() as Map<String, dynamic>;
-                String documentId = data[index].id;
-                return Column(
-                  children: [
-                    ListTile(
-                      onTap: () {
-                        print('Navigating to ItemsDetails with data: $doc');
-                        Get.to(() => ItemsDetails(data: doc));
-                      },
-                      leading: doc['imgs'] != null && doc['imgs'].isNotEmpty
-                          ? Image.network(
-                              doc['imgs'][0],
-                              width: 50,
-                              height: 50,
-                              fit: BoxFit.cover,
-                            )
-                          : Image.asset(
-                              'assets/images/placeholder.png', // Add a placeholder image
-                              width: 50,
-                              height: 50,
-                              fit: BoxFit.cover,
-                            ),
-                      title: Text(
-                        doc['name'],
-                        style: TextStyle(
-                          color: blackColor,
-                          fontSize: 16,
-                          fontFamily: medium,
-                        ),
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                      ),
-                      subtitle: Text(
-                        "${NumberFormat('#,##0').format(double.tryParse(doc['price'])?.toInt() ?? 0)} Bath",
-                        style: TextStyle(
-                          color: greyColor,
-                          fontSize: 14,
-                          fontFamily: medium,
-                        ),
-                      ),
-                      trailing: PopupMenuButton<String>(
-                        icon: Icon(
-                          Icons.more_vert,
-                          color: greyColor,
-                        ),
-                        onSelected: (String value) {
-                          if (value == 'edit') {
-                            print('Navigating to EditProduct with data: $doc');
-                            Get.to(() => EditProduct(productData: doc, documentId: documentId));
-                          } else if (value == 'delete') {
-                            controller.removeProduct(documentId);
-                          }
-                        },
-                        itemBuilder: (BuildContext context) =>
-                            <PopupMenuEntry<String>>[
-                          const PopupMenuItem<String>(
-                              value: 'edit', child: Text('Edit')),
-                          const PopupMenuItem<String>(
-                              value: 'delete', child: Text('Delete')),
-                        ],
-                      ),
-                    ),
-                    Divider(
-                      color: greyLine,
-                    ).paddingSymmetric(horizontal: 14),
-                  ],
-                );
-              },
-            ),
-          ),
-        ],
-      );
-    },
-  );
-}
-
-  Widget buildMatchesTab(BuildContext context) {
-  Future<Map<String, dynamic>> fetchItemsDetails(String topId, String lowerId) async {
-    final topSnapshot = await FirebaseFirestore.instance.collection('products').doc(topId).get();
-    final lowerSnapshot = await FirebaseFirestore.instance.collection('products').doc(lowerId).get();
-
-    final topName = topSnapshot.exists ? topSnapshot.data()!['name'] : 'Unknown';
-    final lowerName = lowerSnapshot.exists ? lowerSnapshot.data()!['name'] : 'Unknown';
-    final topImg = topSnapshot.exists ? topSnapshot.data()!['imgs'][0] : '';
-    final lowerImg = lowerSnapshot.exists ? lowerSnapshot.data()!['imgs'][0] : '';
-    final topPrice = topSnapshot.exists ? double.tryParse(topSnapshot.data()!['price'].toString()) : 0.0;
-    final lowerPrice = lowerSnapshot.exists ? double.tryParse(lowerSnapshot.data()!['price'].toString()) : 0.0;
-
-    return {
-      'name_top': topName,
-      'name_lower': lowerName,
-      'img_top': topImg,
-      'img_lower': lowerImg,
-      'price_top': topPrice,
-      'price_lower': lowerPrice,
-    };
-  }
-
-  return StreamBuilder(
-    stream: FirebaseFirestore.instance.collection('storemixandmatchs').snapshots(),
-    builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-      if (!snapshot.hasData) {
-        return Center(child: CircularProgressIndicator());
-      }
-      final documents = snapshot.data!.docs;
-      return ListView.builder(
-        itemCount: documents.length + 1,
-        itemBuilder: (context, index) {
-          if (index == 0) {
-            return ListTile(
+  Widget buildProductsTab(BuildContext context) {
+    return StreamBuilder<QuerySnapshot>(
+      stream: StoreServices.getProducts(vendorId),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return loadingIndicator();
+        }
+        var data = snapshot.data!.docs;
+        return Column(
+          children: [
+            ListTile(
               leading: const Icon(
                 Icons.add,
-                color: blackColor,
+                color: greyDark,
                 size: 28,
               ),
               title: const Text(
-                'Add new match',
-                style: TextStyle(color: blackColor),
+                'Add new product',
+                style: TextStyle(color: greyDark),
               ),
               onTap: () async {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => AddMatchProduct()),
-                );
+                await controller.getCollection();
+                controller.populateCollectionList();
+                Get.to(() => const AddProduct());
               },
-            );
-          }
-
-          var document = documents[index - 1];
-
-          return FutureBuilder(
-            future: fetchItemsDetails(document['id_top'], document['id_lower']),
-            builder: (context, AsyncSnapshot<Map<String, dynamic>> productSnapshot) {
-              if (!productSnapshot.hasData) {
-                return ListTile(
-                  title: Center(child: CircularProgressIndicator())
-                );
-              }
-              final ItemsDetails = productSnapshot.data!;
-
-              String imgTop = ItemsDetails['img_top'].toString();
-              String nameTop = ItemsDetails['name_top'].toString();
-              double priceTop = double.parse(ItemsDetails['price_top'].toString());
-              String imgLower = ItemsDetails['img_lower'].toString();
-              String nameLower = ItemsDetails['name_lower'].toString();
-              double priceLower = double.parse(ItemsDetails['price_lower'].toString());
-
-              // แปลงข้อมูล List เป็น String ถ้าจำเป็น
-              var description = document['desc'];
-              if (description is List) {
-                description = description.join(', ');
-              }
-              var sex = document['sex'];
-              if (sex is List) {
-                sex = sex.join(', ');
-              }
-              var collection = document['collection'];
-              if (collection is List) {
-                collection = collection.join(', ');
-              }
-
-              return Stack(
-                children: [
-                  Column(
+            ),
+            Divider(
+              color: greyLine,
+            ).paddingSymmetric(horizontal: 14),
+            Expanded(
+              child: ListView.builder(
+                itemCount: data.length,
+                itemBuilder: (context, index) {
+                  var doc = data[index].data() as Map<String, dynamic>;
+                  String documentId = data[index].id;
+                  return Column(
                     children: [
                       ListTile(
-                        subtitle: GestureDetector(
-                          onTap: () {
-                            // Navigate to MatchDetailsScreen
-                            Get.to(() => MatchDetailsScreen(), arguments: {
-                              'topProduct': {
-                                'img': imgTop,
-                                'name': nameTop,
-                                'price': priceTop,
-                              },
-                              'lowerProduct': {
-                                'img': imgLower,
-                                'name': nameLower,
-                                'price': priceLower,
-                              },
-                              'description': description,
-                              'sex': sex,
-                              'collection': collection,
-                            });
-                          },
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              GestureDetector(
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    imgTop.isNotEmpty 
-                                      ? Image.network(
-                                          imgTop,
-                                          width: 60,
-                                          height: 65,
-                                          fit: BoxFit.cover,
-                                        )
-                                      : Container(
-                                          width: 60,
-                                          height: 65,
-                                          color: greyColor,
-                                          child: Center(child: Text("ImgTop")),
-                                        ),
-                                    const SizedBox(width: 10),
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          SizedBox(
-                                            width: 200,
-                                            child: Text(
-                                              nameTop,
-                                              style: TextStyle(fontSize: 16, fontFamily: medium, color: blackColor),
-                                              maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                          ),
-                                          SizedBox(height: 2),
-                                          Text("${NumberFormat('#,##0').format(priceTop)} Bath", style: TextStyle(fontSize: 14, fontFamily: regular, color: greyColor)),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                        onTap: () {
+                          print('Navigating to ItemsDetails with data: $doc');
+                          Get.to(() => ItemsDetails(data: doc));
+                        },
+                        leading: doc['imgs'] != null && doc['imgs'].isNotEmpty
+                            ? Image.network(
+                                doc['imgs'][0],
+                                width: 50,
+                                height: 50,
+                                fit: BoxFit.cover,
+                              )
+                            : Image.asset(
+                                'assets/images/placeholder.png',
+                                width: 50,
+                                height: 50,
+                                fit: BoxFit.cover,
                               ),
-                              SizedBox(height: 10),
-                              GestureDetector(
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    imgLower.isNotEmpty 
+                        title: Text(
+                          doc['name'],
+                          style: TextStyle(
+                            color: blackColor,
+                            fontSize: 16,
+                            fontFamily: medium,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        ),
+                        subtitle: Text(
+                          "${NumberFormat('#,##0').format(double.tryParse(doc['price'])?.toInt() ?? 0)} Bath",
+                          style: TextStyle(
+                            color: greyColor,
+                            fontSize: 14,
+                            fontFamily: medium,
+                          ),
+                        ),
+                        trailing: PopupMenuButton<String>(
+                          icon: Icon(
+                            Icons.more_vert,
+                            color: greyColor,
+                          ),
+                          onSelected: (String value) {
+                            if (value == 'edit') {
+                              print(
+                                  'Navigating to EditProduct with data: $doc');
+                              Get.to(() => EditProduct(
+                                  productData: doc, documentId: documentId));
+                            } else if (value == 'delete') {
+                              controller.removeProduct(documentId);
+                            }
+                          },
+                          itemBuilder: (BuildContext context) =>
+                              <PopupMenuEntry<String>>[
+                            const PopupMenuItem<String>(
+                                value: 'edit', child: Text('Edit')),
+                            const PopupMenuItem<String>(
+                                value: 'delete', child: Text('Delete')),
+                          ],
+                        ),
+                      ),
+                      Divider(
+                        color: greyLine,
+                      ).paddingSymmetric(horizontal: 14),
+                    ],
+                  );
+                },
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Widget buildMatchesTab(BuildContext context) {
+    final String currentUserUID = FirebaseAuth.instance.currentUser!.uid;
+
+    return StreamBuilder<QuerySnapshot>(
+      stream: FirebaseFirestore.instance
+          .collection('storemixandmatchs')
+          .where('vendor_id', isEqualTo: currentUserUID)
+          .snapshots(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return Center(child: CircularProgressIndicator());
+        }
+        final documents = snapshot.data!.docs;
+        return ListView.builder(
+          itemCount: documents.length + 1,
+          itemBuilder: (context, index) {
+            if (index == 0) {
+              return ListTile(
+                leading: const Icon(
+                  Icons.add,
+                  color: blackColor,
+                  size: 28,
+                ),
+                title: const Text(
+                  'Add new match',
+                  style: TextStyle(color: blackColor),
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => AddMatchProduct()),
+                  );
+                },
+              );
+            }
+
+            var document = documents[index - 1];
+            String productIdTop = document['product_id_top'];
+            String productIdLower = document['product_id_lower'];
+
+            return Column(
+              children: [
+                FutureBuilder(
+                  future: Future.wait([
+                    FirebaseFirestore.instance
+                        .collection('products')
+                        .doc(productIdTop)
+                        .get(),
+                    FirebaseFirestore.instance
+                        .collection('products')
+                        .doc(productIdLower)
+                        .get(),
+                  ]),
+                  builder: (context,
+                      AsyncSnapshot<List<DocumentSnapshot>> productSnapshot) {
+                    if (!productSnapshot.hasData) {
+                      return ListTile(
+                        title: Text('Loading product details...'),
+                      );
+                    }
+
+                    var topProductData =
+                        productSnapshot.data![0].data() as Map<String, dynamic>;
+                    var lowerProductData =
+                        productSnapshot.data![1].data() as Map<String, dynamic>;
+
+                    return Stack(
+                      children: [
+                        ListTile(
+                          title: Column(
+                            children: [
+                              Row(
+                                children: [
+                                  topProductData['imgs'] != null &&
+                                          topProductData['imgs'].isNotEmpty
                                       ? Image.network(
-                                          imgLower,
-                                          width: 60,
-                                          height: 65,
+                                          topProductData['imgs'][0],
+                                          width: 65,
+                                          height: 70,
                                           fit: BoxFit.cover,
                                         )
-                                      : Container(
-                                          width: 60,
-                                          height: 65,
-                                          color: greyColor,
-                                          child: Center(child: Text("ImgLower")),
-                                        ),
-                                    const SizedBox(width: 10),
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          SizedBox(
-                                            width: 200,
-                                            child: Text(
-                                              nameLower,
-                                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-                                              maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                          ),
-                                          SizedBox(height: 2),
-                                          Text("${NumberFormat('#,##0').format(priceLower)} Bath", style: TextStyle(fontWeight: FontWeight.w300)),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                                      : loadingIndicator(),
+                                  15.widthBox,
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(topProductData['name']).text.fontFamily(medium).size(16).make(),
+                                      "${NumberFormat('#,##0').format(double.parse(topProductData['price']).toInt())} Bath".text.fontFamily(medium).size(14).color(greyColor).make()
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              5.heightBox,
+                              Row(
+                                children: [
+                                  lowerProductData['imgs'] != null &&
+                                          lowerProductData['imgs'].isNotEmpty
+                                      ? Image.network(
+                                          lowerProductData['imgs'][0],
+                                          width: 65,
+                                          height: 70,
+                                          fit: BoxFit.cover,
+                                        )
+                                      : loadingIndicator(),
+                                  15.widthBox,
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(lowerProductData['name']).text.fontFamily(medium).size(16).make(),
+                                      "${NumberFormat('#,##0').format(double.parse(lowerProductData['price']).toInt())} Bath".text.fontFamily(medium).size(14).color(greyColor).make()
+                                    ],
+                                  ),
+                                ],
                               ),
                             ],
                           ),
+                        
+                          onTap: () {
+                            Get.to(
+                              () => MatchDetailsScreen(),
+                              arguments: {
+                                'topProduct': {
+                                  'product_id': document['product_id_top'],
+                                  'img': topProductData['imgs']?.first ?? '',
+                                  'name': topProductData['name'] ?? '',
+                                  'price': topProductData['price'] ?? 0,
+                                },
+                                'lowerProduct': {
+                                  'product_id': document['product_id_lower'],
+                                  'img': lowerProductData['imgs']?.first ?? '',
+                                  'name': lowerProductData['name'] ?? '',
+                                  'price': lowerProductData['price'] ?? 0,
+                                },
+                                'description': document['description'] ?? '',
+                                'sex': document['gender'] ?? '',
+                                'collection': document['collection'] ?? '',
+                              },
+                            );
+                          },
                         ),
-                      ),
-                      Divider(color: greyLine), // เส้นกั้นระหว่างแต่ละ ListTile
-                    ],
-                  ),
-                  Positioned(
-                    right: 0,
-                    top: 0,
-                    child: PopupMenuButton<String>(
-                      icon: Icon(
-                        Icons.more_vert,
-                        color: greyColor,
-                      ),
-                      onSelected: (String result) async {
-                        if (result == 'edit') {
-                          // ส่งข้อมูลไปหน้า EditMatchProduct เพื่อแก้ไขข้อมูล
-                          Get.to(() => EditMatchProduct(), arguments: {
-                            'document': document,
-                            'ItemsDetails': ItemsDetails,
-                          });
-                        } else if (result == 'delete') {
-                          // ลบเอกสารจาก Firestore
-                          await FirebaseFirestore.instance.collection('storemixandmatchs').doc(document.id).delete();
-                        }
-                      },
-                      itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-                        const PopupMenuItem<String>(
-                          value: 'edit',
-                          child: Text('Edit'),
-                        ),
-                        const PopupMenuItem<String>(
-                          value: 'delete',
-                          child: Text('Delete'),
+                        Positioned(
+                          right: 0,
+                          top: 0,
+                          child: PopupMenuButton<String>(
+                            icon: Icon(
+                              Icons.more_vert,
+                              color: greyColor,
+                            ),
+                            onSelected: (String value) {
+                              if (value == 'edit') {
+                                Get.to(() => EditMatchProduct(), arguments: {
+                                  'document': document,
+                                  'ItemsDetails': {
+                                    'topProduct': topProductData,
+                                    'lowerProduct': lowerProductData,
+                                  }
+                                });
+                              } else if (value == 'delete') {
+                                controller.removeMatch(document.id);
+                              }
+                            },
+                            itemBuilder: (BuildContext context) =>
+                                <PopupMenuEntry<String>>[
+                              const PopupMenuItem<String>(
+                                  value: 'edit', child: Text('Edit')),
+                              const PopupMenuItem<String>(
+                                  value: 'delete', child: Text('Delete')),
+                            ],
+                          ),
                         ),
                       ],
-                    ),
-                  ),
-                ],
-              );
-            },
-          );
-        },
-      );
-    },
-  );
+                    );
+                  },
+                ),
+                Divider(
+                  color: greyLine,
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
   }
 }
+
+
 //  Widget buildMatchesTab(BuildContext context) {
 //     return StreamBuilder<QuerySnapshot>(
 //       stream: FirebaseFirestore.instance
@@ -499,7 +451,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
 //                         children: [
 //                           Image.network(
 //                             productImage1,
-//                             width: 60,
+//                             width: 65,
 //                             height: 70,
 //                             fit: BoxFit.cover,
 //                           ),
@@ -517,33 +469,33 @@ class _ProductsScreenState extends State<ProductsScreen> {
 //                               ],
 //                             ),
 //                           ),
-//                           PopupMenuButton<String>(
-//                             icon: Icon(
-//                               Icons.more_vert,
-//                               color: greyColor ,
-//                             ),
-//                             onSelected: (String value) {
-//                               if (value == 'edit') {
-                                // Navigator.push(
-                                //   context,
-                                //   MaterialPageRoute(
-                                //       builder: (context) => EditMatchProduct(
-                                //           product1: product1,
-                                //           product2: product2)),
-                                // );
-//                               } else if (value == 'delete') {
-//                                 controller.resetMixMatchData(pair.value[0].id);
-//                                 controller.resetMixMatchData(pair.value[1].id);
-//                               }
-//                             },
-//                             itemBuilder: (BuildContext context) =>
-//                                 <PopupMenuEntry<String>>[
-//                               const PopupMenuItem<String>(
-//                                   value: 'edit', child: Text('Edit')),
-//                               const PopupMenuItem<String>(
-//                                   value: 'delete', child: Text('Delete')),
-//                             ],
-//                           ),
+                          // PopupMenuButton<String>(
+                          //   icon: Icon(
+                          //     Icons.more_vert,
+                          //     color: greyColor ,
+                          //   ),
+                          //   onSelected: (String value) {
+                          //     if (value == 'edit') {
+                          //       Navigator.push(
+                          //         context,
+                          //         MaterialPageRoute(
+                          //             builder: (context) => EditMatchProduct(
+                          //                 product1: product1,
+                          //                 product2: product2)),
+                          //       );
+                          //     } else if (value == 'delete') {
+                          //       controller.resetMixMatchData(pair.value[0].id);
+                          //       controller.resetMixMatchData(pair.value[1].id);
+                          //     }
+                          //   },
+                          //   itemBuilder: (BuildContext context) =>
+                          //       <PopupMenuEntry<String>>[
+                          //     const PopupMenuItem<String>(
+                          //         value: 'edit', child: Text('Edit')),
+                          //     const PopupMenuItem<String>(
+                          //         value: 'delete', child: Text('Delete')),
+                          //   ],
+                          // ),
 //                         ],
 //                       ),
 //                       5.heightBox,
@@ -551,7 +503,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
 //                         children: [
 //                           Image.network(
 //                             productImage2,
-//                             width: 60,
+//                             width: 65,
 //                             height: 70,
 //                             fit: BoxFit.cover,
 //                           ),
