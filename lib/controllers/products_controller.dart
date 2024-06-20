@@ -226,6 +226,7 @@ class ProductsController extends GetxController {
         'name': pnameController.text,
         'imgs': FieldValue.arrayUnion(pImagesLinks),
         'favorite_uid': FieldValue.arrayUnion([]),
+        'favorite_count': 0,
         'description': pdescController.text,
         'aboutProduct': pabproductController.text,
         'collection': selectedCollection,
