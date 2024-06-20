@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:seller_finalproject/const/const.dart';
 import 'package:seller_finalproject/const/styles.dart';
 import 'package:seller_finalproject/controllers/match_controller.dart';
-import 'package:seller_finalproject/views/products_screen/products_screen.dart';
 
 class AddMatchProduct extends StatefulWidget {
   @override
@@ -20,6 +19,7 @@ class _AddMatchProductState extends State<AddMatchProduct> {
   @override
   void initState() {
     super.initState();
+    controller.explainController.clear();
   }
 
   @override
@@ -34,18 +34,18 @@ class _AddMatchProductState extends State<AddMatchProduct> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Match Product').text.size(24).fontFamily(medium).make(),
+        title:
+            const Text('Match Product').text.size(24).fontFamily(medium).make(),
         actions: <Widget>[
           TextButton(
             onPressed: () async {
-              // Retrieve necessary parameters
               String productNameTop = controller.selectedTopProduct?.name ?? '';
-              String productNameLower = controller.selectedLowerProduct?.name ?? '';
+              String productNameLower =
+                  controller.selectedLowerProduct?.name ?? '';
               String selectedGender = controller.selectedGender.value;
               List<String> selectedCollections = controller.selectedCollections;
               String explanation = controller.explainController.text;
 
-              // Call the onSaveButtonPressed method
               await onSaveButtonPressed(
                 productNameTop,
                 productNameLower,
@@ -55,9 +55,11 @@ class _AddMatchProductState extends State<AddMatchProduct> {
                 explanation,
               );
 
-              Get.to(() => ProductsScreen());
+              Navigator.pop(context);
             },
-            child: const Text('Save', style: TextStyle(color: primaryApp, fontSize: 14, fontFamily: medium)),
+            child: const Text('Save',
+                style: TextStyle(
+                    color: primaryApp, fontSize: 14, fontFamily: medium)),
           ),
         ],
       ),
@@ -71,7 +73,8 @@ class _AddMatchProductState extends State<AddMatchProduct> {
                   return const Center(child: CircularProgressIndicator());
                 } else if (snapshot.hasError) {
                   return Center(child: Text('Error: ${snapshot.error}'));
-                } else if (snapshot.data?.value != null && snapshot.data!.value!.isNotEmpty) {
+                } else if (snapshot.data?.value != null &&
+                    snapshot.data!.value!.isNotEmpty) {
                   return SizedBox(
                     width: 390,
                     height: 200,
@@ -80,7 +83,8 @@ class _AddMatchProductState extends State<AddMatchProduct> {
                       viewportFraction: 0.6,
                       onPageChanged: (index) {
                         _currentTopIndex = index;
-                        controller.onTopProductSelected(snapshot.data!.value![index]);
+                        controller
+                            .onTopProductSelected(snapshot.data!.value![index]);
                       },
                       itemBuilder: (context, index) {
                         Product product = snapshot.data!.value![index];
@@ -89,7 +93,12 @@ class _AddMatchProductState extends State<AddMatchProduct> {
                             product.imageUrls[0],
                             fit: BoxFit.cover,
                           ).box.roundedSM.clip(Clip.antiAlias).make(),
-                        ).box.white.margin(const EdgeInsets.symmetric(horizontal: 6, vertical: 2)).make();
+                        )
+                            .box
+                            .white
+                            .margin(const EdgeInsets.symmetric(
+                                horizontal: 6, vertical: 2))
+                            .make();
                       },
                     ),
                   );
@@ -106,7 +115,8 @@ class _AddMatchProductState extends State<AddMatchProduct> {
                   return const Center(child: CircularProgressIndicator());
                 } else if (snapshot.hasError) {
                   return Center(child: Text('Error: ${snapshot.error}'));
-                } else if (snapshot.data?.value != null && snapshot.data!.value!.isNotEmpty) {
+                } else if (snapshot.data?.value != null &&
+                    snapshot.data!.value!.isNotEmpty) {
                   return SizedBox(
                     width: 390,
                     height: 200,
@@ -115,7 +125,8 @@ class _AddMatchProductState extends State<AddMatchProduct> {
                       viewportFraction: 0.6,
                       onPageChanged: (index) {
                         _currentLowerIndex = index;
-                        controller.onLowerProductSelected(snapshot.data!.value![index]);
+                        controller.onLowerProductSelected(
+                            snapshot.data!.value![index]);
                       },
                       itemBuilder: (context, index) {
                         Product product = snapshot.data!.value![index];
@@ -124,7 +135,12 @@ class _AddMatchProductState extends State<AddMatchProduct> {
                             product.imageUrls[0],
                             fit: BoxFit.cover,
                           ).box.roundedSM.clip(Clip.antiAlias).make(),
-                        ).box.white.margin(const EdgeInsets.symmetric(horizontal: 6, vertical: 2)).make();
+                        )
+                            .box
+                            .white
+                            .margin(const EdgeInsets.symmetric(
+                                horizontal: 6, vertical: 2))
+                            .make();
                       },
                     ),
                   );
@@ -161,8 +177,10 @@ class _AddMatchProductState extends State<AddMatchProduct> {
                                   child: Text(
                                     capitalize(gender),
                                     style: TextStyle(
-                                      color: isSelected ? primaryApp : greyColor,
-                                      fontFamily: isSelected ? semiBold : regular,
+                                      color:
+                                          isSelected ? primaryApp : greyColor,
+                                      fontFamily:
+                                          isSelected ? semiBold : regular,
                                     ),
                                   ).text.size(14).make(),
                                 ),
@@ -175,7 +193,8 @@ class _AddMatchProductState extends State<AddMatchProduct> {
                                 selectedColor: thinPrimaryApp,
                                 backgroundColor: whiteColor,
                                 side: isSelected
-                                    ? const BorderSide(color: primaryApp, width: 2)
+                                    ? const BorderSide(
+                                        color: primaryApp, width: 2)
                                     : const BorderSide(color: greyLine),
                               ),
                             );
@@ -195,7 +214,8 @@ class _AddMatchProductState extends State<AddMatchProduct> {
                           spacing: 6,
                           runSpacing: 1,
                           children: controller.collectionList.map((collection) {
-                            bool isSelected = controller.isCollectionSelected(collection);
+                            bool isSelected =
+                                controller.isCollectionSelected(collection);
                             return ChoiceChip(
                               showCheckmark: false,
                               label: Container(
@@ -216,8 +236,10 @@ class _AddMatchProductState extends State<AddMatchProduct> {
                               selectedColor: thinPrimaryApp,
                               backgroundColor: whiteColor,
                               side: isSelected
-                                  ? const BorderSide(color: primaryApp, width: 2)
-                                  : const BorderSide(color: greyLine, width: 1.3),
+                                  ? const BorderSide(
+                                      color: primaryApp, width: 2)
+                                  : const BorderSide(
+                                      color: greyLine, width: 1.3),
                             );
                           }).toList(),
                         )),
@@ -268,12 +290,12 @@ class _AddMatchProductState extends State<AddMatchProduct> {
   }
 
   Future<void> onSaveButtonPressed(
-    String productNameTop,
-    String productNameLower,
-    BuildContext context,
-    String selectedGender,
-    List<String> selectedCollections,
-    String explanation) async {
+      String productNameTop,
+      String productNameLower,
+      BuildContext context,
+      String selectedGender,
+      List<String> selectedCollections,
+      String explanation) async {
     List<String> productNames = [productNameTop, productNameLower];
     String currentUserUID = FirebaseAuth.instance.currentUser?.uid ?? '';
 
@@ -283,7 +305,6 @@ class _AddMatchProductState extends State<AddMatchProduct> {
       return;
     }
 
-    // Retrieve user details
     FirebaseFirestore.instance
         .collection(vendorsCollection)
         .doc(currentUserUID)
@@ -293,10 +314,6 @@ class _AddMatchProductState extends State<AddMatchProduct> {
         String userName = userDoc['name'] ?? '';
         String userImg = userDoc['imageUrl'] ?? '';
 
-        print('User Name: $userName');
-        print('User Image: $userImg');
-
-        // Retrieve product details
         FirebaseFirestore.instance
             .collection(productsCollection)
             .where('name', whereIn: productNames)
@@ -327,22 +344,22 @@ class _AddMatchProductState extends State<AddMatchProduct> {
               }
             });
 
-            if (userData.containsKey('product_id_top') && userData.containsKey('product_id_lower')) {
-              // Check if both product IDs were added
+            if (userData.containsKey('product_id_top') &&
+                userData.containsKey('product_id_lower')) {
               FirebaseFirestore.instance
                   .collection('storemixandmatchs')
                   .add(userData)
                   .then((documentReference) {
                 VxToast.show(context, msg: "Added post successful.");
-                print('Data added in storemixandmatchs collection with document ID: ${documentReference.id}');
-                
-                // Clear the fields
+                print(
+                    'Data added in storemixandmatchs collection with document ID: ${documentReference.id}');
+
                 controller.resetController();
-                
-                // Navigate back to the previous screen
+
                 Navigator.pop(context);
               }).catchError((error) {
-                print('Error adding data in storemixandmatchs collection: $error');
+                print(
+                    'Error adding data in storemixandmatchs collection: $error');
                 VxToast.show(context, msg: "Error post.");
               });
             } else {
