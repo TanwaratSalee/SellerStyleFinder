@@ -27,8 +27,8 @@ class HomeScreen extends StatelessWidget {
             var productsData = productSnapshot.data!.docs;
 
             // Sort productsData by wishlist length in descending order
-            productsData.sort(
-                (a, b) => b['favorite'].length.compareTo(a['favorite'].length));
+            productsData.sort((a, b) =>
+                b['favorite'].length.compareTo(a['favorite'].length));
 
             return StreamBuilder(
               stream: StoreServices.getOrders(currentUser!.uid),
@@ -93,7 +93,7 @@ class HomeScreen extends StatelessWidget {
                                 ? 10
                                 : productsData.length,
                             itemBuilder: (context, index) {
-                              if (productsData[index]['favorite'].isEmpty) {
+                              if (productsData[index]['favorite_uid'].isEmpty) {
                                 return const SizedBox.shrink();
                               }
                               return Column(
