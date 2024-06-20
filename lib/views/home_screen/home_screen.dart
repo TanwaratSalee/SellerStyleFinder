@@ -27,8 +27,8 @@ class HomeScreen extends StatelessWidget {
             var productsData = productSnapshot.data!.docs;
 
             // Sort productsData by wishlist length in descending order
-            productsData.sort((a, b) =>
-                b['favorite'].length.compareTo(a['favorite'].length));
+            productsData.sort(
+                (a, b) => b['favorite'].length.compareTo(a['favorite'].length));
 
             return StreamBuilder(
               stream: StoreServices.getOrders(currentUser!.uid),
@@ -115,14 +115,13 @@ class HomeScreen extends StatelessWidget {
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) =>
-                                                ItemsDetails(
-                                                    data: productData),
+                                                ItemsDetails(data: productData),
                                           ),
                                         );
                                       } else {
                                         // Handle product not found
-                                        Get.snackbar('Error',
-                                            'Product not found',
+                                        Get.snackbar(
+                                            'Error', 'Product not found',
                                             snackPosition:
                                                 SnackPosition.BOTTOM);
                                       }
@@ -155,8 +154,7 @@ class HomeScreen extends StatelessWidget {
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
-                                              Text(productsData[index]
-                                                      ['name'])
+                                              Text(productsData[index]['name'])
                                                   .text
                                                   .size(16)
                                                   .fontFamily(medium)
