@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:intl/intl.dart';
 import 'package:seller_finalproject/const/styles.dart';
+import 'package:seller_finalproject/controllers/loading_Indcator.dart';
 import 'package:seller_finalproject/controllers/orders_controller.dart';
 import 'package:seller_finalproject/controllers/profile_controller.dart';
 import 'package:seller_finalproject/views/widgets/our_button.dart';
@@ -304,6 +306,55 @@ class _OrderDetailsState extends State<OrderDetails> {
                     ],
                   ),
                   15.heightBox,
+                  GestureDetector(
+                    onTap: () async {
+                      //ไปหน้า chat
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Row(
+                          children: [
+                            Image.asset(
+                              icMessage,
+                              width: 25,
+                            ),
+                            SizedBox(width: 15),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Chat with purchaser',
+                                  style: TextStyle(
+                                      color: blackColor,
+                                      fontFamily: medium,
+                                      fontSize: 16),
+                                ),
+                                Text(
+                                  'Product, pre-shipping issues, and other questions',
+                                  style: TextStyle(
+                                      color: greyDark,
+                                      fontFamily: regular,
+                                      fontSize: 12),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        Image.asset(
+                          icSeeAll,
+                          width: 12,
+                        ),
+                      ],
+                    ),
+                  )
+                      .box
+                      .color(whiteColor)
+                      .padding(EdgeInsets.fromLTRB(6, 10, 6, 10))
+                      .roundedSM
+                      .border(color: greyLine)
+                      .make(),
+                  15.heightBox,
                   Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -335,7 +386,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                               builder: (context, snapshot) {
                                 if (snapshot.connectionState ==
                                     ConnectionState.waiting) {
-                                  return CircularProgressIndicator();
+                                  return loadingIndicator();
                                 }
                                 if (!snapshot.hasData ||
                                     snapshot.data == null) {
