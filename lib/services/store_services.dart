@@ -12,7 +12,7 @@ class StoreServices {
   static Stream<QuerySnapshot> getMessages(String uid) {
     return firestore
         .collection(chatsCollection)
-        .where('toId', isEqualTo: uid)
+        .where('vendor_id', isEqualTo: uid)
         .snapshots();
   }
 

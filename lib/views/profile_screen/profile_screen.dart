@@ -135,7 +135,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 const Icon(Icons.arrow_forward_ios, size: 18),
                             onTap: () {
                               Get.to(() => MessagesScreen(
-                                  vendorName:
+                                  userName:
                                       controller.snapshotData['name']));
                             },
                           ),

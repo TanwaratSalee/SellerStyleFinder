@@ -3,30 +3,54 @@ import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:seller_finalproject/const/const.dart';
+import 'package:seller_finalproject/const/styles.dart';
 import 'package:seller_finalproject/controllers/chat_controller.dart';
+import 'package:seller_finalproject/controllers/loading_Indcator.dart';
 import 'package:seller_finalproject/views/messages_screen/components/chat_bubble.dart';
 
 class ChatScreen extends StatelessWidget {
-  final String vendorName;
-  final String chatDocId; // Add the chatDocId parameter
-  final String friendId; // Add the friendId parameter
-  final String sellerId; // Add the sellerId parameter
+  final String userName;
+  final String chatDocId; 
+  final String friendId; 
+  final String sellerId; 
+  final String userImageUrl; 
 
   const ChatScreen({
     Key? key,
-    required this.vendorName,
+    required this.userName,
     required this.chatDocId,
     required this.friendId,
     required this.sellerId,
+    required this.userImageUrl,
+    
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     var controller = Get.put(ChatsController());
+    FocusNode focusNode = FocusNode();
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(vendorName),
+        title: Row(
+            children: [
+              CircleAvatar(
+                            radius: 20,
+                            backgroundColor: primaryApp,
+                            backgroundImage: userImageUrl.isNotEmpty
+                                ? NetworkImage(userImageUrl)
+                                : null,),
+              SizedBox(width: 15),
+              Text(
+                userName,
+                style: TextStyle(
+                  fontSize: 18,
+                  fontFamily: medium,
+                  color: blackColor,
+                ),
+              ),
+            ],
+          ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8),
@@ -43,7 +67,7 @@ class ChatScreen extends StatelessWidget {
                 if (!snapshot.hasData) {
                   return Center(child: CircularProgressIndicator());
                 } else if (snapshot.data!.docs.isEmpty) {
-                  return Center(child: Text('No messages with $vendorName'));
+                  return Center(child: Text('No messages with $userName'));
                 } else {
                   var messages = snapshot.data!.docs;
                   return ListView.builder(
@@ -65,13 +89,18 @@ class ChatScreen extends StatelessWidget {
                 Expanded(
                   child: TextFormField(
                     controller: controller.msgController,
-                    decoration: const InputDecoration(
-                      isDense: true,
-                      hintText: "Enter message",
-                      border: OutlineInputBorder(
-                          borderSide: BorderSide(color: primaryApp)),
+                    focusNode: focusNode,
+                    decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(50),
+                        borderSide: BorderSide(color: greyLine),
+                      ),
                       focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: primaryApp)),
+                        borderRadius: BorderRadius.circular(50),
+                        borderSide: BorderSide(color: greyColor),
+                      ),
+                      hintText: "Type a message...",
+                      contentPadding: EdgeInsets.symmetric(horizontal: 20),
                     ),
                   ),
                 ),
@@ -82,7 +111,7 @@ class ChatScreen extends StatelessWidget {
                       chatDocId,
                       friendId,
                       sellerId,
-                      vendorName,
+                      userName,
                     );
                     controller.msgController.clear();
                   },

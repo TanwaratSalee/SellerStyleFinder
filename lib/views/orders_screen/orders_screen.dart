@@ -575,7 +575,7 @@ class _OrdersScreenState extends State<OrdersScreen>
                 Text("${qty}x",
                     style: const TextStyle(fontSize: 14, fontFamily: regular)),
                 const SizedBox(width: 5),
-                Image.network(img, width: 65, height: 70, fit: BoxFit.cover),
+                Image.network(img, width: 55, height: 60, fit: BoxFit.cover),
                 const SizedBox(width: 10),
                 Expanded(
                   child: Column(
