@@ -94,12 +94,19 @@ class MessagesScreen extends StatelessWidget {
                             style: TextStyle(color: greyDark),
                             overflow: TextOverflow.ellipsis,
                             maxLines: 1,
-                          ).text.fontFamily(regular).size(14).color(greyColor).make(),
+                          )
+                              .text
+                              .fontFamily(regular)
+                              .size(14)
+                              .color(greyColor)
+                              .make(),
                           trailing: Text(time),
                         );
                       } else {
-                        var userName = vendorSnapshot.data!['name'] ?? 'Unknown Vendor';
-                        var userImageUrl = vendorSnapshot.data!['imageUrl'] ?? '';
+                        var userName =
+                            vendorSnapshot.data!['name'] ?? 'Unknown Vendor';
+                        var userImageUrl =
+                            vendorSnapshot.data!['imageUrl'] ?? '';
 
                         return ListTile(
                           onTap: () {
@@ -134,7 +141,12 @@ class MessagesScreen extends StatelessWidget {
                               style: TextStyle(color: greyDark),
                               overflow: TextOverflow.ellipsis,
                               maxLines: 1,
-                            ).text.fontFamily(regular).size(14).color(greyColor).make(),
+                            )
+                                .text
+                                .fontFamily(regular)
+                                .size(14)
+                                .color(greyColor)
+                                .make(),
                           ),
                           trailing: Text(time),
                         );
@@ -143,6 +155,7 @@ class MessagesScreen extends StatelessWidget {
                   );
                 },
               ),
+              // Divider(color: greyLine,)
             );
           }
         },
