@@ -1,7 +1,7 @@
-#Fri Jun 21 01:44:07 ICT 2024
-base.0=C\:\\Users\\User\\Documents\\new_seller_app2\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
-base.1=C\:\\Users\\User\\Documents\\new_seller_app2\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes2.dex
-base.2=C\:\\Users\\User\\Documents\\new_seller_app2\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes3.dex
+#Sun Jun 23 16:17:13 ICT 2024
+base.0=C\:\\Users\\P\\Documents\\new_seller_app\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
+base.1=C\:\\Users\\P\\Documents\\new_seller_app\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes2.dex
+base.2=C\:\\Users\\P\\Documents\\new_seller_app\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes3.dex
 path.0=classes.dex
 path.1=classes2.dex
 path.2=classes3.dex

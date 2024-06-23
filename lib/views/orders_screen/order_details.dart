@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -14,6 +15,22 @@ import 'package:intl/intl.dart' as intl;
 class OrderDetails extends StatefulWidget {
   final dynamic data;
   const OrderDetails({super.key, this.data});
+
+  @override
+  State<OrderDetails> createState() => _OrderDetailsState();
+}
+
+class _OrderDetailsState extends State<OrderDetails> {
+  var controller = Get.find<OrdersController>();
+
+  @override
+  void initState() {
+    super.initState();
+    controller.getOrders(widget.data);
+    controller.confirmed.value = widget.data['order_confirmed'];
+    controller.ondelivery.value = widget.data['order_on_delivery'];
+    controller.delivered.value = widget.data['order_delivered'];
+  }
 
   String formatPhoneNumber(String phone) {
     String cleaned = phone.replaceAll(RegExp(r'\D'), '');
@@ -32,20 +49,53 @@ class OrderDetails extends StatefulWidget {
     return phone;
   }
 
-  @override
-  State<OrderDetails> createState() => _OrderDetailsState();
-}
+  Future<Map<String, dynamic>> getProductDetails(String productId) async {
+    if (productId.isEmpty) {
+      debugPrint('Error: productId is empty.');
+      return {
+        'name': 'Unknown Product',
+        'id': productId,
+        'imageUrl': '',
+        'price': 0.0
+      };
+    }
 
-class _OrderDetailsState extends State<OrderDetails> {
-  var controller = Get.find<OrdersController>();
-
-  @override
-  void initState() {
-    super.initState();
-    controller.getOrders(widget.data);
-    controller.confirmed.value = widget.data['order_confirmed'];
-    controller.ondelivery.value = widget.data['order_on_delivery'];
-    controller.delivered.value = widget.data['order_delivered'];
+    try {
+      var productSnapshot = await FirebaseFirestore.instance
+          .collection('products')
+          .doc(productId)
+          .get();
+      if (productSnapshot.exists) {
+        debugPrint('Document ID: ${productSnapshot.id}');
+        var productData = productSnapshot.data() as Map<String, dynamic>?;
+        return {
+          'name': productData?['name'] ?? 'Unknown Product',
+          'id': productId,
+          'imageUrl':
+              (productData?['imgs'] != null && productData!['imgs'].isNotEmpty)
+                  ? productData['imgs'][0]
+                  : '',
+          'price': productData != null && productData['price'] != null
+              ? double.parse(productData['price'].toString())
+              : 0.0,
+        };
+      } else {
+        return {
+          'name': 'Unknown Product',
+          'id': productId,
+          'imageUrl': '',
+          'price': 0.0
+        };
+      }
+    } catch (e) {
+      debugPrint('Error getting product details: $e');
+      return {
+        'name': 'Unknown Product',
+        'id': productId,
+        'imageUrl': '',
+        'price': 0.0
+      };
+    }
   }
 
   @override
@@ -179,7 +229,12 @@ class _OrderDetailsState extends State<OrderDetails> {
                               Icon(Icons.location_on_outlined),
                               20.widthBox,
                               Text(
-                                  "${widget.data['order_by_firstname']} ${widget.data['order_by_surname']},\n${widget.data['order_by_address']},\n${widget.data['order_by_city']}, ${widget.data['order_by_state']},${widget.data['order_by_postalcode']}\n${(widget.data['order_by_phone'])}"),
+                                  "${widget.data['address']['order_by_firstname'] ?? ''} ${widget.data['address']['order_by_surname'] ?? ''},\n"
+                                  "${widget.data['address']['order_by_address'] ?? ''},\n"
+                                  "${widget.data['address']['order_by_city'] ?? ''}, "
+                                  "${widget.data['address']['order_by_state'] ?? ''}, "
+                                  "${widget.data['address']['order_by_postalcode'] ?? ''}\n"
+                                  "${formatPhoneNumber(widget.data['address']['order_by_phone'] ?? '')}"),
                             ],
                           ),
                         ],
@@ -206,7 +261,8 @@ class _OrderDetailsState extends State<OrderDetails> {
                                         .black
                                         .fontFamily(semiBold)
                                         .make(),
-                                    Text(widget.data['order_code'])
+                                    Text(widget.data['order_id'] ??
+                                        'N/A') // เพิ่ม default value
                                   ],
                                 ),
                                 5.heightBox,
@@ -218,8 +274,11 @@ class _OrderDetailsState extends State<OrderDetails> {
                                         .black
                                         .fontFamily(semiBold)
                                         .make(),
-                                    Text(intl.DateFormat().add_yMd().format(
-                                        (widget.data['order_date'].toDate())))
+                                    Text(widget.data['created_at'] != null
+                                        ? intl.DateFormat().add_yMd().format(
+                                            (widget.data['created_at']
+                                                .toDate()))
+                                        : 'N/A') // เพิ่ม default value
                                   ],
                                 ),
                                 5.heightBox,
@@ -231,7 +290,8 @@ class _OrderDetailsState extends State<OrderDetails> {
                                         .black
                                         .fontFamily(semiBold)
                                         .make(),
-                                    Text(widget.data['shipping_method'])
+                                    Text(widget.data['payment_method'] ??
+                                        'N/A') // เพิ่ม default value
                                   ],
                                 ),
                               ],
@@ -253,7 +313,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                           children: [
                             Image.asset(iconsStore, width: 20),
                             10.widthBox,
-                            const Text("Order List")
+                            const Text("Order Lists")
                                 .text
                                 .size(16)
                                 .fontFamily(semiBold)
@@ -270,56 +330,74 @@ class _OrderDetailsState extends State<OrderDetails> {
                           shrinkWrap: true,
                           itemCount: controller.orders.length,
                           itemBuilder: (context, index) {
-                            return Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text("${controller.orders[index]['qty']}x",
-                                    style: const TextStyle(
-                                        fontSize: 14, fontFamily: regular)),
-                                const SizedBox(width: 5),
-                                Image.network(
-                                  controller.orders[index]['img'],
-                                  width: 70,
-                                  height: 70,
-                                  fit: BoxFit.cover,
-                                ).box.color(whiteOpacity).make(),
-                                const SizedBox(width: 10),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                            var productId =
+                                controller.orders[index]['product_id'];
+                            return FutureBuilder<Map<String, dynamic>>(
+                              future: getProductDetails(productId),
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return CircularProgressIndicator();
+                                }
+                                if (!snapshot.hasData ||
+                                    snapshot.data == null) {
+                                  return Text('Error loading product details');
+                                }
+
+                                var productDetails = snapshot.data!;
+                                return Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    SizedBox(
-                                      width: 180,
-                                      child: Text(
-                                        controller.orders[index]['title'],
+                                    Text("${controller.orders[index]['qty']}x",
                                         style: const TextStyle(
-                                            fontSize: 14, fontFamily: medium),
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                    ),
-                                    Text(
-                                      "${NumberFormat('#,##0').format(double.parse(controller.orders[index]['price'].toString()))} Bath",
-                                      style: const TextStyle(
-                                          fontSize: 14,
-                                          fontFamily: regular,
-                                          color: greyColor),
+                                            fontSize: 14, fontFamily: regular)),
+                                    const SizedBox(width: 5),
+                                    Image.network(
+                                      productDetails['imageUrl'],
+                                      width: 70,
+                                      height: 70,
+                                      fit: BoxFit.cover,
+                                    ).box.color(whiteOpacity).make(),
+                                    const SizedBox(width: 10),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        SizedBox(
+                                          width: 180,
+                                          child: Text(
+                                            productDetails['name'],
+                                            style: const TextStyle(
+                                                fontSize: 14,
+                                                fontFamily: medium),
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                        Text(
+                                          "${NumberFormat('#,##0').format(productDetails['price'])} Bath",
+                                          style: const TextStyle(
+                                              fontSize: 14,
+                                              fontFamily: regular,
+                                              color: greyColor),
+                                        ),
+                                      ],
                                     ),
                                   ],
-                                ),
-                              ],
+                                );
+                              },
                             );
                           },
                         ),
                         8.heightBox,
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
-                          // crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             const Text(
                               "Total",
                             ).text.size(14).fontFamily(regular).make(),
                             5.widthBox,
-                            Text("${NumberFormat('#,##0').format(double.parse(widget.data['total_amount'].toString()).toInt())}")
+                            Text("${NumberFormat('#,##0').format(double.parse((widget.data['total_amount'] ?? '0').toString()).toInt())}")
                                 .text
                                 .size(16)
                                 .fontFamily(medium)
@@ -337,7 +415,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                       .padding(EdgeInsets.all(18))
                       .border(color: greyLine)
                       .make(),
-                      100.heightBox,
+                  100.heightBox,
                 ],
               ),
             ),
