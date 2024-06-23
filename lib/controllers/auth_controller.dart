@@ -42,7 +42,6 @@ class AuthController extends GetxController {
   //   }
   //   return userCredential;
   //   }
-
   //   Future<void> loginMethod({required BuildContext context}) async {
   //   isloading(true);
   //   try {
@@ -84,82 +83,93 @@ class AuthController extends GetxController {
   }
 
   //signup account
-  Future<void> loginMethod(BuildContext context) async {
-    if (emailController.text.isEmpty || passwordController.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Please fill in all fields')),
-      );
-      return;
-    }
-
-    try {
-      isloading.value = true;
-
-      var userEmail = emailController.text.trim().toLowerCase();
-      var userCredential = await auth.signInWithEmailAndPassword(
-          email: userEmail, password: passwordController.text.trim());
-
-      if (userCredential.user != null) {
-        var vendorSnapshot = await firestore
-            .collection('vendors')
-            .where('email', isEqualTo: userEmail)
-            .get();
-
-        if (vendorSnapshot.docs.isEmpty) {
-          Get.offAll(() => const CreateAccount());
-        } else {
-          Get.offAll(() => const Home());
-        }
-      }
-    } on FirebaseAuthException catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(e.message ?? 'An error occurred')),
-      );
-    } finally {
-      isloading.value = false;
-    }
+Future<void> loginMethod(BuildContext context) async {
+  if (emailController.text.isEmpty || passwordController.text.isEmpty) {
+    VxToast.show(context, msg: 'Please fill in all fields');
+    return;
   }
 
-  Future<void> signInWithGoogle(BuildContext context) async {
+  try {
     isloading.value = true;
 
-    try {
-      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-      final GoogleSignInAuthentication? googleAuth =
-          await googleUser?.authentication;
-      final OAuthCredential credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth?.accessToken,
-        idToken: googleAuth?.idToken,
-      );
-      final UserCredential userCredential =
-          await FirebaseAuth.instance.signInWithCredential(credential);
+    var userEmail = emailController.text.trim().toLowerCase();
+    var userCredential = await auth.signInWithEmailAndPassword(
+        email: userEmail, password: passwordController.text.trim());
 
-      final String email = userCredential.user?.email ?? "No Email";
-      final String name = userCredential.user?.displayName ?? "No Name";
-      final String uid = userCredential.user?.uid ?? "";
+    if (userCredential.user != null) {
+      var vendorSnapshot = await firestore
+          .collection('vendors')
+          .where('email', isEqualTo: userEmail)
+          .get();
 
-      // Check if the user's uid exists in Firestore
-      final DocumentSnapshot userDoc =
-          await FirebaseFirestore.instance.collection('users').doc(uid).get();
-
-      if (userCredential.user != null) {
-        var vendorSnapshot = await await FirebaseFirestore.instance
-            .collection('vendors')
-            .where('email', isEqualTo: email)
-            .get();
-
-        if (vendorSnapshot.docs.isEmpty) {
-          Get.offAll(() => CreateAccountGoogle(email: email, uid: uid));
-        } else {
-          Get.offAll(() => const Home());
-        }
+      if (vendorSnapshot.docs.isEmpty) {
+        Get.offAll(() => const CreateAccount());
+      } else {
+        Get.offAll(() => const Home());
       }
-    } catch (e) {
-      print("Error signing in with Google: $e");
-    } finally {
-      isloading.value = false;
     }
+  } on FirebaseAuthException catch (e) {
+    String errorMessage = 'An error occurred';
+    if (e.code == 'user-not-found') {
+      errorMessage = 'No user found for that email.';
+    } else if (e.code == 'wrong-password') {
+      errorMessage = 'Wrong password provided.';
+    } else {
+      errorMessage = e.message ?? errorMessage;
+    }
+    VxToast.show(context, msg: errorMessage);
+  } finally {
+    isloading.value = false;
   }
+}
+
+Future<void> signInWithGoogle(BuildContext context) async {
+  isloading.value = true;
+
+  try {
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+    final GoogleSignInAuthentication? googleAuth =
+        await googleUser?.authentication;
+    final OAuthCredential credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
+    final UserCredential userCredential =
+        await FirebaseAuth.instance.signInWithCredential(credential);
+
+    final String email = userCredential.user?.email ?? "No Email";
+    final String name = userCredential.user?.displayName ?? "No Name";
+    final String uid = userCredential.user?.uid ?? "";
+
+    // Check if the user's uid exists in Firestore
+    final DocumentSnapshot userDoc =
+        await FirebaseFirestore.instance.collection('users').doc(uid).get();
+
+    if (userCredential.user != null) {
+      var vendorSnapshot = await await FirebaseFirestore.instance
+          .collection('vendors')
+          .where('email', isEqualTo: email)
+          .get();
+
+      if (vendorSnapshot.docs.isEmpty) {
+        Get.offAll(() => CreateAccountGoogle(email: email, uid: uid));
+      } else {
+        Get.offAll(() => const Home());
+      }
+    }
+  } catch (e) {
+    String errorMessage = 'An error occurred while signing in with Google';
+    if (e is FirebaseAuthException) {
+      errorMessage = e.message ?? errorMessage;
+    } else {
+      errorMessage = e.toString();
+    }
+    VxToast.show(context, msg: errorMessage);
+  } finally {
+    isloading.value = false;
+  }
+}
+
 
   Future<void> CreateAccountMethod(
       BuildContext context, Map<String, String> addressDetails) async {
