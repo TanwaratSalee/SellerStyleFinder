@@ -183,8 +183,7 @@ class LoginScreen extends StatelessWidget {
                                 child: Container(
                                   padding: const EdgeInsets.all(32),
                                   child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       const Text(
@@ -240,11 +239,13 @@ class LoginScreen extends StatelessWidget {
                                           ],
                                         ),
                                       ),
-                                      SizedBox(height: 70),
-                                      const Text(
-                                        'Thank you for choosing StyleFinder to meet your fashion needs. We sincerely hope that you will enjoy and appreciate our service.',
-                                        style: TextStyle(
-                                            fontSize: 18, fontFamily: regular),
+                                      SizedBox(height: 60),
+                                      Center(
+                                        child: const Text(
+                                          'Thank you for choosing StyleFinder to meet\n your fashion needs. We sincerely hope that\n  you will enjoy and appreciate our service.',
+                                          style: TextStyle(
+                                              fontSize: 16, fontFamily: regular, color: greyDark),
+                                        ),
                                       ),
                                     ],
                                   ),

@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -6,7 +5,6 @@ import 'package:intl/intl.dart';
 import 'package:seller_finalproject/const/styles.dart';
 import 'package:seller_finalproject/controllers/orders_controller.dart';
 import 'package:seller_finalproject/controllers/profile_controller.dart';
-import 'package:seller_finalproject/views/orders_screen/components/order_place.dart';
 import 'package:seller_finalproject/views/widgets/our_button.dart';
 import '../../const/const.dart';
 // ignore: depend_on_referenced_packages
