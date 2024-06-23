@@ -7,6 +7,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:seller_finalproject/const/const.dart';
 import 'package:seller_finalproject/const/styles.dart';
 import 'package:seller_finalproject/controllers/loading_Indcator.dart';
+import 'package:intl/intl.dart' as intl;
 
 class ReviewScreen extends StatefulWidget {
   @override
@@ -96,7 +97,6 @@ class _ReviewScreenState extends State<ReviewScreen>
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Column(
-                      
                       children: [
                         Image.network(
                           review['product_image'],
@@ -131,15 +131,27 @@ class _ReviewScreenState extends State<ReviewScreen>
                               borderRadius: BorderRadius.circular(50),
                               child: Image.network(
                                 review['user_image'],
-                                width: 30,
-                                height: 30,
+                                width: 40,
+                                height: 40,
                                 fit: BoxFit.cover,
                               ),
                             ),
                             10.widthBox,
-                            Text(review['user_name'])
+                            Column(
+                              children: [
+                                Text(review['user_name']).text.size(16).make(),
+                                Row(
+                                  children: [
+                                    Text('Date : '),
+                                    Text(intl.DateFormat().add_yMd().format(
+                                        (review['created_at'].toDate()))),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ],
                         ),
+                        10.widthBox,
                         Row(
                           children: [
                             RatingBarIndicator(
@@ -164,7 +176,7 @@ class _ReviewScreenState extends State<ReviewScreen>
                         ),
                         SizedBox(height: 10),
                         SizedBox(
-                          width: 190,
+                          width: 200,
                           child: Text(
                             review['review_text'],
                             style: TextStyle(
