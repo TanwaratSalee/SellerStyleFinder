@@ -8,7 +8,7 @@ import 'package:seller_finalproject/services/store_services.dart';
 import 'package:seller_finalproject/views/auth_screen/login_screen.dart';
 import 'package:seller_finalproject/views/messages_screen/messages_screen.dart';
 import 'package:seller_finalproject/views/profile_screen/editprofile_screen.dart';
-import 'package:seller_finalproject/views/profile_screen/review_screen.dart';
+import 'package:seller_finalproject/views/profile_screen/allreview_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -25,7 +25,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Setting', style: TextStyle(fontFamily: medium, fontSize: 24),
+          'Setting',
+          style: TextStyle(fontFamily: medium, fontSize: 24),
         ),
         centerTitle: true,
       ),
@@ -75,7 +76,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           .clip(Clip.antiAlias)
                                           .make(),
                                     ),
-                            ).box.border(color: greyLine, width: 2).roundedFull.make(),
+                            )
+                                .box
+                                .border(color: greyLine, width: 2)
+                                .roundedFull
+                                .make(),
                             15.widthBox,
                             Expanded(
                               child: Column(
@@ -113,10 +118,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             trailing:
                                 const Icon(Icons.arrow_forward_ios, size: 18),
                             onTap: () async {
-                              bool? result = await Get.to(() => EditProfileScreen(
-                                    username:
-                                        controller.snapshotData['name'],
-                                  ));
+                              bool? result =
+                                  await Get.to(() => EditProfileScreen(
+                                        username:
+                                            controller.snapshotData['name'],
+                                      ));
                               if (result == true) {
                                 setState(() {
                                   // Refresh data
@@ -135,8 +141,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 const Icon(Icons.arrow_forward_ios, size: 18),
                             onTap: () {
                               Get.to(() => MessagesScreen(
-                                  userName:
-                                      controller.snapshotData['name']));
+                                  userName: controller.snapshotData['name']));
                             },
                           ),
                           ListTile(
@@ -144,18 +149,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               icReview,
                               width: 22,
                             ),
-                            title: const Text('Review form customer')
+                            title: const Text('Review from customer')
                                 .text
                                 .color(greyDark)
                                 .fontFamily(medium)
                                 .size(15)
                                 .make(),
-                            trailing:
-                                const Icon(Icons.arrow_forward_ios, size: 18),
+                            trailing: const Icon(Icons.arrow_forward_ios, size: 18),
                             onTap: () {
-                              Get.to(() => ReviewScreen());
+                              String vendorId = currentUser?.uid ?? ''; // ดึงค่า id ของผู้ใช้งานปัจจุบัน
+                              print('vendorId: $vendorId'); // พิมพ์ค่า vendorId
+                              Get.to(() => AllReviewScreen(vendorId: vendorId));
                             },
                           ),
+
                         ],
                       ).box.padding(const EdgeInsets.all(4)).make(),
                     ],

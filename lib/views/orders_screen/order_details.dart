@@ -211,7 +211,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                         .roundedSM
                         .border(color: greyLine)
                         .padding(const EdgeInsets.symmetric(
-                            horizontal: 18, vertical: 12))
+                            horizontal: 18))
                         .make(),
                   ),
                   15.heightBox,
@@ -433,30 +433,17 @@ class _OrderDetailsState extends State<OrderDetails> {
                                       ],
                                     ),
                                   ],
-                                );
+                                ).paddingSymmetric(vertical: 3);
                               },
                             );
                           },
                         ),
                         8.heightBox,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            const Text(
-                              "Total",
-                            ).text.size(14).fontFamily(regular).make(),
-                            5.widthBox,
-                            Text("${NumberFormat('#,##0').format(double.parse((widget.data['total_amount'] ?? '0').toString()).toInt())}")
+                          Text("Total ${NumberFormat('#,##0').format(double.parse((widget.data['total_amount'] ?? '0').toString()).toInt())} Bath")
                                 .text
                                 .size(16)
                                 .fontFamily(medium)
                                 .make(),
-                            5.widthBox,
-                            const Text(
-                              "Bath",
-                            ).text.size(14).fontFamily(regular).make(),
-                          ],
-                        ).paddingOnly(left: 18),
                       ])
                       .box
                       .color(whiteColor)
