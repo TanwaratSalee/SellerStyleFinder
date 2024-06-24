@@ -77,7 +77,7 @@ class _ReviewScreenState extends State<ReviewScreen>
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Order Code: ${review['order_id']}',
+                      'Order Code: ${review['order_id'] ?? 'Null'}',
                       style: TextStyle(
                         fontSize: 16,
                         fontFamily: medium,
@@ -178,7 +178,7 @@ class _ReviewScreenState extends State<ReviewScreen>
                         SizedBox(
                           width: 200,
                           child: Text(
-                            review['review_text'],
+                            review['review_text']  ?? 'Null',
                             style: TextStyle(
                               fontSize: 14,
                             ),
