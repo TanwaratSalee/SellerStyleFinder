@@ -7,6 +7,8 @@ import 'package:seller_finalproject/const/styles.dart';
 import 'package:seller_finalproject/controllers/loading_Indcator.dart';
 import 'package:seller_finalproject/controllers/orders_controller.dart';
 import 'package:seller_finalproject/controllers/profile_controller.dart';
+import 'package:seller_finalproject/views/messages_screen/chat_screen.dart';
+import 'package:seller_finalproject/views/messages_screen/messages_screen.dart';
 import 'package:seller_finalproject/views/widgets/our_button.dart';
 import '../../const/const.dart';
 // ignore: depend_on_referenced_packages
@@ -95,6 +97,32 @@ class _OrderDetailsState extends State<OrderDetails> {
         'imageUrl': '',
         'price': 0.0
       };
+    }
+  }
+
+  Future<Map<String, String>> getVendorDetails(String vendorId) async {
+    if (vendorId.isEmpty) {
+      debugPrint('Error: vendorId is empty.');
+      return {'name': 'Unknown Vendor', 'imageUrl': ''};
+    }
+
+    try {
+      var userSnapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(vendorId)
+          .get();
+      if (userSnapshot.exists) {
+        var vendorData = userSnapshot.data() as Map<String, dynamic>?;
+        return {
+          'name': vendorData?['name'] ?? 'Unknown Vendor',
+          'imageUrl': vendorData?['imageUrl'] ?? ''
+        };
+      } else {
+        return {'name': 'Unknown Vendor', 'imageUrl': ''};
+      }
+    } catch (e) {
+      debugPrint('Error getting vendor details: $e');
+      return {'name': 'Unknown Vendor', 'imageUrl': ''};
     }
   }
 
@@ -307,8 +335,10 @@ class _OrderDetailsState extends State<OrderDetails> {
                   ),
                   15.heightBox,
                   GestureDetector(
-                    onTap: () async {
-                      //ไปหน้า chat
+                    onTap: () {
+                      Get.to(() => MessagesScreen(
+                          userName: widget.data['address']
+                              ['order_by_firstname']));
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
