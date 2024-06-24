@@ -109,8 +109,7 @@ class HomeScreen extends StatelessWidget {
                                               .get();
 
                                       if (productSnapshot.docs.isNotEmpty) {
-                                        var productData =
-                                            productSnapshot.docs.first.data();
+                                        var productData = productSnapshot.docs.first.data();
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
