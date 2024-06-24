@@ -11,6 +11,9 @@ import 'package:path/path.dart';
 class ProductsController extends GetxController {
   var isloading = false.obs;
   var productId = ''.obs;
+  var averageRating = 0.0.obs;
+  var reviewCount = 0.obs;
+  var documentId = ''.obs;
 
   // Text field controllers
   var pnameController = TextEditingController();
@@ -449,6 +452,23 @@ class ProductsController extends GetxController {
       pImagesList.add(null);
     }
   }
+
+    void loadProductReviews(String productId) async {
+    documentId.value = productId;
+    var reviewsSnapshot = await FirebaseFirestore.instance
+        .collection('reviews')
+        .where('product_id', isEqualTo: productId)
+        .get();
+
+    if (reviewsSnapshot.docs.isNotEmpty) {
+      var totalRating = reviewsSnapshot.docs
+          .fold<double>(0.0, (sum, doc) => sum + doc['rating']);
+      averageRating.value = totalRating / reviewsSnapshot.docs.length;
+    } else {
+      averageRating.value = 0.0;
+    }
+  }
+  
 }
 
 class Product {
