@@ -1,315 +1,283 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:intl/intl.dart';
 import 'package:seller_finalproject/const/const.dart';
 import 'package:seller_finalproject/const/styles.dart';
-import 'package:seller_finalproject/controllers/loading_Indcator.dart';
-import 'package:intl/intl.dart' as intl;
+import 'package:seller_finalproject/controllers/products_controller.dart';
 
 class ReviewScreen extends StatefulWidget {
+  final String productId;
+
+  const ReviewScreen({Key? key, required this.productId}) : super(key: key);
+
   @override
   _ReviewScreenState createState() => _ReviewScreenState();
 }
 
-class _ReviewScreenState extends State<ReviewScreen>
-    with SingleTickerProviderStateMixin {
-  late TabController _tabController;
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+class _ReviewScreenState extends State<ReviewScreen> {
+  late final ProductsController controller;
+  int reviewCount = 0;
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
+    controller = Get.put(ProductsController());
+    fetchReviewCount();
+    controller.loadProductReviews(widget.productId);
   }
 
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
-
-  Future<List<Map<String, dynamic>>> fetchReviews() async {
-    QuerySnapshot reviewSnapshot = await _firestore.collection('reviews').get();
-    List<Map<String, dynamic>> reviews = reviewSnapshot.docs
-        .map((doc) => doc.data() as Map<String, dynamic>)
-        .toList();
-
-    for (var review in reviews) {
-      // Fetch user details
-      DocumentSnapshot userSnapshot =
-          await _firestore.collection('users').doc(review['user_id']).get();
-      review['user_name'] = userSnapshot['name'];
-      review['user_image'] = userSnapshot['imageUrl'];
-
-      // Fetch product details
-      DocumentSnapshot productSnapshot = await _firestore
-          .collection('products')
-          .doc(review['product_id'])
+  void fetchReviewCount() async {
+    try {
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('reviews')
+          .where('product_id', isEqualTo: widget.productId)
           .get();
-      review['product_name'] = productSnapshot['name'];
-      // Assuming 'imgs' is a list, get the first image for display
-      review['product_image'] = productSnapshot['imgs'][0];
+
+      setState(() {
+        reviewCount = querySnapshot.docs.length; // Update the review count
+      });
+    } catch (e) {
+      print("Error fetching review count: $e");
+      setState(() {
+        reviewCount = 0;
+      });
+    }
+  }
+
+  Future<Map<String, String>> getUserDetails(String userId) async {
+    if (userId.isEmpty) {
+      debugPrint('Error: userId is empty.');
+      return {'name': 'Unknown User', 'id': userId, 'imageUrl': ''};
     }
 
-    return reviews;
-  }
-
-  void showReviewDialog(BuildContext context, Map<String, dynamic> review) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return Dialog(
-          insetPadding: EdgeInsets.symmetric(horizontal: 16),
-          child: Container(
-            width: 420,
-            decoration: BoxDecoration(
-              color: whiteColor,
-              borderRadius: BorderRadius.circular(10), // Set border radius here
-            ),
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Order Code: ${review['order_id'] ?? 'Null'}',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontFamily: medium,
-                      ),
-                    ),
-                    IconButton(
-                      icon: Icon(Icons.close),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                  ],
-                ),
-                SizedBox(height: 10),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Column(
-                      children: [
-                        Image.network(
-                          review['product_image'],
-                          width: 80,
-                          height: 85,
-                          fit: BoxFit.cover,
-                        ),
-                        SizedBox(height: 10),
-                        Center(
-                          child: SizedBox(
-                            width: 80,
-                            child: Text(
-                              '${review['product_name']}',
-                              style: TextStyle(
-                                fontSize: 12,
-                                fontFamily: regular,
-                              ),
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(width: 15),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(50),
-                              child: Image.network(
-                                review['user_image'],
-                                width: 40,
-                                height: 40,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                            10.widthBox,
-                            Column(
-                              children: [
-                                Text(review['user_name']).text.size(16).make(),
-                                Row(
-                                  children: [
-                                    Text('Date : '),
-                                    Text(intl.DateFormat().add_yMd().format(
-                                        (review['created_at'].toDate()))),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        10.widthBox,
-                        Row(
-                          children: [
-                            RatingBarIndicator(
-                              rating: review['rating'].toDouble(),
-                              itemBuilder: (context, index) => Icon(
-                                Icons.star,
-                                color: golden,
-                              ),
-                              itemCount: 5,
-                              itemSize: 20,
-                              direction: Axis.horizontal,
-                            ),
-                            SizedBox(height: 5),
-                            Text(
-                              '${review['rating']}/5',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontFamily: regular,
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 10),
-                        SizedBox(
-                          width: 200,
-                          child: Text(
-                            review['review_text']  ?? 'Null',
-                            style: TextStyle(
-                              fontSize: 14,
-                            ),
-                            // overflow: TextOverflow.ellipsis,
-                            maxLines: null,
-                          ),
-                        )
-                            .box
-                            .color(greyMessage)
-                            .padding(EdgeInsets.all(12))
-                            .rounded
-                            .make()
-                      ],
-                    )
-                  ],
-                )
-              ],
-            ),
-          ),
-        );
-      },
-    );
+    try {
+      var userSnapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userId)
+          .get();
+      if (userSnapshot.exists) {
+        var userData = userSnapshot.data() as Map<String, dynamic>?;
+        debugPrint('User data: $userData'); // Debug log
+        return {
+          'name': userData?['name'] ?? 'Unknown User',
+          'id': userId,
+          'imageUrl': userData?['imageUrl'] ?? ''
+        };
+      } else {
+        debugPrint('User not found for ID: $userId'); // Debug log
+        return {'name': 'Unknown User', 'id': userId, 'imageUrl': ''};
+      }
+    } catch (e) {
+      debugPrint('Error getting user details: $e');
+      return {'name': 'Unknown User', 'id': userId, 'imageUrl': ''};
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: whiteColor,
       appBar: AppBar(
-        title: const Text(
-          'Reviews',
-          style: TextStyle(fontSize: 24, fontFamily: semiBold),
-        ),
-        centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios),
-          onPressed: () => Get.back(),
-        ),
+        title: Text("Reviews").text.size(24).fontFamily(semiBold).make(),
       ),
-      body: FutureBuilder<List<Map<String, dynamic>>>(
-        future: fetchReviews(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: loadingIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return Center(child: Text('No reviews found'));
-          } else {
-            List<Map<String, dynamic>> reviews = snapshot.data!;
-            return ListView.builder(
-              itemCount: reviews.length,
-              itemBuilder: (context, index) {
-                var review = reviews[index];
-                return GestureDetector(
-                  onTap: () => showReviewDialog(context, review),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      padding: EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: greyLine),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
-                            child: SizedBox(
-                              width: 85,
-                              height: 90,
-                              child: Image.network(
-                                review['product_image'],
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                          15.widthBox,
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+      body: Column(
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Product rating')
+                        .text
+                        .fontFamily(medium)
+                        .size(18)
+                        .color(blackColor)
+                        .make(),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Obx(() {
+                          double rating = controller.averageRating.value;
+                          return Row(
+                            children: [
+                              buildCustomRating(rating, 22),
+                              5.widthBox,
+                              Text('${rating.toStringAsFixed(1)}/5.0')
+                            ],
+                          );
+                        }),
+                        Text('($reviewCount reviews)') // Display the count of reviews
+                            .text
+                            .fontFamily(medium)
+                            .size(14)
+                            .color(blackColor)
+                            .make(),
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            ],
+          ).box.padding(EdgeInsets.symmetric(vertical: 5)).make(),
+          Divider(color: greyThin),
+          Expanded(
+            child: StreamBuilder<QuerySnapshot>(
+              stream: FirebaseFirestore.instance
+                  .collection('reviews')
+                  .where('product_id', isEqualTo: widget.productId)
+                  .snapshots(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return Center(child: CircularProgressIndicator());
+                }
+                var reviews = snapshot.data!.docs;
+                if (reviews.isEmpty) {
+                  return Center(
+                    child: Text('The product has not been reviewed yet.')
+                        .text
+                        .size(16)
+                        .color(greyColor)
+                        .make(),
+                  );
+                }
+                return ListView.builder(
+                  itemCount: reviews.length,
+                  itemBuilder: (context, index) {
+                    var review = reviews[index];
+                    var reviewData = review.data() as Map<String, dynamic>;
+                    var timestamp = reviewData['created_at'] as Timestamp;
+                    var date =
+                        DateFormat('yyyy-MM-dd').format(timestamp.toDate());
+                    var rating = reviewData['rating'] is double
+                        ? (reviewData['rating'] as double).toInt()
+                        : reviewData['rating'] as int;
+
+                    return FutureBuilder<Map<String, String>>(
+                      future: getUserDetails(reviewData['user_id']),
+                      builder: (context, userSnapshot) {
+                        if (!userSnapshot.hasData) {
+                          return Center(child: CircularProgressIndicator());
+                        }
+                        var userDetails = userSnapshot.data!;
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
                               children: [
-                                Text(
-                                  'Order Code : ${review['order_id']}',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontFamily: regular,
+                                CircleAvatar(
+                                  backgroundImage: NetworkImage(
+                                    userDetails['imageUrl'] ??
+                                        'https://via.placeholder.com/150', // Placeholder image
                                   ),
                                 ),
-                                SizedBox(height: 5),
-                                Text(
-                                  '${review['product_name']}',
-                                  style: const TextStyle(
-                                    fontFamily: medium,
-                                    fontSize: 16,
-                                  ),
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
-                                ).box.width(220).make(),
-                                SizedBox(height: 5),
-                                Row(
-                                  children: [
-                                    RatingBarIndicator(
-                                      rating:
-                                          (review['rating'] as num).toDouble(),
-                                      itemBuilder: (context, index) => Icon(
-                                        Icons.star,
-                                        color: golden,
+                                SizedBox(width: 10),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            userDetails['name'] ?? 'Not Found',
+                                            style: TextStyle(
+                                              fontFamily: semiBold,
+                                              fontSize: 16,
+                                            ),
+                                          ),
+                                          Text(
+                                            date,
+                                            style: TextStyle(
+                                              color: greyColor,
+                                              fontSize: 12,
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                      itemCount: 5,
-                                      itemSize: 25,
-                                      direction: Axis.horizontal,
-                                    ),
-                                    5.widthBox,
-                                    Text('${review['rating']}/5')
-                                  ],
-                                )
+                                      Row(
+                                        children: [
+                                          buildStars(rating),
+                                          5.widthBox,
+                                          Text('${rating.toString()}/5.0')
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
                               ],
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                            SizedBox(height: 10),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        reviewData['review_text'],
+                                        style: TextStyle(fontSize: 14),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ).box.padding(EdgeInsets.only(left: 55)).make(),
+                          ],
+                        )
+                            .box
+                            .padding(EdgeInsets.symmetric(
+                                vertical: 14, horizontal: 8))
+                            .make();
+                      },
+                    );
+                  },
                 );
               },
-            );
-          }
-        },
-      ),
+            ),
+          ),
+        ],
+      )
+          .box
+          .padding(EdgeInsets.all(12))
+          .margin(const EdgeInsets.symmetric(horizontal: 12, vertical: 7))
+          .white
+          .roundedSM
+          .make(),
+    );
+  }
+
+  Widget buildStars(int rating) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: List.generate(5, (index) {
+        return Icon(
+          index < rating ? Icons.star : Icons.star_border,
+          color: Colors.yellow,
+          size: 16,
+        );
+      }),
+    );
+  }
+
+  Widget buildCustomRating(double rating, double size) {
+    int filledStars = rating.floor();
+    bool hasHalfStar = rating - filledStars > 0;
+
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: List.generate(5, (index) {
+        if (index < filledStars) {
+          return Icon(Icons.star, color: Colors.yellow, size: size);
+        } else if (index == filledStars && hasHalfStar) {
+          return Icon(Icons.star_half, color: Colors.yellow, size: size);
+        } else {
+          return Icon(Icons.star_border, color: Colors.yellow, size: size);
+        }
+      }),
     );
   }
 }

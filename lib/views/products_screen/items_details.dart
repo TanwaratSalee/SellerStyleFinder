@@ -173,7 +173,7 @@ class ItemsDetails extends StatelessWidget {
                             ),
                             InkWell(
                               onTap: () {
-                                Get.to(() => ReviewScreen());
+                                Get.to(() => ReviewScreen(productId: controller.documentId.value));
                               },
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
