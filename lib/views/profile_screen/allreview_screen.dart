@@ -199,7 +199,7 @@ class _AllReviewScreenState extends State<AllReviewScreen>
                             ),
                             maxLines: null,
                           ),
-                        ).box.padding(EdgeInsets.all(12)).white.rounded.make()
+                        ).box.padding(EdgeInsets.all(12)).color(greyMessage).rounded.make()
                       ],
                     )
                   ],
