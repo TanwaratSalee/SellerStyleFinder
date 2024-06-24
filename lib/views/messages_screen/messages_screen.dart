@@ -10,8 +10,10 @@ import 'package:seller_finalproject/views/messages_screen/chat_screen.dart';
 
 class MessagesScreen extends StatelessWidget {
   final String userName;
+  final String? userId;
 
-  const MessagesScreen({Key? key, required this.userName}) : super(key: key);
+  const MessagesScreen({Key? key, required this.userName, this.userId})
+      : super(key: key);
 
   Future<Map<String, String>> getVendorDetails(String vendorId) async {
     if (vendorId.isEmpty) {

@@ -10,10 +10,10 @@ import 'package:seller_finalproject/views/messages_screen/components/chat_bubble
 
 class ChatScreen extends StatelessWidget {
   final String userName;
-  final String chatDocId; 
-  final String friendId; 
-  final String sellerId; 
-  final String userImageUrl; 
+  final String chatDocId;
+  final String friendId;
+  final String sellerId;
+  final String userImageUrl;
 
   const ChatScreen({
     Key? key,
@@ -22,7 +22,6 @@ class ChatScreen extends StatelessWidget {
     required this.friendId,
     required this.sellerId,
     required this.userImageUrl,
-    
   }) : super(key: key);
 
   @override
@@ -33,24 +32,24 @@ class ChatScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Row(
-            children: [
-              CircleAvatar(
-                            radius: 20,
-                            backgroundColor: primaryApp,
-                            backgroundImage: userImageUrl.isNotEmpty
-                                ? NetworkImage(userImageUrl)
-                                : null,),
-              SizedBox(width: 15),
-              Text(
-                userName,
-                style: TextStyle(
-                  fontSize: 18,
-                  fontFamily: medium,
-                  color: blackColor,
-                ),
+          children: [
+            CircleAvatar(
+              radius: 20,
+              backgroundColor: primaryApp,
+              backgroundImage:
+                  userImageUrl.isNotEmpty ? NetworkImage(userImageUrl) : null,
+            ),
+            SizedBox(width: 15),
+            Text(
+              userName,
+              style: TextStyle(
+                fontSize: 18,
+                fontFamily: medium,
+                color: blackColor,
               ),
-            ],
-          ),
+            ),
+          ],
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8),
@@ -111,7 +110,6 @@ class ChatScreen extends StatelessWidget {
                       chatDocId,
                       friendId,
                       sellerId,
-                      userName,
                     );
                     controller.msgController.clear();
                   },

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -126,6 +127,40 @@ class _OrderDetailsState extends State<OrderDetails> {
     }
   }
 
+  Future<String> getChatDocId(String userId) async {
+    try {
+      String currentUserId = FirebaseAuth.instance.currentUser?.uid ?? '';
+      if (currentUserId.isEmpty) {
+        throw Exception('Current user ID is empty');
+      }
+
+      var chatDoc = await FirebaseFirestore.instance
+          .collection('chats')
+          .where('user_id', isEqualTo: userId)
+          .where('vendor_id', isEqualTo: currentUserId)
+          .limit(1)
+          .get();
+
+      if (chatDoc.docs.isNotEmpty) {
+        return chatDoc.docs.first.id;
+      } else {
+        // Create a new chat document if none exists
+        var newChatDoc =
+            await FirebaseFirestore.instance.collection('chats').add({
+          'user_id': userId,
+          'vendor_id': currentUserId,
+          'created_on': FieldValue.serverTimestamp(),
+          'last_msg': '',
+          'users': {userId: null, currentUserId: null},
+        });
+        return newChatDoc.id;
+      }
+    } catch (e) {
+      debugPrint('Error fetching or creating chatDocId: $e');
+      return '';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Obx(
@@ -238,8 +273,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                         .color(whiteColor)
                         .roundedSM
                         .border(color: greyLine)
-                        .padding(const EdgeInsets.symmetric(
-                            horizontal: 18))
+                        .padding(const EdgeInsets.symmetric(horizontal: 18))
                         .make(),
                   ),
                   15.heightBox,
@@ -335,10 +369,26 @@ class _OrderDetailsState extends State<OrderDetails> {
                   ),
                   15.heightBox,
                   GestureDetector(
-                    onTap: () {
-                      Get.to(() => MessagesScreen(
-                          userName: widget.data['address']
-                              ['order_by_firstname']));
+                    onTap: () async {
+                      String chatDocId =
+                          await getChatDocId(widget.data['user_id']);
+                      if (chatDocId.isNotEmpty) {
+                        Get.to(() => ChatScreen(
+                              userName: widget.data['address']
+                                  ['order_by_firstname'],
+                              chatDocId: chatDocId,
+                              friendId:
+                                  widget.data['user_id'], // Customer's UID
+                              sellerId:
+                                  FirebaseAuth.instance.currentUser?.uid ??
+                                      '', // Current user's UID (seller)
+                              userImageUrl:
+                                  "", // Pass the correct user image URL if available
+                            ));
+                      } else {
+                        // Handle the case where chatDocId could not be generated or fetched
+                        debugPrint('Error: chatDocId is empty');
+                      }
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -356,16 +406,18 @@ class _OrderDetailsState extends State<OrderDetails> {
                                 Text(
                                   'Chat with purchaser',
                                   style: TextStyle(
-                                      color: blackColor,
-                                      fontFamily: medium,
-                                      fontSize: 16),
+                                    color: blackColor,
+                                    fontFamily: medium,
+                                    fontSize: 16,
+                                  ),
                                 ),
                                 Text(
                                   'Product, pre-shipping issues, and other questions',
                                   style: TextStyle(
-                                      color: greyDark,
-                                      fontFamily: regular,
-                                      fontSize: 12),
+                                    color: greyDark,
+                                    fontFamily: regular,
+                                    fontSize: 12,
+                                  ),
                                 ),
                               ],
                             ),
@@ -469,11 +521,11 @@ class _OrderDetailsState extends State<OrderDetails> {
                           },
                         ),
                         8.heightBox,
-                          Text("Total ${NumberFormat('#,##0').format(double.parse((widget.data['total_amount'] ?? '0').toString()).toInt())} Bath")
-                                .text
-                                .size(16)
-                                .fontFamily(medium)
-                                .make(),
+                        Text("Total ${NumberFormat('#,##0').format(double.parse((widget.data['total_amount'] ?? '0').toString()).toInt())} Bath")
+                            .text
+                            .size(16)
+                            .fontFamily(medium)
+                            .make(),
                       ])
                       .box
                       .color(whiteColor)
