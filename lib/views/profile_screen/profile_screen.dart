@@ -33,16 +33,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
       body: Column(
         children: [
           Expanded(
-            child: FutureBuilder<QuerySnapshot>(
-              future: StoreServices.getProfile(currentUser?.uid ?? ''),
+            child: StreamBuilder<DocumentSnapshot>(
+              stream: StoreServices.getProfileStream(currentUser?.uid ?? ''),
               builder: (BuildContext context,
-                  AsyncSnapshot<QuerySnapshot> snapshot) {
+                  AsyncSnapshot<DocumentSnapshot> snapshot) {
                 if (!snapshot.hasData) {
                   return loadingIndicator(circleColor: primaryApp);
-                } else if (snapshot.data!.docs.isEmpty) {
+                } else if (!snapshot.data!.exists) {
                   return const Center(child: Text('No Profile Data'));
                 } else {
-                  controller.snapshotData = snapshot.data!.docs[0];
+                  controller.snapshotData = snapshot.data!;
                   return ListView(
                     children: [
                       Center(
@@ -155,14 +155,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 .fontFamily(medium)
                                 .size(15)
                                 .make(),
-                            trailing: const Icon(Icons.arrow_forward_ios, size: 18),
+                            trailing:
+                                const Icon(Icons.arrow_forward_ios, size: 18),
                             onTap: () {
-                              String vendorId = currentUser?.uid ?? ''; // ดึงค่า id ของผู้ใช้งานปัจจุบัน
+                              String vendorId = currentUser?.uid ??
+                                  ''; // ดึงค่า id ของผู้ใช้งานปัจจุบัน
                               print('vendorId: $vendorId'); // พิมพ์ค่า vendorId
                               Get.to(() => AllReviewScreen(vendorId: vendorId));
                             },
                           ),
-
                         ],
                       ).box.padding(const EdgeInsets.all(4)).make(),
                     ],

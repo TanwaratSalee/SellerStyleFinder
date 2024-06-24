@@ -12,7 +12,7 @@ import 'profile_controller.dart';
 export 'package:get/get.dart';
 
 class ProfileController extends GetxController {
-  late QueryDocumentSnapshot snapshotData;
+  late DocumentSnapshot snapshotData;
 
   var profileImgPath = ''.obs;
 
@@ -29,7 +29,7 @@ class ProfileController extends GetxController {
   var shopCityController = TextEditingController();
   var shopStateController = TextEditingController();
   var shopPostalController = TextEditingController();
-  var shopPhoneController = TextEditingController();  
+  var shopPhoneController = TextEditingController();
 
   fetchUserData() async {
     isloading(true);
@@ -119,14 +119,12 @@ class ProfileController extends GetxController {
         'postalCode': postal
       });
     }
-    await store.set(
-        {
-          'name': name, 
-          'imageUrl': imgUrl, 
-          'addresses': addresses,
-          'mobile' : phone, // Ensure the phone field is included
-        },
-        SetOptions(merge: true));
+    await store.set({
+      'name': name,
+      'imageUrl': imgUrl,
+      'addresses': addresses,
+      'mobile': phone, // Ensure the phone field is included
+    }, SetOptions(merge: true));
 
     isloading(false);
   }

@@ -9,6 +9,13 @@ class StoreServices {
         .get();
   }
 
+  static Stream<DocumentSnapshot> getProfileStream(String uid) {
+    return FirebaseFirestore.instance
+        .collection(vendorsCollection)
+        .doc(uid)
+        .snapshots();
+  }
+
   static Stream<QuerySnapshot> getMessages(String uid) {
     return firestore
         .collection(chatsCollection)

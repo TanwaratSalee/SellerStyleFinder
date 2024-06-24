@@ -38,52 +38,56 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     return Obx(
       () => Scaffold(
         appBar: AppBar(
-          title: const Text(
-            Shopaccout,
-            style: TextStyle(fontFamily: medium, fontSize: 24),
-          ),
-          actions: [
-            controller.isloading.value
-                ? loadingIndicator(circleColor: primaryApp)
-                : TextButton(
-                    onPressed: () async {
-                      controller.isloading(true);
+            title: const Text(
+              Shopaccout,
+              style: TextStyle(fontFamily: medium, fontSize: 24),
+            ),
+            actions: [
+              controller.isloading.value
+                  ? loadingIndicator(circleColor: primaryApp)
+                  : TextButton(
+                      onPressed: () async {
+                        controller.isloading(true);
 
-                      if (controller.profileImgPath.value.isNotEmpty) {
-                        await controller.uploadProfileImage();
-                      } else {
-                        controller.profileImageLink =
-                            controller.snapshotData['imageUrl'];
-                      }
+                        if (controller.profileImgPath.value.isNotEmpty) {
+                          await controller.uploadProfileImage();
+                        } else {
+                          controller.profileImageLink =
+                              controller.snapshotData['imageUrl'];
+                        }
 
-                      // Pass all updated fields to updateProfile
-                      await controller.updateProfile(
-                        name: controller.nameController.text,
-                        imgUrl: controller.profileImageLink,
-                        address: controller.shopAddressController.text,
-                        city: controller.shopCityController.text,
-                        state: controller.shopStateController.text,
-                        postal: controller.shopPostalController.text,
-                        phone: controller
-                            .shopPhoneController.text, // Pass phone parameter
-                      );
+                        // Pass all updated fields to updateProfile
+                        await controller.updateProfile(
+                          name: controller.nameController.text,
+                          imgUrl: controller.profileImageLink,
+                          address: controller.shopAddressController.text,
+                          city: controller.shopCityController.text,
+                          state: controller.shopStateController.text,
+                          postal: controller.shopPostalController.text,
+                          phone: controller
+                              .shopPhoneController.text, // Pass phone parameter
+                        );
 
-                      VxToast.show(context,
-                          msg: "Profile updated successfully");
+                        VxToast.show(context,
+                            msg: "Profile updated successfully");
 
-                      controller.isloading(false);
-                      // Get.back(result: true);
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 10),
-                      child: const Text(
-                        "Save",
-                        style: TextStyle(
-                            fontFamily: medium, color: greyDark, fontSize: 16),
+                        controller.isloading(false);
+                        Get.back(
+                            result:
+                                true); // Navigate back to the previous screen
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 10),
+                        child: const Text(
+                          "Save",
+                          style: TextStyle(
+                              fontFamily: medium,
+                              color: greyDark,
+                              fontSize: 16),
+                        ),
                       ),
-                    ))
-          ],
-        ),
+                    )
+            ]),
         body: Padding(
           padding: const EdgeInsets.fromLTRB(30, 30, 30, 0),
           child: SingleChildScrollView(
