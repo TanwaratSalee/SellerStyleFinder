@@ -1,11 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:seller_finalproject/const/const.dart';
 import 'package:seller_finalproject/const/styles.dart';
 import 'package:seller_finalproject/controllers/products_controller.dart';
-import 'package:seller_finalproject/views/profile_screen/allreview_screen.dart';
 import 'package:seller_finalproject/views/profile_screen/review_screen.dart';
 
 class ItemsDetails extends StatelessWidget {
@@ -27,14 +25,14 @@ class ItemsDetails extends StatelessWidget {
           .get();
       if (userSnapshot.exists) {
         var userData = userSnapshot.data() as Map<String, dynamic>?;
-        debugPrint('User data: $userData'); 
+        debugPrint('User data: $userData');
         return {
           'name': userData?['name'] ?? 'Unknown User',
           'id': userId,
           'imageUrl': userData?['imageUrl'] ?? ''
         };
       } else {
-        debugPrint('User not found for ID: $userId'); 
+        debugPrint('User not found for ID: $userId');
         return {'name': 'Unknown User', 'id': userId, 'imageUrl': ''};
       }
     } catch (e) {
@@ -43,10 +41,8 @@ class ItemsDetails extends StatelessWidget {
     }
   }
 
-  
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: Text(data['name'] ?? 'Product'),
@@ -104,12 +100,18 @@ class ItemsDetails extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 10),
-                    if (data['collection'] != null && data['collection'].isNotEmpty)
+                    if (data['collection'] != null &&
+                        data['collection'].isNotEmpty)
                       Container(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            "Collection".text.color(blackColor).size(16).fontFamily(medium).make(),
+                            "Collection"
+                                .text
+                                .color(blackColor)
+                                .size(16)
+                                .fontFamily(medium)
+                                .make(),
                             SizedBox(height: 5),
                             Container(
                               height: 40,
@@ -120,21 +122,64 @@ class ItemsDetails extends StatelessWidget {
                                   return Container(
                                     child: Text(
                                       "${data['collection'][index].toString()[0].toUpperCase()}${data['collection'][index].toString().substring(1)}",
-                                    ).text.size(26).color(blackColor).fontFamily(medium).make(),
-                                  ).box.white.color(thinPrimaryApp).margin(EdgeInsets.symmetric(horizontal: 3)).roundedLg.padding(EdgeInsets.symmetric(horizontal: 24, vertical: 12)).make();
+                                    )
+                                        .text
+                                        .size(26)
+                                        .color(blackColor)
+                                        .fontFamily(medium)
+                                        .make(),
+                                  )
+                                      .box
+                                      .white
+                                      .color(thinPrimaryApp)
+                                      .margin(
+                                          EdgeInsets.symmetric(horizontal: 3))
+                                      .roundedLg
+                                      .padding(EdgeInsets.symmetric(
+                                          horizontal: 24, vertical: 12))
+                                      .make();
                                 },
                               ),
                             ),
                             SizedBox(height: 10),
-                            "Description".text.color(blackColor).size(16).fontFamily(medium).make(),
+                            "Description"
+                                .text
+                                .color(blackColor)
+                                .size(16)
+                                .fontFamily(medium)
+                                .make(),
                             SizedBox(height: 5),
-                            Text(data['description'] ?? 'No description').text.color(blackColor).size(12).fontFamily(regular).make(),
+                            Text(data['description'] ?? 'No description')
+                                .text
+                                .color(blackColor)
+                                .size(12)
+                                .fontFamily(regular)
+                                .make(),
                             SizedBox(height: 15),
-                            "Size & Fit".text.color(blackColor).size(16).fontFamily(medium).make(),
+                            "Size & Fit"
+                                .text
+                                .color(blackColor)
+                                .size(16)
+                                .fontFamily(medium)
+                                .make(),
                             SizedBox(height: 5),
-                            Text(data['size'] ?? 'No size information').text.color(blackColor).size(12).fontFamily(regular).make(),
+                            Text(data['size'] ?? 'No size information')
+                                .text
+                                .color(blackColor)
+                                .size(12)
+                                .fontFamily(regular)
+                                .make(),
                           ],
-                        ).box.white.padding(const EdgeInsets.symmetric(horizontal: 22, vertical: 18)).margin(const EdgeInsets.symmetric(horizontal: 2, vertical: 7)).outerShadow.roundedSM.make(),
+                        )
+                            .box
+                            .white
+                            .padding(const EdgeInsets.symmetric(
+                                horizontal: 22, vertical: 18))
+                            .margin(const EdgeInsets.symmetric(
+                                horizontal: 2, vertical: 7))
+                            .outerShadow
+                            .roundedSM
+                            .make(),
                       ),
                     Column(
                       children: [
@@ -151,8 +196,10 @@ class ItemsDetails extends StatelessWidget {
                                       .color(blackColor)
                                       .make(),
                                   Obx(() {
-                                    double rating = controller.averageRating.value;
-                                    int reviewCount = controller.reviewCount.value;
+                                    double rating =
+                                        controller.averageRating.value;
+                                    int reviewCount =
+                                        controller.reviewCount.value;
                                     return Row(
                                       children: [
                                         buildCustomRating(rating, 20),
@@ -173,7 +220,8 @@ class ItemsDetails extends StatelessWidget {
                             ),
                             InkWell(
                               onTap: () {
-                                Get.to(() => ReviewScreen(productId: controller.documentId.value));
+                                Get.to(() => ReviewScreen(
+                                    productId: controller.documentId.value));
                               },
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -195,120 +243,155 @@ class ItemsDetails extends StatelessWidget {
                           ],
                         ).box.padding(EdgeInsets.symmetric(vertical: 5)).make(),
                         Divider(color: greyThin),
-                       Column(
-  children: [
-    StreamBuilder<QuerySnapshot>(
-      stream: FirebaseFirestore.instance
-          .collection('reviews')
-          .snapshots(),
-      builder: (context, snapshot) {
-        if (!snapshot.hasData) {
-          return Center(child: CircularProgressIndicator());
-        }
-        var reviews = snapshot.data!.docs;
-        if (reviews.isEmpty) {
-          return Center(
-            child: Text('The product has not been reviewed yet.')
-                .text
-                .size(16)
-                .color(greyColor)
-                .make(),
-          );
-        }
-        return ListView.builder(
-          shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
-          itemCount: reviews.length, // แก้ไขตรงนี้เพื่อให้แสดงผลทั้งหมด
-          itemBuilder: (context, index) {
-            var review = reviews[index];
-            var reviewData = review.data() as Map<String, dynamic>;
-            var timestamp = reviewData['created_at'] as Timestamp;
-            var date = DateFormat('yyyy-MM-dd').format(timestamp.toDate());
-            var rating = reviewData['rating'] is double
-                ? (reviewData['rating'] as double).toInt()
-                : reviewData['rating'] as int;
-
-            return FutureBuilder<Map<String, String>>(
-              future: getUserDetails(reviewData['user_id']),
-              builder: (context, userSnapshot) {
-                if (!userSnapshot.hasData) {
-                  return Center(child: CircularProgressIndicator());
-                }
-                var userDetails = userSnapshot.data!;
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        CircleAvatar(
-                          backgroundImage: NetworkImage(
-                            userDetails['imageUrl'] ??
-                                'https://via.placeholder.com/150', // Placeholder image
-                          ),
-                        ),
-                        SizedBox(width: 10),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  SizedBox(
-                                    width: 150,
+                        Column(
+                          children: [
+                            StreamBuilder<QuerySnapshot>(
+                              stream: FirebaseFirestore.instance
+                                  .collection('reviews')
+                                  .where('product_id', isEqualTo: data['id']) // แก้ไขตรงนี้เพื่อกรองตาม product_id
+                                  .snapshots(),
+                              builder: (context, snapshot) {
+                                if (!snapshot.hasData) {
+                                  return Center(
+                                      child: CircularProgressIndicator());
+                                }
+                                var reviews = snapshot.data!.docs;
+                                if (reviews.isEmpty) {
+                                  return Center(
                                     child: Text(
-                                      userDetails['name'] ?? 'Not Found',
-                                      style: TextStyle(fontFamily: semiBold, fontSize: 16),
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ),
-                                  Text(
-                                    date,
-                                    style: TextStyle(color: greyColor, fontSize: 12),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  buildStars(rating ?? 0),
-                                  5.widthBox,
-                                  Text('${rating.toString()}/5.0'),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 10),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                reviewData['review_text'] ?? 'No review text',
-                                style: TextStyle(fontSize: 14),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ).box.padding(EdgeInsets.only(left: 55)).make(),
-                  ],
-                ).box.padding(EdgeInsets.symmetric(vertical: 14, horizontal: 8)).make();
-              },
-            );
-          },
-        );
-      },
-    ),
-  ],
-)
+                                            'The product has not been reviewed yet.')
+                                        .text
+                                        .size(16)
+                                        .color(greyColor)
+                                        .make(),
+                                  );
+                                }
+                                return ListView.builder(
+                                  shrinkWrap: true,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  itemCount: reviews.length,
+                                  itemBuilder: (context, index) {
+                                    var review = reviews[index];
+                                    var reviewData =
+                                        review.data() as Map<String, dynamic>;
+                                    var timestamp =
+                                        reviewData['created_at'] as Timestamp;
+                                    var date = DateFormat('yyyy-MM-dd')
+                                        .format(timestamp.toDate());
+                                    var rating = reviewData['rating'] is double
+                                        ? (reviewData['rating'] as double)
+                                            .toInt()
+                                        : reviewData['rating'] as int;
 
-],
+                                    return FutureBuilder<Map<String, String>>(
+                                      future:
+                                          getUserDetails(reviewData['user_id']),
+                                      builder: (context, userSnapshot) {
+                                        if (!userSnapshot.hasData) {
+                                          return Center(
+                                              child:
+                                                  CircularProgressIndicator());
+                                        }
+                                        var userDetails = userSnapshot.data!;
+                                        return Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                CircleAvatar(
+                                                  backgroundImage: NetworkImage(
+                                                    userDetails['imageUrl'] ??
+                                                        'https://via.placeholder.com/150', // Placeholder image
+                                                  ),
+                                                ),
+                                                SizedBox(width: 10),
+                                                Expanded(
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          SizedBox(
+                                                            width: 150,
+                                                            child: Text(
+                                                              userDetails[
+                                                                      'name'] ??
+                                                                  'Not Found',
+                                                              style: TextStyle(
+                                                                  fontFamily:
+                                                                      semiBold,
+                                                                  fontSize: 16),
+                                                              maxLines: 1,
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                            date,
+                                                            style: TextStyle(
+                                                                color:
+                                                                    greyColor,
+                                                                fontSize: 12),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      Row(
+                                                        children: [
+                                                          buildStars(rating ?? 0),
+                                                          5.widthBox,
+                                                          Text('${rating.toString()}/5.0'),
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(height: 10),
+                                            Row(
+                                              children: [
+                                                Expanded(
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                        reviewData['review_text'] ?? 'No review text',
+                                                        style: TextStyle(
+                                                            fontSize: 14),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            )
+                                                .box
+                                                .padding(
+                                                    EdgeInsets.only(left: 55))
+                                                .make(),
+                                          ],
+                                        )
+                                            .box
+                                            .padding(EdgeInsets.symmetric(
+                                                vertical: 14, horizontal: 8))
+                                            .make();
+                                      },
+                                    );
+                                  },
+                                );
+                              },
+                            ),
+                          ],
+                        )
+                      ],
                     )
                         .box
                         .padding(EdgeInsets.all(12))
@@ -318,7 +401,7 @@ class ItemsDetails extends StatelessWidget {
                         .outerShadow
                         .roundedSM
                         .make(),
-                        ],
+                  ],
                 ),
               ),
             ],
@@ -340,7 +423,6 @@ class ItemsDetails extends StatelessWidget {
       }),
     );
   }
-
 
   Widget buildCustomRating(double rating, double size) {
     int filledStars = rating.floor();
