@@ -65,7 +65,8 @@ class _AddressFormFormState extends State<AddressForm> {
     return Scaffold(
       backgroundColor: whiteColor,
       appBar: AppBar(
-        title: const Text("Shop Address").text.size(24).fontFamily(medium).make(),
+        title:
+            const Text("Shop Address").text.size(24).fontFamily(medium).make(),
       ),
       bottomNavigationBar: SizedBox(
         height: 45,
@@ -85,9 +86,12 @@ class _AddressFormFormState extends State<AddressForm> {
               'state': controller.stateController.value.text,
               'postalCode': controller.postalCodeController.value.text,
             };
-            await Get.find<AuthController>().CreateAccountMethod(context, addressDetails);
+            await Get.find<AuthController>()
+                .CreateAccountMethod(context, addressDetails);
 
-            Navigator.pop(context);
+            if (Navigator.canPop(context)) {
+              Navigator.pop(context);
+            }
           },
           color: primaryApp,
           textColor: whiteColor,
@@ -103,8 +107,7 @@ class _AddressFormFormState extends State<AddressForm> {
           child: Column(
             children: [
               20.heightBox,
-              Image.asset(imgAddress,width: 250,
-                    height: 250,),
+              Image.asset(imgAddress, width: 250, height: 250),
               customTextField(
                 label: "Address",
                 controller: controller.addressController.value,
