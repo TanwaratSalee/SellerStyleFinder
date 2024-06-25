@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:seller_finalproject/const/const.dart';
@@ -41,8 +42,38 @@ class ItemsDetails extends StatelessWidget {
     }
   }
 
+  Future<void> fetchProductReviewsAndRatings(String productId) async {
+    // Fetch reviews
+    var reviewsSnapshot = await FirebaseFirestore.instance
+        .collection('reviews')
+        .where('product_id', isEqualTo: productId)
+        .get();
+
+    // Check if there are reviews
+    if (reviewsSnapshot.docs.isNotEmpty) {
+      // Calculate average rating
+      var totalRating = reviewsSnapshot.docs
+          .fold<double>(0.0, (sum, doc) => sum + doc['rating']);
+      controller.averageRating.value =
+          totalRating / reviewsSnapshot.docs.length;
+      controller.reviewCount.value = reviewsSnapshot.docs.length;
+    } else {
+      controller.averageRating.value = 0.0;
+      controller.reviewCount.value = 0;
+    }
+
+    // Update reviews in controller
+    controller.reviews.assignAll(reviewsSnapshot.docs);
+  }
+
   @override
   Widget build(BuildContext context) {
+    String documentId = data['documentId'];
+    print('Received data: ${data['name']} and document ID: $documentId');
+
+    // Load reviews and ratings
+    fetchProductReviewsAndRatings(documentId);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(data['name'] ?? 'Product'),
@@ -220,8 +251,8 @@ class ItemsDetails extends StatelessWidget {
                             ),
                             InkWell(
                               onTap: () {
-                                Get.to(() => ReviewScreen(
-                                    productId: controller.documentId.value));
+                                Get.to(
+                                    () => ReviewScreen(productId: documentId));
                               },
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -243,118 +274,134 @@ class ItemsDetails extends StatelessWidget {
                           ],
                         ).box.padding(EdgeInsets.symmetric(vertical: 5)).make(),
                         Divider(color: greyThin),
-                        Column(
-                          children: [
-                            StreamBuilder<QuerySnapshot>(
-                              stream: FirebaseFirestore.instance
-                                  .collection('reviews')
-                                  .where('product_id', isEqualTo: controller.documentId.value)
-                                  .snapshots(),
-                              builder: (context, snapshot) {
-                                if (!snapshot.hasData) {
-                                  return Center(child: CircularProgressIndicator());
-                                }
-                                var reviews = snapshot.data!.docs;
-                                if (reviews.isEmpty) {
-                                  return Center(child: Text('The product has not been reviewed yet.').text.size(16).color(greyColor).make());
-                                }
-                                return ListView.builder(
-                                  shrinkWrap: true,
-                                  physics: NeverScrollableScrollPhysics(),
-                                  itemCount: reviews.length,
-                                  itemBuilder: (context, index) {
-                                    var review = reviews[index];
-                                    var reviewData = review.data() as Map<String, dynamic>;
-                                    var timestamp = reviewData['created_at'] as Timestamp;
-                                    var date = DateFormat('yyyy-MM-dd') .format(timestamp.toDate());
-                                    var rating = reviewData['rating'] is double ? (reviewData['rating'] as double).toInt() : reviewData['rating'] as int;
+                        Obx(() {
+                          var reviews = controller.reviews;
+                          if (reviews.isEmpty) {
+                            return Center(
+                                child: Text(
+                                        'The product has not been reviewed yet.')
+                                    .text
+                                    .size(16)
+                                    .color(greyColor)
+                                    .make());
+                          }
+                          return ListView.builder(
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemCount: reviews.length,
+                            itemBuilder: (context, index) {
+                              var review = reviews[index];
+                              var reviewData =
+                                  review.data() as Map<String, dynamic>;
+                              var timestamp =
+                                  reviewData['created_at'] as Timestamp;
+                              var date = DateFormat('yyyy-MM-dd')
+                                  .format(timestamp.toDate());
+                              var rating = reviewData['rating'] is double
+                                  ? (reviewData['rating'] as double).toInt()
+                                  : reviewData['rating'] as int;
 
-                                    print('Product ID: ${reviewData['product_id']}');
+                              print('Product ID: ${reviewData['product_id']}');
 
-                                    return FutureBuilder<Map<String, String>>(
-                                      future: getUserDetails(reviewData['user_id']),
-                                      builder: (context, userSnapshot) {
-                                        if (!userSnapshot.hasData) {
-                                          return Center(child: CircularProgressIndicator());
-                                        }
-                                        var userDetails = userSnapshot.data!;
-                                        return Column(crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Row(
+                              return FutureBuilder<Map<String, String>>(
+                                future: getUserDetails(reviewData['user_id']),
+                                builder: (context, userSnapshot) {
+                                  if (!userSnapshot.hasData) {
+                                    return Center(
+                                        child: CircularProgressIndicator());
+                                  }
+                                  var userDetails = userSnapshot.data!;
+                                  return Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          CircleAvatar(
+                                            backgroundImage: NetworkImage(
+                                              userDetails['imageUrl'] ??
+                                                  'https://via.placeholder.com/150',
+                                            ),
+                                          ),
+                                          SizedBox(width: 10),
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
                                               children: [
-                                                CircleAvatar(
-                                                  backgroundImage: NetworkImage(
-                                                    userDetails['imageUrl'] ?? 'https://via.placeholder.com/150', 
-                                                  ),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    SizedBox(
+                                                      width: 150,
+                                                      child: Text(
+                                                        userDetails['name'] ??
+                                                            'Not Found',
+                                                        style: TextStyle(
+                                                            fontFamily:
+                                                                semiBold,
+                                                            fontSize: 16),
+                                                        maxLines: 1,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      date,
+                                                      style: TextStyle(
+                                                          color: greyColor,
+                                                          fontSize: 12),
+                                                    ),
+                                                  ],
                                                 ),
-                                                SizedBox(width: 10),
-                                                Expanded(
-                                                  child: Column(
-                                                    crossAxisAlignment: CrossAxisAlignment .start,
-                                                    children: [
-                                                      Row(
-                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                        children: [
-                                                          SizedBox(
-                                                            width: 150,
-                                                            child: Text(
-                                                              userDetails['name'] ?? 'Not Found',
-                                                              style: TextStyle(fontFamily: semiBold,fontSize: 16),
-                                                              maxLines: 1,
-                                                              overflow:TextOverflow.ellipsis,
-                                                            ),
-                                                          ),
-                                                          Text(date,
-                                                            style: TextStyle( color:  greyColor, fontSize: 12),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      Row(
-                                                        children: [
-                                                          buildStars(rating ?? 0),5.widthBox,
-                                                          Text('${rating.toString()}/5.0'),
-                                                        ],
-                                                      ),
-                                                    ],
-                                                  ),
+                                                Row(
+                                                  children: [
+                                                    buildStars(rating ?? 0),
+                                                    5.widthBox,
+                                                    Text(
+                                                        '${rating.toString()}/5.0'),
+                                                  ],
                                                 ),
                                               ],
                                             ),
-                                            SizedBox(height: 10),
-                                            Row(
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(height: 10),
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
                                               children: [
-                                                Expanded(
-                                                  child: Column(
-                                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                                    children: [
-                                                      Text(
-                                                        reviewData['review_text'] ?? 'No review text',
-                                                        style: TextStyle(
-                                                            fontSize: 14),
-                                                      ),
-                                                    ],
-                                                  ),
+                                                Text(
+                                                  reviewData['review_text'] ??
+                                                      'No review text',
+                                                  style:
+                                                      TextStyle(fontSize: 14),
                                                 ),
                                               ],
-                                            )
-                                                .box
-                                                .padding(
-                                                    EdgeInsets.only(left: 55))
-                                                .make(),
-                                          ],
-                                        )
-                                            .box
-                                            .padding(EdgeInsets.symmetric(
-                                                vertical: 14, horizontal: 8))
-                                            .make();
-                                      },
-                                    );
-                                  },
-                                );
-                              },
-                            ),
-                          ],
-                        )
+                                            ),
+                                          ),
+                                        ],
+                                      )
+                                          .box
+                                          .padding(EdgeInsets.only(left: 55))
+                                          .make(),
+                                    ],
+                                  )
+                                      .box
+                                      .padding(EdgeInsets.symmetric(
+                                          vertical: 14, horizontal: 8))
+                                      .make();
+                                },
+                              );
+                            },
+                          );
+                        }),
                       ],
                     )
                         .box
