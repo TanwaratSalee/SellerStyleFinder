@@ -100,7 +100,13 @@ class _ProductsScreenState extends State<ProductsScreen> {
                     children: [
                       ListTile(
                         onTap: () {
-                          print('Navigating to ItemsDetails with data: $doc');
+                          var doc = data[index].data() as Map<String, dynamic>;
+                          String documentId =
+                              data[index].id; // Retrieve the document ID
+
+                          doc['documentId'] = documentId;
+                          print(
+                              'Navigating to ItemsDetails with data: ${doc['name']} and document ID: $documentId');
                           Get.to(() => ItemsDetails(data: doc));
                         },
                         leading: doc['imgs'] != null && doc['imgs'].isNotEmpty
@@ -141,8 +147,6 @@ class _ProductsScreenState extends State<ProductsScreen> {
                           ),
                           onSelected: (String value) {
                             if (value == 'edit') {
-                              print(
-                                  'Navigating to EditProduct with data: $doc');
                               Get.to(() => EditProduct(
                                   productData: doc, documentId: documentId));
                             } else if (value == 'delete') {
@@ -259,8 +263,17 @@ class _ProductsScreenState extends State<ProductsScreen> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text(topProductData['name']).text.fontFamily(medium).size(16).make(),
-                                      "${NumberFormat('#,##0').format(double.parse(topProductData['price']).toInt())} Bath".text.fontFamily(medium).size(14).color(greyColor).make()
+                                      Text(topProductData['name'])
+                                          .text
+                                          .fontFamily(medium)
+                                          .size(16)
+                                          .make(),
+                                      "${NumberFormat('#,##0').format(double.parse(topProductData['price']).toInt())} Bath"
+                                          .text
+                                          .fontFamily(medium)
+                                          .size(14)
+                                          .color(greyColor)
+                                          .make()
                                     ],
                                   ),
                                 ],
@@ -282,15 +295,23 @@ class _ProductsScreenState extends State<ProductsScreen> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text(lowerProductData['name']).text.fontFamily(medium).size(16).make(),
-                                      "${NumberFormat('#,##0').format(double.parse(lowerProductData['price']).toInt())} Bath".text.fontFamily(medium).size(14).color(greyColor).make()
+                                      Text(lowerProductData['name'])
+                                          .text
+                                          .fontFamily(medium)
+                                          .size(16)
+                                          .make(),
+                                      "${NumberFormat('#,##0').format(double.parse(lowerProductData['price']).toInt())} Bath"
+                                          .text
+                                          .fontFamily(medium)
+                                          .size(14)
+                                          .color(greyColor)
+                                          .make()
                                     ],
                                   ),
                                 ],
                               ),
                             ],
                           ),
-                        
                           onTap: () {
                             Get.to(
                               () => MatchDetailsScreen(),

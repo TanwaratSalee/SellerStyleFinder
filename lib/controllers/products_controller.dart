@@ -75,18 +75,50 @@ class ProductsController extends GetxController {
     {'name': 'Black', 'color': Colors.black, 'value': 0xFF000000},
     {'name': 'Grey', 'color': greyColor, 'value': 0xFF808080},
     {'name': 'White', 'color': whiteColor, 'value': 0xFFFFFFFF},
-    {'name': 'Purple','color': const Color.fromRGBO(98, 28, 141, 1),'value': 0xFF621C8D},
-    {'name': 'Deep Purple','color': const Color.fromRGBO(202, 147, 235, 1),'value': 0xFFCA93EB},
-    {'name': 'Blue','color': Color.fromRGBO(32, 47, 179, 1),'value': 0xFF202FB3},
-    {'name': 'Blue','color': const Color.fromRGBO(48, 176, 232, 1),'value': 0xFF30B0E8},
-    {'name': 'Blue Grey','color': const Color.fromRGBO(83, 205, 191, 1),'value': 0xFF53CDBF},
-    {'name': 'Green','color': const Color.fromRGBO(23, 119, 15, 1),'value': 0xFF17770F},
-    {'name': 'Green','color': Color.fromRGBO(98, 207, 47, 1),'value': 0xFF62CF2F},
+    {
+      'name': 'Purple',
+      'color': const Color.fromRGBO(98, 28, 141, 1),
+      'value': 0xFF621C8D
+    },
+    {
+      'name': 'Deep Purple',
+      'color': const Color.fromRGBO(202, 147, 235, 1),
+      'value': 0xFFCA93EB
+    },
+    {
+      'name': 'Blue',
+      'color': Color.fromRGBO(32, 47, 179, 1),
+      'value': 0xFF202FB3
+    },
+    {
+      'name': 'Blue',
+      'color': const Color.fromRGBO(48, 176, 232, 1),
+      'value': 0xFF30B0E8
+    },
+    {
+      'name': 'Blue Grey',
+      'color': const Color.fromRGBO(83, 205, 191, 1),
+      'value': 0xFF53CDBF
+    },
+    {
+      'name': 'Green',
+      'color': const Color.fromRGBO(23, 119, 15, 1),
+      'value': 0xFF17770F
+    },
+    {
+      'name': 'Green',
+      'color': Color.fromRGBO(98, 207, 47, 1),
+      'value': 0xFF62CF2F
+    },
     {'name': 'Yellow', 'color': Colors.yellow, 'value': 0xFFFFFF00},
     {'name': 'Orange', 'color': Colors.orange, 'value': 0xFFFFA500},
     {'name': 'Pink', 'color': Colors.pinkAccent, 'value': 0xFFFF4081},
     {'name': 'Red', 'color': Colors.red, 'value': 0xFFFF0000},
-    {'name': 'Brown','color': Color.fromARGB(255, 121, 58, 31),'value': 0xFF793A1F},
+    {
+      'name': 'Brown',
+      'color': Color.fromARGB(255, 121, 58, 31),
+      'value': 0xFF793A1F
+    },
   ];
 
   Rxn<Product> selectedTopProduct = Rxn<Product>();
@@ -192,7 +224,8 @@ class ProductsController extends GetxController {
         return;
       }
       if (selectedCollection.isEmpty) {
-        VxToast.show(context, msg: "You forgot to select the product collection.");
+        VxToast.show(context,
+            msg: "You forgot to select the product collection.");
         return;
       }
       if (selectedSubcollection.value.isEmpty) {
@@ -200,7 +233,8 @@ class ProductsController extends GetxController {
         return;
       }
       if (selectedGender.value.isEmpty) {
-        VxToast.show(context, msg: "You forgot to select the gender suitability.");
+        VxToast.show(context,
+            msg: "You forgot to select the gender suitability.");
         return;
       }
       if (selectedSizes.isEmpty) {
@@ -212,7 +246,9 @@ class ProductsController extends GetxController {
         return;
       }
       if (selectedMixandmatch.value.isEmpty) {
-        VxToast.show(context, msg: "You forgot to select whether the product is a top or lower part.");
+        VxToast.show(context,
+            msg:
+                "You forgot to select whether the product is a top or lower part.");
         return;
       }
 
@@ -237,7 +273,9 @@ class ProductsController extends GetxController {
         'gender': selectedGender.value,
         'selectsize': selectedSizes,
         'part': selectedMixandmatch.value,
-        'colors': selectedColorIndexes.map((index) => allColors[index]['color'].value).toList(),
+        'colors': selectedColorIndexes
+            .map((index) => allColors[index]['color'].value)
+            .toList(),
         'sizedes': psizedesController.text,
         'price': ppriceController.text,
         'quantity': pquantityController.text,
@@ -356,7 +394,9 @@ class ProductsController extends GetxController {
         'gender': selectedGender.value,
         'productsize': selectedSizes,
         'part': selectedMixandmatch.value,
-        'colors': selectedColorIndexes.map((index) => allColors[index]['value']).toList(),
+        'colors': selectedColorIndexes
+            .map((index) => allColors[index]['value'])
+            .toList(),
         'description': pdescController.text,
         'name': pnameController.text,
         'aboutProduct': pabproductController.text,
@@ -395,7 +435,7 @@ class ProductsController extends GetxController {
         selectedColorIndexes.isNotEmpty &&
         selectedMixandmatch.isNotEmpty;
   }
-  
+
   addFeatured(docId) async {
     await firestore.collection(productsCollection).doc(docId).set({
       'featured_id': currentUser!.uid,
@@ -453,7 +493,8 @@ class ProductsController extends GetxController {
     }
   }
 
-    void loadProductReviews(String productId) async {
+  var reviews = <QueryDocumentSnapshot>[].obs;
+  void loadProductReviews(String productId) async {
     documentId.value = productId;
     var reviewsSnapshot = await FirebaseFirestore.instance
         .collection('reviews')
@@ -464,11 +505,14 @@ class ProductsController extends GetxController {
       var totalRating = reviewsSnapshot.docs
           .fold<double>(0.0, (sum, doc) => sum + doc['rating']);
       averageRating.value = totalRating / reviewsSnapshot.docs.length;
+      reviewCount.value = reviewsSnapshot.docs.length;
+      reviews.assignAll(reviewsSnapshot.docs);
     } else {
       averageRating.value = 0.0;
+      reviewCount.value = 0;
+      reviews.clear();
     }
   }
-  
 }
 
 class Product {
@@ -515,4 +559,3 @@ class Product {
     );
   }
 }
-

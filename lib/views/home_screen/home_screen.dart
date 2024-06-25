@@ -93,39 +93,23 @@ class HomeScreen extends StatelessWidget {
                                 ? 10
                                 : productsData.length,
                             itemBuilder: (context, index) {
-                              if (productsData[index]['favorite_uid'].isEmpty) {
+                              var productSnapshot = productsData[index];
+                              var productData = productSnapshot.data()
+                                  as Map<String, dynamic>;
+                              productData['documentId'] =
+                                  productSnapshot.id; // Add this line
+
+                              if (productData['favorite_uid'].isEmpty) {
                                 return const SizedBox.shrink();
                               }
                               return Column(
                                 children: [
                                   ListTile(
-                                    onTap: () async {
-                                      var productSnapshot =
-                                          await FirebaseFirestore.instance
-                                              .collection(productsCollection)
-                                              .where('name',
-                                                  isEqualTo: productsData[index]
-                                                      ['name'])
-                                              .get();
-
-                                      if (productSnapshot.docs.isNotEmpty) {
-                                        var productData =
-                                            productSnapshot.docs.first.data();
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                ItemsDetails(
-                                                    data: productData),
-                                          ),
-                                        );
-                                      } else {
-                                        // Handle product not found
-                                        Get.snackbar('Error',
-                                            'Product not found',
-                                            snackPosition:
-                                                SnackPosition.BOTTOM);
-                                      }
+                                    onTap: () {
+                                      // Navigate to the ItemDetails page with the product data
+                                      Get.to(() => ItemsDetails(
+                                          data:
+                                              productData)); // Pass the updated data
                                     },
                                     title: Row(
                                       crossAxisAlignment:
@@ -155,8 +139,7 @@ class HomeScreen extends StatelessWidget {
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
-                                              Text(productsData[index]
-                                                      ['name'])
+                                              Text(productsData[index]['name'])
                                                   .text
                                                   .size(16)
                                                   .fontFamily(medium)

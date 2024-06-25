@@ -59,7 +59,8 @@ class _AllReviewScreenState extends State<AllReviewScreen>
       review['product_name'] = productSnapshot['name'];
       review['product_image'] = productSnapshot['imgs'][0];
       review['product_vendor_id'] = productSnapshot['vendor_id'];
-      print('product_vendor_id: ${review['product_vendor_id']}'); // พิมพ์ค่า product_vendor_id
+      print(
+          'product_vendor_id: ${review['product_vendor_id']}'); // พิมพ์ค่า product_vendor_id
 
       // Check if product vendor_id matches the vendorId in widget
       if (review['product_vendor_id'] == widget.vendorId) {
@@ -199,7 +200,12 @@ class _AllReviewScreenState extends State<AllReviewScreen>
                             ),
                             maxLines: null,
                           ),
-                        ).box.padding(EdgeInsets.all(12)).color(greyMessage).rounded.make()
+                        )
+                            .box
+                            .padding(EdgeInsets.all(12))
+                            .color(greyMessage)
+                            .rounded
+                            .make()
                       ],
                     )
                   ],

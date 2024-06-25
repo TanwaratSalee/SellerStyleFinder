@@ -119,7 +119,7 @@ class MatchDetailsScreen extends StatelessWidget {
                                 onTap: () async {
                                   var productSnapshot = await FirebaseFirestore.instance
                                       .collection('products')
-                                      .doc(lowerProduct['product_id']) // Use the ID of the lower product
+                                      .doc(lowerProduct['product_id']) 
                                       .get();
 
                                   if (productSnapshot.exists) {
