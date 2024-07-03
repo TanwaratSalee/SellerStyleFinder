@@ -7,6 +7,7 @@ import 'package:seller_finalproject/controllers/loading_Indcator.dart';
 import 'package:seller_finalproject/controllers/products_controller.dart';
 import 'package:seller_finalproject/views/products_screen/component/product_images.dart';
 import 'package:seller_finalproject/views/widgets/custom_textfield.dart';
+import 'package:seller_finalproject/views/widgets/our_button.dart';
 
 class EditProduct extends StatefulWidget {
   final Map<String, dynamic> productData;
@@ -41,11 +42,12 @@ class _EditProductState extends State<EditProduct> {
         backgroundColor: whiteColor,
         appBar: AppBar(
           title: const Text("Edit Product").text.size(24).fontFamily(medium).make(),
-          actions: [
-            controller.isloading.value
+         
+        ),
+        bottomNavigationBar: controller.isloading.value
                 ? loadingIndicator(circleColor: primaryApp)
-                : TextButton(
-                    onPressed: () async {
+                : ourButton(
+                    onPress: () async {
                       if (controller.fieldProducComplete()) {
                         controller.isloading(true);
                         await controller.uploadImages(context);
@@ -58,10 +60,10 @@ class _EditProductState extends State<EditProduct> {
                         VxToast.show(context, msg: "Please fill in all required fields.");
                       }
                     },
-                    child: const Text(save).text.fontFamily(medium).size(18).make(),
+                    // child: const Text(save).text.fontFamily(medium).size(18).make(),
+                    title: 'Save',
+                    color: primaryApp
                   ),
-          ],
-        ),
         body: Padding(
           padding: const EdgeInsets.all(18),
           child: SingleChildScrollView(
@@ -553,7 +555,7 @@ class _EditProductState extends State<EditProduct> {
                       )),
                 ),
               
-                100.heightBox,
+                30.heightBox,
               ],
             ),
           ),
