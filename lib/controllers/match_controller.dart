@@ -35,8 +35,8 @@ class MatchController extends GetxController {
   RxString selectedGender = ''.obs;
   List<String> mixandmatchList = ['top', 'lower', 'not specified'];
   RxString selectedMixandmatch = ''.obs;
-  List<String> siturationList = ['formal','semi-formal','casual','special-activity','seasonal','work-from-home'];
-  final selectedSituration = <String>[].obs;
+  List<String> situationList = ['formal','semi-formal','casual','special-activity','seasonal','work-from-home'];
+  final selectedSituation = <String>[].obs;
   List<String> collectionList = ['summer','winter','autumn','spring'];
   final selectedCollection = <String>[].obs;
 
@@ -67,11 +67,11 @@ class MatchController extends GetxController {
     selectedSituations.clear();
   }
 
-  void toggleSituration(String situration) {
-    if (selectedSituations.contains(situration)) {
-      selectedSituations.remove(situration);
+  void toggleSituation(String situation) {
+    if (selectedSituations.contains(situation)) {
+      selectedSituations.remove(situation);
     } else {
-      selectedSituations.add(situration);
+      selectedSituations.add(situation);
     }
   }
 
@@ -199,7 +199,7 @@ class MatchController extends GetxController {
           'p_mixmatch_sex': selectedGender.value,
           'p_mixmatch_desc': psizedesController.text,
           'p_mixmatch_collection': selectedCollection.toList(),
-          'p_mixmatch_situration': selectedSituations.toList(),
+          'p_mixmatch_situation': selectedSituations.toList(),
         });
 
         VxToast.show(context, msg: "Product updated successfully.");
@@ -231,7 +231,7 @@ class MatchController extends GetxController {
           'p_mixmatch_sex': selectedGender.value,
           'p_mixmatch_desc': psizedesController.text,
           'p_mixmatch_collection': selectedCollection.toList(),
-          'p_mixmatch_situration': selectedSituations.toList(),
+          'p_mixmatch_situation': selectedSituations.toList(),
         });
 
         VxToast.show(context, msg: "Product updated successfully.");

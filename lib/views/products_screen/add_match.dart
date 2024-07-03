@@ -194,8 +194,8 @@ class _AddMatchProductState extends State<AddMatchProduct> {
                     child: Obx(() => Wrap(
                           spacing: 8,
                           runSpacing: 8,
-                          children: controller.siturationList.map((situration) {
-                            bool isSelected = controller.selectedSituations.contains(situration);
+                          children: controller.situationList.map((situation) {
+                            bool isSelected = controller.selectedSituations.contains(situation);
                             return Container(
                               width: 160,
                               child: ChoiceChip(
@@ -203,7 +203,7 @@ class _AddMatchProductState extends State<AddMatchProduct> {
                                 label: Container(
                                   alignment: Alignment.center,
                                   child: Text(
-                                    capitalize(situration),
+                                    capitalize(situation),
                                     style: TextStyle(
                                       color: isSelected ? primaryApp : greyColor,
                                       fontFamily: isSelected ? semiBold : regular,
@@ -212,7 +212,7 @@ class _AddMatchProductState extends State<AddMatchProduct> {
                                 ),
                                 selected: isSelected,
                                 onSelected: (selected) {
-                                  controller.toggleSituration(situration);
+                                  controller.toggleSituation(situation);
                                 },
                                 selectedColor: thinPrimaryApp,
                                 backgroundColor: whiteColor,

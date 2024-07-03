@@ -40,12 +40,15 @@ class ProductsController extends GetxController {
   RxString selectedGender = ''.obs;
   List<String> mixandmatchList = ['top', 'lower', 'not specified'];
   RxString selectedMixandmatch = ''.obs;
+  List<String> situationList = ['formal','semi-formal','casual','special-activity','seasonal','work-from-home'];
+   final selectedSituation = <String>[].obs;
   List<String> collectionList = [
     'summer',
+    'spring',
     'winter',
-    'autumn',
     'dinner',
-    'everydaylook'
+    'everydaylook',
+    'autumn',
   ];
   final selectedCollection = <String>[].obs;
   List<String> subcollectionList = [
