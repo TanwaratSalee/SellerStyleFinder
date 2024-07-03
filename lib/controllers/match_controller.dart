@@ -25,6 +25,7 @@ class MatchController extends GetxController {
   var collectionsvalue = ''.obs;
   var subcollectionvalue = ''.obs;
   var selectedColorIndex = 0.obs;
+  var selectedSituations = <String>[].obs;
   var selectedCollections = <String>[].obs;
   
 
@@ -34,7 +35,9 @@ class MatchController extends GetxController {
   RxString selectedGender = ''.obs;
   List<String> mixandmatchList = ['top', 'lower', 'not specified'];
   RxString selectedMixandmatch = ''.obs;
-  List<String> collectionList = ['summer','winter','autumn','dinner','everydaylook'];
+  List<String> siturationList = ['formal','semi-formal','casual','special-activity','seasonal','work-from-home'];
+  final selectedSituration = <String>[].obs;
+  List<String> collectionList = ['summer','winter','autumn','spring'];
   final selectedCollection = <String>[].obs;
 
   final selectedColorIndexes = <int>[].obs;
@@ -61,6 +64,15 @@ class MatchController extends GetxController {
     selectedColorIndexes.clear();
     psizedesController.clear();
     selectedCollections.clear();
+    selectedSituations.clear();
+  }
+
+  void toggleSituration(String situration) {
+    if (selectedSituations.contains(situration)) {
+      selectedSituations.remove(situration);
+    } else {
+      selectedSituations.add(situration);
+    }
   }
 
   void toggleCollection(String collection) {
@@ -187,6 +199,7 @@ class MatchController extends GetxController {
           'p_mixmatch_sex': selectedGender.value,
           'p_mixmatch_desc': psizedesController.text,
           'p_mixmatch_collection': selectedCollection.toList(),
+          'p_mixmatch_situration': selectedSituations.toList(),
         });
 
         VxToast.show(context, msg: "Product updated successfully.");
@@ -218,11 +231,11 @@ class MatchController extends GetxController {
           'p_mixmatch_sex': selectedGender.value,
           'p_mixmatch_desc': psizedesController.text,
           'p_mixmatch_collection': selectedCollection.toList(),
+          'p_mixmatch_situration': selectedSituations.toList(),
         });
 
         VxToast.show(context, msg: "Product updated successfully.");
       } else {
-        // หาก documentId เป็นค่าว่างเปล่าหรือ null จะไม่ดำเนินการอัปเดตและแสดงข้อความข้อผิดพลาด
         VxToast.show(context,
             msg: "Error updating product: Document ID is empty.");
       }
@@ -296,6 +309,4 @@ class Product {
       imageUrls: List<String>.from(data['imgs'] ?? []),
     );
   }
-
-  
 }

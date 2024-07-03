@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:seller_finalproject/const/const.dart';
 import 'package:seller_finalproject/const/styles.dart';
 import 'package:seller_finalproject/controllers/match_controller.dart';
+import 'package:seller_finalproject/views/widgets/our_button.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 class AddMatchProduct extends StatefulWidget {
   @override
@@ -34,32 +36,31 @@ class _AddMatchProductState extends State<AddMatchProduct> {
 
     return Scaffold(
       appBar: AppBar(
-        title:
-            const Text('Match Product').text.size(24).fontFamily(medium).make(),
-        actions: <Widget>[
-          TextButton(
-            onPressed: () async {
-              String productNameTop = controller.selectedTopProduct?.name ?? '';
-              String productNameLower =
-                  controller.selectedLowerProduct?.name ?? '';
-              String selectedGender = controller.selectedGender.value;
-              List<String> selectedCollections = controller.selectedCollections;
-              String explanation = controller.explainController.text;
+        title: const Text('Match Product').text.size(24).fontFamily(medium).make(),
+        actions: <Widget>[],
+      ),
+      bottomNavigationBar: ourButton(
+        onPress: () async {
+          String productNameTop = controller.selectedTopProduct?.name ?? '';
+          String productNameLower = controller.selectedLowerProduct?.name ?? '';
+          String selectedGender = controller.selectedGender.value;
+          List<String> selectedCollections = controller.selectedCollections;
+          List<String> selectedSituations = controller.selectedSituations;
+          String explanation = controller.explainController.text;
 
-              await onSaveButtonPressed(
-                productNameTop,
-                productNameLower,
-                context,
-                selectedGender,
-                selectedCollections,
-                explanation,
-              );
-            },
-            child: const Text('Save',
-                style: TextStyle(
-                    color: primaryApp, fontSize: 14, fontFamily: medium)),
-          ),
-        ],
+          await onSaveButtonPressed(
+            productNameTop,
+            productNameLower,
+            context,
+            selectedGender,
+            selectedCollections,
+            selectedSituations,
+            explanation,
+          );
+        },
+        title: "Save",
+        textColor: whiteColor,
+        color: primaryApp,
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -71,8 +72,7 @@ class _AddMatchProductState extends State<AddMatchProduct> {
                   return const Center(child: CircularProgressIndicator());
                 } else if (snapshot.hasError) {
                   return Center(child: Text('Error: ${snapshot.error}'));
-                } else if (snapshot.data?.value != null &&
-                    snapshot.data!.value!.isNotEmpty) {
+                } else if (snapshot.data?.value != null && snapshot.data!.value!.isNotEmpty) {
                   return SizedBox(
                     width: 390,
                     height: 200,
@@ -81,8 +81,7 @@ class _AddMatchProductState extends State<AddMatchProduct> {
                       viewportFraction: 0.6,
                       onPageChanged: (index) {
                         _currentTopIndex = index;
-                        controller
-                            .onTopProductSelected(snapshot.data!.value![index]);
+                        controller.onTopProductSelected(snapshot.data!.value![index]);
                       },
                       itemBuilder: (context, index) {
                         Product product = snapshot.data!.value![index];
@@ -91,12 +90,7 @@ class _AddMatchProductState extends State<AddMatchProduct> {
                             product.imageUrls[0],
                             fit: BoxFit.cover,
                           ).box.roundedSM.clip(Clip.antiAlias).make(),
-                        )
-                            .box
-                            .white
-                            .margin(const EdgeInsets.symmetric(
-                                horizontal: 6, vertical: 2))
-                            .make();
+                        ).box.white.margin(const EdgeInsets.symmetric(horizontal: 6, vertical: 2)).make();
                       },
                     ),
                   );
@@ -113,8 +107,7 @@ class _AddMatchProductState extends State<AddMatchProduct> {
                   return const Center(child: CircularProgressIndicator());
                 } else if (snapshot.hasError) {
                   return Center(child: Text('Error: ${snapshot.error}'));
-                } else if (snapshot.data?.value != null &&
-                    snapshot.data!.value!.isNotEmpty) {
+                } else if (snapshot.data?.value != null && snapshot.data!.value!.isNotEmpty) {
                   return SizedBox(
                     width: 390,
                     height: 200,
@@ -123,8 +116,7 @@ class _AddMatchProductState extends State<AddMatchProduct> {
                       viewportFraction: 0.6,
                       onPageChanged: (index) {
                         _currentLowerIndex = index;
-                        controller.onLowerProductSelected(
-                            snapshot.data!.value![index]);
+                        controller.onLowerProductSelected(snapshot.data!.value![index]);
                       },
                       itemBuilder: (context, index) {
                         Product product = snapshot.data!.value![index];
@@ -133,12 +125,7 @@ class _AddMatchProductState extends State<AddMatchProduct> {
                             product.imageUrls[0],
                             fit: BoxFit.cover,
                           ).box.roundedSM.clip(Clip.antiAlias).make(),
-                        )
-                            .box
-                            .white
-                            .margin(const EdgeInsets.symmetric(
-                                horizontal: 6, vertical: 2))
-                            .make();
+                        ).box.white.margin(const EdgeInsets.symmetric(horizontal: 6, vertical: 2)).make();
                       },
                     ),
                   );
@@ -164,8 +151,7 @@ class _AddMatchProductState extends State<AddMatchProduct> {
                           spacing: 8,
                           runSpacing: 8,
                           children: controller.genderList.map((gender) {
-                            bool isSelected =
-                                controller.selectedGender.value == gender;
+                            bool isSelected = controller.selectedGender.value == gender;
                             return Container(
                               width: 105,
                               child: ChoiceChip(
@@ -175,10 +161,8 @@ class _AddMatchProductState extends State<AddMatchProduct> {
                                   child: Text(
                                     capitalize(gender),
                                     style: TextStyle(
-                                      color:
-                                          isSelected ? primaryApp : greyColor,
-                                      fontFamily:
-                                          isSelected ? semiBold : regular,
+                                      color: isSelected ? primaryApp : greyColor,
+                                      fontFamily: isSelected ? semiBold : regular,
                                     ),
                                   ).text.size(14).make(),
                                 ),
@@ -191,8 +175,7 @@ class _AddMatchProductState extends State<AddMatchProduct> {
                                 selectedColor: thinPrimaryApp,
                                 backgroundColor: whiteColor,
                                 side: isSelected
-                                    ? const BorderSide(
-                                        color: primaryApp, width: 2)
+                                    ? const BorderSide(color: primaryApp, width: 2)
                                     : const BorderSide(color: greyLine),
                               ),
                             );
@@ -200,7 +183,7 @@ class _AddMatchProductState extends State<AddMatchProduct> {
                         )),
                   ),
                   const SizedBox(height: 15),
-                  const Text("Collection")
+                  const Text("Suitable for work and situations")
                       .text
                       .size(16)
                       .color(blackColor)
@@ -209,15 +192,56 @@ class _AddMatchProductState extends State<AddMatchProduct> {
                   const SizedBox(height: 8),
                   Center(
                     child: Obx(() => Wrap(
-                          spacing: 6,
+                          spacing: 8,
+                          runSpacing: 8,
+                          children: controller.siturationList.map((situration) {
+                            bool isSelected = controller.selectedSituations.contains(situration);
+                            return Container(
+                              width: 160,
+                              child: ChoiceChip(
+                                showCheckmark: false,
+                                label: Container(
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    capitalize(situration),
+                                    style: TextStyle(
+                                      color: isSelected ? primaryApp : greyColor,
+                                      fontFamily: isSelected ? semiBold : regular,
+                                    ),
+                                  ).text.size(14).make(),
+                                ),
+                                selected: isSelected,
+                                onSelected: (selected) {
+                                  controller.toggleSituration(situration);
+                                },
+                                selectedColor: thinPrimaryApp,
+                                backgroundColor: whiteColor,
+                                side: isSelected
+                                    ? const BorderSide(color: primaryApp, width: 2)
+                                    : const BorderSide(color: greyLine),
+                              ),
+                            );
+                          }).toList(),
+                        )),
+                  ),
+                  const SizedBox(height: 15),
+                  const Text("Suitable for seasons")
+                      .text
+                      .size(16)
+                      .color(blackColor)
+                      .fontFamily(medium)
+                      .make(),
+                  const SizedBox(height: 8),
+                  Center(
+                    child: Obx(() => Wrap(
+                          spacing: 8,
                           runSpacing: 1,
                           children: controller.collectionList.map((collection) {
-                            bool isSelected =
-                                controller.isCollectionSelected(collection);
+                            bool isSelected = controller.isCollectionSelected(collection);
                             return ChoiceChip(
                               showCheckmark: false,
                               label: Container(
-                                width: 75,
+                                width: 130,
                                 alignment: Alignment.center,
                                 child: Text(
                                   capitalize(collection),
@@ -234,10 +258,8 @@ class _AddMatchProductState extends State<AddMatchProduct> {
                               selectedColor: thinPrimaryApp,
                               backgroundColor: whiteColor,
                               side: isSelected
-                                  ? const BorderSide(
-                                      color: primaryApp, width: 2)
-                                  : const BorderSide(
-                                      color: greyLine, width: 1.3),
+                                  ? const BorderSide(color: primaryApp, width: 2)
+                                  : const BorderSide(color: greyLine, width: 1.3),
                             );
                           }).toList(),
                         )),
@@ -259,7 +281,7 @@ class _AddMatchProductState extends State<AddMatchProduct> {
                         const SizedBox(height: 8),
                         TextField(
                           controller: controller.explainController,
-                          maxLines: 3,
+                          maxLines: null,
                           decoration: const InputDecoration(
                             hintText: 'Enter your explanation here',
                             border: OutlineInputBorder(
@@ -277,10 +299,10 @@ class _AddMatchProductState extends State<AddMatchProduct> {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 100),
+                  const SizedBox(height: 30),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),
@@ -293,6 +315,7 @@ class _AddMatchProductState extends State<AddMatchProduct> {
     BuildContext context,
     String selectedGender,
     List<String> selectedCollections,
+    List<String> selectedSituations,
     String explanation,
   ) async {
     List<String> productNames = [productNameTop, productNameLower];
@@ -368,6 +391,7 @@ class _AddMatchProductState extends State<AddMatchProduct> {
 
       Map<String, dynamic> userData = {
         'collection': selectedCollections,
+        'situations': selectedSituations,
         'gender': selectedGender,
         'description': explanation,
         'vendor_id': currentUserUID,
@@ -385,8 +409,7 @@ class _AddMatchProductState extends State<AddMatchProduct> {
           .add(userData);
 
       VxToast.show(context, msg: "Added post successful.");
-      print(
-          'Data added in storemixandmatchs collection with document ID: ${documentReference.id}');
+      print('Data added in storemixandmatchs collection with document ID: ${documentReference.id}');
 
       controller.resetController();
 

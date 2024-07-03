@@ -189,12 +189,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 ),
                 15.heightBox,
                 editTextField(
-                  label: 'Shop Name :',
+                  label: 'Shop Name',
                   controller: controller.nameController,
                 ),
                 10.heightBox,
                 editTextField(
-                    label: 'Email :',
+                    label: 'Email',
                     controller: controller.emailController,
                     isPass: false,
                     readOnly: true),
@@ -202,7 +202,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: const Text(
-                    address2,
+                    address,
                     style: TextStyle(fontFamily: medium),
                   ).text.size(20).fontFamily(medium).color(blackColor).make(),
                 ),

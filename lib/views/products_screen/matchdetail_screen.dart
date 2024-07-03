@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:seller_finalproject/const/const.dart';
@@ -12,12 +11,14 @@ class MatchDetailsScreen extends StatelessWidget {
     final Map<String, dynamic>? topProduct = Get.arguments['topProduct'];
     final Map<String, dynamic>? lowerProduct = Get.arguments['lowerProduct'];
     final String? description = Get.arguments['description'];
-    final dynamic sex = Get.arguments['sex']; // Changed to dynamic to handle both String and List
-    final dynamic collection = Get.arguments['collection']; // Changed to dynamic to handle both String and List
+    final dynamic sex = Get.arguments['gender'];
+    final dynamic siturations = Get.arguments['siturations'];
+    final dynamic collection = Get.arguments['collection'];
 
     // Ensure sex and collection are strings
     final String sexString = sex is List ? sex.join(', ') : sex.toString();
-    final String collectionString = collection is List ? collection.join(', ') : collection.toString();
+    final String situationString =siturations is List ? siturations.join(', ') : siturations.toString();
+    final String collectionString =collection is List ? collection.join(', ') : collection.toString();
 
     if (topProduct == null || lowerProduct == null || description == null) {
       return Scaffold(
@@ -46,9 +47,11 @@ class MatchDetailsScreen extends StatelessWidget {
                             children: [
                               GestureDetector(
                                 onTap: () async {
-                                  var productSnapshot = await FirebaseFirestore.instance
+                                  var productSnapshot = await FirebaseFirestore
+                                      .instance
                                       .collection('products')
-                                      .doc(topProduct['product_id']) // Use the ID of the top product
+                                      .doc(topProduct[
+                                          'product_id']) // Use the ID of the top product
                                       .get();
 
                                   if (productSnapshot.exists) {
@@ -56,11 +59,13 @@ class MatchDetailsScreen extends StatelessWidget {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => ItemsDetails(data: productData),
+                                        builder: (context) =>
+                                            ItemsDetails(data: productData),
                                       ),
                                     );
                                   } else {
-                                    Get.snackbar('Error', 'Product not found', snackPosition: SnackPosition.BOTTOM);
+                                    Get.snackbar('Error', 'Product not found',
+                                        snackPosition: SnackPosition.BOTTOM);
                                   }
                                 },
                                 child: Container(
@@ -97,7 +102,12 @@ class MatchDetailsScreen extends StatelessWidget {
                               ),
                               Text(
                                 "${NumberFormat('#,##0').format(double.tryParse(topProduct['price'].toString()) ?? 0)} Bath",
-                              ).text.color(greyDark).fontFamily(regular).size(12).make(),
+                              )
+                                  .text
+                                  .color(greyDark)
+                                  .fontFamily(regular)
+                                  .size(12)
+                                  .make(),
                             ],
                           ).box.border(color: greyLine).rounded.make(),
                         ),
@@ -108,7 +118,12 @@ class MatchDetailsScreen extends StatelessWidget {
                             const Icon(
                               Icons.add,
                               color: whiteColor,
-                            ).box.color(primaryApp).roundedFull.padding(EdgeInsets.all(4)).make(),
+                            )
+                                .box
+                                .color(primaryApp)
+                                .roundedFull
+                                .padding(EdgeInsets.all(4))
+                                .make(),
                           ],
                         ),
                         const SizedBox(width: 5),
@@ -117,9 +132,10 @@ class MatchDetailsScreen extends StatelessWidget {
                             children: [
                               GestureDetector(
                                 onTap: () async {
-                                  var productSnapshot = await FirebaseFirestore.instance
+                                  var productSnapshot = await FirebaseFirestore
+                                      .instance
                                       .collection('products')
-                                      .doc(lowerProduct['product_id']) 
+                                      .doc(lowerProduct['product_id'])
                                       .get();
 
                                   if (productSnapshot.exists) {
@@ -127,11 +143,13 @@ class MatchDetailsScreen extends StatelessWidget {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => ItemsDetails(data: productData),
+                                        builder: (context) =>
+                                            ItemsDetails(data: productData),
                                       ),
                                     );
                                   } else {
-                                    Get.snackbar('Error', 'Product not found', snackPosition: SnackPosition.BOTTOM);
+                                    Get.snackbar('Error', 'Product not found',
+                                        snackPosition: SnackPosition.BOTTOM);
                                   }
                                 },
                                 child: Container(
@@ -168,7 +186,12 @@ class MatchDetailsScreen extends StatelessWidget {
                               ),
                               Text(
                                 "${NumberFormat('#,##0').format(double.tryParse(lowerProduct['price'].toString()) ?? 0)} Bath",
-                              ).text.color(greyDark).fontFamily(regular).size(12).make(),
+                              )
+                                  .text
+                                  .color(greyDark)
+                                  .fontFamily(regular)
+                                  .size(12)
+                                  .make(),
                             ],
                           ).box.border(color: greyLine).rounded.make(),
                         ),
@@ -181,11 +204,16 @@ class MatchDetailsScreen extends StatelessWidget {
                           alignment: Alignment.centerLeft,
                           child: Text(
                             'Suitable for gender',
-                          ).text.fontFamily(regular).size(16).make(),
+                          )
+                              .text
+                              .size(16)
+                              .color(blackColor)
+                              .fontFamily(medium)
+                              .make(),
                         ),
                         Column(
                           children: [
-                            SizedBox(height: 10),
+                            3.heightBox,
                             Container(
                               height: 40,
                               child: ListView.builder(
@@ -193,58 +221,136 @@ class MatchDetailsScreen extends StatelessWidget {
                                 itemCount: sexString.split(', ').length,
                                 itemBuilder: (context, index) {
                                   String item = sexString.split(', ')[index];
-                                  String capitalizedItem = item[0].toUpperCase() + item.substring(1);
+                                  String capitalizedItem =
+                                      item[0].toUpperCase() + item.substring(1);
                                   return Container(
                                     alignment: Alignment.center,
-                                    child: capitalizedItem.text.size(14).color(greyDark).fontFamily(medium).make(),
-                                  ).box.color(thinPrimaryApp).margin(EdgeInsets.symmetric(horizontal: 6)).roundedLg.padding(EdgeInsets.symmetric(horizontal: 24, vertical: 12)).make();
+                                    child: capitalizedItem.text
+                                        .size(14)
+                                        .color(greyDark)
+                                        .fontFamily(medium)
+                                        .make(),
+                                  )
+                                      .box
+                                      .color(thinPrimaryApp)
+                                      .margin(
+                                          EdgeInsets.symmetric(horizontal: 6))
+                                      .roundedLg
+                                      .padding(EdgeInsets.symmetric(
+                                          horizontal: 28, vertical: 6))
+                                      .make();
                                 },
                               ),
                             ),
                           ],
                         ),
-                        10.heightBox,
+                        15.heightBox,
                         Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            'Opportunity suitable for',
-                          ).text.fontFamily(regular).size(16).make(),
+                            'Suitable for work and situations',
+                          )
+                              .text
+                              .size(16)
+                              .color(blackColor)
+                              .fontFamily(medium)
+                              .make(),
                         ),
                         Column(
                           children: [
-                            SizedBox(height: 10),
+                            3.heightBox,
+                            Container(
+                              height: 40,
+                              child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: situationString.split(', ').length,
+                                itemBuilder: (context, index) {
+                                  String item =
+                                      situationString.split(', ')[index];
+                                  return Container(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      "${item[0].toUpperCase()}${item.substring(1)}",
+                                    )
+                                         .text.size(14)
+                                        .color(greyDark)
+                                        .fontFamily(medium)
+                                        .make(),
+                                  )
+                                      .box
+                                      .color(thinPrimaryApp)
+                                      .margin(EdgeInsets.symmetric(horizontal: 6))
+                                      .roundedLg
+                                      .padding(EdgeInsets.symmetric(
+                                          horizontal: 28, vertical: 6))
+                                      .make();
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                        15.heightBox,
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            'Suitable for seasons',
+                          )
+                              .text
+                              .size(16)
+                              .color(blackColor)
+                              .fontFamily(medium)
+                              .make(),
+                        ),
+                        Column(
+                          children: [
+                            3.heightBox,
                             Container(
                               height: 40,
                               child: ListView.builder(
                                 scrollDirection: Axis.horizontal,
                                 itemCount: collectionString.split(', ').length,
                                 itemBuilder: (context, index) {
-                                  String item = collectionString.split(', ')[index];
+                                  String item =
+                                      collectionString.split(', ')[index];
                                   return Container(
                                     alignment: Alignment.center,
                                     child: Text(
                                       "${item[0].toUpperCase()}${item.substring(1)}",
-                                    ).text.size(14).color(greyDark).fontFamily(medium).make(),
-                                  ).box.color(thinPrimaryApp).margin(EdgeInsets.symmetric(horizontal: 6)).roundedLg.padding(EdgeInsets.symmetric(horizontal: 24, vertical: 12)).make();
+                                    )
+                                        .text
+                                        .size(14)
+                                        .color(greyDark)
+                                        .fontFamily(medium)
+                                        .make(),
+                                  )
+                                      .box
+                                      .color(thinPrimaryApp)
+                                      .margin(
+                                          EdgeInsets.symmetric(horizontal: 6))
+                                      .roundedLg
+                                      .padding(EdgeInsets.symmetric(
+                                          horizontal: 28, vertical: 6))
+                                      .make();
                                 },
                               ),
                             ),
                           ],
                         ),
-                        10.heightBox,
+                        15.heightBox,
                         Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
                             'The reason for match',
-                            style: TextStyle(
-                              fontFamily: regular,
-                              fontSize: 16,
-                            ),
-                          ),
+                          )
+                              .text
+                              .size(16)
+                              .color(blackColor)
+                              .fontFamily(medium)
+                              .make(),
                         ),
                         Container(
                           width: double.infinity,
-                          height: 100,
+                          // height: 100,
                           decoration: BoxDecoration(
                             color: greyThin,
                             borderRadius: BorderRadius.circular(10),

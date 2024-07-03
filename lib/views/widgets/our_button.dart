@@ -9,24 +9,27 @@ Widget ourButton({
   Color? borderColor, 
   double elevation = 2.0,
 }) {
-  return SizedBox(
-    child: ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        backgroundColor: color,
-        elevation: elevation,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
-          side: BorderSide(color: borderColor ?? Colors.transparent, width: 1), 
+  return Padding(
+    padding: const EdgeInsets.fromLTRB(24,0,24,28),
+    child: SizedBox(
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: color,
+          elevation: elevation,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+            side: BorderSide(color: borderColor ?? Colors.transparent, width: 1), 
+          ),
+          minimumSize: const Size(double.infinity, 45),
         ),
-        minimumSize: const Size(double.infinity, 45),
-      ),
-      onPressed: onPress,
-      child: Text(
-        title ?? '',
-        style: TextStyle(
-          fontSize: 16,
-          color: textColor ?? whiteColor,
-          fontFamily: medium,
+        onPressed: onPress,
+        child: Text(
+          title ?? '',
+          style: TextStyle(
+            fontSize: 16,
+            color: textColor ?? whiteColor,
+            fontFamily: medium,
+          ),
         ),
       ),
     ),

@@ -34,8 +34,7 @@ const appname = "eMart Seller App",
 const aboutaccount = "About Account", aboutyou = "About You";
 
 //Edit account
-const address = 'Address :',
-    address2 = 'Address ',
-    city = 'City :',
-    state = 'State / Province :',
-    postal = 'Postal / Zip code :';
+const address = 'Address',
+    city = 'City',
+    state = 'State',
+    postal = 'Postal';
