@@ -16,7 +16,7 @@ class EditProduct extends StatefulWidget {
   const EditProduct({
     Key? key,
     required this.productData,
-    required this.documentId, 
+    required this.documentId,
   }) : super(key: key);
 
   @override
@@ -25,7 +25,7 @@ class EditProduct extends StatefulWidget {
 
 class _EditProductState extends State<EditProduct> {
   late ProductsController controller;
-  
+
   @override
   void initState() {
     super.initState();
@@ -41,29 +41,32 @@ class _EditProductState extends State<EditProduct> {
       () => Scaffold(
         backgroundColor: whiteColor,
         appBar: AppBar(
-          title: const Text("Edit Product").text.size(24).fontFamily(medium).make(),
-         
+          title: const Text("Edit Product")
+              .text
+              .size(24)
+              .fontFamily(medium)
+              .make(),
         ),
         bottomNavigationBar: controller.isloading.value
-                ? loadingIndicator(circleColor: primaryApp)
-                : ourButton(
-                    onPress: () async {
-                      if (controller.fieldProducComplete()) {
-                        controller.isloading(true);
-                        await controller.uploadImages(context);
-                        await controller.updateProduct(context, widget.documentId);
-                        controller.resetForm();
-                        Get.back();
-                        controller.isloading(false);
-                        VxToast.show(context, msg: "Product saved successfully.");
-                      } else {
-                        VxToast.show(context, msg: "Please fill in all required fields.");
-                      }
-                    },
-                    // child: const Text(save).text.fontFamily(medium).size(18).make(),
-                    title: 'Save',
-                    color: primaryApp
-                  ),
+            ? loadingIndicator(circleColor: primaryApp)
+            : ourButton(
+                onPress: () async {
+                  if (controller.fieldProducComplete()) {
+                    controller.isloading(true);
+                    await controller.uploadImages(context);
+                    await controller.updateProduct(context, widget.documentId);
+                    controller.resetForm();
+                    Get.back();
+                    controller.isloading(false);
+                    VxToast.show(context, msg: "Product saved successfully.");
+                  } else {
+                    VxToast.show(context,
+                        msg: "Please fill in all required fields.");
+                  }
+                },
+                // child: const Text(save).text.fontFamily(medium).size(18).make(),
+                title: 'Save',
+                color: primaryApp),
         body: Padding(
           padding: const EdgeInsets.all(18),
           child: SingleChildScrollView(
@@ -91,7 +94,8 @@ class _EditProductState extends State<EditProduct> {
                             3,
                             (col) {
                               int index = row * 3 + col;
-                              if (index < controller.pImagesList.length && controller.pImagesList[index] != null) {
+                              if (index < controller.pImagesList.length &&
+                                  controller.pImagesList[index] != null) {
                                 return Stack(
                                   children: [
                                     controller.pImagesList[index] is File
@@ -118,7 +122,8 @@ class _EditProductState extends State<EditProduct> {
                                   controller.pickImage(index, context);
                                 });
                               } else {
-                                return productImages(label: "${index + 1}").onTap(() {
+                                return productImages(label: "${index + 1}")
+                                    .onTap(() {
                                   controller.pickImage(index, context);
                                 });
                               }
@@ -155,15 +160,15 @@ class _EditProductState extends State<EditProduct> {
                 customTextFieldInput(
                   heading: "Price",
                   controller: controller.ppriceController,
-                   keyboardType: TextInputType.number,
-                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                  keyboardType: TextInputType.number,
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 ),
                 15.heightBox,
                 customTextFieldInput(
                   heading: "Quantity",
                   controller: controller.pquantityController,
-                   keyboardType: TextInputType.number,
-                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                  keyboardType: TextInputType.number,
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 ),
                 15.heightBox,
                 const Text("Suitable for gender")
@@ -190,11 +195,9 @@ class _EditProductState extends State<EditProduct> {
                               child: Text(
                                 capitalize(gender),
                                 style: TextStyle(
-                                  fontFamily:
-                                      isSelected ? semiBold : regular,
+                                  fontFamily: isSelected ? semiBold : regular,
                                   fontSize: 14,
-                                  color:
-                                      isSelected ? primaryApp : greyColor,
+                                  color: isSelected ? primaryApp : greyColor,
                                 ),
                               ),
                             ),
@@ -207,10 +210,8 @@ class _EditProductState extends State<EditProduct> {
                             selectedColor: thinPrimaryApp,
                             backgroundColor: whiteColor,
                             side: isSelected
-                                ? const BorderSide(
-                                    color: primaryApp, width: 2)
-                                : const BorderSide(
-                                    color: greyLine, width: 1.3),
+                                ? const BorderSide(color: primaryApp, width: 2)
+                                : const BorderSide(color: greyLine, width: 1.3),
                           ),
                         );
                       }).toList(),
@@ -241,32 +242,27 @@ class _EditProductState extends State<EditProduct> {
                               child: Text(
                                 size,
                                 style: TextStyle(
-                                  fontFamily:
-                                      isSelected ? semiBold : regular,
+                                  fontFamily: isSelected ? semiBold : regular,
                                   fontSize: 14,
-                                  color:
-                                      isSelected ? primaryApp : greyColor,
+                                  color: isSelected ? primaryApp : greyColor,
                                 ),
                               ),
                             ),
                             selected: isSelected,
                             onSelected: (selected) {
                               if (selected) {
-                                if (!controller.selectedSizes
-                                    .contains(size)) {
+                                if (!controller.selectedSizes.contains(size)) {
                                   controller.selectedSizes.add(size);
                                 }
                               } else {
                                 controller.selectedSizes.remove(size);
                               }
-                            },  
+                            },
                             selectedColor: thinPrimaryApp,
                             backgroundColor: whiteColor,
                             side: isSelected
-                                ? const BorderSide(
-                                    color: primaryApp, width: 2)
-                                : const BorderSide(
-                                    color: greyLine, width: 1.3),
+                                ? const BorderSide(color: primaryApp, width: 2)
+                                : const BorderSide(color: greyLine, width: 1.3),
                           ),
                         );
                       }).toList(),
@@ -274,7 +270,6 @@ class _EditProductState extends State<EditProduct> {
                   ),
                 ),
                 15.heightBox,
-                
                 const Text("Type of product")
                     .text
                     .size(16)
@@ -300,11 +295,9 @@ class _EditProductState extends State<EditProduct> {
                               child: Text(
                                 capitalize(subcollection),
                                 style: TextStyle(
-                                  fontFamily:
-                                      isSelected ? semiBold : regular,
+                                  fontFamily: isSelected ? semiBold : regular,
                                   fontSize: 14,
-                                  color:
-                                      isSelected ? primaryApp : greyColor,
+                                  color: isSelected ? primaryApp : greyColor,
                                 ),
                               ),
                             ),
@@ -318,10 +311,8 @@ class _EditProductState extends State<EditProduct> {
                             selectedColor: thinPrimaryApp,
                             backgroundColor: whiteColor,
                             side: isSelected
-                                ? const BorderSide(
-                                    color: primaryApp, width: 2)
-                                : const BorderSide(
-                                    color: greyLine, width: 1.3),
+                                ? const BorderSide(color: primaryApp, width: 2)
+                                : const BorderSide(color: greyLine, width: 1.3),
                           ),
                         );
                       }).toList(),
@@ -329,29 +320,27 @@ class _EditProductState extends State<EditProduct> {
                   ),
                 ),
                 10.heightBox,
-                 const Text("Suitable for work and situations")
-                        .text
-                        .size(16)
-                        .color(blackColor)
-                        .fontFamily(medium)
-                        .make(),
+                const Text("Suitable for work and situations")
+                    .text
+                    .size(16)
+                    .color(blackColor)
+                    .fontFamily(medium)
+                    .make(),
                 5.heightBox,
                 Center(
                   child: Obx(
                     () => Wrap(
                       spacing: 6,
                       runSpacing: 8,
-                      children: controller.situationList.map((collection) {
-                        bool isSelected = controller.selectedCollection
-                            .contains(collection);
+                      children: controller.situationList.map((situation) {
+                        bool isSelected =
+                            controller.selectedSituations.contains(situation);
                         return GestureDetector(
                             onTap: () {
                               if (isSelected) {
-                                controller.selectedCollection
-                                    .remove(collection);
+                                controller.selectedSituations.remove(situation);
                               } else {
-                                controller.selectedCollection
-                                    .add(collection);
+                                controller.selectedSituations.add(situation);
                               }
                             },
                             child: SizedBox(
@@ -360,25 +349,22 @@ class _EditProductState extends State<EditProduct> {
                                 padding: EdgeInsets.symmetric(
                                     horizontal: 6, vertical: 8),
                                 decoration: BoxDecoration(
-                                  color: isSelected
-                                      ? thinPrimaryApp
-                                      : whiteColor,
+                                  color:
+                                      isSelected ? thinPrimaryApp : whiteColor,
                                   border: Border.all(
-                                    color:
-                                        isSelected ? primaryApp : greyLine,
+                                    color: isSelected ? primaryApp : greyLine,
                                     width: isSelected ? 1.5 : 0.5,
                                   ),
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 child: Text(
-                                  capitalize(collection),
+                                  controller.situationDisplay[situation] ??
+                                      situation,
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
-                                    fontFamily:
-                                        isSelected ? semiBold : regular,
+                                    fontFamily: isSelected ? semiBold : regular,
                                     fontSize: 14,
-                                    color:
-                                        isSelected ? primaryApp : greyColor,
+                                    color: isSelected ? primaryApp : greyColor,
                                   ),
                                 ),
                               ),
@@ -389,11 +375,11 @@ class _EditProductState extends State<EditProduct> {
                 ),
                 10.heightBox,
                 const Text("Suitable for seasons")
-                        .text
-                        .size(16)
-                        .color(blackColor)
-                        .fontFamily(medium)
-                        .make(),
+                    .text
+                    .size(16)
+                    .color(blackColor)
+                    .fontFamily(medium)
+                    .make(),
                 5.heightBox,
                 Center(
                   child: Obx(
@@ -401,16 +387,15 @@ class _EditProductState extends State<EditProduct> {
                       spacing: 6,
                       runSpacing: 8,
                       children: controller.collectionList.map((collection) {
-                        bool isSelected = controller.selectedCollection
-                            .contains(collection);
+                        bool isSelected =
+                            controller.selectedCollection.contains(collection);
                         return GestureDetector(
                             onTap: () {
                               if (isSelected) {
                                 controller.selectedCollection
                                     .remove(collection);
                               } else {
-                                controller.selectedCollection
-                                    .add(collection);
+                                controller.selectedCollection.add(collection);
                               }
                             },
                             child: SizedBox(
@@ -419,12 +404,10 @@ class _EditProductState extends State<EditProduct> {
                                 padding: EdgeInsets.symmetric(
                                     horizontal: 6, vertical: 8),
                                 decoration: BoxDecoration(
-                                  color: isSelected
-                                      ? thinPrimaryApp
-                                      : whiteColor,
+                                  color:
+                                      isSelected ? thinPrimaryApp : whiteColor,
                                   border: Border.all(
-                                    color:
-                                        isSelected ? primaryApp : greyLine,
+                                    color: isSelected ? primaryApp : greyLine,
                                     width: isSelected ? 2 : 1.3,
                                   ),
                                   borderRadius: BorderRadius.circular(8),
@@ -433,11 +416,9 @@ class _EditProductState extends State<EditProduct> {
                                   capitalize(collection),
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
-                                    fontFamily:
-                                        isSelected ? semiBold : regular,
+                                    fontFamily: isSelected ? semiBold : regular,
                                     fontSize: 14,
-                                    color:
-                                        isSelected ? primaryApp : greyColor,
+                                    color: isSelected ? primaryApp : greyColor,
                                   ),
                                 ),
                               ),
@@ -509,14 +490,13 @@ class _EditProductState extends State<EditProduct> {
                     .size(16)
                     .color(blackColor)
                     .fontFamily(medium)
-                    .make(),                    
-                    8.heightBox,
+                    .make(),
+                8.heightBox,
                 Center(
                   child: Obx(() => Wrap(
                         spacing: 8,
                         runSpacing: 8,
-                        children:
-                            controller.mixandmatchList.map((mixandmatch) {
+                        children: controller.mixandmatchList.map((mixandmatch) {
                           bool isSelected =
                               controller.selectedMixandmatch.value ==
                                   mixandmatch;
@@ -529,10 +509,8 @@ class _EditProductState extends State<EditProduct> {
                                 child: Text(
                                   capitalize(mixandmatch),
                                   style: TextStyle(
-                                    color:
-                                        isSelected ? primaryApp : greyColor,
-                                    fontFamily:
-                                        isSelected ? semiBold : regular,
+                                    color: isSelected ? primaryApp : greyColor,
+                                    fontFamily: isSelected ? semiBold : regular,
                                   ),
                                 ).text.size(14).make(),
                               ),
@@ -554,7 +532,6 @@ class _EditProductState extends State<EditProduct> {
                         }).toList(),
                       )),
                 ),
-              
                 30.heightBox,
               ],
             ),

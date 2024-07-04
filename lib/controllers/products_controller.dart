@@ -40,8 +40,24 @@ class ProductsController extends GetxController {
   RxString selectedGender = ''.obs;
   List<String> mixandmatchList = ['top', 'lower', 'not specified'];
   RxString selectedMixandmatch = ''.obs;
-  List<String> situationList = ['formal','semi-formal','casual','special-activity','seasonal','work-from-home'];
-   final selectedSituation = <String>[].obs;
+  List<String> situationList = [
+    'formal',
+    'semi-formal',
+    'casual',
+    'special-activity',
+    'seasonal',
+    'work-from-home'
+  ];
+
+  Map<String, String> situationDisplay = {
+    'formal': 'Formal Attire',
+    'semi-formal': 'Semi-Formal Attire',
+    'casual': 'Casual Attire',
+    'special-activity': 'Special Activity Attire',
+    'seasonal': 'Seasonal Attire',
+    'work-from-home': 'Work from Home',
+  };
+  final selectedSituations = <String>[].obs;
   List<String> collectionList = [
     'summer',
     'spring',
@@ -218,6 +234,11 @@ class ProductsController extends GetxController {
         VxToast.show(context, msg: "You forgot to enter the product name.");
         return;
       }
+      if (selectedSituations.isEmpty) {
+        VxToast.show(context,
+            msg: "You forgot to enter the product situations.");
+        return;
+      }
       if (ppriceController.text.isEmpty) {
         VxToast.show(context, msg: "You forgot to enter the product price.");
         return;
@@ -272,6 +293,7 @@ class ProductsController extends GetxController {
         'description': pdescController.text,
         'aboutProduct': pabproductController.text,
         'collection': selectedCollection,
+        'situations': selectedSituations,
         'subcollection': selectedSubcollection.value,
         'gender': selectedGender.value,
         'selectsize': selectedSizes,
@@ -336,6 +358,13 @@ class ProductsController extends GetxController {
       selectedCollection.clear();
     }
 
+    if (productData['situations'] != null) {
+      selectedSituations
+          .assignAll(List<String>.from(productData['situations']));
+    } else {
+      selectedSituations.clear();
+    }
+
     // ตั้งค่าขนาดที่เลือก
     if (productData['selectsize'] != null) {
       selectedSizes.assignAll(List<String>.from(productData['selectsize']));
@@ -393,6 +422,7 @@ class ProductsController extends GetxController {
           .doc(documentId);
       await productDoc.update({
         'collection': selectedCollection,
+        'situations': selectedSituations,
         'subcollection': selectedSubcollection.value,
         'gender': selectedGender.value,
         'productsize': selectedSizes,
@@ -484,6 +514,7 @@ class ProductsController extends GetxController {
     pquantityController.clear();
     selectedColorIndexes.clear();
     selectedCollection.clear();
+    selectedSituations.clear();
     pImagesLinks.clear();
     selectedSubcollection.value = '';
     selectedGender.value = '';

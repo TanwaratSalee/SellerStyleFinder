@@ -136,119 +136,6 @@ class AddProduct extends StatelessWidget {
                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     ),
                     10.heightBox,
-                    const Text("Collection")
-                        .text
-                        .size(16)
-                        .color(blackColor)
-                        .fontFamily(medium)
-                        .make(),
-                    3.heightBox,
-                    Center(
-                      child: Obx(
-                        () => Wrap(
-                          spacing: 6,
-                          runSpacing: 8,
-                          children: controller.collectionList.map((collection) {
-                            bool isSelected = controller.selectedCollection
-                                .contains(collection);
-                            return GestureDetector(
-                                onTap: () {
-                                  if (isSelected) {
-                                    controller.selectedCollection
-                                        .remove(collection);
-                                  } else {
-                                    controller.selectedCollection
-                                        .add(collection);
-                                  }
-                                },
-                                child: SizedBox(
-                                  width: 110,
-                                  child: Container(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 6, vertical: 8),
-                                    decoration: BoxDecoration(
-                                      color: isSelected
-                                          ? thinPrimaryApp
-                                          : whiteColor,
-                                      border: Border.all(
-                                        color:
-                                            isSelected ? primaryApp : greyLine,
-                                        width: isSelected ? 2 : 1.3,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    child: Text(
-                                      capitalize(collection),
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontFamily:
-                                            isSelected ? semiBold : regular,
-                                        fontSize: 14,
-                                        color:
-                                            isSelected ? primaryApp : greyColor,
-                                      ),
-                                    ),
-                                  ),
-                                ));
-                          }).toList(),
-                        ),
-                      ),
-                    ),
-                    10.heightBox,
-                    const Text("Type of product")
-                        .text
-                        .size(16)
-                        .color(blackColor)
-                        .fontFamily(medium)
-                        .make(),
-                    10.heightBox,
-                    Center(
-                      child: Obx(
-                        () => Wrap(
-                          spacing: 6,
-                          runSpacing: 1,
-                          children:
-                              controller.subcollectionList.map((subcollection) {
-                            bool isSelected =
-                                controller.selectedSubcollection.value ==
-                                    subcollection;
-                            return SizedBox(
-                              width: 165,
-                              child: ChoiceChip(
-                                showCheckmark: false,
-                                label: Center(
-                                  child: Text(
-                                    capitalize(subcollection),
-                                    style: TextStyle(
-                                      fontFamily:
-                                          isSelected ? semiBold : regular,
-                                      fontSize: 14,
-                                      color:
-                                          isSelected ? primaryApp : greyColor,
-                                    ),
-                                  ),
-                                ),
-                                selected: isSelected,
-                                onSelected: (selected) {
-                                  if (selected) {
-                                    controller.selectedSubcollection.value =
-                                        subcollection;
-                                  }
-                                },
-                                selectedColor: thinPrimaryApp,
-                                backgroundColor: whiteColor,
-                                side: isSelected
-                                    ? const BorderSide(
-                                        color: primaryApp, width: 2)
-                                    : const BorderSide(
-                                        color: greyLine, width: 1.3),
-                              ),
-                            );
-                          }).toList(),
-                        ),
-                      ),
-                    ),
-                    10.heightBox,
                     const Text("Suitable for gender")
                         .text
                         .size(16)
@@ -357,6 +244,179 @@ class AddProduct extends StatelessWidget {
                       ),
                     ),
                     15.heightBox,
+                    const Text("Type of product")
+                        .text
+                        .size(16)
+                        .color(blackColor)
+                        .fontFamily(medium)
+                        .make(),
+                    10.heightBox,
+                    Center(
+                      child: Obx(
+                        () => Wrap(
+                          spacing: 6,
+                          runSpacing: 1,
+                          children:
+                              controller.subcollectionList.map((subcollection) {
+                            bool isSelected =
+                                controller.selectedSubcollection.value ==
+                                    subcollection;
+                            return SizedBox(
+                              width: 165,
+                              child: ChoiceChip(
+                                showCheckmark: false,
+                                label: Center(
+                                  child: Text(
+                                    capitalize(subcollection),
+                                    style: TextStyle(
+                                      fontFamily:
+                                          isSelected ? semiBold : regular,
+                                      fontSize: 14,
+                                      color:
+                                          isSelected ? primaryApp : greyColor,
+                                    ),
+                                  ),
+                                ),
+                                selected: isSelected,
+                                onSelected: (selected) {
+                                  if (selected) {
+                                    controller.selectedSubcollection.value =
+                                        subcollection;
+                                  }
+                                },
+                                selectedColor: thinPrimaryApp,
+                                backgroundColor: whiteColor,
+                                side: isSelected
+                                    ? const BorderSide(
+                                        color: primaryApp, width: 2)
+                                    : const BorderSide(
+                                        color: greyLine, width: 1.3),
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                    ),
+                    10.heightBox,
+                    const Text(" Suitable for work and situations ")
+                        .text
+                        .size(16)
+                        .color(blackColor)
+                        .fontFamily(medium)
+                        .make(),
+                    15.heightBox,
+                    Center(
+                      child: Obx(
+                        () => Wrap(
+                          spacing: 6,
+                          runSpacing: 8,
+                          children: controller.situationList.map((situation) {
+                            bool isSelected = controller.selectedSituations
+                                .contains(situation);
+                            return GestureDetector(
+                                onTap: () {
+                                  if (isSelected) {
+                                    controller.selectedSituations
+                                        .remove(situation);
+                                  } else {
+                                    controller.selectedSituations
+                                        .add(situation);
+                                  }
+                                },
+                                child: SizedBox(
+                                  width: 110,
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 6, vertical: 8),
+                                    decoration: BoxDecoration(
+                                      color: isSelected
+                                          ? thinPrimaryApp
+                                          : whiteColor,
+                                      border: Border.all(
+                                        color:
+                                            isSelected ? primaryApp : greyLine,
+                                        width: isSelected ? 2 : 1.3,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child: Text(
+                                      controller.situationDisplay[situation] ??
+                                          situation,
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontFamily:
+                                            isSelected ? semiBold : regular,
+                                        fontSize: 14,
+                                        color:
+                                            isSelected ? primaryApp : greyColor,
+                                      ),
+                                    ),
+                                  ),
+                                ));
+                          }).toList(),
+                        ),
+                      ),
+                    ),
+                    10.heightBox,
+                    const Text(" Suitable for seasons")
+                        .text
+                        .size(16)
+                        .color(blackColor)
+                        .fontFamily(medium)
+                        .make(),
+                    15.heightBox,
+                    Center(
+                      child: Obx(
+                        () => Wrap(
+                          spacing: 6,
+                          runSpacing: 8,
+                          children: controller.collectionList.map((collection) {
+                            bool isSelected = controller.selectedCollection
+                                .contains(collection);
+                            return GestureDetector(
+                                onTap: () {
+                                  if (isSelected) {
+                                    controller.selectedCollection
+                                        .remove(collection);
+                                  } else {
+                                    controller.selectedCollection
+                                        .add(collection);
+                                  }
+                                },
+                                child: SizedBox(
+                                  width: 110,
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 6, vertical: 8),
+                                    decoration: BoxDecoration(
+                                      color: isSelected
+                                          ? thinPrimaryApp
+                                          : whiteColor,
+                                      border: Border.all(
+                                        color:
+                                            isSelected ? primaryApp : greyLine,
+                                        width: isSelected ? 2 : 1.3,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child: Text(
+                                      capitalize(collection),
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontFamily:
+                                            isSelected ? semiBold : regular,
+                                        fontSize: 14,
+                                        color:
+                                            isSelected ? primaryApp : greyColor,
+                                      ),
+                                    ),
+                                  ),
+                                ));
+                          }).toList(),
+                        ),
+                      ),
+                    ),
+                    10.heightBox,
                     const Text("Choose product colors")
                         .text
                         .size(16)
