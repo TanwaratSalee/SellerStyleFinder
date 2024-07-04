@@ -45,8 +45,7 @@ class AddProduct extends StatelessWidget {
                         .text
                         .fontFamily(medium)
                         .size(18)
-                        .make()
-                        )
+                        .make())
           ],
         ),
         body: Padding(

@@ -15,7 +15,6 @@ void main() async {
   runApp(const MyApp());
 }
 
-
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -23,24 +22,23 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
 
-
 class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
     checkUser();
   }
-  
+
   var isLoggedin = false;
 
   checkUser() async {
     auth.authStateChanges().listen((User? user) {
-      if(user == null && mounted) {
+      if (user == null && mounted) {
         isLoggedin = false;
       } else {
         isLoggedin = true;
       }
-      setState(() { });
+      setState(() {});
     });
   }
 
@@ -48,8 +46,8 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      home: isLoggedin? const Home() : const LoginScreen() ,
-     theme: ThemeData(
+      home: isLoggedin ? const Home() : const LoginScreen(),
+      theme: ThemeData(
           useMaterial3: true,
           colorScheme: ColorScheme(
             brightness: Brightness.light,
@@ -77,7 +75,6 @@ class _MyAppState extends State<MyApp> {
             selectionHandleColor: primaryApp,
             cursorColor: primaryApp,
           )),
-      
     );
   }
 }

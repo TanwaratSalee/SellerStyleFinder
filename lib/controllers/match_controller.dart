@@ -27,7 +27,6 @@ class MatchController extends GetxController {
   var selectedColorIndex = 0.obs;
   var selectedSituations = <String>[].obs;
   var selectedCollections = <String>[].obs;
-  
 
   List<String> sizesList = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
   final selectedSizes = <String>[].obs;
@@ -35,9 +34,26 @@ class MatchController extends GetxController {
   RxString selectedGender = ''.obs;
   List<String> mixandmatchList = ['top', 'lower', 'not specified'];
   RxString selectedMixandmatch = ''.obs;
-  List<String> situationList = ['formal','semi-formal','casual','special-activity','seasonal','work-from-home'];
+  List<String> situationList = [
+    'formal',
+    'semi-formal',
+    'casual',
+    'special-activity',
+    'seasonal',
+    'work-from-home'
+  ];
+
+  Map<String, String> situationDisplay = {
+    'formal': 'Formal Attire',
+    'semi-formal': 'Semi-Formal Attire',
+    'casual': 'Casual Attire',
+    'special-activity': 'Special Activity Attire',
+    'seasonal': 'Seasonal Attire',
+    'work-from-home': 'Work from Home',
+  };
+
   final selectedSituation = <String>[].obs;
-  List<String> collectionList = ['summer','winter','autumn','spring'];
+  List<String> collectionList = ['summer', 'winter', 'autumn', 'spring'];
   final selectedCollection = <String>[].obs;
 
   final selectedColorIndexes = <int>[].obs;
