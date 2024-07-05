@@ -13,6 +13,7 @@ class EditMatchProduct extends StatefulWidget {
 class _EditMatchProductState extends State<EditMatchProduct> {
   final TextEditingController explanationController = TextEditingController();
   List<String> selectedCollections = [];
+  List<String> selectedSituations = [];
   String selectedGender = '';
   late DocumentSnapshot document;
   Map<String, dynamic> ItemsDetails = {};
@@ -34,6 +35,9 @@ class _EditMatchProductState extends State<EditMatchProduct> {
     Map<String, dynamic> docData = document.data() as Map<String, dynamic>;
     selectedCollections = docData.containsKey('collection')
         ? List<String>.from(docData['collection'])
+        : [];
+    selectedSituations = docData.containsKey('situations')
+        ? List<String>.from(docData['situations'])
         : [];
     explanationController.text = document['description'];
     pIdTop = document['product_id_top'];
@@ -230,7 +234,7 @@ class _EditMatchProductState extends State<EditMatchProduct> {
                     }).toList(),
                   ),
                   const SizedBox(height: 15),
-                  const Text("Collection")
+                  const Text(" Suitable for seasons")
                       .text
                       .size(16)
                       .color(blackColor)
@@ -269,6 +273,57 @@ class _EditMatchProductState extends State<EditMatchProduct> {
                               selectedCollections.remove(collection);
                             } else {
                               selectedCollections.add(collection);
+                            }
+                          });
+                        },
+                        selectedColor: thinPrimaryApp,
+                        backgroundColor: whiteColor,
+                        side: isSelected
+                            ? const BorderSide(color: primaryApp, width: 2)
+                            : const BorderSide(color: greyLine, width: 1.3),
+                      );
+                    }).toList(),
+                  ),
+                  const SizedBox(height: 15),
+                  const Text("Suitable for work and situations")
+                      .text
+                      .size(16)
+                      .color(blackColor)
+                      .fontFamily(medium)
+                      .make(),
+                  const SizedBox(height: 8),
+                  Wrap(
+                    spacing: 6,
+                    runSpacing: 1,
+                    children: [
+                      'formal',
+                      'semi-formal',
+                      'casual',
+                      'special-activity',
+                      'seasonal'
+                          'work-from-home'
+                    ].map((situations) {
+                      bool isSelected = selectedSituations.contains(situations);
+                      return ChoiceChip(
+                        showCheckmark: false,
+                        label: Container(
+                          width: 75,
+                          alignment: Alignment.center,
+                          child: Text(
+                            capitalize(situations),
+                            style: TextStyle(
+                              color: isSelected ? primaryApp : greyColor,
+                              fontFamily: isSelected ? semiBold : regular,
+                            ),
+                          ).text.size(14).make(),
+                        ),
+                        selected: isSelected,
+                        onSelected: (selected) {
+                          setState(() {
+                            if (isSelected) {
+                              selectedSituations.remove(situations);
+                            } else {
+                              selectedSituations.add(situations);
                             }
                           });
                         },
@@ -337,6 +392,7 @@ class _EditMatchProductState extends State<EditMatchProduct> {
       'product_id_top': pIdTop,
       'product_id_lower': pIdLower,
       'collection': selectedCollections,
+      'situations': selectedSituations,
       'gender': selectedGender,
       'description': explanationController.text,
     };
