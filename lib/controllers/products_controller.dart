@@ -57,13 +57,12 @@ class ProductsController extends GetxController {
     'seasonal': 'Seasonal Attire',
     'work-from-home': 'Work from Home',
   };
+
   final selectedSituations = <String>[].obs;
   List<String> collectionList = [
     'summer',
     'spring',
     'winter',
-    'dinner',
-    'everydaylook',
     'autumn',
   ];
   final selectedCollection = <String>[].obs;
