@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:seller_finalproject/const/const.dart';
 import 'package:seller_finalproject/const/styles.dart';
 import 'package:seller_finalproject/controllers/match_controller.dart';
+import 'package:seller_finalproject/views/widgets/infosituation.dart';
 import 'package:seller_finalproject/views/widgets/our_button.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -202,13 +203,30 @@ class _AddMatchProductState extends State<AddMatchProduct> {
                         )),
                   ),
                   const SizedBox(height: 15),
-                  const Text("Suitable for work and situations")
-                      .text
-                      .size(16)
-                      .color(blackColor)
-                      .fontFamily(medium)
-                      .make(),
-                  const SizedBox(height: 8),
+                  Row(
+                    children: [
+                      Text(
+                        "Suitable for work and situations",
+                        style: TextStyle(fontSize: 16, fontFamily: medium),
+                      ),
+                      10.widthBox,
+                      GestureDetector(
+                        onTap: () {
+                          showModalBottomSheet(
+                            context: context,
+                            builder: (context) {
+                              return SituationsList();
+                            },
+                          );
+                        },
+                        child: Image.asset(
+                          icInfo,
+                          width: 15,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
                   Center(
                     child: Obx(() => Wrap(
                           spacing: 8,

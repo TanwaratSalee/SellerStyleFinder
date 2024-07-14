@@ -28,3 +28,5 @@ const icReview = "assets/icons/setting/review.png";
 
 //login
 const icbag = "assets/icons/setting/iconseller.png";
+
+const icInfo = "assets/icons/icInfo.png";

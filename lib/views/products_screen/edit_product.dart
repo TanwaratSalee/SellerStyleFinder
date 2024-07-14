@@ -7,6 +7,7 @@ import 'package:seller_finalproject/controllers/loading_Indcator.dart';
 import 'package:seller_finalproject/controllers/products_controller.dart';
 import 'package:seller_finalproject/views/products_screen/component/product_images.dart';
 import 'package:seller_finalproject/views/widgets/custom_textfield.dart';
+import 'package:seller_finalproject/views/widgets/infosituation.dart';
 import 'package:seller_finalproject/views/widgets/our_button.dart';
 
 class EditProduct extends StatefulWidget {
@@ -320,12 +321,30 @@ class _EditProductState extends State<EditProduct> {
                   ),
                 ),
                 10.heightBox,
-                const Text("Suitable for work and situations")
-                    .text
-                    .size(16)
-                    .color(blackColor)
-                    .fontFamily(medium)
-                    .make(),
+               Row(
+                    children: [
+                      Text(
+                        "Suitable for work and situations",
+                        style: TextStyle(fontSize: 16, fontFamily: medium),
+                      ),
+                      10.widthBox,
+                      GestureDetector(
+                        onTap: () {
+                          showModalBottomSheet(
+                            context: context,
+                            builder: (context) {
+                              return SituationsList();
+                            },
+                          );
+                        },
+                        child: Image.asset(
+                          icInfo,
+                          width: 15,
+                        ),
+                      ),
+                    ],
+                  ),
+                  
                 5.heightBox,
                 Center(
                   child: Obx(

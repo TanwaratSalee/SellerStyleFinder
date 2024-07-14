@@ -6,6 +6,7 @@ import 'package:seller_finalproject/controllers/loading_Indcator.dart';
 import 'package:seller_finalproject/controllers/products_controller.dart';
 import 'package:seller_finalproject/views/products_screen/component/product_images.dart';
 import 'package:seller_finalproject/views/widgets/custom_textfield.dart';
+import 'package:seller_finalproject/views/widgets/infosituation.dart';
 
 class AddProduct extends StatelessWidget {
   const AddProduct({super.key});
@@ -146,13 +147,13 @@ class AddProduct extends StatelessWidget {
                     Center(
                       child: Obx(
                         () => Wrap(
-                          spacing: 6,
-                          runSpacing: 6,
+                          spacing: 10,
+                          runSpacing: 3,
                           children: controller.genderList.map((gender) {
                             bool isSelected =
                                 controller.selectedGender.value == gender;
                             return Container(
-                              width: 110,
+                              width: 120,
                               child: ChoiceChip(
                                 showCheckmark: false,
                                 label: Align(
@@ -198,13 +199,13 @@ class AddProduct extends StatelessWidget {
                     Center(
                       child: Obx(
                         () => Wrap(
-                          spacing: 8,
-                          runSpacing: 1,
+                          spacing: 10,
+                          runSpacing: 5,
                           children: controller.sizesList.map((size) {
                             bool isSelected =
                                 controller.selectedSizes.contains(size);
                             return SizedBox(
-                              width: 100,
+                              width: 120,
                               child: ChoiceChip(
                                 showCheckmark: false,
                                 label: Center(
@@ -254,15 +255,15 @@ class AddProduct extends StatelessWidget {
                     Center(
                       child: Obx(
                         () => Wrap(
-                          spacing: 6,
-                          runSpacing: 1,
+                          spacing: 10,
+                          runSpacing: 5,
                           children:
                               controller.subcollectionList.map((subcollection) {
                             bool isSelected =
                                 controller.selectedSubcollection.value ==
                                     subcollection;
                             return SizedBox(
-                              width: 165,
+                              width: 175,
                               child: ChoiceChip(
                                 showCheckmark: false,
                                 label: Center(
@@ -298,18 +299,36 @@ class AddProduct extends StatelessWidget {
                       ),
                     ),
                     10.heightBox,
-                    const Text(" Suitable for work and situations ")
-                        .text
-                        .size(16)
-                        .color(blackColor)
-                        .fontFamily(medium)
-                        .make(),
+                   Row(
+                    children: [
+                      Text(
+                        "Suitable for work and situations",
+                        style: TextStyle(fontSize: 16, fontFamily: medium),
+                      ),
+                      10.widthBox,
+                      GestureDetector(
+                        onTap: () {
+                          showModalBottomSheet(
+                            context: context,
+                            builder: (context) {
+                              return SituationsList();
+                            },
+                          );
+                        },
+                        child: Image.asset(
+                          icInfo,
+                          width: 15,
+                        ),
+                      ),
+                    ],
+                  ),
+                  
                     15.heightBox,
                     Center(
                       child: Obx(
                         () => Wrap(
-                          spacing: 6,
-                          runSpacing: 8,
+                          spacing: 10,
+                          runSpacing: 10,
                           children: controller.situationList.map((situation) {
                             bool isSelected = controller.selectedSituations
                                 .contains(situation);
@@ -324,7 +343,7 @@ class AddProduct extends StatelessWidget {
                                   }
                                 },
                                 child: SizedBox(
-                                  width: 110,
+                                  width: 175,
                                   child: Container(
                                     padding: EdgeInsets.symmetric(
                                         horizontal: 6, vertical: 8),
@@ -526,7 +545,7 @@ class AddProduct extends StatelessWidget {
                     )
                   ],
                 ).paddingSymmetric(horizontal: 16),
-                100.heightBox,
+                50.heightBox,
               ],
             ),
           ),

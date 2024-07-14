@@ -295,7 +295,7 @@ class ProductsController extends GetxController {
         'situations': selectedSituations,
         'subcollection': selectedSubcollection.value,
         'gender': selectedGender.value,
-        'selectsize': selectedSizes,
+        'productsize ': selectedSizes,
         'part': selectedMixandmatch.value,
         'colors': selectedColorIndexes
             .map((index) => allColors[index]['color'].value)
@@ -365,8 +365,8 @@ class ProductsController extends GetxController {
     }
 
     // ตั้งค่าขนาดที่เลือก
-    if (productData['selectsize'] != null) {
-      selectedSizes.assignAll(List<String>.from(productData['selectsize']));
+    if (productData['productsize '] != null) {
+      selectedSizes.assignAll(List<String>.from(productData['productsize ']));
     } else {
       selectedSizes.clear();
     }
