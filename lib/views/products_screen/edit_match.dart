@@ -300,48 +300,43 @@ class _EditMatchProductState extends State<EditMatchProduct> {
                       .fontFamily(medium)
                       .make(),
                   const SizedBox(height: 8),
-                  Wrap(
-                    spacing: 6,
-                    runSpacing: 1,
-                    children: [
-                      'formal',
-                      'semi-formal',
-                      'casual',
-                      'special-activity',
-                      'seasonal'
-                      'work-from-home'
-                    ].map((situations) {
-                      bool isSelected = selectedSituations.contains(situations);
-                      return ChoiceChip(
-                        showCheckmark: false,
-                        label: Container(
-                          width: 75,
-                          alignment: Alignment.center,
-                          child: Text(
-                            capitalize(situations),
-                            style: TextStyle(
-                              color: isSelected ? primaryApp : greyColor,
-                              fontFamily: isSelected ? semiBold : regular,
-                            ),
-                          ).text.size(14).make(),
-                        ),
-                        selected: isSelected,
-                        onSelected: (selected) {
-                          setState(() {
-                            if (isSelected) {
-                              selectedSituations.remove(situations);
-                            } else {
-                              selectedSituations.add(situations);
-                            }
-                          });
-                        },
-                        selectedColor: thinPrimaryApp,
-                        backgroundColor: whiteColor,
-                        side: isSelected
-                            ? const BorderSide(color: primaryApp, width: 2)
-                            : const BorderSide(color: greyLine, width: 1.3),
-                      );
-                    }).toList(),
+                  Center(
+                    child: Wrap(
+                      spacing: 6,
+                      runSpacing: 1,
+                      children: situationNames.keys.map((situation) {
+                        bool isSelected = selectedSituations.contains(situation);
+                        return ChoiceChip(
+                          showCheckmark: false,
+                          label: Container(
+                            width: 120,
+                            alignment: Alignment.center,
+                            child: Text(
+                              situationNames[situation]!,
+                              style: TextStyle(
+                                color: isSelected ? primaryApp : greyColor,
+                                fontFamily: isSelected ? semiBold : regular,
+                              ),
+                            ).text.size(14).make(),
+                          ),
+                          selected: isSelected,
+                          onSelected: (selected) {
+                            setState(() {
+                              if (isSelected) {
+                                selectedSituations.remove(situation);
+                              } else {
+                                selectedSituations.add(situation);
+                              }
+                            });
+                          },
+                          selectedColor: thinPrimaryApp,
+                          backgroundColor: whiteColor,
+                          side: isSelected
+                              ? const BorderSide(color: primaryApp, width: 2)
+                              : const BorderSide(color: greyLine, width: 1.3),
+                        );
+                      }).toList(),
+                    ),
                   ),
                   const SizedBox(height: 15),
                   Padding(
