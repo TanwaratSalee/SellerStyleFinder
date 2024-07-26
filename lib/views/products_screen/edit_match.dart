@@ -74,6 +74,15 @@ class _EditMatchProductState extends State<EditMatchProduct> {
     }
   }
 
+  final Map<String, String> situationNames = {
+    'formal': 'Formal Attire',
+    'semi-formal': 'Semi-Formal Attire',
+    'casual': 'Casual Attire',
+    'special-activity': 'Activity Attire',
+    'seasonal': 'Seasonal Attire',
+    'work-from-home': 'Work from Home',
+  };
+
   @override
   Widget build(BuildContext context) {
     String capitalize(String s) => s[0].toUpperCase() + s.substring(1);
@@ -295,22 +304,15 @@ class _EditMatchProductState extends State<EditMatchProduct> {
                   Wrap(
                     spacing: 6,
                     runSpacing: 1,
-                    children: [
-                      'formal',
-                      'semi-formal',
-                      'casual',
-                      'special-activity',
-                      'seasonal'
-                          'work-from-home'
-                    ].map((situations) {
-                      bool isSelected = selectedSituations.contains(situations);
+                    children: situationNames.keys.map((situation) {
+                      bool isSelected = selectedSituations.contains(situation);
                       return ChoiceChip(
                         showCheckmark: false,
                         label: Container(
-                          width: 75,
+                          width: 120,
                           alignment: Alignment.center,
                           child: Text(
-                            capitalize(situations),
+                            situationNames[situation]!,
                             style: TextStyle(
                               color: isSelected ? primaryApp : greyColor,
                               fontFamily: isSelected ? semiBold : regular,
@@ -321,9 +323,9 @@ class _EditMatchProductState extends State<EditMatchProduct> {
                         onSelected: (selected) {
                           setState(() {
                             if (isSelected) {
-                              selectedSituations.remove(situations);
+                              selectedSituations.remove(situation);
                             } else {
-                              selectedSituations.add(situations);
+                              selectedSituations.add(situation);
                             }
                           });
                         },
