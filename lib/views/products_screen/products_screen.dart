@@ -264,15 +264,15 @@ class _ProductsScreenState extends State<ProductsScreen> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                            "${topProductData['name']}",
-                                            style: const TextStyle(
-                                              fontFamily: medium,
-                                              fontSize: 16,
-                                              color: greyDark,
-                                            ),
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                          ).box.width(200).make(),
+                                        "${topProductData['name']}",
+                                        style: const TextStyle(
+                                          fontFamily: medium,
+                                          fontSize: 16,
+                                          color: greyDark,
+                                        ),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                      ).box.width(200).make(),
                                       // Text(topProductData['name'])
                                       //     .text
                                       //     .fontFamily(medium)
@@ -306,15 +306,15 @@ class _ProductsScreenState extends State<ProductsScreen> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                            "${lowerProductData['name']}",
-                                            style: const TextStyle(
-                                              fontFamily: medium,
-                                              fontSize: 16,
-                                              color: greyDark,
-                                            ),
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                          ).box.width(200).make(),
+                                        "${lowerProductData['name']}",
+                                        style: const TextStyle(
+                                          fontFamily: medium,
+                                          fontSize: 16,
+                                          color: greyDark,
+                                        ),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                      ).box.width(200).make(),
                                       "${NumberFormat('#,##0').format(double.parse(lowerProductData['price']).toInt())} Bath"
                                           .text
                                           .fontFamily(medium)
@@ -343,7 +343,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                                   'name': lowerProductData['name'] ?? '',
                                   'price': lowerProductData['price'] ?? 0,
                                 },
-                                'siturations' : document['siturations'] ?? '',
+                                'situations': document['situations'] ?? '',
                                 'description': document['description'] ?? '',
                                 'gender': document['gender'] ?? '',
                                 'collection': document['collection'] ?? '',

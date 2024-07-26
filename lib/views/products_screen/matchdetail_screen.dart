@@ -12,13 +12,15 @@ class MatchDetailsScreen extends StatelessWidget {
     final Map<String, dynamic>? lowerProduct = Get.arguments['lowerProduct'];
     final String? description = Get.arguments['description'];
     final dynamic sex = Get.arguments['gender'];
-    final dynamic siturations = Get.arguments['siturations'];
+    final dynamic situations = Get.arguments['situations'];
     final dynamic collection = Get.arguments['collection'];
 
     // Ensure sex and collection are strings
     final String sexString = sex is List ? sex.join(', ') : sex.toString();
-    final String situationString =siturations is List ? siturations.join(', ') : siturations.toString();
-    final String collectionString =collection is List ? collection.join(', ') : collection.toString();
+    final String situationsString =
+        situations is List ? situations.join(', ') : situations.toString();
+    final String collectionString =
+        collection is List ? collection.join(', ') : collection.toString();
 
     if (topProduct == null || lowerProduct == null || description == null) {
       return Scaffold(
@@ -263,23 +265,29 @@ class MatchDetailsScreen extends StatelessWidget {
                               height: 40,
                               child: ListView.builder(
                                 scrollDirection: Axis.horizontal,
-                                itemCount: situationString.split(', ').length,
+                                itemCount: situations is List
+                                    ? situations.length
+                                    : situationsString.split(', ').length,
                                 itemBuilder: (context, index) {
-                                  String item =
-                                      situationString.split(', ')[index];
+                                  String item = situations is List
+                                      ? situations[index]
+                                      : situationsString.split(', ')[index];
+
                                   return Container(
                                     alignment: Alignment.center,
                                     child: Text(
                                       "${item[0].toUpperCase()}${item.substring(1)}",
                                     )
-                                         .text.size(14)
+                                        .text
+                                        .size(14)
                                         .color(greyDark)
                                         .fontFamily(medium)
                                         .make(),
                                   )
                                       .box
                                       .color(thinPrimaryApp)
-                                      .margin(EdgeInsets.symmetric(horizontal: 6))
+                                      .margin(
+                                          EdgeInsets.symmetric(horizontal: 6))
                                       .roundedLg
                                       .padding(EdgeInsets.symmetric(
                                           horizontal: 28, vertical: 6))
