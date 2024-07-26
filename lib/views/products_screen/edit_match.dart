@@ -241,48 +241,45 @@ class _EditMatchProductState extends State<EditMatchProduct> {
                       .fontFamily(medium)
                       .make(),
                   const SizedBox(height: 8),
-                  Wrap(
-                    spacing: 6,
-                    runSpacing: 1,
-                    children: [
-                      'summer',
-                      'winter',
-                      'autumn',
-                      'dinner',
-                      'everydaylook'
-                    ].map((collection) {
-                      bool isSelected =
-                          selectedCollections.contains(collection);
-                      return ChoiceChip(
-                        showCheckmark: false,
-                        label: Container(
-                          width: 75,
-                          alignment: Alignment.center,
-                          child: Text(
-                            capitalize(collection),
-                            style: TextStyle(
-                              color: isSelected ? primaryApp : greyColor,
-                              fontFamily: isSelected ? semiBold : regular,
-                            ),
-                          ).text.size(14).make(),
-                        ),
-                        selected: isSelected,
-                        onSelected: (selected) {
-                          setState(() {
-                            if (isSelected) {
-                              selectedCollections.remove(collection);
-                            } else {
-                              selectedCollections.add(collection);
-                            }
-                          });
-                        },
-                        selectedColor: thinPrimaryApp,
-                        backgroundColor: whiteColor,
-                        side: isSelected
-                            ? const BorderSide(color: primaryApp, width: 2)
-                            : const BorderSide(color: greyLine, width: 1.3),
-                      );
-                    }).toList(),
+                  Center(
+                    child: Wrap(
+                      spacing: 6,
+                      runSpacing: 1,
+                      children: ['summer', 'winter', 'autumn', 'spring']
+                          .map((collection) {
+                        bool isSelected =
+                            selectedCollections.contains(collection);
+                        return ChoiceChip(
+                          showCheckmark: false,
+                          label: Container(
+                            width: 125,
+                            alignment: Alignment.center,
+                            child: Text(
+                              capitalize(collection),
+                              style: TextStyle(
+                                color: isSelected ? primaryApp : greyColor,
+                                fontFamily: isSelected ? semiBold : regular,
+                              ),
+                            ).text.size(14).make(),
+                          ),
+                          selected: isSelected,
+                          onSelected: (selected) {
+                            setState(() {
+                              if (isSelected) {
+                                selectedCollections.remove(collection);
+                              } else {
+                                selectedCollections.add(collection);
+                              }
+                            });
+                          },
+                          selectedColor: thinPrimaryApp,
+                          backgroundColor: whiteColor,
+                          side: isSelected
+                              ? const BorderSide(color: primaryApp, width: 2)
+                              : const BorderSide(color: greyLine, width: 1.3),
+                        );
+                      }).toList(),
+                    ),
                   ),
                   const SizedBox(height: 15),
                   const Text("Suitable for work and situations")
@@ -301,7 +298,7 @@ class _EditMatchProductState extends State<EditMatchProduct> {
                       'casual',
                       'special-activity',
                       'seasonal'
-                          'work-from-home'
+                      'work-from-home'
                     ].map((situations) {
                       bool isSelected = selectedSituations.contains(situations);
                       return ChoiceChip(

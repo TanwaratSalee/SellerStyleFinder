@@ -153,7 +153,7 @@ class AddProduct extends StatelessWidget {
                             bool isSelected =
                                 controller.selectedGender.value == gender;
                             return Container(
-                              width: 120,
+                              width: 100,
                               child: ChoiceChip(
                                 showCheckmark: false,
                                 label: Align(
@@ -205,7 +205,7 @@ class AddProduct extends StatelessWidget {
                             bool isSelected =
                                 controller.selectedSizes.contains(size);
                             return SizedBox(
-                              width: 120,
+                              width: 100,
                               child: ChoiceChip(
                                 showCheckmark: false,
                                 label: Center(
@@ -263,7 +263,7 @@ class AddProduct extends StatelessWidget {
                                 controller.selectedSubcollection.value ==
                                     subcollection;
                             return SizedBox(
-                              width: 175,
+                              width: 155,
                               child: ChoiceChip(
                                 showCheckmark: false,
                                 label: Center(
@@ -343,7 +343,7 @@ class AddProduct extends StatelessWidget {
                                   }
                                 },
                                 child: SizedBox(
-                                  width: 175,
+                                  width: 155,
                                   child: Container(
                                     padding: EdgeInsets.symmetric(
                                         horizontal: 6, vertical: 8),
@@ -403,7 +403,7 @@ class AddProduct extends StatelessWidget {
                                   }
                                 },
                                 child: SizedBox(
-                                  width: 110,
+                                  width: 155,
                                   child: Container(
                                     padding: EdgeInsets.symmetric(
                                         horizontal: 6, vertical: 8),
