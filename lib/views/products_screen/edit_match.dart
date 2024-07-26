@@ -206,41 +206,43 @@ class _EditMatchProductState extends State<EditMatchProduct> {
                       .fontFamily(medium)
                       .make(),
                   const SizedBox(height: 8),
-                  Wrap(
-                    spacing: 8,
-                    runSpacing: 8,
-                    children: ['men', 'women', 'other'].map((gender) {
-                      bool isSelected = selectedGender == gender;
-                      return Container(
-                        width: 105,
-                        child: ChoiceChip(
-                          showCheckmark: false,
-                          label: Container(
-                            alignment: Alignment.center,
-                            child: Text(
-                              capitalize(gender),
-                              style: TextStyle(
-                                color: isSelected ? primaryApp : greyColor,
-                                fontFamily: isSelected ? semiBold : regular,
-                              ),
-                            ).text.size(14).make(),
+                  Center(
+                    child: Wrap(
+                      spacing: 8,
+                      runSpacing: 8,
+                      children: ['men', 'women', 'other'].map((gender) {
+                        bool isSelected = selectedGender == gender;
+                        return Container(
+                          width: 105,
+                          child: ChoiceChip(
+                            showCheckmark: false,
+                            label: Container(
+                              alignment: Alignment.center,
+                              child: Text(
+                                capitalize(gender),
+                                style: TextStyle(
+                                  color: isSelected ? primaryApp : greyColor,
+                                  fontFamily: isSelected ? semiBold : regular,
+                                ),
+                              ).text.size(14).make(),
+                            ),
+                            selected: isSelected,
+                            onSelected: (selected) {
+                              if (selected) {
+                                setState(() {
+                                  selectedGender = gender;
+                                });
+                              }
+                            },
+                            selectedColor: thinPrimaryApp,
+                            backgroundColor: whiteColor,
+                            side: isSelected
+                                ? const BorderSide(color: primaryApp, width: 2)
+                                : const BorderSide(color: greyLine),
                           ),
-                          selected: isSelected,
-                          onSelected: (selected) {
-                            if (selected) {
-                              setState(() {
-                                selectedGender = gender;
-                              });
-                            }
-                          },
-                          selectedColor: thinPrimaryApp,
-                          backgroundColor: whiteColor,
-                          side: isSelected
-                              ? const BorderSide(color: primaryApp, width: 2)
-                              : const BorderSide(color: greyLine),
-                        ),
-                      );
-                    }).toList(),
+                        );
+                      }).toList(),
+                    ),
                   ),
                   const SizedBox(height: 15),
                   const Text(" Suitable for seasons")
@@ -301,15 +303,22 @@ class _EditMatchProductState extends State<EditMatchProduct> {
                   Wrap(
                     spacing: 6,
                     runSpacing: 1,
-                    children: situationNames.keys.map((situation) {
-                      bool isSelected = selectedSituations.contains(situation);
+                    children: [
+                      'formal',
+                      'semi-formal',
+                      'casual',
+                      'special-activity',
+                      'seasonal'
+                      'work-from-home'
+                    ].map((situations) {
+                      bool isSelected = selectedSituations.contains(situations);
                       return ChoiceChip(
                         showCheckmark: false,
                         label: Container(
-                          width: 120,
+                          width: 75,
                           alignment: Alignment.center,
                           child: Text(
-                            situationNames[situation]!,
+                            capitalize(situations),
                             style: TextStyle(
                               color: isSelected ? primaryApp : greyColor,
                               fontFamily: isSelected ? semiBold : regular,
@@ -320,9 +329,9 @@ class _EditMatchProductState extends State<EditMatchProduct> {
                         onSelected: (selected) {
                           setState(() {
                             if (isSelected) {
-                              selectedSituations.remove(situation);
+                              selectedSituations.remove(situations);
                             } else {
-                              selectedSituations.add(situation);
+                              selectedSituations.add(situations);
                             }
                           });
                         },
