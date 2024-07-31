@@ -46,7 +46,7 @@ class Home extends GetView<HomeController> {
                 color: controller.navIndex.value == 2 ? primaryApp : greyDark,
                 width: controller.navIndex.value == 2 ? 22 : 18,
               ),
-              label: orders,
+              label: ordersdas,
             ),
             BottomNavigationBarItem(
               icon: Image.asset(

@@ -6,6 +6,7 @@ const icHome = "assets/icons/home.png";
 const icGeneralSettings = "assets/icons/general_setting.png";
 const icOrders = "assets/icons/orders.png";
 const icTotalsales = "assets/icons/totalsales.jpg";
+const icTotalPrice = "assets/icons/totalprice.png";
 const icProducts = "assets/icons/products.png";
 const icProfile = "assets/icons/profile.png";
 const icShopSettings = "assets/icons/shop_setting.png";

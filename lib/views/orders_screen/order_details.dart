@@ -175,10 +175,10 @@ class _OrderDetailsState extends State<OrderDetails> {
           bottomNavigationBar: Visibility(
             visible: !controller.confirmed.value,
             child: SizedBox(
-              height: 75,
+              height: 100,
               width: context.screenWidth,
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
+                padding: const EdgeInsets.fromLTRB(5, 0, 5, 30),
                 child: ourButton(
                   color: primaryApp,
                   onPress: () {
